@@ -1,0 +1,6 @@
+{
+  "name": "delta-ui",
+  "workspaces": [
+    "packages/*"
+  ]
+}
