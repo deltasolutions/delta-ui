@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "declaration": true,
     "declarationDir": "./build",
     "emitDeclarationOnly": true,
     "jsx": "preserve",
+    "jsxImportSource": "theme-ui",
     "rootDir": "./src",
     "types": ["node", "react"]
   },
   "extends": "../../tsconfig",
-  "include": ["./src/**/*.ts"]
+  "include": ["./src/**/*.ts", "./src/**/*.tsx"]
 }

@@ -26,7 +26,7 @@ import { tab } from './tab';
 import { table } from './table';
 import { textArea } from './textArea';
 
-export const restylerDeltaTheme: BasicTheme = {
+export const theme: BasicTheme = {
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   radii: [0, 2, 4, 8],
   fontSizes: [10, 12, 14, 16, 20, 26, 42, 48, 56],

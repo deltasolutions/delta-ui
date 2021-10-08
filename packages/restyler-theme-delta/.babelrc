@@ -7,7 +7,13 @@
         "shippedProposals": true
       }
     ],
-    "@babel/preset-react"
+    [
+      "@babel/preset-react",
+      {
+        "runtime": "automatic",
+        "importSource": "theme-ui"
+      }
+    ]
   ],
   "plugins": [
     ["@babel/plugin-proposal-decorators", { "legacy": true }],

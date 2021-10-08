@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "rootDir": "."
+  },
+  "include": ["./**/*.tsx"],
+  "extends": "../tsconfig.json"
+}

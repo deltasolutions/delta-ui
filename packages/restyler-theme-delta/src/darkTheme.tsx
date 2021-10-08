@@ -1,7 +1,7 @@
 import { mergeBasicThemes } from 'restyler';
-import { restylerDeltaTheme } from './restylerDeltaTheme';
+import { theme } from './theme';
 
-export const restylerDarkDeltaTheme = mergeBasicThemes({}, restylerDeltaTheme, {
+export const darkTheme = mergeBasicThemes({}, theme, {
   fontWeights: {
     body: 400,
     heading: 300
