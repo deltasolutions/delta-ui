@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
-    "rootDir": ".."
+    "jsx": "preserve",
+    "rootDir": "..",
+    "types": ["node", "react"]
   },
-  "include": ["./**/*.tsx"],
-  "extends": "../tsconfig.json"
+  "extends": "../tsconfig.json",
+  "include": ["./**/*.tsx"]
 }

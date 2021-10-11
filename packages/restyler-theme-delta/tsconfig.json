@@ -4,10 +4,7 @@
     "declaration": true,
     "declarationDir": "./build",
     "emitDeclarationOnly": true,
-    "jsx": "preserve",
-    "jsxImportSource": "theme-ui",
-    "rootDir": "./src",
-    "types": ["node", "react"]
+    "rootDir": "./src"
   },
   "extends": "../../tsconfig",
   "include": ["./src/**/*.ts", "./src/**/*.tsx"]

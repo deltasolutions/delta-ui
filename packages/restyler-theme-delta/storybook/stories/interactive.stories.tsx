@@ -1,6 +1,8 @@
+/** @jsx jsx */
 import { Meta } from '@storybook/react';
 import { Fragment, useCallback } from 'react';
 import * as R from 'restyler';
+import { jsx } from 'theme-ui';
 
 export default {
   title: 'General/Interactive'

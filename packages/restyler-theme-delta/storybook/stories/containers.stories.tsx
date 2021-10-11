@@ -1,6 +1,8 @@
+/** @jsx jsx */
 import { Meta } from '@storybook/react';
 import { useMemo, useState } from 'react';
 import * as R from 'restyler';
+import { jsx } from 'theme-ui';
 import { compact } from '../decorators';
 
 export default {
