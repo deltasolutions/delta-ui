@@ -15,7 +15,7 @@ export const main = async (args: string[]) => {
 
   const { stdout: branch = '' } =
     (await exec('git branch --show-current', { stdio: 'pipe' })) ?? {};
-  log('info', `current branch is ${branch}`);
+  log('info', `current branch is "${branch}"`);
   if (!['master', 'main'].includes(branch)) {
     log('error', 'wrong branch to make release at, exiting');
     return;
@@ -36,32 +36,32 @@ export const main = async (args: string[]) => {
   });
 
   const version = semver.inc(packageJson.version, opts.increment);
-  log('info', `new version is ${version}`);
+  log('info', `new version is "${version}"`);
   const message = mustache.render(opts.message, { ...packageJson, version });
-  log('info', `generated commit message is ${message}`);
-  await execSafe(`npm --no-git-tag-version version ${version}`);
-  await execSafe(`git commit -am ${message}`);
-  await execSafe(`git push origin ${branch}`);
+  log('info', `generated commit message is "${message}"`);
+  await execSafe(`npm --no-git-tag-version version "${version}"`);
+  await execSafe(`git commit -am "${message}"`);
+  await execSafe(`git push origin "${branch}"`);
 
   if (opts.tag) {
     log('info', '--tag option was set, tagging');
     if (typeof opts.tag === 'string') {
       const tag = mustache.render(opts.tag, { ...packageJson, version });
-      log('info', `generated tag is ${tag}`);
-      await execSafe(`git tag ${tag}`);
+      log('info', `generated tag is "${tag}"`);
+      await execSafe(`git tag "${tag}"`);
     } else {
       log(
         'info',
         'tag template was omitted, using previously generated commit message'
       );
-      await execSafe(`git tag ${message}`);
+      await execSafe(`git tag "${message}"`);
     }
-    await execSafe(`git push origin ${message}`);
+    await execSafe(`git push origin "${message}"`);
   }
 
   if (opts.script) {
     log('info', '--script option was set, executing');
-    await execSafe(`npm run ${opts.script}`);
+    await execSafe(`npm run "${opts.script}"`);
   }
 
   if (opts.publish) {
