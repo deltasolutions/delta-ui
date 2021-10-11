@@ -37,3 +37,4 @@ export const Form = () => (
     </R.FormGrid>
   </R.Form>
 );
+Form.decorators = [compact()];

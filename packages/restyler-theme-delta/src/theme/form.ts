@@ -23,6 +23,9 @@ const actionButtonTheme = {
 };
 
 export const form: BasicTheme = {
+  style: {
+    width: '100%'
+  },
   components: {
     field: {
       style: {

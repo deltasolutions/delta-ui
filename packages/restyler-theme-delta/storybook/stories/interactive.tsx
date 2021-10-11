@@ -7,7 +7,7 @@ export default {
 } as Meta;
 
 export const Anchor = () => {
-  return <R.Anchor>Anchor text</R.Anchor>;
+  return <R.Anchor href="#">Anchor text</R.Anchor>;
 };
 
 export const Buttons = () => {

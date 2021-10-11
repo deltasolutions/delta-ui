@@ -4,6 +4,10 @@ export const anchor: BasicTheme = {
   style: {
     color: 'primary',
     cursor: 'pointer',
-    textDecoration: 'none'
+    outline: 'none',
+    textDecoration: 'none',
+    '&:hover, &:focus': {
+      textDecoration: 'underline'
+    }
   }
 };

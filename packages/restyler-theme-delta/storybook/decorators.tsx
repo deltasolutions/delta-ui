@@ -1,8 +1,9 @@
 import isPropValid from '@emotion/is-prop-valid';
 import { Global } from '@emotion/react';
 import { forwardRef } from 'react';
-import { Box, defaultTheme, mergeBasicThemes, SystemContainer } from 'restyler';
+import { Box, mergeBasicThemes, SystemContainer } from 'restyler';
 import { ThemeProvider } from 'theme-ui';
+import { theme as packageTheme } from '../src';
 
 const styled = (Tag: any, fn: Function) =>
   forwardRef((props: any, ref: any) => {
@@ -14,7 +15,7 @@ const styled = (Tag: any, fn: Function) =>
     return <Tag ref={ref} {...validProps} />;
   }) as any;
 
-const theme = mergeBasicThemes({}, defaultTheme, {
+const theme = mergeBasicThemes({}, packageTheme, {
   colors: {
     background: 'transparent',
     accentBackground: 'transparent'
