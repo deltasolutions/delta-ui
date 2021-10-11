@@ -13,8 +13,10 @@ export const main = async (args: string[]) => {
     log('info', 'this is a preview run, nothing will be changed');
   }
 
-  const { stdout: branch = '' } =
-    (await exec('git branch --show-current', { stdio: 'pipe' })) ?? {};
+  const branchOutput = await exec('git', ['branch', '--show-current'], {
+    stdio: 'pipe'
+  });
+  const { stdout: branch = '' } = branchOutput ?? {};
   log('info', `current branch is ${branch}`);
   if (!['master', 'main'].includes(branch)) {
     log('error', 'wrong branch to make release at, exiting');
@@ -39,34 +41,35 @@ export const main = async (args: string[]) => {
   log('info', `new version is ${version}`);
   const message = mustache.render(opts.message, { ...packageJson, version });
   log('info', `generated commit message is "${message}"`);
-  await execSafe(`npm --no-git-tag-version version ${version}`);
-  await execSafe(`git commit -am "${message}"`);
-  await execSafe(`git push origin ${branch}`);
+  await execSafe('npm', ['--no-git-tag-version', 'version', version]);
+  await execSafe('git', ['commit', '-am', message]);
+  await execSafe('git', ['push', 'origin', branch]);
 
   if (opts.tag) {
     log('info', '--tag option was set, tagging');
     if (typeof opts.tag === 'string') {
       const tag = mustache.render(opts.tag, { ...packageJson, version });
       log('info', `generated tag is ${tag}`);
-      await execSafe(`git tag ${tag}`);
+      await execSafe('git', ['tag', tag]);
+      await execSafe('git', ['push', 'origin', tag]);
     } else {
       log(
         'info',
         'tag template was omitted, using previously generated commit message'
       );
-      await execSafe(`git tag "${message}"`);
+      await execSafe('git', ['tag', message]);
+      await execSafe('git', ['push', 'origin', message]);
     }
-    await execSafe(`git push origin "${message}"`);
   }
 
   if (opts.script) {
     log('info', '--script option was set, executing');
-    await execSafe(`npm run ${opts.script}`);
+    await execSafe('npm', ['run', opts.script]);
   }
 
   if (opts.publish) {
     log('info', '--publish option was set, publishing');
-    await execSafe(`npm publish`);
+    await execSafe('npm', ['publish']);
   }
 };
 
