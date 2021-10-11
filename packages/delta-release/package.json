@@ -14,7 +14,7 @@
   "scripts": {
     "build": "gulp build",
     "lint": "gulp lint",
-    "release": "ts-node src/index.ts -m {{name}}@{{version}} -s build -t -p"
+    "release": "gulp release"
   },
   "dependencies": {
     "colors": "^1.4.0",

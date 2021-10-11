@@ -29,3 +29,16 @@ task('lint', async () => {
   await exec('npx eslint ./{src,storybook}/**/*.{js,jsx,ts,tsx} --fix');
   await exec('npx prettier ./{src,storybook}/**/*.{js,jsx,ts,tsx} --write');
 });
+
+task('release', async () => {
+  await exec(
+    [
+      'ts-node',
+      'src/index.ts',
+      '-m "chore(delta-release): {{name}}@{{version}}"',
+      '-s build',
+      '-t {{name}}@{{version}}',
+      '-p'
+    ].join(' ')
+  );
+});
