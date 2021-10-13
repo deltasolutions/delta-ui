@@ -1,0 +1,6 @@
+{
+  "script": "build",
+  "message": "chore(delta-release): {{version}}",
+  "tag": "{{name}}@{{version}}",
+  "publish": true
+}

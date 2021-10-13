@@ -1,14 +1,34 @@
 import { promises as fsp } from 'fs';
 import * as path from 'path';
+import { exit } from 'process';
 import * as mustache from 'mustache';
 import * as semver from 'semver';
 import { createExecutor, exec } from './exec';
 import { log } from './log';
+import { parseConfig } from './parseConfig';
 import { parseOpts } from './parseOpts';
 
 export const main = async (args: string[]) => {
-  const opts = await parseOpts(args);
-  if (opts.preview) {
+  const {
+    project,
+    config: configFileName,
+    ...overrides
+  } = await parseOpts(args);
+  const projectPath = project ?? process.cwd();
+  const stats = await fsp.lstat(projectPath);
+  const packageJsonFilePath = stats.isDirectory()
+    ? path.join(projectPath, 'package.json')
+    : projectPath;
+  const packageDir = path.dirname(packageJsonFilePath);
+  const packageJsonBuffer = await fsp.readFile(packageJsonFilePath);
+  const packageJson = JSON.parse(packageJsonBuffer.toString());
+  const configFilePath = path.join(packageDir, configFileName);
+  const config = await parseConfig(configFilePath, overrides).catch(() => {
+    log('error', 'exiting with status code 1');
+    exit(1);
+  });
+
+  if (config.preview) {
     log('info', 'this is a preview run, nothing will be changed');
   }
 
@@ -22,32 +42,23 @@ export const main = async (args: string[]) => {
     return;
   }
 
-  const projectPath = opts.project ?? process.cwd();
-  const stats = await fsp.lstat(projectPath);
-  const packageJsonFile = stats.isDirectory()
-    ? path.join(projectPath, 'package.json')
-    : projectPath;
-  const packageDir = path.dirname(packageJsonFile);
-  const packageJsonBuffer = await fsp.readFile(packageJsonFile);
-  const packageJson = JSON.parse(packageJsonBuffer.toString());
-
   const execSafe = createExecutor({
     cwd: packageDir,
-    preview: opts.preview
+    preview: config.preview
   });
 
-  const version = semver.inc(packageJson.version, opts.increment);
+  const version = semver.inc(packageJson.version, config.increment);
   log('info', `new version is ${version}`);
-  const message = mustache.render(opts.message, { ...packageJson, version });
+  const message = mustache.render(config.message, { ...packageJson, version });
   log('info', `generated commit message is "${message}"`);
   await execSafe('npm', ['--no-git-tag-version', 'version', version]);
   await execSafe('git', ['commit', '-am', message]);
   await execSafe('git', ['push', 'origin', branch]);
 
-  if (opts.tag) {
-    log('info', '--tag option was set, tagging');
-    if (typeof opts.tag === 'string') {
-      const tag = mustache.render(opts.tag, { ...packageJson, version });
+  if (config.tag) {
+    log('info', 'tag option was set, tagging');
+    if (typeof config.tag === 'string') {
+      const tag = mustache.render(config.tag, { ...packageJson, version });
       log('info', `generated tag is ${tag}`);
       await execSafe('git', ['tag', tag]);
       await execSafe('git', ['push', 'origin', tag]);
@@ -61,13 +72,13 @@ export const main = async (args: string[]) => {
     }
   }
 
-  if (opts.script) {
-    log('info', '--script option was set, executing');
-    await execSafe('npm', ['run', opts.script]);
+  if (config.script) {
+    log('info', 'script option was set, executing');
+    await execSafe('npm', ['run', config.script]);
   }
 
-  if (opts.publish) {
-    log('info', '--publish option was set, publishing');
+  if (config.publish) {
+    log('info', 'publish option was set, publishing');
     await execSafe('npm', ['publish']);
   }
 };
