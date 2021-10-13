@@ -2,6 +2,7 @@ import path from 'path';
 import process from 'process';
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
+import json from '@rollup/plugin-json';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import builtins from 'builtin-modules';
@@ -21,6 +22,7 @@ export default {
   ],
 
   plugins: [
+    json(),
     nodeResolve({
       extensions,
       customResolveOptions: {

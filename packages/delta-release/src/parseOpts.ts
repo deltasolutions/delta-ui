@@ -1,11 +1,11 @@
 import * as commander from 'commander';
-import { parseSelf } from './parseSelf';
+// @ts-ignore
+import { version } from '../package.json';
 
 export const parseOpts = async (args: string[]) => {
-  const self = await parseSelf();
   const program = new commander.Command();
   program
-    .version(self.version)
+    .version(version)
     .addOption(
       new commander.Option(
         '-i, --increment [increment]',
