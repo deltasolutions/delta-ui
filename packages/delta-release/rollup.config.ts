@@ -15,10 +15,28 @@ export default {
   input: './src/index.ts',
 
   output: [
-    { file: './build/index.js', format: 'es' },
-    { file: './build/index.min.js', format: 'es', plugins: [terser()] },
-    { file: './build/index.cjs', format: 'cjs' },
-    { file: './build/index.min.cjs', format: 'cjs', plugins: [terser()] }
+    {
+      banner: '#!/usr/bin/env node',
+      file: './build/index.js',
+      format: 'es'
+    },
+    {
+      banner: '#!/usr/bin/env node',
+      file: './build/index.min.js',
+      format: 'es',
+      plugins: [terser()]
+    },
+    {
+      banner: '#!/usr/bin/env node',
+      file: './build/index.cjs',
+      format: 'cjs'
+    },
+    {
+      banner: '#!/usr/bin/env node',
+      file: './build/index.min.cjs',
+      format: 'cjs',
+      plugins: [terser()]
+    }
   ],
 
   plugins: [

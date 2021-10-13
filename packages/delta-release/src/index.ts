@@ -2,7 +2,7 @@ import { promises as fsp } from 'fs';
 import * as path from 'path';
 import { exit } from 'process';
 import * as mustache from 'mustache';
-import * as semver from 'semver';
+import inc from 'semver/functions/inc.js';
 import { createExecutor, exec } from './exec';
 import { log } from './log';
 import { parseConfig } from './parseConfig';
@@ -47,7 +47,7 @@ export const main = async (args: string[]) => {
     preview: config.preview
   });
 
-  const version = semver.inc(packageJson.version, config.increment);
+  const version = inc(packageJson.version, config.increment);
   log('info', `new version is ${version}`);
   const message = mustache.render(config.message, { ...packageJson, version });
   log('info', `generated commit message is "${message}"`);
