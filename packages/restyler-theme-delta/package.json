@@ -48,6 +48,6 @@
     "typescript": "^4.3.4"
   },
   "peerDependencies": {
-    "restyler": ">=0.33.0"
+    "restyler": ">=0.30.0"
   }
 }
