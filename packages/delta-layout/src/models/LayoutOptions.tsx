@@ -1,15 +1,10 @@
 import { ReactNode } from 'react';
+import { LayoutActionOptions } from './LayoutActionOptions';
 
 export interface LayoutOptions {
   heading?: ReactNode;
   logoSrc?: string;
-  actions?: LayoutAction[];
+  actions?: ReactNode;
   account?: ReactNode;
   onAccountClick?: () => void;
-}
-
-export interface LayoutAction {
-  icon?: ReactNode;
-  tooltip?: string;
-  onClick?: () => void;
 }

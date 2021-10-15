@@ -27,6 +27,7 @@ export const layout: BasicTheme = {
         }
       }
     },
+
     content: {
       style: {
         paddingBottom: 5,
@@ -34,6 +35,7 @@ export const layout: BasicTheme = {
         alignItems: 'flex-start'
       }
     },
+
     main: {
       style: {
         flex: '1 1 auto',
@@ -42,6 +44,7 @@ export const layout: BasicTheme = {
         marginTop: 4
       }
     },
+
     sidebar: {
       style: {
         position: 'relative',
@@ -79,6 +82,24 @@ export const layout: BasicTheme = {
         }
       }
     },
+
+    actions: {
+      style: {
+        display: 'flex',
+        gap: 2,
+        flex: '0 0 auto',
+        '& svg': {
+          width: '35px',
+          height: '35px',
+          verticalAlign: 'middle'
+        },
+        '& button': {
+          cursor: 'pointer',
+          '&:hover': { color: 'primary' }
+        }
+      }
+    },
+
     header: {
       style: {
         margin: 0,
@@ -92,28 +113,15 @@ export const layout: BasicTheme = {
           style: {
             display: 'flex',
             alignItems: 'center',
+            justifyContent: 'space-between',
             marginLeft: sidebarWidth,
             paddingLeft: 4,
-            gap: 2,
-            '& > *': {
-              flex: '0 0 auto'
-            },
-            '& > h6': {
-              flex: '1 1 auto'
-            },
-            '& svg': {
-              width: '30px',
-              height: '30px',
-              verticalAlign: 'middle'
-            },
-            '& > button': {
-              cursor: 'pointer',
-              '&:hover': { color: 'primary' }
-            }
+            gap: 2
           }
         }
       }
     },
+
     footer: {
       style: {
         paddingY: 5,

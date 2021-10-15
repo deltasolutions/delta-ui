@@ -15,6 +15,7 @@ export interface LayoutProps
 
 export const Layout = ({
   account,
+  actions,
   heading,
   logoSrc,
   onAccountClick,
@@ -26,6 +27,7 @@ export const Layout = ({
   const ThemedLayoutMain = useThemed('div', 'layout.main');
   const contextValue = {
     account,
+    actions,
     heading,
     logoSrc,
     onAccountClick

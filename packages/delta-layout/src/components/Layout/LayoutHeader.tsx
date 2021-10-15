@@ -1,7 +1,9 @@
 import { jsx } from '@theme-ui/core';
-import { ReactNode } from 'react';
+import { ReactNode, useContext } from 'react';
 import { useThemed, Heading } from 'restyler';
+import { LayoutActions } from './LayoutActions';
 import { LayoutContainer } from './LayoutContainer';
+import { LayoutContext } from './LayoutContext';
 
 export interface HeaderProps {
   children?: ReactNode;
@@ -19,7 +21,10 @@ export const LayoutHeader = ({ children }: HeaderProps) => {
   return (
     <ThemedLayoutHeader>
       <LayoutContainer>
-        <ThemedLayoutHeaderContent>{heading}</ThemedLayoutHeaderContent>
+        <ThemedLayoutHeaderContent>
+          {heading}
+          <LayoutActions />
+        </ThemedLayoutHeaderContent>
       </LayoutContainer>
     </ThemedLayoutHeader>
   );
