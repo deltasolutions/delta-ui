@@ -6,6 +6,7 @@ import { card } from './card';
 import { checkbox } from './checkbox';
 import { collapse } from './collapse';
 import { defaults } from './defaults';
+import { feed } from './feed';
 import { file } from './file';
 import { form } from './form';
 import { heading } from './heading';
@@ -106,6 +107,7 @@ export const theme: BasicTheme = {
     checkbox,
     collapse,
     defaults,
+    feed,
     file,
     form,
     heading,
