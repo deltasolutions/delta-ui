@@ -35,6 +35,18 @@ export const feed: BasicTheme = {
         borderRadius: 2,
         position: 'relative'
       },
+      kinds: {
+        dragReady: {
+          cursor: 'move',
+          filter: 'opacity(0.7) grayscale(1)',
+          '&:hover': {
+            filter: 'unset'
+          }
+        },
+        dragging: {
+          visibility: 'none'
+        }
+      },
       components: {
         loader: {
           style: ({ isVisible }) => ({

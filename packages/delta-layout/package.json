@@ -50,5 +50,9 @@
   "peerDependencies": {
     "@theme-ui/core": "^0.11.3",
     "restyler": ">=0.30.0"
+  },
+  "dependencies": {
+    "react-dnd": "^14.0.4",
+    "react-dnd-html5-backend": "^14.0.2"
   }
 }

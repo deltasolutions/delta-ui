@@ -1,5 +1,9 @@
 import { jsx } from '@theme-ui/core';
+import { useContext } from 'react';
+import { useDrag } from 'react-dnd';
 import { BoxProps, useThemed, useThemedFactory, useTransition } from 'restyler';
+import { LayoutEditTarget } from '../../models';
+import { LayoutEditContext } from '../LayoutEditContext';
 
 export interface FeedItemProps extends BoxProps {
   isLoading?: boolean;
@@ -19,8 +23,26 @@ export const FeedItem = ({ isLoading, children, ...rest }: FeedItemProps) => {
       isMounted: !!isLoading
     }
   );
+  const { updates } = useContext(LayoutEditContext);
+  const isEditing = !!updates[LayoutEditTarget.Feed];
+  const [{ isDragging }, dragRef] = useDrag(
+    () => ({
+      type: 'column',
+      item: {},
+      canDrag: isEditing,
+      collect: monitor => ({
+        isDragging: monitor.isDragging()
+      })
+    }),
+    []
+  );
   return (
-    <ThemedFeedItem {...extraProps} {...rest}>
+    <ThemedFeedItem
+      ref={dragRef}
+      kind={isEditing ? (isDragging ? 'dragging' : 'dragReady') : undefined}
+      {...extraProps}
+      {...rest}
+    >
       {children}
       {loader}
     </ThemedFeedItem>

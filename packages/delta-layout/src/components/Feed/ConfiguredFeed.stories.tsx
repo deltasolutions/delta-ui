@@ -1,5 +1,8 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
+import { useLayoutEditManager } from '../../hooks';
+import { LayoutEditTarget } from '../../models';
+import { LayoutEditContext } from '../LayoutEditContext';
 import { SystemContainer } from '../SystemContainer';
 import { ConfiguredFeed } from './ConfiguredFeed';
 import { FeedItem } from './FeedItem';
@@ -35,16 +38,33 @@ const registry = {
   )
 };
 
-export const Basics = () => (
-  <SystemContainer sx={{ padding: 4, minHeight: '100vh' }}>
-    <ConfiguredFeed
-      registry={registry}
-      sections={[
-        {
-          columns: { count: 2 },
-          items: ['a', 'b', 'c', 'd']
-        }
-      ]}
-    />
-  </SystemContainer>
-);
+export const Basics = () => {
+  const manager = useLayoutEditManager({
+    onSave: (...args) => console.warn(...args)
+  });
+  return (
+    <LayoutEditContext.Provider value={manager}>
+      <SystemContainer sx={{ padding: 4, minHeight: '100vh' }}>
+        <button
+          sx={{ mb: 4 }}
+          onClick={() => {
+            Object.keys(manager.updates).length > 0
+              ? manager.cancel()
+              : manager.edit([LayoutEditTarget.Feed]);
+          }}
+        >
+          Toggle
+        </button>
+        <ConfiguredFeed
+          registry={registry}
+          sections={[
+            {
+              columns: { count: 2 },
+              items: ['a', 'b', 'c', 'd']
+            }
+          ]}
+        />
+      </SystemContainer>
+    </LayoutEditContext.Provider>
+  );
+};

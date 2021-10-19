@@ -2,6 +2,8 @@ import isPropValid from '@emotion/is-prop-valid';
 import { Global } from '@emotion/react';
 import { jsx, ThemeProvider } from '@theme-ui/core';
 import { forwardRef } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import {
   SystemContainer as RestylerContainer,
   SystemContainerProps as RestylerContainerProps
@@ -14,20 +16,22 @@ export const SystemContainer = ({
   ...rest
 }: Partial<RestylerContainerProps>) => {
   return (
-    <ThemeProvider theme={theme}>
-      <RestylerContainer styled={styled} theme={theme} {...rest}>
-        <Global
-          styles={{
-            'html, body, #root': {
-              margin: '0 !important',
-              padding: '0 !important',
-              minHeight: '100vh'
-            }
-          }}
-        />
-        {children}
-      </RestylerContainer>
-    </ThemeProvider>
+    <DndProvider backend={HTML5Backend}>
+      <ThemeProvider theme={theme}>
+        <RestylerContainer styled={styled} theme={theme} {...rest}>
+          <Global
+            styles={{
+              'html, body, #root': {
+                margin: '0 !important',
+                padding: '0 !important',
+                minHeight: '100vh'
+              }
+            }}
+          />
+          {children}
+        </RestylerContainer>
+      </ThemeProvider>
+    </DndProvider>
   );
 };
 
