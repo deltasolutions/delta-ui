@@ -1,3 +1,4 @@
+import { jsx } from '@theme-ui/core';
 import { BoxProps, useThemed, useThemedFactory, useTransition } from 'restyler';
 
 export interface FeedItemProps extends BoxProps {
