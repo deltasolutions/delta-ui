@@ -37,14 +37,23 @@ export const feed: BasicTheme = {
       },
       kinds: {
         dragReady: {
-          cursor: 'move',
-          filter: 'opacity(0.7) grayscale(1)',
-          '&:hover': {
-            filter: 'unset'
+          style: {
+            cursor: 'move',
+            filter: 'opacity(0.6) grayscale(1)',
+            '&:hover': {
+              filter: 'unset'
+            }
           }
         },
-        dragging: {
-          visibility: 'none'
+        dragActive: {
+          style: {
+            visibility: 'hidden'
+          }
+        },
+        dropReady: {
+          style: {
+            filter: 'sepia(1)'
+          }
         }
       },
       components: {

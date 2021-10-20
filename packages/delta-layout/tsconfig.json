@@ -3,6 +3,7 @@
     "baseUrl": ".",
     "declaration": true,
     "declarationDir": "./build",
+    "downlevelIteration": true,
     "emitDeclarationOnly": true,
     "jsx": "preserve",
     "jsxFactory": "jsx",

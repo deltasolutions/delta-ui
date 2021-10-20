@@ -1,8 +1,8 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { useLayoutEditManager } from '../../hooks';
-import { LayoutEditTarget } from '../../models';
-import { LayoutEditContext } from '../LayoutEditContext';
+import { useLayoutUpdateManager } from '../../hooks';
+import { LayoutUpdateTarget } from '../../models';
+import { LayoutUpdateContext } from '../LayoutUpdateContext';
 import { SystemContainer } from '../SystemContainer';
 import { ConfiguredFeed } from './ConfiguredFeed';
 import { FeedItem } from './FeedItem';
@@ -39,18 +39,18 @@ const registry = {
 };
 
 export const Basics = () => {
-  const manager = useLayoutEditManager({
+  const manager = useLayoutUpdateManager({
     onSave: (...args) => console.warn(...args)
   });
   return (
-    <LayoutEditContext.Provider value={manager}>
+    <LayoutUpdateContext.Provider value={manager}>
       <SystemContainer sx={{ padding: 4, minHeight: '100vh' }}>
         <button
           sx={{ mb: 4 }}
           onClick={() => {
             Object.keys(manager.updates).length > 0
               ? manager.cancel()
-              : manager.edit([LayoutEditTarget.Feed]);
+              : manager.allow([LayoutUpdateTarget.Feed]);
           }}
         >
           Toggle
@@ -65,6 +65,6 @@ export const Basics = () => {
           ]}
         />
       </SystemContainer>
-    </LayoutEditContext.Provider>
+    </LayoutUpdateContext.Provider>
   );
 };

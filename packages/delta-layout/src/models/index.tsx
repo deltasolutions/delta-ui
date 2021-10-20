@@ -3,5 +3,5 @@ export * from './FeedOptions';
 export * from './FeedSectionOptions';
 export * from './LayoutActionOptions';
 export * from './LayoutContextValue';
-export * from './LayoutEditManager';
+export * from './LayoutUpdateManager';
 export * from './LayoutOptions';

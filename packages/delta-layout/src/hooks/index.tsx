@@ -1,1 +1,1 @@
-export * from './useLayoutEditManager';
+export * from './useLayoutUpdateManager';
