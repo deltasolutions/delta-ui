@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { LayoutUpdateManager } from '../models';
 
 export interface LayoutUpdateManagerOptions {
-  onSave: (target: string, updates: any) => void;
+  onSave?: (updates: LayoutUpdateManager['updates']) => void | Promise<void>;
 }
 
 export const useLayoutUpdateManager = ({
@@ -18,24 +18,27 @@ export const useLayoutUpdateManager = ({
     []
   );
   const save = useCallback<LayoutUpdateManager['save']>(
-    targets => {
-      const targetSet = new Set(targets);
-      setUpdates(prior =>
-        Object.keys(prior).reduce((p, v) => {
-          if (targetSet.has(v)) {
-            onSave(v, prior[v]);
-            return p;
-          } else {
-            return { ...p, [v]: prior[v] };
-          }
-        }, {})
+    async (targetsToSave = targets) => {
+      const set = new Set(targetsToSave);
+      const data = targetsToSave.reduce(
+        (p, v) => ({ ...p, [v]: updates[v] }),
+        {}
       );
+      await onSave?.(data);
+      setUpdates(
+        Object.keys(updates).reduce(
+          (p, v) => (set.has(v) ? p : { ...p, [v]: updates[v] }),
+          {}
+        )
+      );
+      setTargets(targets.filter(v => !set.has(v)));
     },
-    [onSave]
+    [updates, targets, onSave]
   );
   const cancel = useCallback<LayoutUpdateManager['cancel']>(() => {
-    setTargets(() => []);
-    setUpdates(() => ({}));
+    // FIXME: it should cancel only given targets
+    setTargets([]);
+    setUpdates({});
   }, []);
   const checkIfUpdating = useCallback<LayoutUpdateManager['checkIfUpdating']>(
     (v: string) => targets.includes(v),

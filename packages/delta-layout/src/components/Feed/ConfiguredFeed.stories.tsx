@@ -1,7 +1,7 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { useLayoutUpdateManager } from '../../hooks';
-import { LayoutUpdateTarget } from '../../models';
+import { useCallback, useContext, useState } from 'react';
+import { LayoutUpdateTarget, FeedSectionOptions } from '../../models';
 import { LayoutUpdateContext } from '../LayoutUpdateContext';
 import { SystemContainer } from '../SystemContainer';
 import { ConfiguredFeed } from './ConfiguredFeed';
@@ -39,32 +39,40 @@ const registry = {
 };
 
 export const Basics = () => {
-  const manager = useLayoutUpdateManager({
-    onSave: (...args) => console.warn(...args)
-  });
+  const [sections, setSections] = useState<FeedSectionOptions[]>([
+    {
+      columns: { count: 2 },
+      items: ['a', 'b', 'c', 'd']
+    }
+  ]);
+  const Toggler = useCallback(() => {
+    const { checkIfUpdating, save, allow } = useContext(LayoutUpdateContext);
+    return (
+      <button
+        sx={{ mb: 4 }}
+        onClick={() => {
+          checkIfUpdating(LayoutUpdateTarget.Feed)
+            ? save()
+            : allow([LayoutUpdateTarget.Feed]);
+        }}
+      >
+        Toggle
+      </button>
+    );
+  }, []);
   return (
-    <LayoutUpdateContext.Provider value={manager}>
-      <SystemContainer sx={{ padding: 4, minHeight: '100vh' }}>
-        <button
-          sx={{ mb: 4 }}
-          onClick={() => {
-            Object.keys(manager.updates).length > 0
-              ? manager.cancel()
-              : manager.allow([LayoutUpdateTarget.Feed]);
-          }}
-        >
-          Toggle
-        </button>
-        <ConfiguredFeed
-          registry={registry}
-          sections={[
-            {
-              columns: { count: 2 },
-              items: ['a', 'b', 'c', 'd']
-            }
-          ]}
-        />
-      </SystemContainer>
-    </LayoutUpdateContext.Provider>
+    <SystemContainer
+      sx={{ padding: 4, minHeight: '100vh' }}
+      onLayoutUpdateSave={async updates => {
+        const feedUpdate = updates[LayoutUpdateTarget.Feed];
+        // await new Promise(resolve =>
+        //   setTimeout(() => resolve(undefined), 1000)
+        // );
+        setSections(feedUpdate);
+      }}
+    >
+      <Toggler />
+      <ConfiguredFeed registry={registry} sections={sections} />
+    </SystemContainer>
   );
 };

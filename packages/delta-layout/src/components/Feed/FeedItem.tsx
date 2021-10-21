@@ -33,7 +33,6 @@ export const FeedItem = ({ isLoading, children, ...rest }: FeedItemProps) => {
   );
   const { checkIfUpdating } = useContext(LayoutUpdateContext);
   const isUpdating = checkIfUpdating(LayoutUpdateTarget.Feed);
-  console.log('isUpdating', isUpdating);
   const id = useContext(FeedItemIdContext);
   const { moveItem } = useContext(ConfiguredFeedContext);
   const [{ isDragging }, dragRef] = useDrag(
