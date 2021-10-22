@@ -64,10 +64,7 @@ export const Basics = () => {
     <SystemContainer
       sx={{ padding: 4, minHeight: '100vh' }}
       onLayoutUpdateSave={async updates => {
-        const feedUpdate = updates[LayoutUpdateTarget.Feed];
-        // await new Promise(resolve =>
-        //   setTimeout(() => resolve(undefined), 1000)
-        // );
+        const feedUpdate = updates[LayoutUpdateTarget.Feed] ?? sections;
         setSections(feedUpdate);
       }}
     >
