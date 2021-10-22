@@ -35,6 +35,14 @@ const registry = {
       <div>1</div>
       <div>2</div>
     </FeedItem>
+  ),
+  e: () => (
+    <FeedItem sx={{ p: 3 }}>
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+      <div>4</div>
+    </FeedItem>
   )
 };
 
@@ -42,7 +50,11 @@ export const Basics = () => {
   const [sections, setSections] = useState<FeedSectionOptions[]>([
     {
       columns: { count: 2 },
-      items: ['a', 'b', 'c', 'd']
+      items: ['a', 'b', 'c']
+    },
+    {
+      columns: { count: 1 },
+      items: ['d', 'e']
     }
   ]);
   const Toggler = useCallback(() => {

@@ -3,5 +3,7 @@ import { FeedSectionOptions } from '../../models';
 
 export const ConfiguredFeedContext = createContext({
   sections: [] as FeedSectionOptions[],
-  moveItem: (sourceId: string, targetId: string) => {}
+  moveItemToItem: (sourceId: string, targetId: string) => {},
+  moveItemToSection: (sourceId: string, targetId: string) => {},
+  moveSectionToSection: (sourceId: string, targetId: string) => {}
 });

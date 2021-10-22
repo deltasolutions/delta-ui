@@ -33,12 +33,12 @@ export const FeedItem = ({ isLoading, children, ...rest }: FeedItemProps) => {
   );
   const { checkIfUpdating } = useContext(LayoutUpdateContext);
   const isUpdating = checkIfUpdating(LayoutUpdateTarget.Feed);
-  const id = useContext(FeedItemIdContext);
-  const { moveItem } = useContext(ConfiguredFeedContext);
+  const feedItemId = useContext(FeedItemIdContext);
+  const { moveItemToItem } = useContext(ConfiguredFeedContext);
   const [{ isDragging }, dragRef] = useDrag(
     () => ({
       type: 'feedItem',
-      item: { id },
+      item: { feedItemId },
       canDrag: isUpdating,
       collect: monitor => ({
         isDragging: monitor.isDragging()
@@ -46,24 +46,25 @@ export const FeedItem = ({ isLoading, children, ...rest }: FeedItemProps) => {
     }),
     [isUpdating]
   );
-  const [{ isOver, canDrop }, dropRef] = useDrop(
+  const [isDropReady, dropRef] = useDrop(
     () => ({
       accept: 'feedItem',
-      canDrop: (v: { id: string }) => isUpdating && v.id !== id,
-      collect: monitor => ({
-        isOver: monitor.isOver(),
-        canDrop: monitor.canDrop()
-      }),
-      drop: v => moveItem(v.id, id)
+      canDrop: (v: { feedItemId: string }) =>
+        isUpdating && v.feedItemId !== feedItemId,
+      collect: monitor =>
+        monitor.isOver() &&
+        monitor.canDrop() &&
+        monitor.isOver({ shallow: true }),
+      drop: v => moveItemToItem(v.feedItemId, feedItemId)
     }),
-    [isUpdating, id]
+    [moveItemToItem, isUpdating, feedItemId]
   );
   const sharedRef = useSharedRef<HTMLDivElement>(
     null,
     isUpdating ? [dropRef, dragRef] : []
   );
   const kind = isUpdating
-    ? isOver && canDrop
+    ? isDropReady
       ? 'dropReady'
       : isDragging
       ? 'dragActive'

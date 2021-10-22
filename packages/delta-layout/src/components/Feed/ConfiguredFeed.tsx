@@ -37,7 +37,7 @@ export const ConfiguredFeed = ({ sections, registry }: ConfiguredFeedProps) => {
     },
     []
   );
-  const moveItem = useCallback(
+  const moveItemToItem = useCallback(
     (sourceId: string, targetId: string) => {
       const clonedSections = clone(targetSections);
       const source = locateItem(clonedSections, sourceId);
@@ -51,11 +51,42 @@ export const ConfiguredFeed = ({ sections, registry }: ConfiguredFeedProps) => {
     },
     [targetSections, update]
   );
+  const moveItemToSection = useCallback(
+    (sourceId: string, targetId: string) => {
+      const clonedSections = clone(targetSections);
+      const source = locateItem(clonedSections, sourceId);
+      const target = clonedSections.find(v => hash(v) === targetId);
+      if (!source || !target) {
+        throw new Error('Unable to locate feed item or section');
+      }
+      source.section.items.splice(source.index, 1);
+      target.items.push(source.item);
+      update(LayoutUpdateTarget.Feed, clonedSections);
+    },
+    [targetSections, update]
+  );
+  const moveSectionToSection = useCallback(
+    (sourceId: string, targetId: string) => {
+      const clonedSections = clone(targetSections) as FeedSectionOptions[];
+      const sourceIndex = clonedSections.findIndex(v => hash(v) === sourceId);
+      const targetIndex = clonedSections.findIndex(v => hash(v) === targetId);
+      if (sourceIndex < 0 || targetIndex < 0) {
+        throw new Error('Unable to locate feed section');
+      }
+      const source = clonedSections[sourceIndex];
+      clonedSections.splice(sourceIndex, 1);
+      clonedSections.splice(targetIndex, 0, source);
+      update(LayoutUpdateTarget.Feed, clonedSections);
+    },
+    [targetSections, update]
+  );
   return (
     <ConfiguredFeedContext.Provider
       value={{
         sections: targetSections,
-        moveItem
+        moveItemToItem,
+        moveItemToSection,
+        moveSectionToSection
       }}
     >
       <Feed>
@@ -63,7 +94,7 @@ export const ConfiguredFeed = ({ sections, registry }: ConfiguredFeedProps) => {
           const key = hash(section);
           const { columns, items } = section;
           return (
-            <FeedSection key={key} columns={columns ?? { count: 1 }}>
+            <FeedSection key={key} id={key} columns={columns ?? { count: 1 }}>
               {items.map(item => {
                 const id = hash(item);
                 const { component, ...rest } =

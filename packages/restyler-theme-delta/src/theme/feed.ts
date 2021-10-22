@@ -23,6 +23,32 @@ export const feed: BasicTheme = {
             gap: 4
           }
         }
+      },
+      kinds: {
+        dragReady: {
+          style: {
+            padding: 4,
+            cursor: 'move',
+            backdropFilter: 'invert(0.1)',
+            borderRadius: 2,
+            '&:hover': {
+              backdropFilter: 'invert(0.15)'
+            }
+          }
+        },
+        dragActive: {
+          style: {
+            padding: 4,
+            visibility: 'hidden'
+          }
+        },
+        dropReady: {
+          style: {
+            padding: 4,
+            borderRadius: 2,
+            backdropFilter: 'sepia(1)'
+          }
+        }
       }
     },
     item: {
@@ -39,10 +65,8 @@ export const feed: BasicTheme = {
         dragReady: {
           style: {
             cursor: 'move',
-            filter: 'opacity(0.6) grayscale(1)',
-            '&:hover': {
-              filter: 'unset'
-            }
+            filter: 'opacity(0.8) grayscale(1)',
+            '&:hover': { filter: 'unset' }
           }
         },
         dragActive: {
