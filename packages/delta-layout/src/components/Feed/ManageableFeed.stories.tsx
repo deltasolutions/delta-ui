@@ -4,8 +4,8 @@ import { useCallback, useContext, useState } from 'react';
 import { LayoutUpdateTarget, FeedSectionOptions } from '../../models';
 import { LayoutUpdateContext } from '../LayoutUpdateContext';
 import { SystemContainer } from '../SystemContainer';
-import { ConfiguredFeed } from './ConfiguredFeed';
 import { FeedItem } from './FeedItem';
+import { ManageableFeed } from './ManageableFeed';
 
 export default {
   title: 'General/ConfiguredFeed'
@@ -81,7 +81,12 @@ export const Basics = () => {
       }}
     >
       <Toggler />
-      <ConfiguredFeed registry={registry} sections={sections} />
+      <ManageableFeed
+        canAddItems
+        canRemoveSections
+        registry={registry}
+        sections={sections}
+      />
     </SystemContainer>
   );
 };

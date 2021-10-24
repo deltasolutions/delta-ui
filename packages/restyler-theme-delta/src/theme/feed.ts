@@ -17,17 +17,14 @@ export const feed: BasicTheme = {
     section: {
       style: {
         width: '100%',
-        '& > div': {
-          '&, & > div': {
-            minWidth: 0,
-            gap: 4
-          }
-        }
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 3
       },
       kinds: {
         dragReady: {
           style: {
-            padding: 4,
+            padding: 3,
             cursor: 'move',
             backdropFilter: 'invert(0.1)',
             borderRadius: 2,
@@ -38,15 +35,27 @@ export const feed: BasicTheme = {
         },
         dragActive: {
           style: {
-            padding: 4,
+            padding: 3,
             visibility: 'hidden'
           }
         },
         dropReady: {
           style: {
-            padding: 4,
+            padding: 3,
             borderRadius: 2,
             backdropFilter: 'sepia(1)'
+          }
+        }
+      },
+      components: {
+        actions: {
+          style: {
+            display: 'flex',
+            justifyContent: 'center',
+            gap: 2,
+            color: 'onBackground',
+            fontSize: 4,
+            opacity: 0.7
           }
         }
       }
@@ -65,7 +74,7 @@ export const feed: BasicTheme = {
         dragReady: {
           style: {
             cursor: 'move',
-            filter: 'opacity(0.8) grayscale(1)',
+            filter: 'opacity(0.65) grayscale(1)',
             '&:hover': { filter: 'unset' }
           }
         },

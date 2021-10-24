@@ -10,8 +10,8 @@ import {
 } from 'restyler';
 import { LayoutUpdateTarget } from '../../models';
 import { LayoutUpdateContext } from '../LayoutUpdateContext';
-import { ConfiguredFeedContext } from './ConfiguredFeedContext';
 import { FeedItemIdContext } from './FeedItemIdContext';
+import { ManageableFeedContext } from './ManageableFeedContext';
 
 export interface FeedItemProps extends BoxProps {
   isLoading?: boolean;
@@ -34,7 +34,7 @@ export const FeedItem = ({ isLoading, children, ...rest }: FeedItemProps) => {
   const { checkIfUpdating } = useContext(LayoutUpdateContext);
   const isUpdating = checkIfUpdating(LayoutUpdateTarget.Feed);
   const feedItemId = useContext(FeedItemIdContext);
-  const { moveItemToItem } = useContext(ConfiguredFeedContext);
+  const { moveItemToItem } = useContext(ManageableFeedContext);
   const [{ isDragging }, dragRef] = useDrag(
     () => ({
       type: 'feedItem',

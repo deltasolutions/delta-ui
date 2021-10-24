@@ -2,10 +2,14 @@ import { promises as fsp } from 'fs';
 import execa from 'execa';
 import { task, series } from 'gulp';
 import * as rollup from 'rollup';
-import rollupConfig from './rollup.config.js';
+import rollupConfig from './rollup.config';
 
-const execaOptions = { stdout: 'inherit' };
+const exec = (command: string) =>
+  execa.command(command, {
+    stdout: 'inherit'
+  });
 
+// @ts-ignore
 task('clean', async () => fsp.rm('./build', { recursive: true, force: true }));
 
 task('build:lib:js', async () => {
@@ -18,34 +22,22 @@ task('build:lib:js', async () => {
 });
 
 task('build:lib:types', async () => {
-  await execa.command('tsc', execaOptions);
+  await exec('tsc');
 });
 
 task('build:lib', series('clean', 'build:lib:js', 'build:lib:types'));
 
 task('build:docs:js', async () => {
-  await execa.command(
-    'build-storybook -c storybook -o build/docs',
-    execaOptions
-  );
+  await exec('build-storybook -c storybook -o build/docs');
 });
 
 task('build:docs', series('clean', 'build:docs:js'));
 
 task('dev:docs', async () => {
-  await execa.command(
-    'start-storybook -c storybook -p 6006 --ci',
-    execaOptions
-  );
+  await exec('start-storybook -c storybook -p 6006 --ci');
 });
 
 task('lint', async () => {
-  await execa.command(
-    'npx eslint ./{src,storybook}/**/*.{js,jsx,ts,tsx} --fix',
-    execaOptions
-  );
-  await execa.command(
-    'npx prettier ./{src,storybook}/**/*.{js,jsx,ts,tsx} --write',
-    execaOptions
-  );
+  await exec('npx eslint ./{src,storybook}/**/*.{js,jsx,ts,tsx} --fix');
+  await exec('npx prettier ./{src,storybook}/**/*.{js,jsx,ts,tsx} --write');
 });

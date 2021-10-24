@@ -2,8 +2,10 @@ import path from 'path';
 import process from 'process';
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
+import json from '@rollup/plugin-json';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
+import { RollupOptions } from 'rollup';
 import { terser } from 'rollup-plugin-terser';
 
 const extensions = ['.ts', '.tsx', '.js', '.jsx', '.es6', '.es', '.mjs'];
@@ -19,6 +21,7 @@ export default {
   ],
 
   plugins: [
+    json(),
     nodeResolve({
       extensions,
       customResolveOptions: {
@@ -51,4 +54,4 @@ export default {
       rollupWarn(warning);
     }
   }
-};
+} as RollupOptions;

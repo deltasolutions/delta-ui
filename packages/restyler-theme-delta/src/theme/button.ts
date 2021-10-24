@@ -38,6 +38,18 @@ export const button: BasicTheme = {
     secondary: createKind('primary', { borderStyle: 'dashed' }),
     success: createKind('success'),
     warning: createKind('warning'),
-    danger: createKind('danger')
+    danger: createKind('danger'),
+    icon: {
+      style: {
+        cursor: 'pointer',
+        marginY: '-0.25em',
+        '&:hover': { color: 'primary' },
+        '& svg': {
+          width: '1.5em',
+          height: '1.5em',
+          verticalAlign: 'middle'
+        }
+      }
+    }
   }
 };

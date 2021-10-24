@@ -1,9 +1,8 @@
 import { jsx } from '@theme-ui/core';
-import { useContext, useMemo } from 'react';
+import { Children, ReactNode, useContext, useMemo } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import {
   BoxProps,
-  hash,
   Masonry,
   MasonryProps,
   useSharedRef,
@@ -11,33 +10,33 @@ import {
 } from 'restyler';
 import { LayoutUpdateTarget } from '../../models';
 import { LayoutUpdateContext } from '../LayoutUpdateContext';
-import { ConfiguredFeedContext } from './ConfiguredFeedContext';
+import { ManageableFeedContext } from './ManageableFeedContext';
 
 export interface FeedSectionProps
   extends BoxProps,
     Pick<MasonryProps, 'columns'> {
+  actions: ReactNode;
   id?: string;
 }
 
 export const FeedSection = ({
+  actions,
   id: feedSectionId = '',
   columns,
   children,
   ...rest
 }: FeedSectionProps) => {
   const ThemedFeedSection = useThemed('div', 'feed.section');
-  const { checkIfUpdating } = useContext(LayoutUpdateContext);
-  const isUpdating = checkIfUpdating(LayoutUpdateTarget.Feed);
-  const { sections, moveItemToSection, moveSectionToSection } = useContext(
-    ConfiguredFeedContext
-  );
-  const section = useMemo(
-    () => sections.find(v => hash(v) === feedSectionId),
+  const ThemedFeedSectionActions = useThemed('div', 'feed.section.actions');
+  const {
+    isUpdating,
+    getSectionChildIds,
+    moveItemToSection,
+    moveSectionToSection
+  } = useContext(ManageableFeedContext);
+  const childIdSet = useMemo(
+    () => new Set(getSectionChildIds(feedSectionId)),
     [feedSectionId]
-  );
-  const childHashSet = useMemo(
-    () => new Set(section?.items.map(v => hash(v))),
-    [section, feedSectionId]
   );
   const [{ isDragging }, dragRef] = useDrag(
     () => ({
@@ -56,7 +55,7 @@ export const FeedSection = ({
       canDrop: (v: { feedItemId?: string; feedSectionId?: string }) =>
         isUpdating &&
         v.feedSectionId !== feedSectionId &&
-        !childHashSet.has(v.feedItemId ?? ''),
+        !childIdSet.has(v.feedItemId ?? ''),
       collect: monitor =>
         monitor.isOver() &&
         monitor.canDrop() &&
@@ -71,7 +70,7 @@ export const FeedSection = ({
     [
       isUpdating,
       feedSectionId,
-      childHashSet,
+      childIdSet,
       moveItemToSection,
       moveSectionToSection
     ]
@@ -87,9 +86,19 @@ export const FeedSection = ({
       ? 'dragActive'
       : 'dragReady'
     : undefined;
+  const masonryKind = isUpdating
+    ? 'updatingFeedSectionContent'
+    : 'feedSectionContent';
   return (
     <ThemedFeedSection ref={sharedRef} kind={kind} {...rest}>
-      <Masonry columns={columns}>{children}</Masonry>
+      {actions && (
+        <ThemedFeedSectionActions>{actions}</ThemedFeedSectionActions>
+      )}
+      {Children.count(children) > 0 && (
+        <Masonry kind={masonryKind} columns={columns}>
+          {children}
+        </Masonry>
+      )}
     </ThemedFeedSection>
   );
 };
