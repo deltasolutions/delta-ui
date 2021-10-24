@@ -1,10 +1,11 @@
 import { jsx } from '@theme-ui/core';
 import { ComponentType, Fragment, useCallback } from 'react';
 import { HiViewGridAdd } from 'react-icons/hi';
+import { IoMdAdd } from 'react-icons/io';
 import { RiDeleteBin2Fill } from 'react-icons/ri';
-import { Button, hash } from 'restyler';
+import { Button, hash, useThemed } from 'restyler';
 import { useFeedManager } from '../../hooks';
-import { FeedOptions, FeedSectionOptions } from '../../models';
+import { FeedOptions } from '../../models';
 import { Feed } from './Feed';
 import { FeedItemIdContext } from './FeedItemIdContext';
 import { FeedSection } from './FeedSection';
@@ -26,8 +27,9 @@ export const ManageableFeed = ({
   registry,
   sections
 }: ManageableFeedProps) => {
+  const ThemedFeedActions = useThemed('div', 'feed.actions');
   const manager = useFeedManager(sections);
-  const { targetSections, isUpdating, removeSection } = manager;
+  const { targetSections, isUpdating, addSection, removeSection } = manager;
   const getSectionActions = useCallback(
     (sectionId: string) => {
       if (!isUpdating) {
@@ -87,6 +89,13 @@ export const ManageableFeed = ({
             </FeedSection>
           );
         })}
+        {isUpdating && (
+          <ThemedFeedActions>
+            <Button kind="icon" onClick={addSection}>
+              <IoMdAdd />
+            </Button>
+          </ThemedFeedActions>
+        )}
       </Feed>
     </ManageableFeedContext.Provider>
   );

@@ -8,4 +8,5 @@ export interface FeedManager {
   moveSectionToSection: (sourceId: string, targetId: string) => void;
   removeSection: (id: string) => void;
   getSectionChildIds: (id: string) => string[];
+  addSection: () => void;
 }

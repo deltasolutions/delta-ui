@@ -10,10 +10,26 @@ export const feed: BasicTheme = {
   style: {
     display: 'flex',
     flexDirection: 'column',
-    width: '100%',
-    gap: 4
+    alignItems: 'center',
+    gap: 4,
+    width: '100%'
   },
   components: {
+    actions: {
+      style: {
+        display: 'flex',
+        gap: 2,
+        '& button': {
+          width: '2.5rem',
+          height: '2.5rem',
+          borderRadius: '50%',
+          backdropFilter: 'invert(0.1)',
+          '&:hover': {
+            backdropFilter: 'invert(0.15)'
+          }
+        }
+      }
+    },
     section: {
       style: {
         width: '100%',

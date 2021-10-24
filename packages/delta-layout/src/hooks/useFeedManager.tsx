@@ -74,6 +74,17 @@ export const useFeedManager = (sections: FeedSectionOptions[]) => {
     },
     [targetSections]
   );
+  const addSection = useCallback(() => {
+    update(
+      LayoutUpdateTarget.Feed,
+      targetSections.concat([
+        {
+          items: [],
+          columns: { count: 1 }
+        }
+      ])
+    );
+  }, [targetSections]);
   const getSectionChildIds = useCallback(
     (id: string) => {
       const section = targetSections.find(v => hash(v) === id);
@@ -91,6 +102,7 @@ export const useFeedManager = (sections: FeedSectionOptions[]) => {
     moveItemToSection,
     moveSectionToSection,
     removeSection,
+    addSection,
     getSectionChildIds
   };
 };
