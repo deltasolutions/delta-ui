@@ -50,12 +50,44 @@ export const feed: BasicTheme = {
       components: {
         actions: {
           style: {
+            position: 'relative',
             display: 'flex',
             justifyContent: 'center',
+            alignItems: 'center',
             gap: 2,
+            height: '3px',
+            opacity: 0.7,
             color: 'onBackground',
             fontSize: 4,
-            opacity: 0.7
+            pointerEvents: 'none',
+            transition: 'height 0.2s ease-out',
+            '&::after': {
+              content: '"···"',
+              position: 'absolute',
+              display: 'block',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              opacity: 1,
+              fontSize: '40px',
+              pointerEvents: 'all',
+              transition: 'opacity 0.2s linear'
+            },
+            '& button': {
+              opacity: 0,
+              transition: 'opacity 0.2s linear'
+            },
+            '&:hover': {
+              height: '22px',
+              pointerEvents: 'all',
+              '&::after': {
+                opacity: 0,
+                pointerEvents: 'none'
+              },
+              '& button': {
+                opacity: 1,
+                pointerEvents: 'all'
+              }
+            }
           }
         }
       }
