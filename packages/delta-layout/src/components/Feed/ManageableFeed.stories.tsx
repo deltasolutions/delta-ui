@@ -1,7 +1,11 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { useCallback, useContext, useState } from 'react';
-import { LayoutUpdateTarget, FeedSectionOptions } from '../../models';
+import {
+  LayoutUpdateTarget,
+  FeedSectionDef,
+  FeedComponentType
+} from '../../models';
 import { LayoutUpdateContext } from '../LayoutUpdateContext';
 import { SystemContainer } from '../SystemContainer';
 import { FeedItem } from './FeedItem';
@@ -11,50 +15,79 @@ export default {
   title: 'General/ConfiguredFeed'
 } as Meta;
 
-const registry = {
-  a: () => (
-    <FeedItem sx={{ p: 3 }}>
-      <div>1</div>
-    </FeedItem>
-  ),
-  b: () => (
-    <FeedItem sx={{ p: 3 }}>
-      <div>1</div>
-      <div>2</div>
-      <div>3</div>
-    </FeedItem>
-  ),
-  c: () => (
-    <FeedItem sx={{ p: 3 }}>
-      <div>1</div>
-      <div>2</div>
-    </FeedItem>
-  ),
-  d: () => (
-    <FeedItem sx={{ p: 3 }}>
-      <div>1</div>
-      <div>2</div>
-    </FeedItem>
-  ),
-  e: () => (
-    <FeedItem sx={{ p: 3 }}>
-      <div>1</div>
-      <div>2</div>
-      <div>3</div>
-      <div>4</div>
-    </FeedItem>
-  )
-};
+const registry = [
+  {
+    id: 'a',
+    type: FeedComponentType.Item,
+    component: () => (
+      <FeedItem sx={{ p: 3 }}>
+        <div>1</div>
+      </FeedItem>
+    )
+  },
+  {
+    id: 'b',
+    type: FeedComponentType.Item,
+    component: () => (
+      <FeedItem sx={{ p: 3 }}>
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+      </FeedItem>
+    )
+  },
+  {
+    id: 'c',
+    type: FeedComponentType.Item,
+    component: () => (
+      <FeedItem sx={{ p: 3 }}>
+        <div>1</div>
+        <div>2</div>
+      </FeedItem>
+    )
+  },
+  {
+    id: 'd',
+    type: FeedComponentType.Item,
+    component: () => (
+      <FeedItem sx={{ p: 3 }}>
+        <div>1</div>
+        <div>2</div>
+      </FeedItem>
+    )
+  },
+  {
+    id: 'e',
+    type: FeedComponentType.Item,
+    component: () => (
+      <FeedItem sx={{ p: 3 }}>
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+      </FeedItem>
+    )
+  }
+];
 
 export const Basics = () => {
-  const [sections, setSections] = useState<FeedSectionOptions[]>([
+  const [sections, setSections] = useState<FeedSectionDef[]>([
     {
+      id: '1',
       columns: { count: 2 },
-      items: ['a', 'b', 'c']
+      items: [
+        { id: 'a', componentId: 'a' },
+        { id: 'b', componentId: 'b' },
+        { id: 'c', componentId: 'c' }
+      ]
     },
     {
+      id: '2',
       columns: { count: 1 },
-      items: ['d', 'e']
+      items: [
+        { id: 'd', componentId: 'd' },
+        { id: 'e', componentId: 'e' }
+      ]
     }
   ]);
   const Toggler = useCallback(() => {
@@ -81,12 +114,7 @@ export const Basics = () => {
       }}
     >
       <Toggler />
-      <ManageableFeed
-        canAddItems
-        canRemoveSections
-        registry={registry}
-        sections={sections}
-      />
+      <ManageableFeed registry={registry} sections={sections} />
     </SystemContainer>
   );
 };

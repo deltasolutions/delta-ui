@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { FeedManager, FeedSectionOptions } from '../../models';
+import { FeedManager } from '../../models';
 
 const noop = () => {
   throw new Error('Not implemented');
@@ -12,5 +12,6 @@ export const ManageableFeedContext = createContext<FeedManager>({
   moveItemToSection: noop,
   moveSectionToSection: noop,
   removeSection: noop,
-  getSectionChildIds: noop
+  getSectionChildIds: noop,
+  addSection: noop
 });

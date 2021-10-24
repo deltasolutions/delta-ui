@@ -1,18 +1,18 @@
 import { useCallback, useContext } from 'react';
 import { clone, hash } from 'restyler';
 import { LayoutUpdateContext } from '../components';
-import { FeedSectionOptions, LayoutUpdateTarget } from '../models';
+import { FeedSectionDef, LayoutUpdateTarget } from '../models';
 
-export const useFeedManager = (sections: FeedSectionOptions[]) => {
+export const useFeedManager = (sections: FeedSectionDef[]) => {
   const { updates, update, checkIfUpdating } = useContext(LayoutUpdateContext);
   const isUpdating = checkIfUpdating(LayoutUpdateTarget.Feed);
-  const targetSections: FeedSectionOptions[] = isUpdating
+  const targetSections: FeedSectionDef[] = isUpdating
     ? updates[LayoutUpdateTarget.Feed] ?? sections
     : sections;
-  const findItem = useCallback((sections: FeedSectionOptions[], id: string) => {
+  const findItem = useCallback((sections: FeedSectionDef[], id: string) => {
     for (const section of sections) {
       for (const [index, item] of section.items.entries()) {
-        if (hash(item) === id) {
+        if (item.id === id) {
           return { item, index, section };
         }
       }
@@ -37,7 +37,7 @@ export const useFeedManager = (sections: FeedSectionOptions[]) => {
     (sourceId: string, targetId: string) => {
       const clonedSections = clone(targetSections);
       const source = findItem(clonedSections, sourceId);
-      const target = clonedSections.find(v => hash(v) === targetId);
+      const target = clonedSections.find(v => v.id === targetId);
       if (!source || !target) {
         throw new Error('Unable to locate feed item or section');
       }
@@ -49,9 +49,9 @@ export const useFeedManager = (sections: FeedSectionOptions[]) => {
   );
   const moveSectionToSection = useCallback(
     (sourceId: string, targetId: string) => {
-      const clonedSections = clone(targetSections) as FeedSectionOptions[];
-      const sourceIndex = clonedSections.findIndex(v => hash(v) === sourceId);
-      const targetIndex = clonedSections.findIndex(v => hash(v) === targetId);
+      const clonedSections = clone(targetSections) as FeedSectionDef[];
+      const sourceIndex = clonedSections.findIndex(v => v.id === sourceId);
+      const targetIndex = clonedSections.findIndex(v => v.id === targetId);
       if (sourceIndex < 0 || targetIndex < 0) {
         throw new Error('Unable to locate feed section');
       }
@@ -64,8 +64,8 @@ export const useFeedManager = (sections: FeedSectionOptions[]) => {
   );
   const removeSection = useCallback(
     (id: string) => {
-      const clonedSections = clone(targetSections) as FeedSectionOptions[];
-      const index = clonedSections.findIndex(v => hash(v) === id);
+      const clonedSections = clone(targetSections) as FeedSectionDef[];
+      const index = clonedSections.findIndex(v => v.id === id);
       if (index < 0) {
         throw new Error('Unable to locate feed section');
       }
@@ -79,19 +79,20 @@ export const useFeedManager = (sections: FeedSectionOptions[]) => {
       LayoutUpdateTarget.Feed,
       targetSections.concat([
         {
-          items: [],
-          columns: { count: 1 }
+          id: Math.random().toString().slice(-4),
+          columns: { count: 1 },
+          items: []
         }
       ])
     );
   }, [targetSections]);
   const getSectionChildIds = useCallback(
     (id: string) => {
-      const section = targetSections.find(v => hash(v) === id);
+      const section = targetSections.find(v => v.id === id);
       if (!section) {
         throw new Error('Unable to locate feed section');
       }
-      return section.items.map(v => hash(v));
+      return section.items.map(v => v.id);
     },
     [targetSections]
   );

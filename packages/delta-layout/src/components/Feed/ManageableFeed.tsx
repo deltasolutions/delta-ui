@@ -1,33 +1,30 @@
 import { jsx } from '@theme-ui/core';
-import { ComponentType, Fragment, useCallback } from 'react';
+import { ComponentType, Fragment, useCallback, useMemo } from 'react';
 import { HiViewGridAdd } from 'react-icons/hi';
 import { IoMdAdd } from 'react-icons/io';
 import { RiDeleteBin2Fill } from 'react-icons/ri';
-import { Button, hash, useThemed } from 'restyler';
+import { Button, useThemed } from 'restyler';
 import { useFeedManager } from '../../hooks';
-import { FeedOptions } from '../../models';
+import { FeedDef, FeedComponentDef } from '../../models';
 import { Feed } from './Feed';
 import { FeedItemIdContext } from './FeedItemIdContext';
 import { FeedSection } from './FeedSection';
 import { ManageableFeedContext } from './ManageableFeedContext';
 
-export interface ManageableFeedProps extends FeedOptions {
-  canAddItems?: boolean;
-  canAddSections?: boolean;
-  canRemoveSections?: boolean;
-  registry: {
-    [key: string]: ComponentType;
-  };
+export interface ManageableFeedProps extends FeedDef {
+  registry: FeedComponentDef[];
 }
 
-export const ManageableFeed = ({
-  canAddItems,
-  canAddSections,
-  canRemoveSections,
-  registry,
-  sections
-}: ManageableFeedProps) => {
+export const ManageableFeed = ({ registry, sections }: ManageableFeedProps) => {
   const ThemedFeedActions = useThemed('div', 'feed.actions');
+  const componentMap = useMemo(
+    () =>
+      Object.values(registry).reduce(
+        (p, v) => p.set(v.id, v),
+        new Map<string, FeedComponentDef>()
+      ),
+    [registry]
+  );
   const manager = useFeedManager(sections);
   const { targetSections, isUpdating, addSection, removeSection } = manager;
   const getSectionActions = useCallback(
@@ -37,54 +34,45 @@ export const ManageableFeed = ({
       }
       return (
         <Fragment>
-          {canAddItems && (
-            <Button
-              kind="icon"
-              onClick={e => {
-                console.log('!');
-              }}
-            >
-              <HiViewGridAdd />
-            </Button>
-          )}
-          {canRemoveSections && (
-            <Button kind="icon" onClick={() => removeSection(sectionId)}>
-              <RiDeleteBin2Fill />
-            </Button>
-          )}
+          <Button
+            kind="icon"
+            onClick={e => {
+              console.log('!');
+            }}
+          >
+            <HiViewGridAdd />
+          </Button>
+          <Button kind="icon" onClick={() => removeSection(sectionId)}>
+            <RiDeleteBin2Fill />
+          </Button>
         </Fragment>
       );
     },
-    [isUpdating, removeSection, canAddItems, canRemoveSections]
+    [isUpdating, removeSection]
   );
   return (
     <ManageableFeedContext.Provider value={manager}>
       <Feed>
-        {targetSections.map(section => {
-          const key = hash(section);
-          const { columns, items } = section;
+        {targetSections.map(({ id, columns, items }) => {
           return (
             <FeedSection
-              key={key}
-              id={key}
-              actions={getSectionActions(key)}
+              key={id}
+              id={id}
+              actions={getSectionActions(id)}
               columns={columns ?? { count: 1 }}
             >
-              {items.map(item => {
-                const id = hash(item);
-                const { component, ...rest } =
-                  typeof item === 'object' ? item : { component: item };
-                const Component = registry[component];
-                if (Component) {
-                  return (
-                    <FeedItemIdContext.Provider key={id} value={id}>
-                      <Component {...rest} />
-                    </FeedItemIdContext.Provider>
-                  );
-                } else {
-                  console.warn('Unknown feed item:', item);
+              {items.map(({ id, componentId, managerComponentId, ...rest }) => {
+                const componentDef = componentMap.get(componentId);
+                if (!componentDef) {
+                  console.warn('Unknown feed item component:', componentId);
                   return null;
                 }
+                const { component: Component } = componentDef;
+                return (
+                  <FeedItemIdContext.Provider key={id} value={id}>
+                    <Component {...rest} />
+                  </FeedItemIdContext.Provider>
+                );
               })}
             </FeedSection>
           );

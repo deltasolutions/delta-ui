@@ -8,8 +8,6 @@ import {
   useSharedRef,
   useThemed
 } from 'restyler';
-import { LayoutUpdateTarget } from '../../models';
-import { LayoutUpdateContext } from '../LayoutUpdateContext';
 import { ManageableFeedContext } from './ManageableFeedContext';
 
 export interface FeedSectionProps
@@ -36,7 +34,7 @@ export const FeedSection = ({
   } = useContext(ManageableFeedContext);
   const childIdSet = useMemo(
     () => new Set(getSectionChildIds(feedSectionId)),
-    [feedSectionId]
+    [getSectionChildIds, feedSectionId]
   );
   const [{ isDragging }, dragRef] = useDrag(
     () => ({

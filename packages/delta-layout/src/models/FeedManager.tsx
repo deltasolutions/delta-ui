@@ -1,8 +1,8 @@
-import { FeedSectionOptions } from './FeedSectionOptions';
+import { FeedSectionDef } from './FeedSectionDef';
 
 export interface FeedManager {
   isUpdating: boolean;
-  targetSections: FeedSectionOptions[];
+  targetSections: FeedSectionDef[];
   moveItemToItem: (sourceId: string, targetId: string) => void;
   moveItemToSection: (sourceId: string, targetId: string) => void;
   moveSectionToSection: (sourceId: string, targetId: string) => void;
