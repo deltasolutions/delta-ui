@@ -8,10 +8,7 @@ export const actions: BasicTheme = {
       width: '2.5rem',
       height: '2.5rem',
       borderRadius: '50%',
-      backdropFilter: 'invert(0.1)',
-      '&:hover': {
-        backdropFilter: 'invert(0.15)'
-      }
+      backgroundColor: 'accentBackground'
     }
   }
 };

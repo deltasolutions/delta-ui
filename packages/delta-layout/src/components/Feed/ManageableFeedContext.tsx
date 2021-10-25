@@ -13,5 +13,8 @@ export const ManageableFeedContext = createContext<FeedManager>({
   moveSectionToSection: noop,
   removeSection: noop,
   getSectionChildIds: noop,
-  addSection: noop
+  addSection: noop,
+  setSectionColumns: noop,
+  addItemToSection: noop,
+  removeItem: noop
 });

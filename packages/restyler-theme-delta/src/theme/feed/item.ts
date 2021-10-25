@@ -36,6 +36,21 @@ export const item: BasicTheme = {
     }
   },
   components: {
+    actions: {
+      style: {
+        position: 'absolute',
+        top: 3,
+        right: 3,
+        display: 'flex',
+        gap: 1,
+        padding: 2,
+        backgroundColor: 'accentSurface',
+        opacity: 0.6,
+        '&:hover': {
+          opacity: 0.9
+        }
+      }
+    },
     loader: {
       style: ({ isVisible }) => ({
         position: 'absolute',

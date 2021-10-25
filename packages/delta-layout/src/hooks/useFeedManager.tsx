@@ -59,6 +59,15 @@ export const useFeedManager = (sections: FeedSectionDef[]) => {
     },
     [targetSections, update]
   );
+  const removeItem = useCallback(
+    (id: string) => {
+      const clonedSections = clone(targetSections);
+      const source = findItem(clonedSections, id);
+      source.section.items.splice(source.itemIndex, 1);
+      update(LayoutUpdateTarget.Feed, clonedSections);
+    },
+    [targetSections]
+  );
   const removeSection = useCallback(
     (id: string) => {
       const clonedSections = clone(targetSections);
@@ -114,6 +123,7 @@ export const useFeedManager = (sections: FeedSectionDef[]) => {
     moveItemToItem,
     moveItemToSection,
     moveSectionToSection,
+    removeItem,
     removeSection,
     addSection,
     addItemToSection,
