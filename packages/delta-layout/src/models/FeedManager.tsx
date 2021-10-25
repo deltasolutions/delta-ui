@@ -9,5 +9,6 @@ export interface FeedManager {
   removeSection: (id: string) => void;
   getSectionChildIds: (id: string) => string[];
   addSection: () => void;
+  addItemToSection: (componentId: string, sectionId: string) => void;
   setSectionColumns: (id: string, columns: FeedSectionDef['columns']) => void;
 }

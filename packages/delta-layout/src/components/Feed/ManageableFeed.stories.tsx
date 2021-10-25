@@ -1,11 +1,7 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { useCallback, useContext, useState } from 'react';
-import {
-  LayoutUpdateTarget,
-  FeedSectionDef,
-  FeedComponentType
-} from '../../models';
+import { LayoutUpdateTarget, FeedSectionDef } from '../../models';
 import { LayoutUpdateContext } from '../LayoutUpdateContext';
 import { SystemContainer } from '../SystemContainer';
 import { FeedItem } from './FeedItem';
@@ -18,7 +14,8 @@ export default {
 const registry = [
   {
     id: 'a',
-    type: FeedComponentType.Item,
+    title: 'A',
+    description: 'Lorem ipsum dolor sit amet.',
     component: () => (
       <FeedItem sx={{ p: 3 }}>
         <div>1</div>
@@ -27,7 +24,8 @@ const registry = [
   },
   {
     id: 'b',
-    type: FeedComponentType.Item,
+    title: 'B',
+    description: 'Lorem ipsum dolor sit amet.',
     component: () => (
       <FeedItem sx={{ p: 3 }}>
         <div>1</div>
@@ -38,7 +36,8 @@ const registry = [
   },
   {
     id: 'c',
-    type: FeedComponentType.Item,
+    title: 'C',
+    description: 'Lorem ipsum dolor sit amet.',
     component: () => (
       <FeedItem sx={{ p: 3 }}>
         <div>1</div>
@@ -48,7 +47,8 @@ const registry = [
   },
   {
     id: 'd',
-    type: FeedComponentType.Item,
+    title: 'D',
+    description: 'Lorem ipsum dolor sit amet.',
     component: () => (
       <FeedItem sx={{ p: 3 }}>
         <div>1</div>
@@ -58,7 +58,8 @@ const registry = [
   },
   {
     id: 'e',
-    type: FeedComponentType.Item,
+    title: 'E',
+    description: 'Lorem ipsum dolor sit amet.',
     component: () => (
       <FeedItem sx={{ p: 3 }}>
         <div>1</div>

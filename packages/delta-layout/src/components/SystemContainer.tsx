@@ -74,6 +74,8 @@ const defalutLocale = {
   layoutType: 'Layout Type',
   minWidth: 'Minimum Width',
   ok: 'OK',
+  registry: 'Registry',
   required: 'Required',
+  search: 'Search',
   wrongFormat: 'Wrong Format'
 };

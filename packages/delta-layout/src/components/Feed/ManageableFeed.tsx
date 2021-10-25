@@ -13,6 +13,7 @@ import { Feed } from './Feed';
 import { FeedItemIdContext } from './FeedItemIdContext';
 import { FeedSection } from './FeedSection';
 import { ManageableFeedContext } from './ManageableFeedContext';
+import { RegistryModal } from './RegistryModal';
 
 export interface ManageableFeedProps extends FeedDef {
   registry: FeedComponentDef[];
@@ -36,11 +37,27 @@ export const ManageableFeed = ({ registry, sections }: ManageableFeedProps) => {
       openModal({
         kind: 'small',
         render: props => (
-          <ColumnsModal sectionId={sectionId} manager={manager} {...props} />
+          <ColumnsModal manager={manager} sectionId={sectionId} {...props} />
         )
       });
     },
     [openModal, manager]
+  );
+  const openItemsModal = useCallback(
+    (sectionId: string) => {
+      openModal({
+        kind: 'small',
+        render: props => (
+          <RegistryModal
+            manager={manager}
+            sectionId={sectionId}
+            registry={registry}
+            {...props}
+          />
+        )
+      });
+    },
+    [openModal, manager, registry]
   );
   const getSectionActions = useCallback(
     (sectionId: string) => {
@@ -49,12 +66,7 @@ export const ManageableFeed = ({ registry, sections }: ManageableFeedProps) => {
       }
       return (
         <Fragment>
-          <Button
-            kind="icon"
-            onClick={e => {
-              console.log('!');
-            }}
-          >
+          <Button kind="icon" onClick={() => openItemsModal(sectionId)}>
             <HiViewGridAdd />
           </Button>
           <Button kind="icon" onClick={() => openColumnsModal(sectionId)}>

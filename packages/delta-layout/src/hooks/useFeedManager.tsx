@@ -80,6 +80,18 @@ export const useFeedManager = (sections: FeedSectionDef[]) => {
       ])
     );
   }, [targetSections]);
+  const addItemToSection = useCallback(
+    (componentId: string, sectionId: string) => {
+      const clonedSections = clone(targetSections);
+      const target = findSection(clonedSections, sectionId);
+      target.section.items.push({
+        id: Math.random().toString().slice(-4),
+        componentId
+      });
+      update(LayoutUpdateTarget.Feed, clonedSections);
+    },
+    [targetSections, update]
+  );
   const getSectionChildIds = useCallback(
     (id: string) => {
       const { section } = findSection(targetSections, id);
@@ -104,6 +116,7 @@ export const useFeedManager = (sections: FeedSectionDef[]) => {
     moveSectionToSection,
     removeSection,
     addSection,
+    addItemToSection,
     getSectionChildIds,
     setSectionColumns
   };
