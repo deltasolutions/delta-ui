@@ -10,25 +10,29 @@ export const useFeedManager = (sections: FeedSectionDef[]) => {
     ? updates[LayoutUpdateTarget.Feed] ?? sections
     : sections;
   const findItem = useCallback((sections: FeedSectionDef[], id: string) => {
-    for (const section of sections) {
-      for (const [index, item] of section.items.entries()) {
+    for (const [sectionIndex, section] of sections.entries()) {
+      for (const [itemIndex, item] of section.items.entries()) {
         if (item.id === id) {
-          return { item, index, section };
+          return { item, itemIndex, section, sectionIndex };
         }
       }
     }
-    return undefined;
+    throw new Error('Unable to find item');
+  }, []);
+  const findSection = useCallback((sections: FeedSectionDef[], id: string) => {
+    const sectionIndex = sections.findIndex(v => v.id === id);
+    if (sectionIndex < 0) {
+      throw new Error('Unable to find section');
+    }
+    return { sectionIndex, section: sections[sectionIndex] };
   }, []);
   const moveItemToItem = useCallback(
     (sourceId: string, targetId: string) => {
       const clonedSections = clone(targetSections);
       const source = findItem(clonedSections, sourceId);
       const target = findItem(clonedSections, targetId);
-      if (!source || !target) {
-        throw new Error('Unable to locate feed item');
-      }
-      source.section.items.splice(source.index, 1);
-      target.section.items.splice(target.index, 0, source.item);
+      source.section.items.splice(source.itemIndex, 1);
+      target.section.items.splice(target.itemIndex, 0, source.item);
       update(LayoutUpdateTarget.Feed, clonedSections);
     },
     [targetSections, update]
@@ -37,39 +41,29 @@ export const useFeedManager = (sections: FeedSectionDef[]) => {
     (sourceId: string, targetId: string) => {
       const clonedSections = clone(targetSections);
       const source = findItem(clonedSections, sourceId);
-      const target = clonedSections.find(v => v.id === targetId);
-      if (!source || !target) {
-        throw new Error('Unable to locate feed item or section');
-      }
-      source.section.items.splice(source.index, 1);
-      target.items.push(source.item);
+      const target = findSection(clonedSections, targetId);
+      source.section.items.splice(source.itemIndex, 1);
+      target.section.items.push(source.item);
       update(LayoutUpdateTarget.Feed, clonedSections);
     },
     [targetSections, update]
   );
   const moveSectionToSection = useCallback(
     (sourceId: string, targetId: string) => {
-      const clonedSections = clone(targetSections) as FeedSectionDef[];
-      const sourceIndex = clonedSections.findIndex(v => v.id === sourceId);
-      const targetIndex = clonedSections.findIndex(v => v.id === targetId);
-      if (sourceIndex < 0 || targetIndex < 0) {
-        throw new Error('Unable to locate feed section');
-      }
-      const source = clonedSections[sourceIndex];
-      clonedSections.splice(sourceIndex, 1);
-      clonedSections.splice(targetIndex, 0, source);
+      const clonedSections = clone(targetSections);
+      const source = findSection(clonedSections, sourceId);
+      const target = findSection(clonedSections, targetId);
+      clonedSections.splice(source.sectionIndex, 1);
+      clonedSections.splice(target.sectionIndex, 0, source.section);
       update(LayoutUpdateTarget.Feed, clonedSections);
     },
     [targetSections, update]
   );
   const removeSection = useCallback(
     (id: string) => {
-      const clonedSections = clone(targetSections) as FeedSectionDef[];
-      const index = clonedSections.findIndex(v => v.id === id);
-      if (index < 0) {
-        throw new Error('Unable to locate feed section');
-      }
-      clonedSections.splice(index, 1);
+      const clonedSections = clone(targetSections);
+      const { sectionIndex } = findSection(clonedSections, id);
+      clonedSections.splice(sectionIndex, 1);
       update(LayoutUpdateTarget.Feed, clonedSections);
     },
     [targetSections]
@@ -88,11 +82,17 @@ export const useFeedManager = (sections: FeedSectionDef[]) => {
   }, [targetSections]);
   const getSectionChildIds = useCallback(
     (id: string) => {
-      const section = targetSections.find(v => v.id === id);
-      if (!section) {
-        throw new Error('Unable to locate feed section');
-      }
+      const { section } = findSection(targetSections, id);
       return section.items.map(v => v.id);
+    },
+    [targetSections]
+  );
+  const setSectionColumns = useCallback(
+    (id: string, columns: FeedSectionDef['columns']) => {
+      const clonedSections = clone(targetSections);
+      const source = findSection(clonedSections, id);
+      source.section.columns = columns;
+      update(LayoutUpdateTarget.Feed, clonedSections);
     },
     [targetSections]
   );
@@ -104,6 +104,7 @@ export const useFeedManager = (sections: FeedSectionDef[]) => {
     moveSectionToSection,
     removeSection,
     addSection,
-    getSectionChildIds
+    getSectionChildIds,
+    setSectionColumns
   };
 };

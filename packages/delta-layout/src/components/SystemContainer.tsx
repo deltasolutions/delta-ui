@@ -19,6 +19,7 @@ export interface SystemContainerProps extends Partial<RestylerContainerProps> {
 export const SystemContainer = ({
   onLayoutUpdateSave,
   theme = defaultTheme,
+  locale = defalutLocale,
   children,
   ...rest
 }: SystemContainerProps) => {
@@ -28,7 +29,12 @@ export const SystemContainer = ({
   return (
     <DndProvider backend={HTML5Backend}>
       <ThemeProvider theme={theme}>
-        <RestylerContainer styled={styled} theme={theme} {...rest}>
+        <RestylerContainer
+          styled={styled}
+          theme={theme}
+          locale={locale}
+          {...rest}
+        >
           <LayoutUpdateContext.Provider value={layoutUpdateManager}>
             <Global
               styles={{
@@ -56,3 +62,18 @@ const styled = (Tag: any, fn: Function) =>
     );
     return <Tag ref={ref} {...validProps} />;
   }) as any;
+
+const defalutLocale = {
+  anyCountThatFit: 'Any Count That Fit',
+  apply: 'Apply',
+  cancel: 'Cancel',
+  columns: 'Columns',
+  count: 'Count',
+  empty: 'No Data',
+  fixedCount: 'Fixed Count',
+  layoutType: 'Layout Type',
+  minWidth: 'Minimum Width',
+  ok: 'OK',
+  required: 'Required',
+  wrongFormat: 'Wrong Format'
+};
