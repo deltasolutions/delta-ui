@@ -45,6 +45,7 @@ export const item: BasicTheme = {
         gap: 1,
         padding: 2,
         backgroundColor: 'accentSurface',
+        borderRadius: 2,
         opacity: 0.6,
         '&:hover': {
           opacity: 0.9
