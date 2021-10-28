@@ -1,15 +1,23 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { useCallback, useContext, useState } from 'react';
-import { LayoutUpdateTarget, FeedSectionDef } from '../../models';
+import { FeedSectionDef, LayoutUpdateTarget } from '../../models';
 import { LayoutUpdateContext } from '../LayoutUpdateContext';
 import { SystemContainer } from '../SystemContainer';
+import { Feed } from './Feed';
 import { FeedItem } from './FeedItem';
-import { ManageableFeed } from './ManageableFeed';
 
 export default {
   title: 'General/ConfiguredFeed'
 } as Meta;
+
+export const Basics = () => (
+  <SystemContainer sx={{ padding: 4, minHeight: '100vh' }}>
+    <Feed>
+      <FeedItem sx={{ padding: 3 }}>Lorem ipsum dolor sit amet.</FeedItem>
+    </Feed>
+  </SystemContainer>
+);
 
 const registry = [
   {
@@ -71,26 +79,28 @@ const registry = [
   }
 ];
 
-export const Basics = () => {
-  const [sections, setSections] = useState<FeedSectionDef[]>([
-    {
-      id: '1',
-      columns: { count: 2 },
-      items: [
-        { id: 'a', componentId: 'a' },
-        { id: 'b', componentId: 'b' },
-        { id: 'c', componentId: 'c' }
-      ]
-    },
-    {
-      id: '2',
-      columns: { count: 1 },
-      items: [
-        { id: 'd', componentId: 'd' },
-        { id: 'e', componentId: 'e' }
-      ]
-    }
-  ]);
+const defaultSections = [
+  {
+    id: '1',
+    columns: { count: 2 },
+    items: [
+      { id: 'a', componentId: 'a' },
+      { id: 'b', componentId: 'b' },
+      { id: 'c', componentId: 'c' }
+    ]
+  },
+  {
+    id: '2',
+    columns: { count: 1 },
+    items: [
+      { id: 'd', componentId: 'd' },
+      { id: 'e', componentId: 'e' }
+    ]
+  }
+];
+
+export const Manageable = () => {
+  const [sections, setSections] = useState<FeedSectionDef[]>(defaultSections);
   const Toggler = useCallback(() => {
     const { checkIfUpdating, save, allow } = useContext(LayoutUpdateContext);
     return (
@@ -115,7 +125,7 @@ export const Basics = () => {
       }}
     >
       <Toggler />
-      <ManageableFeed registry={registry} sections={sections} />
+      <Feed managerOptions={{ registry, sections }} />
     </SystemContainer>
   );
 };

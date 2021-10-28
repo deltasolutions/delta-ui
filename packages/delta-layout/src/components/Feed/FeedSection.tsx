@@ -1,5 +1,5 @@
 import { jsx } from '@theme-ui/core';
-import { Children, ReactNode, useContext, useMemo } from 'react';
+import { Children, useContext, useMemo } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import {
   BoxProps,
@@ -8,38 +8,38 @@ import {
   useSharedRef,
   useThemed
 } from 'restyler';
-import { ManageableFeedContext } from './ManageableFeedContext';
+import { FeedContext } from './FeedContext';
+import { FeedSectionExtras } from './FeedSectionExtras';
 
 export interface FeedSectionProps
   extends BoxProps,
     Pick<MasonryProps, 'columns'> {
-  actions: ReactNode;
   id?: string;
 }
 
 export const FeedSection = ({
-  actions,
-  id: feedSectionId = '',
+  id,
   columns,
   children,
   ...rest
 }: FeedSectionProps) => {
   const ThemedFeedSection = useThemed('div', 'feed.section');
-  const ThemedFeedSectionActions = useThemed('div', 'feed.section.actions');
   const {
-    isUpdating,
-    getSectionChildIds,
-    moveItemToSection,
-    moveSectionToSection
-  } = useContext(ManageableFeedContext);
+    manager: {
+      isUpdating,
+      getSectionChildIds,
+      moveItemToSection,
+      moveSectionToSection
+    }
+  } = useContext(FeedContext);
   const childIdSet = useMemo(
-    () => new Set(getSectionChildIds(feedSectionId)),
-    [getSectionChildIds, feedSectionId]
+    () => new Set(id ? getSectionChildIds(id) : undefined),
+    [getSectionChildIds, id]
   );
   const [{ isDragging }, dragRef] = useDrag(
     () => ({
       type: 'feedSection',
-      item: { feedSectionId },
+      item: { feedSectionId: id },
       canDrag: isUpdating,
       collect: monitor => ({
         isDragging: monitor.isDragging()
@@ -52,26 +52,24 @@ export const FeedSection = ({
       accept: ['feedItem', 'feedSection'],
       canDrop: (v: { feedItemId?: string; feedSectionId?: string }) =>
         isUpdating &&
-        v.feedSectionId !== feedSectionId &&
+        v.feedSectionId !== id &&
         !childIdSet.has(v.feedItemId ?? ''),
       collect: monitor =>
         monitor.isOver() &&
         monitor.canDrop() &&
         monitor.isOver({ shallow: true }),
-      drop: v =>
-        v.feedItemId
-          ? moveItemToSection(v.feedItemId, feedSectionId)
-          : v.feedSectionId
-          ? moveSectionToSection(v.feedSectionId, feedSectionId)
-          : undefined
+      drop: v => {
+        if (!id) {
+          return;
+        }
+        if (v.feedItemId) {
+          moveItemToSection(v.feedItemId, id);
+        } else if (v.feedSectionId) {
+          moveSectionToSection(v.feedSectionId, id);
+        }
+      }
     }),
-    [
-      isUpdating,
-      feedSectionId,
-      childIdSet,
-      moveItemToSection,
-      moveSectionToSection
-    ]
+    [id, isUpdating, childIdSet, moveItemToSection, moveSectionToSection]
   );
   const sharedRef = useSharedRef<HTMLDivElement>(
     null,
@@ -89,14 +87,12 @@ export const FeedSection = ({
     : 'feedSectionContent';
   return (
     <ThemedFeedSection ref={sharedRef} kind={kind} {...rest}>
-      {actions && (
-        <ThemedFeedSectionActions>{actions}</ThemedFeedSectionActions>
-      )}
       {Children.count(children) > 0 && (
         <Masonry kind={masonryKind} columns={columns}>
           {children}
         </Masonry>
       )}
+      {id && isUpdating && <FeedSectionExtras id={id} />}
     </ThemedFeedSection>
   );
 };

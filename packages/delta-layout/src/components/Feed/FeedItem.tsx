@@ -1,11 +1,8 @@
 import { jsx } from '@theme-ui/core';
-import { useContext, useMemo } from 'react';
+import { useContext } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
-import { IoSettings } from 'react-icons/io5';
-import { RiDeleteBin2Fill } from 'react-icons/ri';
 import {
   BoxProps,
-  Button,
   useSharedRef,
   useThemed,
   useThemedFactory,
@@ -13,8 +10,9 @@ import {
 } from 'restyler';
 import { LayoutUpdateTarget } from '../../models';
 import { LayoutUpdateContext } from '../LayoutUpdateContext';
+import { FeedContext } from './FeedContext';
+import { FeedItemExtras } from './FeedItemExtras';
 import { FeedItemIdContext } from './FeedItemIdContext';
-import { ManageableFeedContext } from './ManageableFeedContext';
 
 export interface FeedItemProps extends BoxProps {
   isLoading?: boolean;
@@ -24,7 +22,6 @@ export const FeedItem = ({ isLoading, children, ...rest }: FeedItemProps) => {
   const useThemed = useThemedFactory<Pick<FeedItemProps, 'isLoading'>>();
   const ThemedFeedItem = useThemed('div', 'feed.item');
   const ThemedFeedItemLoader = useThemed('div', 'feed.item.loader');
-  const ThemedFeedItemActions = useThemed('div', 'feed.item.actions');
   const extraProps = { isLoading };
   const loader = useTransition<HTMLDivElement>(
     (transitionProps, ref) => (
@@ -38,7 +35,9 @@ export const FeedItem = ({ isLoading, children, ...rest }: FeedItemProps) => {
   const { checkIfUpdating } = useContext(LayoutUpdateContext);
   const isUpdating = checkIfUpdating(LayoutUpdateTarget.Feed);
   const feedItemId = useContext(FeedItemIdContext);
-  const { moveItemToItem, removeItem } = useContext(ManageableFeedContext);
+  const {
+    manager: { moveItemToItem }
+  } = useContext(FeedContext);
   const [{ isDragging }, dragRef] = useDrag(
     () => ({
       type: 'feedItem',
@@ -74,26 +73,11 @@ export const FeedItem = ({ isLoading, children, ...rest }: FeedItemProps) => {
       ? 'dragActive'
       : 'dragReady'
     : undefined;
-  const actions = useMemo(() => {
-    if (!isUpdating) {
-      return null;
-    }
-    return (
-      <ThemedFeedItemActions>
-        {/* <Button kind="icon">
-          <IoSettings />
-        </Button> */}
-        <Button kind="icon" onClick={() => removeItem(feedItemId)}>
-          <RiDeleteBin2Fill />
-        </Button>
-      </ThemedFeedItemActions>
-    );
-  }, [isUpdating, feedItemId, removeItem]);
   return (
     <ThemedFeedItem ref={sharedRef} kind={kind} {...extraProps} {...rest}>
       {children}
       {loader}
-      {actions}
+      {feedItemId && isUpdating && <FeedItemExtras id={feedItemId} />}
     </ThemedFeedItem>
   );
 };

@@ -36,7 +36,7 @@ export const item: BasicTheme = {
     }
   },
   components: {
-    actions: {
+    extras: {
       style: {
         position: 'absolute',
         top: 3,

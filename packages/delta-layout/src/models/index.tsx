@@ -2,6 +2,7 @@ export * from './FeedComponentDef';
 export * from './FeedDef';
 export * from './FeedItemDef';
 export * from './FeedManager';
+export * from './FeedManagerOptions';
 export * from './FeedSectionDef';
 export * from './LayoutActionOptions';
 export * from './LayoutContextValue';

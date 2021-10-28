@@ -31,8 +31,9 @@ export const section: BasicTheme = {
     }
   },
   components: {
-    actions: {
+    extras: {
       style: {
+        order: -1,
         position: 'relative',
         display: 'flex',
         justifyContent: 'right',

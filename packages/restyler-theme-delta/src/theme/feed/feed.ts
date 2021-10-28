@@ -1,5 +1,5 @@
 import { BasicTheme } from 'restyler';
-import { actions } from './actions';
+import { extras } from './extras';
 import { item } from './item';
 import { registry } from './registry';
 import { section } from './section';
@@ -13,9 +13,9 @@ export const feed: BasicTheme = {
     width: '100%'
   },
   components: {
-    actions,
-    section,
+    extras,
     item,
-    registry
+    registry,
+    section
   }
 };

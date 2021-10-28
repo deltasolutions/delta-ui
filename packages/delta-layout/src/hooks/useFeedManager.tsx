@@ -1,15 +1,28 @@
-import { useCallback, useContext } from 'react';
-import { clone, hash } from 'restyler';
+import { useCallback, useContext, useMemo } from 'react';
+import { clone } from 'restyler';
 import { LayoutUpdateContext } from '../components';
-import { FeedSectionDef, LayoutUpdateTarget } from '../models';
+import {
+  FeedManager,
+  FeedManagerOptions,
+  FeedSectionDef,
+  LayoutUpdateTarget
+} from '../models';
 
-export const useFeedManager = (sections: FeedSectionDef[]) => {
+export const useFeedManager = (options?: FeedManagerOptions) => {
+  const isActive = !!options;
+  const { sections = [], registry = [] } = options ?? {};
   const { updates, update, checkIfUpdating } = useContext(LayoutUpdateContext);
-  const isUpdating = checkIfUpdating(LayoutUpdateTarget.Feed);
+  const isUpdating = isActive && checkIfUpdating(LayoutUpdateTarget.Feed);
   const targetSections: FeedSectionDef[] = isUpdating
     ? updates[LayoutUpdateTarget.Feed] ?? sections
     : sections;
+  const insure = useCallback(() => {
+    if (!isActive) {
+      throw new Error('Feed section is unmanageable');
+    }
+  }, [isActive]);
   const findItem = useCallback((sections: FeedSectionDef[], id: string) => {
+    insure();
     for (const [sectionIndex, section] of sections.entries()) {
       for (const [itemIndex, item] of section.items.entries()) {
         if (item.id === id) {
@@ -20,6 +33,7 @@ export const useFeedManager = (sections: FeedSectionDef[]) => {
     throw new Error('Unable to find item');
   }, []);
   const findSection = useCallback((sections: FeedSectionDef[], id: string) => {
+    insure();
     const sectionIndex = sections.findIndex(v => v.id === id);
     if (sectionIndex < 0) {
       throw new Error('Unable to find section');
@@ -28,6 +42,7 @@ export const useFeedManager = (sections: FeedSectionDef[]) => {
   }, []);
   const moveItemToItem = useCallback(
     (sourceId: string, targetId: string) => {
+      insure();
       const clonedSections = clone(targetSections);
       const source = findItem(clonedSections, sourceId);
       const target = findItem(clonedSections, targetId);
@@ -39,6 +54,7 @@ export const useFeedManager = (sections: FeedSectionDef[]) => {
   );
   const moveItemToSection = useCallback(
     (sourceId: string, targetId: string) => {
+      insure();
       const clonedSections = clone(targetSections);
       const source = findItem(clonedSections, sourceId);
       const target = findSection(clonedSections, targetId);
@@ -50,6 +66,7 @@ export const useFeedManager = (sections: FeedSectionDef[]) => {
   );
   const moveSectionToSection = useCallback(
     (sourceId: string, targetId: string) => {
+      insure();
       const clonedSections = clone(targetSections);
       const source = findSection(clonedSections, sourceId);
       const target = findSection(clonedSections, targetId);
@@ -61,6 +78,7 @@ export const useFeedManager = (sections: FeedSectionDef[]) => {
   );
   const removeItem = useCallback(
     (id: string) => {
+      insure();
       const clonedSections = clone(targetSections);
       const source = findItem(clonedSections, id);
       source.section.items.splice(source.itemIndex, 1);
@@ -70,6 +88,7 @@ export const useFeedManager = (sections: FeedSectionDef[]) => {
   );
   const removeSection = useCallback(
     (id: string) => {
+      insure();
       const clonedSections = clone(targetSections);
       const { sectionIndex } = findSection(clonedSections, id);
       clonedSections.splice(sectionIndex, 1);
@@ -78,6 +97,7 @@ export const useFeedManager = (sections: FeedSectionDef[]) => {
     [targetSections]
   );
   const addSection = useCallback(() => {
+    insure();
     update(
       LayoutUpdateTarget.Feed,
       targetSections.concat([
@@ -91,6 +111,7 @@ export const useFeedManager = (sections: FeedSectionDef[]) => {
   }, [targetSections]);
   const addItemToSection = useCallback(
     (componentId: string, sectionId: string) => {
+      insure();
       const clonedSections = clone(targetSections);
       const target = findSection(clonedSections, sectionId);
       target.section.items.push({
@@ -103,6 +124,7 @@ export const useFeedManager = (sections: FeedSectionDef[]) => {
   );
   const getSectionChildIds = useCallback(
     (id: string) => {
+      insure();
       const { section } = findSection(targetSections, id);
       return section.items.map(v => v.id);
     },
@@ -110,6 +132,7 @@ export const useFeedManager = (sections: FeedSectionDef[]) => {
   );
   const setSectionColumns = useCallback(
     (id: string, columns: FeedSectionDef['columns']) => {
+      insure();
       const clonedSections = clone(targetSections);
       const source = findSection(clonedSections, id);
       source.section.columns = columns;
@@ -117,17 +140,20 @@ export const useFeedManager = (sections: FeedSectionDef[]) => {
     },
     [targetSections]
   );
-  return {
+  const manager: FeedManager = {
+    isActive,
     isUpdating,
+    registry,
     targetSections,
+    addItemToSection,
+    addSection,
+    getSectionChildIds,
     moveItemToItem,
     moveItemToSection,
     moveSectionToSection,
     removeItem,
     removeSection,
-    addSection,
-    addItemToSection,
-    getSectionChildIds,
     setSectionColumns
   };
+  return useMemo(() => manager, [Object.values(manager)]);
 };

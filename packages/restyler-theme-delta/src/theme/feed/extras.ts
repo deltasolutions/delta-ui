@@ -1,6 +1,6 @@
 import { BasicTheme } from 'restyler';
 
-export const actions: BasicTheme = {
+export const extras: BasicTheme = {
   style: {
     display: 'flex',
     gap: 2,
