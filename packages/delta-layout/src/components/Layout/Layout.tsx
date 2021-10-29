@@ -1,6 +1,5 @@
 import { jsx } from '@theme-ui/core';
-import { HTMLAttributes } from 'react';
-import { ThemeProps, useThemed } from 'restyler';
+import { BoxProps, useThemed } from 'restyler';
 import { LayoutOptions } from '../../models';
 import { LayoutContainer } from './LayoutContainer';
 import { LayoutContext } from './LayoutContext';
@@ -8,15 +7,12 @@ import { LayoutFooter } from './LayoutFooter';
 import { LayoutHeader } from './LayoutHeader';
 import { LayoutSidebar } from './LayoutSidebar';
 
-export interface LayoutProps
-  extends HTMLAttributes<HTMLDivElement>,
-    ThemeProps,
-    LayoutOptions {}
+export interface LayoutProps extends BoxProps, LayoutOptions {}
 
 export const Layout = ({
   account,
-  actions,
   heading,
+  headerExtras,
   logoSrc,
   onAccountClick,
   children,
@@ -27,8 +23,8 @@ export const Layout = ({
   const ThemedLayoutMain = useThemed('div', 'layout.main');
   const contextValue = {
     account,
-    actions,
     heading,
+    headerExtras,
     logoSrc,
     onAccountClick
   };

@@ -15,7 +15,7 @@ export const Basics = () => (
       heading="Heading"
       account="root"
       logoSrc="http://www.deltasolutions.ru/images/logo-minimal.svg"
-      actions={
+      headerExtras={
         <Fragment>
           <IoIosHeartEmpty sx={{ color: 'success' }} />
           <IoIosPower sx={{ color: 'danger' }} />
