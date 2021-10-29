@@ -9,23 +9,15 @@ import {
   SystemContainerProps as RestylerContainerProps
 } from 'restyler';
 import { theme as defaultTheme } from 'restyler-theme-delta';
-import { LayoutUpdateManagerOptions, useLayoutUpdateManager } from '../hooks';
-import { LayoutUpdateContext } from './LayoutUpdateContext';
 
-export interface SystemContainerProps extends Partial<RestylerContainerProps> {
-  onLayoutUpdateSave?: LayoutUpdateManagerOptions['onSave'];
-}
+export interface SystemContainerProps extends Partial<RestylerContainerProps> {}
 
 export const SystemContainer = ({
-  onLayoutUpdateSave,
   theme = defaultTheme,
   locale = defalutLocale,
   children,
   ...rest
 }: SystemContainerProps) => {
-  const layoutUpdateManager = useLayoutUpdateManager({
-    onSave: onLayoutUpdateSave
-  });
   return (
     <DndProvider backend={HTML5Backend}>
       <ThemeProvider theme={theme}>
@@ -35,18 +27,16 @@ export const SystemContainer = ({
           locale={locale}
           {...rest}
         >
-          <LayoutUpdateContext.Provider value={layoutUpdateManager}>
-            <Global
-              styles={{
-                'html, body, #root': {
-                  margin: '0 !important',
-                  padding: '0 !important',
-                  minHeight: '100vh'
-                }
-              }}
-            />
-            {children}
-          </LayoutUpdateContext.Provider>
+          <Global
+            styles={{
+              'html, body, #root': {
+                margin: '0 !important',
+                padding: '0 !important',
+                minHeight: '100vh'
+              }
+            }}
+          />
+          {children}
         </RestylerContainer>
       </ThemeProvider>
     </DndProvider>

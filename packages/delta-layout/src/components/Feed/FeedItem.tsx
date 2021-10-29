@@ -9,7 +9,7 @@ import {
   useTransition
 } from 'restyler';
 import { LayoutUpdateTarget } from '../../models';
-import { LayoutUpdateContext } from '../LayoutUpdateContext';
+import { LayoutUpdateContext } from '../Layout';
 import { FeedContext } from './FeedContext';
 import { FeedItemExtras } from './FeedItemExtras';
 import { FeedItemIdContext } from './FeedItemIdContext';

@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { LayoutUpdateManager } from '../models';
 
 export interface LayoutUpdateManagerOptions {
@@ -52,7 +52,7 @@ export const useLayoutUpdateManager = ({
     (v: string) => targets.includes(v),
     [targets]
   );
-  return {
+  const manager = {
     updates,
     update,
     allow,
@@ -60,4 +60,5 @@ export const useLayoutUpdateManager = ({
     cancel,
     checkIfUpdating
   };
+  return useMemo(() => manager, Object.values(manager));
 };
