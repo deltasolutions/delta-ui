@@ -3,7 +3,7 @@ import { jsx } from '@theme-ui/core';
 import { Fragment } from 'react';
 import { IoIosHeartEmpty, IoIosPower } from 'react-icons/io';
 import { useLocalLayoutMenu } from '../../hooks';
-import { PageDef } from '../../models';
+import { LayoutMenuEntryDef } from '../../models';
 import { SystemContainer } from '../SystemContainer';
 import { Layout } from './Layout';
 
@@ -12,11 +12,10 @@ export default {
 } as Meta;
 
 export const Basics = () => {
-  const menu = useLocalLayoutMenu({ pages });
+  const menu = useLocalLayoutMenu({ entries, activeIds: [] });
   return (
     <SystemContainer>
       <Layout
-        pages={pages}
         header={{
           title: 'Heading',
           extras: (
@@ -38,26 +37,17 @@ export const Basics = () => {
   );
 };
 
-const pages: PageDef[] = [
+const entries: LayoutMenuEntryDef[] = [
   {
     id: 'dashboard',
-    title: 'Dashboard',
-    path: '/dashboard'
+    title: 'Dashboard'
   },
   {
     id: 'settings',
     title: 'Settings',
     subs: [
-      {
-        id: 'ui',
-        title: 'UI',
-        path: '/settings/ui'
-      },
-      {
-        id: 'users',
-        title: 'Users',
-        path: '/settings/users'
-      }
+      { id: 'ui', title: 'UI' },
+      { id: 'users', title: 'Users' }
     ]
   }
 ];

@@ -1,16 +1,21 @@
 import { jsx } from '@theme-ui/core';
 import { useCallback, useContext, useMemo } from 'react';
 import { Menu, MenuGroup, MenuItem } from 'restyler';
-import { PageDef } from '../../models';
+import { LayoutMenuEntryDef } from '../../models';
 import { LayoutContext } from './LayoutContext';
 
 export const LayoutMenu = () => {
   const {
-    pages = [],
-    sidebar: { menu: { getActiveIds = () => [], ...rest } = {} } = {}
+    sidebar: {
+      menu: {
+        entries = [],
+        activeIds = [],
+        onGroupClick = undefined,
+        onItemClick = undefined
+      } = {}
+    } = {}
   } = useContext(LayoutContext);
-  const activeIds = useMemo(() => getActiveIds(), [getActiveIds]);
-  const renderPage = useCallback(({ id, title, subs }: PageDef) => {
+  const renderPage = useCallback(({ id, title, subs }: LayoutMenuEntryDef) => {
     if (subs) {
       return (
         <MenuGroup key={id} id={id} title={title}>
@@ -24,9 +29,16 @@ export const LayoutMenu = () => {
       </MenuItem>
     );
   }, []);
-  return (
-    <Menu activeIds={activeIds} {...rest}>
-      {pages.map(v => renderPage(v))}
-    </Menu>
+  return useMemo(
+    () => (
+      <Menu
+        activeIds={activeIds}
+        onGroupClick={onGroupClick}
+        onItemClick={onItemClick}
+      >
+        {entries.map(v => renderPage(v))}
+      </Menu>
+    ),
+    [entries, activeIds, onGroupClick, onItemClick]
   );
 };
