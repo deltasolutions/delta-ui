@@ -13,12 +13,12 @@ import {
   SystemContext
 } from 'restyler';
 import { useDebounce } from '../../hooks';
-import { FeedComponentDef, FeedManager, FeedSectionDef } from '../../models';
+import { ComponentDef, FeedManager, FeedSectionDef } from '../../models';
 
 export interface RegistryModalProps extends ModalRendererProps {
   manager: FeedManager;
   sectionId: string;
-  registry: FeedComponentDef[];
+  registry: ComponentDef[];
 }
 
 export const RegistryModal = ({

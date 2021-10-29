@@ -1,6 +1,6 @@
 import { ComponentType } from 'react';
 
-export interface FeedComponentDef {
+export interface ComponentDef {
   id: string;
   title: string;
   description?: string;

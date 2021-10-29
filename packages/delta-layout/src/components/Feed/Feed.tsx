@@ -2,7 +2,7 @@ import { jsx } from '@theme-ui/core';
 import { useMemo } from 'react';
 import { BoxProps, useThemed } from 'restyler';
 import { useFeedManager } from '../../hooks';
-import { FeedComponentDef, FeedManagerOptions } from '../../models';
+import { ComponentDef, FeedManagerOptions } from '../../models';
 import { FeedContext } from './FeedContext';
 import { FeedItemIdContext } from './FeedItemIdContext';
 import { FeedSection } from './FeedSection';
@@ -19,7 +19,7 @@ export const Feed = ({ managerOptions, children, ...rest }: FeedProps) => {
     () =>
       (managerOptions?.registry ?? []).reduce(
         (p, v) => p.set(v.id, v),
-        new Map<string, FeedComponentDef>()
+        new Map<string, ComponentDef>()
       ),
     [managerOptions]
   );

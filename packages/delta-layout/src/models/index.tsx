@@ -1,4 +1,4 @@
-export * from './FeedComponentDef';
+export * from './ComponentDef';
 export * from './FeedDef';
 export * from './FeedItemDef';
 export * from './FeedManager';

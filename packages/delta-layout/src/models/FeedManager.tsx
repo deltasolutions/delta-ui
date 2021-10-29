@@ -1,10 +1,10 @@
-import { FeedComponentDef } from './FeedComponentDef';
+import { ComponentDef } from './ComponentDef';
 import { FeedSectionDef } from './FeedSectionDef';
 
 export interface FeedManager {
   isActive: boolean;
   isUpdating: boolean;
-  registry: FeedComponentDef[];
+  registry: ComponentDef[];
   targetSections: FeedSectionDef[];
   addItemToSection: (componentId: string, sectionId: string) => void;
   addSection: () => void;
