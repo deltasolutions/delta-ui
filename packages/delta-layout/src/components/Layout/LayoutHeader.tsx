@@ -1,28 +1,28 @@
 import { jsx } from '@theme-ui/core';
-import { ReactNode } from 'react';
-import { useThemed, Heading } from 'restyler';
+import { useContext } from 'react';
+import { Heading, useThemed } from 'restyler';
 import { LayoutContainer } from './LayoutContainer';
-import { LayoutHeaderExtras } from './LayoutHeaderExtras';
+import { LayoutContext } from './LayoutContext';
 
-export interface HeaderProps {
-  children?: ReactNode;
-}
-
-export const LayoutHeader = ({ children }: HeaderProps) => {
+export const LayoutHeader = () => {
   const ThemedLayoutHeader = useThemed('div', 'layout.header');
   const ThemedLayoutHeaderContent = useThemed('div', 'layout.header.content');
-  const heading =
-    typeof children === 'string' ? (
-      <Heading kind="layout">{children}</Heading>
-    ) : (
-      children
-    );
+  const ThemedLayoutHeaderExtras = useThemed('div', 'layout.header.extras');
+  const { header } = useContext(LayoutContext);
+  if (!header) {
+    return null;
+  }
+  const { title, extras } = header;
   return (
     <ThemedLayoutHeader>
       <LayoutContainer>
         <ThemedLayoutHeaderContent>
-          {heading}
-          <LayoutHeaderExtras />
+          <Heading level={1} kind="layout">
+            {title}
+          </Heading>
+          {extras && (
+            <ThemedLayoutHeaderExtras>{extras}</ThemedLayoutHeaderExtras>
+          )}
         </ThemedLayoutHeaderContent>
       </LayoutContainer>
     </ThemedLayoutHeader>

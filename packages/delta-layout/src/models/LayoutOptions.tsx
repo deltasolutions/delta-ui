@@ -1,9 +1,7 @@
-import { ReactNode } from 'react';
-
+import { LayoutHeaderOptions } from './LayoutHeaderOptions';
+import { LayoutSidebarOptions } from './LayoutSidebarOptions';
 export interface LayoutOptions {
-  heading?: ReactNode;
-  headerExtras?: ReactNode;
+  header?: LayoutHeaderOptions;
+  sidebar?: LayoutSidebarOptions;
   logoSrc?: string;
-  account?: ReactNode;
-  onAccountClick?: () => void;
 }

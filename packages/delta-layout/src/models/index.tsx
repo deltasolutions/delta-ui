@@ -4,7 +4,7 @@ export * from './FeedItemDef';
 export * from './FeedManager';
 export * from './FeedManagerOptions';
 export * from './FeedSectionDef';
-export * from './LayoutActionOptions';
 export * from './LayoutContextValue';
 export * from './LayoutOptions';
 export * from './LayoutUpdateManager';
+export * from './PageDef';

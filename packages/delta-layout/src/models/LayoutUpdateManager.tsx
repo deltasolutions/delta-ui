@@ -2,14 +2,13 @@ export interface LayoutUpdateManager {
   updates: {
     [target: string]: any;
   };
-  update: (target: string, data: any) => void;
   allow: (targets: string[]) => void;
-  save: (targets?: string[]) => void;
   cancel: (targets?: string[]) => void;
   checkIfUpdating: (target: string) => boolean;
+  save: (targets?: string[]) => void;
+  update: (target: string, data: any) => void;
 }
 
 export enum LayoutUpdateTarget {
-  Feed = 'feed',
-  FeedItemTitle = 'feedItemTitle'
+  Feed = 'feed'
 }

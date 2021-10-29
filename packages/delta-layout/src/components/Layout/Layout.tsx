@@ -10,11 +10,9 @@ import { LayoutSidebar } from './LayoutSidebar';
 export interface LayoutProps extends BoxProps, LayoutOptions {}
 
 export const Layout = ({
-  account,
-  heading,
-  headerExtras,
+  header,
+  sidebar,
   logoSrc,
-  onAccountClick,
   children,
   ...rest
 }: LayoutProps) => {
@@ -22,16 +20,14 @@ export const Layout = ({
   const ThemedLayoutContent = useThemed('div', 'layout.content');
   const ThemedLayoutMain = useThemed('div', 'layout.main');
   const contextValue = {
-    account,
-    heading,
-    headerExtras,
-    logoSrc,
-    onAccountClick
+    header,
+    sidebar,
+    logoSrc
   };
   return (
     <LayoutContext.Provider value={contextValue}>
       <ThemedLayout {...rest}>
-        <LayoutHeader>{heading}</LayoutHeader>
+        <LayoutHeader />
         <LayoutContainer>
           <ThemedLayoutContent>
             <LayoutSidebar />

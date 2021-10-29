@@ -12,15 +12,20 @@ export default {
 export const Basics = () => (
   <SystemContainer>
     <Layout
-      heading="Heading"
-      account="root"
+      header={{
+        title: 'Heading',
+        extras: (
+          <Fragment>
+            <IoIosHeartEmpty sx={{ color: 'success' }} />
+            <IoIosPower sx={{ color: 'danger' }} />
+          </Fragment>
+        )
+      }}
+      sidebar={{
+        account: 'root',
+        pages: []
+      }}
       logoSrc="http://www.deltasolutions.ru/images/logo-minimal.svg"
-      headerExtras={
-        <Fragment>
-          <IoIosHeartEmpty sx={{ color: 'success' }} />
-          <IoIosPower sx={{ color: 'danger' }} />
-        </Fragment>
-      }
     >
       Content
     </Layout>
