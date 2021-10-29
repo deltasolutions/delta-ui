@@ -10,6 +10,7 @@ import { LayoutSidebar } from './LayoutSidebar';
 export interface LayoutProps extends BoxProps, LayoutOptions {}
 
 export const Layout = ({
+  pages,
   header,
   sidebar,
   logoSrc,
@@ -20,6 +21,7 @@ export const Layout = ({
   const ThemedLayoutContent = useThemed('div', 'layout.content');
   const ThemedLayoutMain = useThemed('div', 'layout.main');
   const contextValue = {
+    pages,
     header,
     sidebar,
     logoSrc

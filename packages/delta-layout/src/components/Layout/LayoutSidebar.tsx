@@ -14,15 +14,15 @@ export const LayoutSidebar = ({ children, ...rest }: LayoutSidebarProps) => {
   if (!sidebar) {
     return null;
   }
-  const { account, onAccountClick } = sidebar;
+  const {
+    account: { title, onClick }
+  } = sidebar;
   return (
     <ThemedLayoutSidebar {...rest}>
-      {account && (
-        <ThemedLayoutSidebarAccount>
-          <MdAccountCircle />
-          <Anchor onClick={onAccountClick}>@{account}</Anchor>
-        </ThemedLayoutSidebarAccount>
-      )}
+      <ThemedLayoutSidebarAccount>
+        <MdAccountCircle />
+        <Anchor onClick={onClick}>@{title}</Anchor>
+      </ThemedLayoutSidebarAccount>
       <LayoutMenu />
     </ThemedLayoutSidebar>
   );

@@ -1,8 +1,10 @@
 import { ReactNode } from 'react';
-import { PageDef } from './PageDef';
+import { LayoutMenuOptions } from './LayoutMenuOptions';
 
 export interface LayoutSidebarOptions {
-  account: ReactNode;
-  pages: PageDef[];
-  onAccountClick?: () => void;
+  account: {
+    title: ReactNode;
+    onClick?: () => void;
+  };
+  menu: LayoutMenuOptions;
 }

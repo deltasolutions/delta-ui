@@ -5,6 +5,7 @@ export * from './FeedManager';
 export * from './FeedManagerOptions';
 export * from './FeedSectionDef';
 export * from './LayoutContextValue';
+export * from './LayoutMenuOptions';
 export * from './LayoutOptions';
 export * from './LayoutUpdateManager';
 export * from './PageDef';
