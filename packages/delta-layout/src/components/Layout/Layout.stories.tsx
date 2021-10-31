@@ -4,7 +4,7 @@ import { Fragment } from 'react';
 import { IoIosHeartEmpty, IoIosPower } from 'react-icons/io';
 import { useLocalLayoutMenu } from '../../hooks';
 import { LayoutMenuEntryDef } from '../../models';
-import { SystemContainer } from '../SystemContainer';
+import { AppContainer } from '../AppContainer';
 import { Layout } from './Layout';
 
 export default {
@@ -14,7 +14,7 @@ export default {
 export const Basics = () => {
   const menu = useLocalLayoutMenu({ entries, activeIds: [] });
   return (
-    <SystemContainer>
+    <AppContainer>
       <Layout
         header={{
           title: 'Heading',
@@ -33,7 +33,7 @@ export const Basics = () => {
       >
         Content
       </Layout>
-    </SystemContainer>
+    </AppContainer>
   );
 };
 

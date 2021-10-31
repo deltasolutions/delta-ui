@@ -3,8 +3,8 @@ import { jsx } from '@theme-ui/core';
 import { useCallback, useContext, useState } from 'react';
 import { useLayoutUpdateManager } from '../../hooks';
 import { FeedSectionDef, LayoutUpdateTarget } from '../../models';
+import { AppContainer } from '../AppContainer';
 import { LayoutUpdateContext } from '../Layout/LayoutUpdateContext';
-import { SystemContainer } from '../SystemContainer';
 import { Feed } from './Feed';
 import { FeedItem } from './FeedItem';
 
@@ -14,11 +14,11 @@ export default {
 
 export const Basics = () => {
   return (
-    <SystemContainer sx={{ padding: 4, minHeight: '100vh' }}>
+    <AppContainer sx={{ padding: 4, minHeight: '100vh' }}>
       <Feed>
         <FeedItem sx={{ padding: 3 }}>Lorem ipsum dolor sit amet.</FeedItem>
       </Feed>
-    </SystemContainer>
+    </AppContainer>
   );
 };
 
@@ -125,11 +125,11 @@ export const Manageable = () => {
     );
   }, []);
   return (
-    <SystemContainer sx={{ padding: 4, minHeight: '100vh' }}>
+    <AppContainer sx={{ padding: 4, minHeight: '100vh' }}>
       <LayoutUpdateContext.Provider value={updateManager}>
         <Toggler />
         <Feed managerOptions={{ registry, sections }} />
       </LayoutUpdateContext.Provider>
-    </SystemContainer>
+    </AppContainer>
   );
 };

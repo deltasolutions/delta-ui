@@ -1,5 +1,6 @@
 import { jsx } from '@theme-ui/core';
-import { useContext, useMemo } from 'react';
+import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Input,
   RadioGroup,
@@ -13,8 +14,7 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
-  ModalRendererProps,
-  SystemContext
+  ModalRendererProps
 } from 'restyler';
 import { FeedManager, FeedSectionDef } from '../../models';
 
@@ -28,7 +28,7 @@ export const ColumnsModal = ({
   sectionId,
   handleClose
 }: ColumnsModalProps) => {
-  const { locale } = useContext(SystemContext);
+  const [t] = useTranslation();
   const formDefaults = useMemo(
     () => getFormDefaults(targetSections, sectionId),
     []
@@ -46,24 +46,33 @@ export const ColumnsModal = ({
       }}
     >
       <ModalHeader>
-        <Heading kind="modal">{locale.columns}</Heading>
+        <Heading kind="modal">
+          {t('common:sections.feedSectionColumns')}
+        </Heading>
       </ModalHeader>
       <ModalBody>
         <FormGrid>
-          <FormField name="isFixedCountLayout" label={locale.layoutType}>
+          <FormField
+            name="isFixedCountLayout"
+            label={t('common:labels.layoutType')}
+          >
             <RadioGroup>
-              <RadioOption value={true}>{locale.fixedCount}</RadioOption>
-              <RadioOption value={false}>{locale.anyCountThatFit}</RadioOption>
+              <RadioOption value={true}>
+                {t('common:labels.fixedCount')}
+              </RadioOption>
+              <RadioOption value={false}>
+                {t('common:labels.anyCountThatFit')}
+              </RadioOption>
             </RadioGroup>
           </FormField>
           <FormField
             name="value"
             label={
               formManager.values.isFixedCountLayout
-                ? locale.count
-                : locale.minWidth
+                ? t('common:labels.count')
+                : t('common:labels.minimumWidth')
             }
-            validate={v => (v && +v > 0 ? [] : [locale.wrongFormat])}
+            validate={v => (v && +v > 0 ? [] : [t('errors.wrongFormat')])}
           >
             <Input type="number" />
           </FormField>
@@ -71,10 +80,10 @@ export const ColumnsModal = ({
       </ModalBody>
       <ModalFooter>
         <Button kind="secondary" onClick={handleClose}>
-          {locale.cancel}
+          {t('actions.cancel')}
         </Button>
         <Button kind="primary" type="submit">
-          {locale.apply}
+          {t('actions.apply')}
         </Button>
       </ModalFooter>
     </Form>

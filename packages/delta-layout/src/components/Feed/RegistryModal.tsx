@@ -1,5 +1,6 @@
 import { jsx } from '@theme-ui/core';
-import { Fragment, useContext, useMemo, useState } from 'react';
+import { Fragment, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useThemed } from 'restyler';
 import {
   Box,
@@ -9,8 +10,7 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
-  ModalRendererProps,
-  SystemContext
+  ModalRendererProps
 } from 'restyler';
 import { useDebounce } from '../../hooks';
 import { ComponentDef, FeedManager, FeedSectionDef } from '../../models';
@@ -27,6 +27,7 @@ export const RegistryModal = ({
   registry,
   handleClose
 }: RegistryModalProps) => {
+  const [t] = useTranslation();
   const ThemedRegistryQuery = useThemed('div', 'feed.registry.query');
   const ThemedRegistryContent = useThemed('div', 'feed.registry.content');
   const ThemedRegistryItem = useThemed('div', 'feed.registry.item');
@@ -35,7 +36,6 @@ export const RegistryModal = ({
     'div',
     'feed.registry.item.description'
   );
-  const { locale } = useContext(SystemContext);
   const [query, setQuery] = useState('');
   const debouncedQuery = useDebounce(query, 300);
   const filtered = useMemo(
@@ -75,12 +75,12 @@ export const RegistryModal = ({
   return (
     <Fragment>
       <ModalHeader>
-        <Heading kind="modal">{locale.registry}</Heading>
+        <Heading kind="modal">{t('sections.feedItemRegistry')}</Heading>
       </ModalHeader>
       <ModalBody>
         <ThemedRegistryQuery>
           <Input
-            placeholder={locale.search}
+            placeholder={t('labels.search')}
             value={query}
             onChange={v => setQuery(v)}
           />
@@ -89,7 +89,7 @@ export const RegistryModal = ({
       </ModalBody>
       <ModalFooter>
         <Button kind="primary" onClick={handleClose}>
-          {locale.cancel}
+          {t('actions.cancel')}
         </Button>
       </ModalFooter>
     </Fragment>
