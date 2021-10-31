@@ -13,9 +13,12 @@ import { theme as defaultTheme } from 'restyler-theme-delta';
 import { LoadScreen } from '../LoadScreen';
 import { defaultStyled } from './defaultStyled';
 
-export interface RestylerContainerProps extends Partial<SystemContainerProps> {}
+export interface RestylerContainerProps extends Partial<SystemContainerProps> {
+  useSuspense?: boolean;
+}
 
 export const RestylerContainer = ({
+  useSuspense,
   theme: passedTheme = defaultTheme,
   locale: passedLocale = defaultLocale,
   styled: passedStyled,
@@ -55,7 +58,11 @@ export const RestylerContainer = ({
             }
           }}
         />
-        <Suspense fallback={<LoadScreen />}>{children}</Suspense>
+        {useSuspense ? (
+          <Suspense fallback={<LoadScreen />}>{children}</Suspense>
+        ) : (
+          children
+        )}
       </SystemContainer>
     </ThemeProvider>
   );

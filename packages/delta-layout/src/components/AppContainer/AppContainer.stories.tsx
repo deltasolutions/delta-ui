@@ -12,7 +12,7 @@ export default {
 export const Basics = () => <AppContainer i18n={i18n}>It works</AppContainer>;
 
 export const WithTranslation = () => (
-  <AppContainer i18n={i18n}>
+  <AppContainer useSuspense i18n={i18n}>
     <Translated />
   </AppContainer>
 );
