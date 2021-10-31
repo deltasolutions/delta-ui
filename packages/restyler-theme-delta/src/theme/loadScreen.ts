@@ -1,4 +1,4 @@
-import { keyframes } from '@emotion/react';
+import { keyframes } from '@emotion/core';
 import { BasicTheme } from 'restyler';
 
 const loaderAnimation = keyframes({
