@@ -1,6 +1,6 @@
 import { Global } from '@emotion/react';
 import { jsx, ThemeProvider } from '@theme-ui/core';
-import { Suspense, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   defaultLocale,
@@ -10,15 +10,11 @@ import {
   SystemContainerProps
 } from 'restyler';
 import { theme as defaultTheme } from 'restyler-theme-delta';
-import { LoadScreen } from '../LoadScreen';
 import { defaultStyled } from './defaultStyled';
 
-export interface RestylerContainerProps extends Partial<SystemContainerProps> {
-  useSuspense?: boolean;
-}
+export interface RestylerContainerProps extends Partial<SystemContainerProps> {}
 
 export const RestylerContainer = ({
-  useSuspense,
   theme: passedTheme = defaultTheme,
   locale: passedLocale = defaultLocale,
   styled: passedStyled,
@@ -58,11 +54,7 @@ export const RestylerContainer = ({
             }
           }}
         />
-        {useSuspense ? (
-          <Suspense fallback={<LoadScreen />}>{children}</Suspense>
-        ) : (
-          children
-        )}
+        {children}
       </SystemContainer>
     </ThemeProvider>
   );
