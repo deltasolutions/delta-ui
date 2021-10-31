@@ -5,13 +5,15 @@ import { button } from './button';
 import { card } from './card';
 import { checkbox } from './checkbox';
 import { collapse } from './collapse';
-import { container } from './container';
 import { defaults } from './defaults';
+import { feed } from './feed';
 import { file } from './file';
 import { form } from './form';
 import { heading } from './heading';
 import { input } from './input';
 import { layer } from './layer';
+import { layout } from './layout';
+import { loadScreen } from './loadScreen';
 import { masonry } from './masonry';
 import { menu } from './menu';
 import { modal } from './modal';
@@ -105,13 +107,15 @@ export const theme: BasicTheme = {
     card,
     checkbox,
     collapse,
-    container,
     defaults,
+    feed,
     file,
     form,
     heading,
     input,
     layer,
+    layout,
+    loadScreen,
     masonry,
     menu,
     modal,
