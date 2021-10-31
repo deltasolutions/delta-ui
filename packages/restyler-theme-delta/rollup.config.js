@@ -44,7 +44,7 @@ export default {
     })
   ],
 
-  external: ['@emotion/core', 'react', 'react-dom', 'restyler'],
+  external: ['@emotion/react', 'react', 'react-dom', 'restyler'],
 
   onwarn: (warning, rollupWarn) => {
     if (!['THIS_IS_UNDEFINED'].includes(warning.code)) {
