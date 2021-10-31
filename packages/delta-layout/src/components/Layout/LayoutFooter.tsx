@@ -1,5 +1,5 @@
 import { jsx } from '@theme-ui/core';
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import { useThemed, Box } from 'restyler';
 import { LayoutContainer } from './LayoutContainer';
 import { LayoutContext } from './LayoutContext';
@@ -8,6 +8,7 @@ export const LayoutFooter = () => {
   const ThemedLayoutFooterAnchor = useThemed('a', 'layout.footer.anchor');
   const ThemedLayoutFooter = useThemed('div', 'layout.footer');
   const { logoSrc } = useContext(LayoutContext);
+  const currentYear = useMemo(() => new Date().getFullYear(), []);
   return (
     <ThemedLayoutFooter>
       <LayoutContainer>
@@ -31,7 +32,7 @@ export const LayoutFooter = () => {
           <ThemedLayoutFooterAnchor
             sx={{ display: 'flex', flexDirection: 'column' }}
           >
-            © 2006 — 2021
+            © 2006 — {currentYear}
           </ThemedLayoutFooterAnchor>
         </Box>
       </LayoutContainer>

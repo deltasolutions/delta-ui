@@ -19,7 +19,9 @@ export const decorators = [
             namespace: string,
             callback: (errorValue: unknown, translations: any) => void
           ) {
-            callback(null, commonNamespace);
+            setTimeout(() => {
+              callback(null, commonNamespace);
+            }, 2000);
           }
         })
         .init({
