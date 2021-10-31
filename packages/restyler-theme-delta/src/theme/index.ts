@@ -13,6 +13,7 @@ import { heading } from './heading';
 import { input } from './input';
 import { layer } from './layer';
 import { layout } from './layout';
+import { loadScreen } from './loadScreen';
 import { masonry } from './masonry';
 import { menu } from './menu';
 import { modal } from './modal';
@@ -114,6 +115,7 @@ export const theme: BasicTheme = {
     input,
     layer,
     layout,
+    loadScreen,
     masonry,
     menu,
     modal,

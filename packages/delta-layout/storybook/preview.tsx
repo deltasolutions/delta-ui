@@ -21,7 +21,7 @@ export const decorators = [
           ) {
             setTimeout(() => {
               callback(null, commonNamespace);
-            }, 2000);
+            }, 1000);
           }
         })
         .init({
