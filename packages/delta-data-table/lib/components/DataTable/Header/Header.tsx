@@ -1,7 +1,7 @@
 import { jsx } from '@theme-ui/core';
-import { useContext, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo } from 'react';
 import { useDrop } from 'react-dnd';
-import { useSharedRef, useThemed } from 'restyler';
+import { SystemContext, useThemed } from 'restyler';
 import { DataTableContext } from '../DataTableContext';
 import { getColumnWidth, getRowWidth } from '../utils';
 import { DraggableCell } from './DraggableCell';
@@ -10,8 +10,6 @@ import { Ruler } from './Ruler';
 export const Header = () => {
   const TableRow = useThemed('div', 'dataTable.row');
   const { columns, activeTab, updateActiveTab } = useContext(DataTableContext);
-
-  const [element, setElement] = useState<HTMLDivElement | null>(null);
   const [_, dropRef] = useDrop(() => ({
     accept: 'resizer',
     drop: ({ index }, monitor) => {
@@ -29,16 +27,10 @@ export const Header = () => {
       });
     }
   }));
-  const sharedRef = useSharedRef<HTMLDivElement>(null, [setElement, dropRef]);
-  const rulerOffset = useMemo(
-    () => (element ? -element.getBoundingClientRect().left : 0),
-    [element]
-  );
-
   return (
     <TableRow
       key="head"
-      ref={sharedRef}
+      ref={dropRef}
       kind="head"
       style={{
         zIndex: 1,
@@ -48,7 +40,6 @@ export const Header = () => {
         whiteSpace: 'nowrap'
       }}
     >
-      <Ruler offset={rulerOffset} />
       {columns.map((v, i) => (
         <DraggableCell
           key={v.key + '-head'}
@@ -61,6 +52,7 @@ export const Header = () => {
           {v.header}
         </DraggableCell>
       ))}
+      <Ruler />
     </TableRow>
   );
 };
