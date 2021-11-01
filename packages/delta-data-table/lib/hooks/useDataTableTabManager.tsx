@@ -1,12 +1,13 @@
 import { SetStateAction, useCallback, useMemo, useState } from 'react';
-import { DataTableTab } from './types';
-import { LayoutManager } from './useLayoutManager';
+import {
+  DataTableTabDef,
+  DataTableTabManagerOptions,
+  DataTableTabManager
+} from '../models';
 
-export interface TabManagerOptions {
-  layoutManager: LayoutManager;
-}
-
-export const useTabManager = ({ layoutManager }: TabManagerOptions) => {
+export const useDataTableTabManager = ({
+  layoutManager
+}: DataTableTabManagerOptions): DataTableTabManager => {
   const { layout, setLayout } = layoutManager;
   const [activeTabName, setActiveTabName] = useState('main');
   const activeTab = useMemo(
@@ -14,7 +15,7 @@ export const useTabManager = ({ layoutManager }: TabManagerOptions) => {
     [activeTabName, layout]
   );
   const updateActiveTab = useCallback(
-    (dispatcher: SetStateAction<Partial<DataTableTab>>) => {
+    (dispatcher: SetStateAction<Partial<DataTableTabDef>>) => {
       const tab =
         typeof dispatcher === 'function' ? dispatcher(activeTab) : dispatcher;
       setLayout({
@@ -55,7 +56,7 @@ export const useTabManager = ({ layoutManager }: TabManagerOptions) => {
     },
     [activeTabName, layout]
   );
-  return {
+  const manager = {
     activeTab,
     activeTabName,
     setActiveTabName,
@@ -63,6 +64,5 @@ export const useTabManager = ({ layoutManager }: TabManagerOptions) => {
     addTab,
     removeTab
   };
+  return useMemo(() => manager, Object.values(manager));
 };
-
-export type TabManager = ReturnType<typeof useTabManager>;

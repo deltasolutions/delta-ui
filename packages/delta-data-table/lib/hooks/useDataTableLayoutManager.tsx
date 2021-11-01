@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useUpdateEffect } from 'restyler';
-import { DataTableLayout, DataTableLayoutStatus } from './types';
+import {
+  DataTableLayoutDef,
+  DataTableLayoutManager,
+  DataTableLayoutStatus
+} from '../models';
 
-export const useLayoutManager = () => {
-  const [layout, setLayout] = useState<DataTableLayout>({
+export const useDataTableLayoutManager = (): DataTableLayoutManager => {
+  const [layout, setLayout] = useState<DataTableLayoutDef>({
     tabs: [
       {
         name: 'main',
@@ -31,7 +35,7 @@ export const useLayoutManager = () => {
     }
     return undefined;
   }, [layout]);
-  return {
+  const manager = {
     layout,
     setLayout,
     isConfiguringLayout,
@@ -39,6 +43,5 @@ export const useLayoutManager = () => {
     layoutStatus,
     setLayoutStatus
   };
+  return useMemo(() => manager, Object.values(manager));
 };
-
-export type LayoutManager = ReturnType<typeof useLayoutManager>;

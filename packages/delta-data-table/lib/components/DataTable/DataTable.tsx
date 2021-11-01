@@ -2,24 +2,20 @@ import { jsx } from '@theme-ui/core';
 import { forwardRef, useCallback, useMemo } from 'react';
 import { FixedSizeList } from 'react-window';
 import { Box, useThemed } from 'restyler';
+import { useCoercedColumns } from '../../hooks';
+import { DataTableProps } from '../../models';
+import { getColumnWidth, getRowWidth } from '../../utils';
 import { DataTableContext } from './DataTableContext';
 import { Header } from './Header';
 import { Toolbar } from './Toolbar';
-import { DataTableProps } from './types';
-import { useCoercedColumns } from './useCoercedColumns';
-import { useLayoutManager } from './useLayoutManager';
-import { useTabManager } from './useTabManager';
-import { getColumnWidth, getRowWidth } from './utils';
 
 export const DataTable = <T extends object>({
-  height,
   columns: originalColumns,
   data,
   getRowProps,
-  onDownload,
   ...rest
 }: DataTableProps<T>) => {
-  const Table = useThemed('div', 'table');
+  const Table = useThemed('div', 'dataTable');
   const TableBody = useThemed('div', 'dataTable.body');
   const TableRow = useThemed('div', 'dataTable.row');
   const TableCell = useThemed('div', 'dataTable.cell');
@@ -74,6 +70,8 @@ export const DataTable = <T extends object>({
     [columns]
   );
 
+  const height = 400; // FIXME
+  const rowHeight = 56; // FIXME
   const bodyContent = useMemo(
     () => (
       <FixedSizeList
@@ -95,7 +93,7 @@ export const DataTable = <T extends object>({
       <DataTableContext.Provider
         value={{ ...layoutManager, ...tabManager, originalColumns, columns }}
       >
-        <Toolbar sx={{ height: rowHeight }} onDownload={onDownload} />
+        <Toolbar sx={{ height: rowHeight }} />
         <Table>
           <TableBody>{bodyContent}</TableBody>
         </Table>
@@ -103,5 +101,3 @@ export const DataTable = <T extends object>({
     </Box>
   );
 };
-
-const rowHeight = 56;
