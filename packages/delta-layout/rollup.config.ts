@@ -50,7 +50,6 @@ export default {
   external: [
     '@emotion/react',
     '@theme-ui/core',
-    'i18next',
     'react',
     'react-dom',
     'react-dnd',

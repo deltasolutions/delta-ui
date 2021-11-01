@@ -1,23 +1,65 @@
-import { jsx } from '@theme-ui/core';
-import i18n from 'i18next';
+import { Global } from '@emotion/react';
+import { jsx, ThemeProvider } from '@theme-ui/core';
+import { useMemo } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { I18nextProvider } from 'react-i18next';
-import { RestylerContainer, RestylerContainerProps } from './RestylerContainer';
+import { useTranslation } from 'react-i18next';
+import {
+  defaultLocale,
+  hash,
+  Locale,
+  SystemContainer,
+  SystemContainerProps
+} from 'restyler';
+import { theme as defaultTheme } from 'restyler-theme-delta';
+import { defaultStyled } from './defaultStyled';
 
-export interface AppContainerProps extends RestylerContainerProps {
-  i18n?: any;
-}
+export interface AppContainerProps extends Partial<SystemContainerProps> {}
 
 export const AppContainer = ({
-  i18n: passedI18n,
+  theme: passedTheme = defaultTheme,
+  locale: passedLocale = defaultLocale,
+  styled: passedStyled,
+  children,
   ...rest
 }: AppContainerProps) => {
+  const [t] = useTranslation('common', { useSuspense: false });
+  const locale = useMemo(
+    () =>
+      passedLocale ??
+      ({
+        cancel: t('common:actions.cancel'),
+        empty: t('common:labels.empty'),
+        ok: t('common:actions.confirm'),
+        required: t('common:errors.required')
+      } as Locale),
+    [passedLocale, t]
+  );
+  const styled = useMemo(() => passedStyled ?? defaultStyled, [passedStyled]);
+  const theme = passedTheme;
+  const key = useMemo(() => hash(theme) + hash(locale), [theme, locale]);
   return (
     <DndProvider backend={HTML5Backend}>
-      <I18nextProvider i18n={passedI18n ?? i18n}>
-        <RestylerContainer {...rest} />
-      </I18nextProvider>
+      <ThemeProvider theme={theme}>
+        <SystemContainer
+          key={key}
+          theme={theme}
+          locale={locale}
+          styled={styled}
+          {...rest}
+        >
+          <Global
+            styles={{
+              'html, body, #root': {
+                margin: '0 !important',
+                padding: '0 !important',
+                minHeight: '100vh'
+              }
+            }}
+          />
+          {children}
+        </SystemContainer>
+      </ThemeProvider>
     </DndProvider>
   );
 };
