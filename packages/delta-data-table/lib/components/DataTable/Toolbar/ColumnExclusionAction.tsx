@@ -8,7 +8,7 @@ import {
   useImperativePortal,
   useStandaloneTransition
 } from 'restyler';
-import { jsx } from 'theme-ui';
+import { jsx } from '@theme-ui/core';
 import { Tooltip } from '../../Tooltip';
 import { DataTableContext } from '../DataTableContext';
 import { ColumnExclusions, ColumnExclusionsContext } from './ColumnExclusions';

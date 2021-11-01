@@ -19,7 +19,7 @@ import {
   useSharedRef,
   useStack
 } from 'restyler';
-import { jsx } from 'theme-ui';
+import { jsx } from '@theme-ui/core';
 import { DataTableContext } from '../DataTableContext';
 
 export interface ColumnExclusionsContext {

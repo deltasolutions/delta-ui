@@ -4,7 +4,7 @@ import { BiReset } from 'react-icons/bi';
 import { IoMdClose } from 'react-icons/io';
 import { RiLayoutColumnFill } from 'react-icons/ri';
 import { Button } from 'restyler';
-import { jsx } from 'theme-ui';
+import { jsx } from '@theme-ui/core';
 import { Tooltip } from '../../Tooltip';
 import { DataTableContext } from '../DataTableContext';
 import { ColumnExclusionAction } from './ColumnExclusionAction';

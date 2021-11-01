@@ -1,7 +1,7 @@
 import { forwardRef, useCallback, useMemo } from 'react';
 import { FixedSizeList } from 'react-window';
 import { Box, useThemed } from 'restyler';
-import { jsx } from 'theme-ui';
+import { jsx } from '@theme-ui/core';
 import { DataTableContext } from './DataTableContext';
 import { Header } from './Header';
 import { Toolbar } from './Toolbar';

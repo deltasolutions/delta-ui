@@ -2,7 +2,7 @@ import { useTranslation } from 'next-i18next';
 import { IoIosSave } from 'react-icons/io';
 import { RiLayoutColumnFill } from 'react-icons/ri';
 import { Box, BoxProps, Button } from 'restyler';
-import { jsx } from 'theme-ui';
+import { jsx } from '@theme-ui/core';
 import { Tooltip } from '../../Tooltip';
 import { Actions } from './Actions';
 import { Tabs } from './Tabs';

@@ -2,7 +2,7 @@ import { useContext, useMemo } from 'react';
 import { IoMdAdd, IoMdClose } from 'react-icons/io';
 import { IoHome } from 'react-icons/io5';
 import { Box, Button } from 'restyler';
-import { jsx } from 'theme-ui';
+import { jsx } from '@theme-ui/core';
 import { DataTableContext } from '../DataTableContext';
 
 export * from './Toolbar';
