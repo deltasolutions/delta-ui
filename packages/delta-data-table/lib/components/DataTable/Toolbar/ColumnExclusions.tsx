@@ -8,7 +8,7 @@ import {
   useMemo
 } from 'react';
 import { useDrag } from 'react-dnd';
-import { useTranslation } from 'react-i18next';
+import { IoPushOutline } from 'react-icons/io5';
 import {
   Button,
   ButtonProps,
@@ -30,7 +30,6 @@ export const ColumnExclusions = forwardRef<
   HTMLDivElement,
   StandaloneTransitionerProps<ColumnExclusionsContext>
 >(({ isVisible, handleClose, context: { anchorRef } = {} }, ref) => {
-  const [t] = useTranslation('common');
   const {
     originalColumns,
     activeTab: { columnExclusions = [] }
@@ -63,8 +62,8 @@ export const ColumnExclusions = forwardRef<
         </Item>
       ))
     ) : (
-      <Button disabled kind="primary">
-        {t('labels.empty')}
+      <Button disabled kind="icon" sx={{ pointerEvents: 'none', opacity: 0.6 }}>
+        <IoPushOutline />
       </Button>
     );
   return (
