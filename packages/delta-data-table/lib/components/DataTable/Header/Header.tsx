@@ -44,7 +44,7 @@ export const Header = () => {
         zIndex: 1,
         position: 'sticky',
         top: 0,
-        width: getRowWidth(columns) + 'px',
+        width: `max(${getRowWidth(columns)}px, 100%)`,
         whiteSpace: 'nowrap'
       }}
     >

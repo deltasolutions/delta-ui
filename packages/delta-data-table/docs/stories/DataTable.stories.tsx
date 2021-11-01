@@ -9,7 +9,7 @@ export default {
 } as Meta;
 
 export const Basics = () => {
-  const props = useMock({ columnCount: 5, rowCount: 30 });
+  const props = useMock({ columnCount: 5, rowCount: 100 });
   return (
     <Box sx={{ padding: 5 }}>
       <Card>

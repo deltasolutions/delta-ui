@@ -39,7 +39,7 @@ export const DataTable = <T extends object>({
           style={{
             ...style,
             cursor: onClick ? 'pointer' : undefined,
-            width: getRowWidth(columns) + 'px'
+            width: `max(${getRowWidth(columns)}px, 100%)`
           }}
           onClick={onClick}
           {...rest}
