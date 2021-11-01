@@ -1,8 +1,8 @@
-import { useContext, useMemo } from 'react';
-import { IoMdAdd, IoMdClose } from 'react-icons/io';
-import { IoHome } from 'react-icons/io5';
-import { Box, Button } from 'restyler';
 import { jsx } from '@theme-ui/core';
+import { useContext, useMemo } from 'react';
+import { IoAdd, IoCloseOutline } from 'react-icons/io5';
+import { RiHome6Line } from 'react-icons/ri';
+import { Box, Button } from 'restyler';
 import { DataTableContext } from '../DataTableContext';
 
 export * from './Toolbar';
@@ -33,8 +33,8 @@ export const Tabs = () => {
                   : removeTab(name);
               }}
             >
-              {isMain ? <IoHome /> : letters[index - 1]}
-              <IoMdClose role="close" />
+              {isMain ? <RiHome6Line /> : letters[index - 1]}
+              <IoCloseOutline role="close" />
             </Button>
           );
         })}
@@ -43,7 +43,7 @@ export const Tabs = () => {
             sx={getTabStyle(false, false)}
             onClick={() => addTab(getNewTabName())}
           >
-            <IoMdAdd />
+            <IoAdd />
           </Button>
         )}
       </Box>

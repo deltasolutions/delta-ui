@@ -1,15 +1,14 @@
+import { jsx } from '@theme-ui/core';
 import { useContext, useRef } from 'react';
 import { useDrop } from 'react-dnd';
 import { useTranslation } from 'react-i18next';
-import { RiFolderChartFill, RiFolderOpenFill } from 'react-icons/ri';
+import { IoFileTrayFullOutline, IoFileTrayOutline } from 'react-icons/io5';
 import {
   Button,
   SystemContext,
   useImperativePortal,
   useStandaloneTransition
 } from 'restyler';
-import { jsx } from '@theme-ui/core';
-import { Tooltip } from '../../Tooltip';
 import { DataTableContext } from '../DataTableContext';
 import { ColumnExclusions, ColumnExclusionsContext } from './ColumnExclusions';
 
@@ -60,31 +59,24 @@ export const ColumnExclusionAction = () => {
   });
 
   return (
-    <Tooltip
-      content={
-        t('labels.unusedColumns') +
-        (columnExclusions.length ? ` (${columnExclusions.length})` : '')
+    <Button
+      ref={dropRef}
+      kind="icon"
+      sx={{ color: isOver && canDrop ? 'danger' : undefined }}
+      onClick={() =>
+        openFolder({
+          anchorRef
+        })
       }
     >
-      <Button
-        ref={dropRef}
-        kind="icon"
-        sx={{ color: isOver && canDrop ? 'danger' : undefined }}
-        onClick={() =>
-          openFolder({
-            anchorRef
-          })
-        }
-      >
-        {portal}
-        <span ref={anchorRef}>
-          {columnExclusions.length > 0 ? (
-            <RiFolderChartFill />
-          ) : (
-            <RiFolderOpenFill />
-          )}
-        </span>
-      </Button>
-    </Tooltip>
+      {portal}
+      <span ref={anchorRef}>
+        {columnExclusions.length > 0 ? (
+          <IoFileTrayFullOutline />
+        ) : (
+          <IoFileTrayOutline />
+        )}
+      </span>
+    </Button>
   );
 };

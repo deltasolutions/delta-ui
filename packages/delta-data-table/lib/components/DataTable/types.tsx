@@ -7,7 +7,7 @@ export interface DataTableColumn {
   width?: number;
 }
 
-export interface DataTableProps<T extends object = Record<string, any>>
+export interface DataTableProps<T extends object = { [key: string]: any }>
   extends BoxProps {
   getRowProps?: (datum: T, index: number) => HTMLAttributes<HTMLDivElement>;
   onDownload?: () => void;

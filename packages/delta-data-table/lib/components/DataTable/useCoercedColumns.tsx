@@ -24,7 +24,7 @@ export const useCoercedColumns = (
     const filteredAccessors = orderedAccessors.filter(
       v => !exclusionsSet.has(v)
     );
-    const columnsMap: Record<string, DataTableColumn> = columns.reduce(
+    const columnsMap: { [key: string]: DataTableColumn } = columns.reduce(
       (p, v) => ({ ...p, [v.key]: v }),
       {}
     );

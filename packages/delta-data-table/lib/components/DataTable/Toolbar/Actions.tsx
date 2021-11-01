@@ -1,11 +1,8 @@
+import { jsx } from '@theme-ui/core';
 import { Fragment, useCallback, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { BiReset } from 'react-icons/bi';
-import { IoMdClose } from 'react-icons/io';
-import { RiLayoutColumnFill } from 'react-icons/ri';
+import { IoArrowUndoOutline, IoCloseOutline, IoOptions } from 'react-icons/io5';
 import { Button } from 'restyler';
-import { jsx } from '@theme-ui/core';
-import { Tooltip } from '../../Tooltip';
 import { DataTableContext } from '../DataTableContext';
 import { ColumnExclusionAction } from './ColumnExclusionAction';
 import { SyncAction } from './SyncAction';
@@ -28,25 +25,19 @@ export const Actions = () => {
       <Fragment>
         <SyncAction />
         <ColumnExclusionAction />
-        <Tooltip content={t('actions.reset')}>
-          <Button kind="icon" onClick={handleReset}>
-            <BiReset />
-          </Button>
-        </Tooltip>
-        <Tooltip content={t('actions.close')}>
-          <Button kind="icon" onClick={() => setIsConfiguringLayout(false)}>
-            <IoMdClose />
-          </Button>
-        </Tooltip>
+        <Button kind="icon" onClick={handleReset}>
+          <IoArrowUndoOutline />
+        </Button>
+        <Button kind="icon" onClick={() => setIsConfiguringLayout(false)}>
+          <IoCloseOutline />
+        </Button>
       </Fragment>
     );
   }
 
   return (
-    <Tooltip content={t('actions.updateLayout')}>
-      <Button kind="icon" onClick={() => setIsConfiguringLayout(true)}>
-        <RiLayoutColumnFill />
-      </Button>
-    </Tooltip>
+    <Button kind="icon" onClick={() => setIsConfiguringLayout(true)}>
+      <IoOptions />
+    </Button>
   );
 };

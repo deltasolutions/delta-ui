@@ -1,5 +1,5 @@
-import { useDragLayer } from 'react-dnd';
 import { jsx } from '@theme-ui/core';
+import { useDragLayer } from 'react-dnd';
 
 export interface RulerProps {
   offset: number;

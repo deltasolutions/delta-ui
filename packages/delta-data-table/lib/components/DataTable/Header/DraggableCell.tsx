@@ -1,7 +1,7 @@
+import { jsx } from '@theme-ui/core';
 import { Fragment, useContext } from 'react';
 import { useDrag } from 'react-dnd';
 import { BoxProps, useThemed } from 'restyler';
-import { jsx } from '@theme-ui/core';
 import { DataTableContext } from '../DataTableContext';
 import { Handle } from './Handle';
 

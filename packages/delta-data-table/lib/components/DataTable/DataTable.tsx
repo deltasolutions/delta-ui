@@ -1,7 +1,7 @@
+import { jsx } from '@theme-ui/core';
 import { forwardRef, useCallback, useMemo } from 'react';
 import { FixedSizeList } from 'react-window';
 import { Box, useThemed } from 'restyler';
-import { jsx } from '@theme-ui/core';
 import { DataTableContext } from './DataTableContext';
 import { Header } from './Header';
 import { Toolbar } from './Toolbar';
@@ -20,9 +20,9 @@ export const DataTable = <T extends object>({
   ...rest
 }: DataTableProps<T>) => {
   const Table = useThemed('div', 'table');
-  const TableBody = useThemed('div', 'table.body');
-  const TableRow = useThemed('div', 'table.row');
-  const TableCell = useThemed('div', 'table.cell');
+  const TableBody = useThemed('div', 'dataTable.body');
+  const TableRow = useThemed('div', 'dataTable.row');
+  const TableCell = useThemed('div', 'dataTable.cell');
 
   const layoutManager = useLayoutManager();
   const tabManager = useTabManager({ layoutManager });

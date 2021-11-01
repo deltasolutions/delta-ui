@@ -1,14 +1,14 @@
+import { jsx } from '@theme-ui/core';
 import { useContext, useMemo, useState } from 'react';
 import { useDrop } from 'react-dnd';
 import { useSharedRef, useThemed } from 'restyler';
-import { jsx } from '@theme-ui/core';
 import { DataTableContext } from '../DataTableContext';
 import { getColumnWidth, getRowWidth } from '../utils';
 import { DraggableCell } from './DraggableCell';
 import { Ruler } from './Ruler';
 
 export const Header = () => {
-  const TableRow = useThemed('div', 'table.row');
+  const TableRow = useThemed('div', 'dataTable.row');
   const { columns, activeTab, updateActiveTab } = useContext(DataTableContext);
 
   const [element, setElement] = useState<HTMLDivElement | null>(null);

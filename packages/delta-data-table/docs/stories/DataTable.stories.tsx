@@ -1,9 +1,20 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { Box } from 'restyler';
+import { Box, Card } from 'restyler';
+import { DataTable } from '../../lib';
+import { useMock } from './useMock';
 
 export default {
   title: 'General/DataTable'
 } as Meta;
 
-export const Basics = () => <Box>It works</Box>;
+export const Basics = () => {
+  const props = useMock({ columnCount: 5, rowCount: 30 });
+  return (
+    <Box sx={{ padding: 5 }}>
+      <Card>
+        <DataTable {...props} height={400} />
+      </Card>
+    </Box>
+  );
+};

@@ -1,4 +1,5 @@
-import { useCallback, useContext, useEffect } from 'react';
+import { jsx } from '@theme-ui/core';
+import { useContext, useEffect } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import { HiOutlineArrowNarrowUp } from 'react-icons/hi';

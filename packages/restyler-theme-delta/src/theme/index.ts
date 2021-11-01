@@ -5,6 +5,7 @@ import { button } from './button';
 import { card } from './card';
 import { checkbox } from './checkbox';
 import { collapse } from './collapse';
+import { dataTable } from './dataTable';
 import { defaults } from './defaults';
 import { feed } from './feed';
 import { file } from './file';
@@ -107,6 +108,7 @@ export const theme: BasicTheme = {
     card,
     checkbox,
     collapse,
+    dataTable,
     defaults,
     feed,
     file,

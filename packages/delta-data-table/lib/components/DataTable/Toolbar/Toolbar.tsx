@@ -1,9 +1,6 @@
-import { useTranslation } from 'next-i18next';
-import { IoIosSave } from 'react-icons/io';
-import { RiLayoutColumnFill } from 'react-icons/ri';
-import { Box, BoxProps, Button } from 'restyler';
 import { jsx } from '@theme-ui/core';
-import { Tooltip } from '../../Tooltip';
+import { IoIosSave } from 'react-icons/io';
+import { Box, BoxProps, Button } from 'restyler';
 import { Actions } from './Actions';
 import { Tabs } from './Tabs';
 
@@ -12,8 +9,6 @@ export interface ToolbarProps extends BoxProps {
 }
 
 export const Toolbar = ({ onDownload, ...rest }: ToolbarProps) => {
-  const [t] = useTranslation('common');
-  const [tFlights] = useTranslation('flights');
   return (
     <Box
       sx={{
@@ -28,11 +23,9 @@ export const Toolbar = ({ onDownload, ...rest }: ToolbarProps) => {
       <Tabs />
       <Box sx={{ display: 'flex', gap: 2 }}>
         {onDownload && (
-          <Tooltip content={t('actions.download')}>
-            <Button kind="icon" onClick={onDownload}>
-              <IoIosSave />
-            </Button>
-          </Tooltip>
+          <Button kind="icon" onClick={onDownload}>
+            <IoIosSave />
+          </Button>
         )}
         <Actions />
       </Box>
