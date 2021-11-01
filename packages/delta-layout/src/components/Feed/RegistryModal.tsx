@@ -75,12 +75,12 @@ export const RegistryModal = ({
   return (
     <Fragment>
       <ModalHeader>
-        <Heading kind="modal">{t('sections.feedItemRegistry')}</Heading>
+        <Heading kind="modal">{t('common:sections.feedItemRegistry')}</Heading>
       </ModalHeader>
       <ModalBody>
         <ThemedRegistryQuery>
           <Input
-            placeholder={t('labels.search')}
+            placeholder={t('common:labels.search')}
             value={query}
             onChange={v => setQuery(v)}
           />
@@ -89,7 +89,7 @@ export const RegistryModal = ({
       </ModalBody>
       <ModalFooter>
         <Button kind="primary" onClick={handleClose}>
-          {t('actions.cancel')}
+          {t('common:actions.cancel')}
         </Button>
       </ModalFooter>
     </Fragment>

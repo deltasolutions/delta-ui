@@ -47,7 +47,17 @@ export default {
     })
   ],
 
-  external: ['react', 'react-dom', 'restyler'],
+  external: [
+    '@emotion/react',
+    '@theme-ui/core',
+    'react',
+    'react-dom',
+    'react-dnd',
+    'react-dnd-html5-backend',
+    'react-i18next',
+    'restyler',
+    'restyler-theme-delta'
+  ],
 
   onwarn: (warning, rollupWarn) => {
     if (!['THIS_IS_UNDEFINED'].includes(warning.code)) {

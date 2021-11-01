@@ -1,7 +1,7 @@
 import { jsx } from '@theme-ui/core';
 import i18n from 'i18next';
 import { useLayoutEffect } from 'react';
-import { initReactI18next } from 'react-i18next';
+import { I18nextProvider, initReactI18next } from 'react-i18next';
 
 export const parameters = {
   controls: { hideNoControlsWarning: true }
@@ -29,7 +29,11 @@ export const decorators = [
           interpolation: { escapeValue: false }
         });
     }, []);
-    return <Story />;
+    return (
+      <I18nextProvider i18n={i18n}>
+        <Story />
+      </I18nextProvider>
+    );
   }
 ];
 

@@ -72,7 +72,9 @@ export const ColumnsModal = ({
                 ? t('common:labels.count')
                 : t('common:labels.minimumWidth')
             }
-            validate={v => (v && +v > 0 ? [] : [t('errors.wrongFormat')])}
+            validate={v =>
+              v && +v > 0 ? [] : [t('common:errors.wrongFormat')]
+            }
           >
             <Input type="number" />
           </FormField>
@@ -80,10 +82,10 @@ export const ColumnsModal = ({
       </ModalBody>
       <ModalFooter>
         <Button kind="secondary" onClick={handleClose}>
-          {t('actions.cancel')}
+          {t('common:actions.cancel')}
         </Button>
         <Button kind="primary" type="submit">
-          {t('actions.apply')}
+          {t('common:actions.apply')}
         </Button>
       </ModalFooter>
     </Form>
