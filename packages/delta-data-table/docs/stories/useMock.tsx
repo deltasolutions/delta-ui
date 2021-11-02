@@ -11,7 +11,7 @@ export const useMock = ({ columnCount, rowCount }: MockDataOptions) => {
     () =>
       new Array(columnCount)
         .fill(undefined)
-        .map((_, i) => 'Tab ' + String.fromCharCode('A'.charCodeAt(0) + i)),
+        .map((_, i) => 'Column ' + String.fromCharCode('A'.charCodeAt(0) + i)),
     []
   );
   const generate = useCallback(
