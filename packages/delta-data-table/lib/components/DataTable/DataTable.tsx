@@ -6,11 +6,12 @@ import { DataTableProps } from '../../models';
 import { getColumnWidth, getRowWidth } from '../../utils';
 import { DataTableContext } from './DataTableContext';
 import { Header } from './Header';
+import { LoaderRow } from './LoaderRow';
 import { Toolbar } from './Toolbar';
 
 export const DataTable = <T extends object>({
   manager,
-  manager: { data, coercedColumns },
+  manager: { data, coercedColumns, hasNextChunk },
   getRowProps,
   ...rest
 }: DataTableProps<T>) => {
@@ -21,14 +22,18 @@ export const DataTable = <T extends object>({
 
   const renderRow = useCallback(
     ({ index, style }) => {
+      const width = `max(${getRowWidth(coercedColumns)}px, 100%)`;
+      if (index === data.length) {
+        return <LoaderRow style={{ ...style, width }} />;
+      }
       const datum = data[index] ?? {};
       const { onClick, ...rest } = getRowProps?.(datum, index) ?? {};
       return (
         <TableRow
           style={{
             ...style,
-            cursor: onClick ? 'pointer' : undefined,
-            width: `max(${getRowWidth(coercedColumns)}px, 100%)`
+            width,
+            cursor: onClick ? 'pointer' : undefined
           }}
           onClick={onClick}
           {...rest}
@@ -70,7 +75,7 @@ export const DataTable = <T extends object>({
       <FixedSizeList
         height={height ? height - rowHeight : 300}
         innerElementType={innerElementType}
-        itemCount={data.length}
+        itemCount={hasNextChunk ? data.length + 1 : data.length}
         itemSize={rowHeight}
         overscanCount={5}
         width="100%"
@@ -78,7 +83,7 @@ export const DataTable = <T extends object>({
         {renderRow}
       </FixedSizeList>
     ),
-    [height, data, renderRow]
+    [height, data, renderRow, hasNextChunk]
   );
 
   const contextValue = useMemo(() => ({ manager }), [manager]);

@@ -9,7 +9,7 @@ export default {
 } as Meta;
 
 export const Basics = () => {
-  const options = useMock({ columnCount: 5, rowCount: 100 });
+  const options = useMock({ columnCount: 5, rowCount: 30 });
   const manager = useDataTableManager(options);
   return (
     <Box sx={{ padding: 5, minHeight: '100vh' }}>

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import {
   DataTableColumnDef,
   DataTableContentManager,
@@ -19,6 +19,7 @@ export const useDataTableContentManager = <T extends object>({
   const [data, setData] = useState(initialContent.data);
   const [columns, setColumns] = useState(initialContent.columns);
   const [hasNextChunk, setHasNextChunk] = useState(initialContent.hasNextChunk);
+  const [isLoadingNextChunk, setIsLoadingNextChunk] = useState(false);
   const coercedColumns = useMemo(() => {
     const orderedKeySet = new Set(columnOrder);
     const orderedKeys = columnOrder
@@ -41,6 +42,19 @@ export const useDataTableContentManager = <T extends object>({
     );
     return coerced;
   }, [columns, columnOrder, columnExclusions, columnSizes]);
+  const requestNextChunk = useCallback(async () => {
+    if (isLoadingNextChunk) {
+      return;
+    }
+    setIsLoadingNextChunk(true);
+    const got = (await getNextChunk?.(data.length)) ?? {
+      data: [],
+      hasNextChunk: false
+    };
+    setData(data.concat(got.data));
+    setHasNextChunk(got.hasNextChunk);
+    setIsLoadingNextChunk(false);
+  }, [isLoadingNextChunk, getNextChunk, data]);
   const manager = {
     coercedColumns,
     columns,
@@ -48,9 +62,12 @@ export const useDataTableContentManager = <T extends object>({
     getNextChunk,
     hasNextChunk,
     initialContent,
+    isLoadingNextChunk,
+    requestNextChunk,
     setColumns,
     setData,
-    setHasNextChunk
+    setHasNextChunk,
+    setIsLoadingNextChunk
   };
   return useMemo(() => manager, Object.values(manager));
 };

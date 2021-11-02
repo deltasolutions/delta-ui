@@ -8,5 +8,7 @@ export interface DataTableContentManagerOptions<T extends object> {
     columns: DataTableColumnDef[];
     hasNextChunk: boolean;
   };
-  getNextChunk?: () => Promise<{ data: T[]; hasNextChunk: boolean }>;
+  getNextChunk?: (
+    offset: number
+  ) => Promise<{ data: T[]; hasNextChunk: boolean }>;
 }
