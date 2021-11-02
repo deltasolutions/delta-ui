@@ -13,9 +13,11 @@ export interface HandleProps extends BoxProps {
 
 export const Handle = ({ index }: HandleProps) => {
   const {
-    columns,
-    activeTab: { columnExclusions = [] },
-    updateActiveTab
+    manager: {
+      coercedColumns,
+      activeTab: { columnExclusions = [] },
+      updateActiveTab
+    }
   } = useContext(DataTableContext);
   const [{ isOver, canDrop }, dropRef] = useDrop(
     () => ({
@@ -26,11 +28,11 @@ export const Handle = ({ index }: HandleProps) => {
       }),
       drop: (dropped: { index?: number; exclusion?: string }) => {
         const splitIndex = index + 1;
-        const keys = columns.map(v => v.key);
+        const keys = coercedColumns.map(v => v.key);
         const left = keys.slice(0, splitIndex);
         const right = keys.slice(splitIndex);
         const droppedKey = (dropped.exclusion ??
-          columns[dropped.index ?? -1].key)!;
+          coercedColumns[dropped.index ?? -1].key)!;
         const columnOrder = [...left, droppedKey, ...right];
         if (dropped.index) {
           const formerIndex =
@@ -45,7 +47,7 @@ export const Handle = ({ index }: HandleProps) => {
         });
       }
     }),
-    [columns, columnExclusions, updateActiveTab]
+    [coercedColumns, columnExclusions, updateActiveTab]
   );
   const [_, dragRef, dragPreviewRef] = useDrag(() => ({
     type: 'resizer',

@@ -31,8 +31,10 @@ export const ColumnExclusions = forwardRef<
   StandaloneTransitionerProps<ColumnExclusionsContext>
 >(({ isVisible, handleClose, context: { anchorRef } = {} }, ref) => {
   const {
-    originalColumns,
-    activeTab: { columnExclusions = [] }
+    manager: {
+      columns,
+      activeTab: { columnExclusions = [] }
+    }
   } = useContext(DataTableContext);
   const sharedRef = useSharedRef<HTMLDivElement>(null, [ref]);
   useClickOutside(sharedRef, handleClose);
@@ -40,13 +42,13 @@ export const ColumnExclusions = forwardRef<
   useEffect(() => {
     return disableScroll();
   }, []);
-  const originalColumnsMap = useMemo(
-    () => Object.fromEntries(originalColumns.map(v => [v.key, v])),
-    [originalColumns]
+  const columnMap = useMemo(
+    () => Object.fromEntries(columns.map(v => [v.key, v])),
+    [columns]
   );
-  const getColumnheader = useCallback(
-    (key: string) => originalColumnsMap[key]?.header ?? key,
-    [originalColumnsMap]
+  const getColumnHeader = useCallback(
+    (key: string) => columnMap[key]?.header ?? key,
+    [columnMap]
   );
   const {
     top = 0,
@@ -58,7 +60,7 @@ export const ColumnExclusions = forwardRef<
     columnExclusions.length > 0 ? (
       columnExclusions.map(exclusion => (
         <Item key={exclusion} exclusion={exclusion}>
-          {getColumnheader(exclusion)}
+          {getColumnHeader(exclusion)}
         </Item>
       ))
     ) : (

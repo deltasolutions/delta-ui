@@ -5,5 +5,5 @@ export interface DataTableContentManagerOptions<T extends object> {
   tabManager: DataTableTabManager;
   initialData: T[];
   initialColumns: DataTableColumnDef[];
-  getNextChunk: () => T[] | Promise<T[]>;
+  getNextChunk?: () => T[] | Promise<T[]>;
 }

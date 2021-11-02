@@ -1,7 +1,5 @@
 import { createContext } from 'react';
-import { DataTableColumn } from './types';
-import { LayoutManager } from './useLayoutManager';
-import { TabManager } from './useTabManager';
+import { DataTableContextValue } from '../../models';
 
 const noop = new Proxy(
   {},
@@ -12,9 +10,6 @@ const noop = new Proxy(
   }
 );
 
-export interface DataTableContextValue extends LayoutManager, TabManager {
-  originalColumns: DataTableColumn[];
-  columns: DataTableColumn[];
-}
-
-export const DataTableContext = createContext(noop as DataTableContextValue);
+export const DataTableContext = createContext(
+  noop as DataTableContextValue<any>
+);

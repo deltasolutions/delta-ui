@@ -1,14 +1,11 @@
 import { jsx } from '@theme-ui/core';
-import { IoIosSave } from 'react-icons/io';
-import { Box, BoxProps, Button } from 'restyler';
+import { Box, BoxProps } from 'restyler';
 import { Actions } from './Actions';
 import { Tabs } from './Tabs';
 
-export interface ToolbarProps extends BoxProps {
-  onDownload?: () => void;
-}
+export interface ToolbarProps extends BoxProps {}
 
-export const Toolbar = ({ onDownload, ...rest }: ToolbarProps) => {
+export const Toolbar = (props: ToolbarProps) => {
   return (
     <Box
       sx={{
@@ -18,15 +15,10 @@ export const Toolbar = ({ onDownload, ...rest }: ToolbarProps) => {
         borderBottom: '1px solid',
         borderBottomColor: 'border'
       }}
-      {...rest}
+      {...props}
     >
       <Tabs />
       <Box sx={{ display: 'flex', gap: 2 }}>
-        {onDownload && (
-          <Button kind="icon" onClick={onDownload}>
-            <IoIosSave />
-          </Button>
-        )}
         <Actions />
       </Box>
     </Box>

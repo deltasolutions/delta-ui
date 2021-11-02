@@ -2,7 +2,6 @@ import { jsx } from '@theme-ui/core';
 import { forwardRef, useCallback, useMemo } from 'react';
 import { FixedSizeList } from 'react-window';
 import { Box, useThemed } from 'restyler';
-import { useCoercedColumns } from '../../hooks';
 import { DataTableProps } from '../../models';
 import { getColumnWidth, getRowWidth } from '../../utils';
 import { DataTableContext } from './DataTableContext';
@@ -10,8 +9,8 @@ import { Header } from './Header';
 import { Toolbar } from './Toolbar';
 
 export const DataTable = <T extends object>({
-  columns: originalColumns,
-  data,
+  manager,
+  manager: { data, coercedColumns },
   getRowProps,
   ...rest
 }: DataTableProps<T>) => {
@@ -19,12 +18,6 @@ export const DataTable = <T extends object>({
   const TableBody = useThemed('div', 'dataTable.body');
   const TableRow = useThemed('div', 'dataTable.row');
   const TableCell = useThemed('div', 'dataTable.cell');
-
-  const layoutManager = useLayoutManager();
-  const tabManager = useTabManager({ layoutManager });
-  const columns = useCoercedColumns(originalColumns, {
-    tab: tabManager.activeTab
-  });
 
   const renderRow = useCallback(
     ({ index, style }) => {
@@ -35,12 +28,12 @@ export const DataTable = <T extends object>({
           style={{
             ...style,
             cursor: onClick ? 'pointer' : undefined,
-            width: `max(${getRowWidth(columns)}px, 100%)`
+            width: `max(${getRowWidth(coercedColumns)}px, 100%)`
           }}
           onClick={onClick}
           {...rest}
         >
-          {columns.map(v => {
+          {coercedColumns.map(v => {
             return (
               <TableCell
                 key={v.key}
@@ -56,7 +49,7 @@ export const DataTable = <T extends object>({
         </TableRow>
       );
     },
-    [columns, data]
+    [coercedColumns, data]
   );
 
   const innerElementType = useMemo(
@@ -67,7 +60,7 @@ export const DataTable = <T extends object>({
           {children}
         </div>
       )),
-    [columns]
+    [coercedColumns]
   );
 
   const height = 400; // FIXME
@@ -88,11 +81,11 @@ export const DataTable = <T extends object>({
     [height, data, renderRow]
   );
 
+  const contextValue = useMemo(() => ({ manager }), [manager]);
+
   return (
     <Box {...rest}>
-      <DataTableContext.Provider
-        value={{ ...layoutManager, ...tabManager, originalColumns, columns }}
-      >
+      <DataTableContext.Provider value={contextValue}>
         <Toolbar sx={{ height: rowHeight }} />
         <Table>
           <TableBody>{bodyContent}</TableBody>

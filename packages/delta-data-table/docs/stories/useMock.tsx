@@ -12,14 +12,17 @@ export const useMock = ({ columnCount, rowCount }: MockDataOptions) => {
     () => new Array(columnCount).fill(undefined).map(randomize),
     []
   );
-  const columns = useMemo(() => keys.map(key => ({ key, header: key })), []);
-  const data = useMemo(
+  const initialColumns = useMemo(
+    () => keys.map(key => ({ key, header: key })),
+    []
+  );
+  const initialData = useMemo(
     () =>
       new Array(rowCount)
         .fill(undefined)
         .map(() => keys.reduce((p, v) => ({ ...p, [v]: randomize() }), {})),
     []
   );
-  const output = { columns, data };
+  const output = { initialColumns, initialData };
   return useMemo(() => output, Object.values(output));
 };

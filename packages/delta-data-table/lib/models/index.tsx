@@ -1,6 +1,7 @@
 export * from './DataTableColumnDef';
 export * from './DataTableContentManager';
 export * from './DataTableContentManagerOptions';
+export * from './DataTableContextValue';
 export * from './DataTableLayoutDef';
 export * from './DataTableLayoutManager';
 export * from './DataTableLayoutStatus';

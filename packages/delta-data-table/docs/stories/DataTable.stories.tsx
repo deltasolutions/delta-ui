@@ -1,7 +1,7 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { Box, Card } from 'restyler';
-import { DataTable } from '../../lib';
+import { DataTable, useDataTableManager } from '../../lib';
 import { useMock } from './useMock';
 
 export default {
@@ -9,11 +9,12 @@ export default {
 } as Meta;
 
 export const Basics = () => {
-  const props = useMock({ columnCount: 5, rowCount: 100 });
+  const options = useMock({ columnCount: 5, rowCount: 100 });
+  const manager = useDataTableManager(options);
   return (
     <Box sx={{ padding: 5, minHeight: '100vh' }}>
       <Card>
-        <DataTable {...props} height={400} />
+        <DataTable manager={manager} />
       </Card>
     </Box>
   );

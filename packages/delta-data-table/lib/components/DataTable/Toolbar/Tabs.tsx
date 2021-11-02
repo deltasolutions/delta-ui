@@ -9,11 +9,13 @@ export * from './Toolbar';
 
 export const Tabs = () => {
   const {
-    layout: { tabs },
-    activeTabName,
-    setActiveTabName,
-    addTab,
-    removeTab
+    manager: {
+      layout: { tabs },
+      activeTabName,
+      setActiveTabName,
+      addTab,
+      removeTab
+    }
   } = useContext(DataTableContext);
   const tabNames = tabs.map(v => v.name);
   const canAdd = tabs.length < 6;

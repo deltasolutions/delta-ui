@@ -15,9 +15,11 @@ import { ColumnExclusions, ColumnExclusionsContext } from './ColumnExclusions';
 export const ColumnExclusionAction = () => {
   const [t] = useTranslation('common');
   const {
-    columns,
-    activeTab: { columnExclusions = [] },
-    updateActiveTab
+    manager: {
+      coercedColumns,
+      activeTab: { columnExclusions = [] },
+      updateActiveTab
+    }
   } = useContext(DataTableContext);
 
   const {
@@ -36,7 +38,7 @@ export const ColumnExclusionAction = () => {
         canDrop: monitor.canDrop()
       }),
       drop: ({ index }: { index: number }) => {
-        const { key } = columns[index] ?? {};
+        const { key } = coercedColumns[index] ?? {};
         if (!key) {
           return;
         }
@@ -47,7 +49,7 @@ export const ColumnExclusionAction = () => {
         });
       }
     }),
-    [columns, columnExclusions, updateActiveTab]
+    [coercedColumns, columnExclusions, updateActiveTab]
   );
 
   const openFolder = useStandaloneTransition<

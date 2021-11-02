@@ -9,8 +9,9 @@ import { SyncAction } from './SyncAction';
 
 export const Actions = () => {
   const [t] = useTranslation('common');
-  const { updateActiveTab, isConfiguringLayout, setIsConfiguringLayout } =
-    useContext(DataTableContext);
+  const {
+    manager: { updateActiveTab, isConfiguringLayout, setIsConfiguringLayout }
+  } = useContext(DataTableContext);
 
   const handleReset = useCallback(() => {
     updateActiveTab({

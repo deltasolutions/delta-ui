@@ -15,7 +15,9 @@ export const DraggableCell = ({
   ...rest
 }: DraggableCellProps) => {
   const TableCell = useThemed('div', 'dataTable.cell');
-  const { isConfiguringLayout } = useContext(DataTableContext);
+  const {
+    manager: { isConfiguringLayout }
+  } = useContext(DataTableContext);
   const [{ isDragging }, dragRef] = useDrag(
     () => ({
       type: 'column',

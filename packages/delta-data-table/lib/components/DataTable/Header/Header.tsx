@@ -1,20 +1,22 @@
 import { jsx } from '@theme-ui/core';
-import { useContext, useEffect, useMemo } from 'react';
+import { useContext } from 'react';
 import { useDrop } from 'react-dnd';
-import { SystemContext, useThemed } from 'restyler';
+import { useThemed } from 'restyler';
+import { getColumnWidth, getRowWidth } from '../../../utils';
 import { DataTableContext } from '../DataTableContext';
-import { getColumnWidth, getRowWidth } from '../utils';
 import { DraggableCell } from './DraggableCell';
 import { Ruler } from './Ruler';
 
 export const Header = () => {
   const TableRow = useThemed('div', 'dataTable.row');
-  const { columns, activeTab, updateActiveTab } = useContext(DataTableContext);
+  const {
+    manager: { coercedColumns, activeTab, updateActiveTab }
+  } = useContext(DataTableContext);
   const [_, dropRef] = useDrop(() => ({
     accept: 'resizer',
     drop: ({ index }, monitor) => {
       const { x = 0 } = monitor.getDifferenceFromInitialOffset() ?? {};
-      const column = columns[index];
+      const column = coercedColumns[index];
       if (!column) {
         return;
       }
@@ -36,11 +38,11 @@ export const Header = () => {
         zIndex: 1,
         position: 'sticky',
         top: 0,
-        width: `max(${getRowWidth(columns)}px, 100%)`,
+        width: `max(${getRowWidth(coercedColumns)}px, 100%)`,
         whiteSpace: 'nowrap'
       }}
     >
-      {columns.map((v, i) => (
+      {coercedColumns.map((v, i) => (
         <DraggableCell
           key={v.key + '-head'}
           index={i}
