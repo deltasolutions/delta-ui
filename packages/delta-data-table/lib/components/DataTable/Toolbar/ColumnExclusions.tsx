@@ -1,13 +1,14 @@
 import { jsx } from '@theme-ui/core';
 import {
   forwardRef,
+  Fragment,
   RefObject,
   useCallback,
   useContext,
   useEffect,
   useMemo
 } from 'react';
-import { useDrag } from 'react-dnd';
+import { DragPreviewImage, useDrag } from 'react-dnd';
 import { IoPushOutline } from 'react-icons/io5';
 import {
   Button,
@@ -20,6 +21,7 @@ import {
   useSharedRef,
   useStack
 } from 'restyler';
+import { getColumnImageUri } from '../../../utils';
 import { DataTableContext } from '../DataTableContext';
 
 export interface ColumnExclusionsContext {
@@ -98,7 +100,7 @@ interface ItemProps extends ButtonProps {
 }
 
 const Item = ({ exclusion, ...rest }: ItemProps) => {
-  const [{ isDragging }, dragRef] = useDrag(() => ({
+  const [{ isDragging }, dragRef, connectPreview] = useDrag(() => ({
     type: 'column',
     item: { exclusion },
     collect: monitor => ({
@@ -106,17 +108,20 @@ const Item = ({ exclusion, ...rest }: ItemProps) => {
     })
   }));
   return (
-    <Button
-      ref={dragRef}
-      kind="primary"
-      sx={{
-        opacity: isDragging ? 0.5 : 1,
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
-        cursor: 'move'
-      }}
-      {...rest}
-    />
+    <Fragment>
+      <Button
+        ref={dragRef}
+        kind="primary"
+        sx={{
+          opacity: isDragging ? 0.5 : 1,
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
+          cursor: 'move'
+        }}
+        {...rest}
+      />
+      <DragPreviewImage src={getColumnImageUri()} connect={connectPreview} />
+    </Fragment>
   );
 };
