@@ -11,7 +11,7 @@ import { terser } from 'rollup-plugin-terser';
 const extensions = ['.ts', '.tsx', '.js', '.jsx', '.es6', '.es', '.mjs'];
 
 export default {
-  input: './lib/index.ts',
+  input: './lib/index.tsx',
 
   output: [
     { file: './build/index.js', format: 'es' },
@@ -47,7 +47,13 @@ export default {
     })
   ],
 
-  external: ['react', 'react-dom', 'restyler'],
+  external: [
+    '@emotion/react',
+    '@theme-ui/core',
+    'react',
+    'react-dnd',
+    'restyler'
+  ],
 
   onwarn: (warning, rollupWarn) => {
     if (!['THIS_IS_UNDEFINED'].includes(warning.code)) {

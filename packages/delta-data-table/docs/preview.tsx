@@ -1,8 +1,5 @@
 import { jsx } from '@theme-ui/core';
 import { AppContainer } from 'delta-layout';
-import i18n from 'i18next';
-import { useLayoutEffect } from 'react';
-import { initReactI18next } from 'react-i18next';
 
 export const parameters = {
   controls: { hideNoControlsWarning: true }
@@ -10,26 +7,6 @@ export const parameters = {
 
 export const decorators = [
   Story => {
-    // useLayoutEffect(() => {
-    //   i18n
-    //     .use(initReactI18next)
-    //     .use({
-    //       type: 'backend',
-    //       read(
-    //         language: string,
-    //         namespace: string,
-    //         callback: (errorValue: unknown, translations: any) => void
-    //       ) {
-    //         setTimeout(() => {
-    //           callback(null, commonNamespace);
-    //         }, 1000);
-    //       }
-    //     })
-    //     .init({
-    //       lng: 'en',
-    //       interpolation: { escapeValue: false }
-    //     });
-    // }, []);
     return (
       <AppContainer>
         <Story />
