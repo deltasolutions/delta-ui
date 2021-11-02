@@ -7,7 +7,11 @@ import {
 
 export const useDataTableContentManager = <T extends object>({
   tabManager: {
-    activeTab: { columnOrder = [], columnExclusions = [], columnSizes = {} }
+    activeTab: {
+      columnOrder = defaultColumnOrder,
+      columnExclusions = defaultColumnExclusions,
+      columnSizes = defaultColumnSizes
+    }
   },
   initialData,
   initialColumns,
@@ -49,3 +53,7 @@ export const useDataTableContentManager = <T extends object>({
   };
   return useMemo(() => manager, Object.values(manager));
 };
+
+const defaultColumnOrder = [];
+const defaultColumnExclusions = [];
+const defaultColumnSizes = {};
