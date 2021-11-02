@@ -7,8 +7,10 @@ export interface DataTableContentManager<T extends object>
   coercedColumns: DataTableColumnDef[];
   columns: DataTableColumnDef[];
   data: T[];
+  hasNextChunk: boolean;
   setColumns: Dispatch<SetStateAction<DataTableColumnDef[]>>;
   setData: Dispatch<SetStateAction<T[]>>;
+  setHasNextChunk: Dispatch<SetStateAction<boolean>>;
   // Future:
   //   - sorts
   //   - query

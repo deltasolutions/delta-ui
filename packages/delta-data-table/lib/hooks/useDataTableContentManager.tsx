@@ -13,12 +13,12 @@ export const useDataTableContentManager = <T extends object>({
       columnSizes = defaultColumnSizes
     }
   },
-  initialData,
-  initialColumns,
+  initialContent,
   getNextChunk
 }: DataTableContentManagerOptions<T>): DataTableContentManager<T> => {
-  const [data, setData] = useState(initialData);
-  const [columns, setColumns] = useState(initialColumns);
+  const [data, setData] = useState(initialContent.data);
+  const [columns, setColumns] = useState(initialContent.columns);
+  const [hasNextChunk, setHasNextChunk] = useState(initialContent.hasNextChunk);
   const coercedColumns = useMemo(() => {
     const orderedKeySet = new Set(columnOrder);
     const orderedKeys = columnOrder
@@ -42,14 +42,15 @@ export const useDataTableContentManager = <T extends object>({
     return coerced;
   }, [columns, columnOrder, columnExclusions, columnSizes]);
   const manager = {
-    data,
-    setData,
-    columns,
-    setColumns,
     coercedColumns,
-    initialData,
-    initialColumns,
-    getNextChunk
+    columns,
+    data,
+    getNextChunk,
+    hasNextChunk,
+    initialContent,
+    setColumns,
+    setData,
+    setHasNextChunk
   };
   return useMemo(() => manager, Object.values(manager));
 };
