@@ -1,22 +1,18 @@
 import { useMemo, useState } from 'react';
-import { useUpdateEffect } from 'restyler';
+import { clone, useUpdateEffect } from 'restyler';
 import {
   DataTableLayoutDef,
   DataTableLayoutManager,
+  DataTableLayoutManagerOptions,
   DataTableLayoutStatus
 } from '../models';
 
-export const useDataTableLayoutManager = (): DataTableLayoutManager => {
-  const [layout, setLayout] = useState<DataTableLayoutDef>({
-    tabs: [
-      {
-        name: 'main',
-        columnOrder: [],
-        columnSizes: {},
-        columnExclusions: []
-      }
-    ]
-  });
+export const useDataTableLayoutManager = ({
+  initialLayout
+}: DataTableLayoutManagerOptions): DataTableLayoutManager => {
+  const [layout, setLayout] = useState<DataTableLayoutDef>(() =>
+    sanitizeLayout(initialLayout)
+  );
   const [isConfiguringLayout, setIsConfiguringLayout] = useState(false);
   const [layoutStatus, setLayoutStatus] = useState(
     DataTableLayoutStatus.Synced
@@ -36,12 +32,29 @@ export const useDataTableLayoutManager = (): DataTableLayoutManager => {
     return undefined;
   }, [layout]);
   const manager = {
-    layout,
-    setLayout,
+    initialLayout,
     isConfiguringLayout,
-    setIsConfiguringLayout,
+    layout,
     layoutStatus,
+    setIsConfiguringLayout,
+    setLayout,
     setLayoutStatus
   };
   return useMemo(() => manager, Object.values(manager));
+};
+
+const sanitizeLayout = (layout: DataTableLayoutDef = { tabs: [] }) => {
+  const cloned = clone(layout);
+  if (!cloned.tabs.find(v => v.name === 'main')) {
+    cloned.tabs = [
+      {
+        name: 'main',
+        columnOrder: [],
+        columnSizes: {},
+        columnExclusions: []
+      },
+      ...cloned.tabs
+    ];
+  }
+  return cloned;
 };

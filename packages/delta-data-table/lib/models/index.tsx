@@ -4,6 +4,7 @@ export * from './DataTableContentManagerOptions';
 export * from './DataTableContextValue';
 export * from './DataTableLayoutDef';
 export * from './DataTableLayoutManager';
+export * from './DataTableLayoutManagerOptions';
 export * from './DataTableLayoutStatus';
 export * from './DataTableManager';
 export * from './DataTableManagerOptions';
