@@ -7,6 +7,7 @@ import {
 
 export const useDataTableContentManager = <T extends object>({
   tabManager: {
+    activeTab,
     activeTab: {
       columnOrder = defaultColumnOrder,
       columnExclusions = defaultColumnExclusions,

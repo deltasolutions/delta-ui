@@ -17,20 +17,6 @@ export const useDataTableLayoutManager = ({
   const [layoutStatus, setLayoutStatus] = useState(
     DataTableLayoutStatus.Synced
   );
-  useUpdateEffect(() => {
-    // TODO: server integration
-    if (layoutStatus === DataTableLayoutStatus.Synced) {
-      setLayoutStatus(DataTableLayoutStatus.Syncing);
-      const id = setTimeout(
-        () => setLayoutStatus(DataTableLayoutStatus.Synced),
-        2000
-      );
-      return () => {
-        clearTimeout(id);
-      };
-    }
-    return undefined;
-  }, [layout]);
   const manager = {
     initialLayout,
     isConfiguringLayout,

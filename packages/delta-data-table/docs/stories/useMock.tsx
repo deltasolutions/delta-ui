@@ -8,7 +8,10 @@ export interface MockDataOptions {
 export const useMock = ({ columnCount, rowCount }: MockDataOptions) => {
   const randomize = useCallback(() => Math.random().toString().slice(-4), []);
   const keys = useMemo(
-    () => new Array(columnCount).fill(undefined).map(randomize),
+    () =>
+      new Array(columnCount)
+        .fill(undefined)
+        .map((_, i) => 'Tab ' + String.fromCharCode('A'.charCodeAt(0) + i)),
     []
   );
   const generate = useCallback(

@@ -12,3 +12,4 @@ export * from './DataTableProps';
 export * from './DataTableTabDef';
 export * from './DataTableTabManager';
 export * from './DataTableTabManagerOptions';
+export * from './StoredDataTableManagerOptions';
