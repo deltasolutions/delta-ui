@@ -13,8 +13,8 @@ export const Basics = () => {
   const manager = useDataTableManager(options);
   return (
     <Box sx={{ padding: 5, minHeight: '100vh' }}>
-      <Card>
-        <DataTable manager={manager} />
+      <Card sx={{ height: '400px' }}>
+        <DataTable manager={manager} sx={{ height: '100%' }} />
       </Card>
     </Box>
   );

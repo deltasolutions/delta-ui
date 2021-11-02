@@ -1,5 +1,5 @@
 import { jsx } from '@theme-ui/core';
-import { forwardRef, useCallback, useMemo } from 'react';
+import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react';
 import { FixedSizeList } from 'react-window';
 import { Box, useThemed } from 'restyler';
 import { DataTableProps } from '../../models';
@@ -19,6 +19,20 @@ export const DataTable = <T extends object>({
   const TableBody = useThemed('div', 'dataTable.body');
   const TableRow = useThemed('div', 'dataTable.row');
   const TableCell = useThemed('div', 'dataTable.cell');
+
+  const [element, setElement] = useState<HTMLDivElement | null>(null);
+  const [height, setHeight] = useState(0);
+  const rowHeight = 56; // FIXME
+  useEffect(() => {
+    if (!element) {
+      return;
+    }
+    const updateHeight = () => setHeight(element.clientHeight);
+    updateHeight();
+    const observer = new ResizeObserver(updateHeight);
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [element]);
 
   const renderRow = useCallback(
     ({ index, style }) => {
@@ -68,8 +82,6 @@ export const DataTable = <T extends object>({
     [coercedColumns]
   );
 
-  const height = 400; // FIXME
-  const rowHeight = 56; // FIXME
   const bodyContent = useMemo(
     () => (
       <FixedSizeList
@@ -89,7 +101,7 @@ export const DataTable = <T extends object>({
   const contextValue = useMemo(() => ({ manager }), [manager]);
 
   return (
-    <Box {...rest}>
+    <Box ref={setElement} {...rest}>
       <DataTableContext.Provider value={contextValue}>
         <Toolbar sx={{ height: rowHeight }} />
         <Table>
