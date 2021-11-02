@@ -1,10 +1,9 @@
 import { useMemo, useState } from 'react';
-import { clone, useUpdateEffect } from 'restyler';
+import { clone } from 'restyler';
 import {
   DataTableLayoutDef,
   DataTableLayoutManager,
-  DataTableLayoutManagerOptions,
-  DataTableLayoutStatus
+  DataTableLayoutManagerOptions
 } from '../models';
 
 export const useDataTableLayoutManager = ({
@@ -14,17 +13,12 @@ export const useDataTableLayoutManager = ({
     sanitizeLayout(initialLayout)
   );
   const [isConfiguringLayout, setIsConfiguringLayout] = useState(false);
-  const [layoutStatus, setLayoutStatus] = useState(
-    DataTableLayoutStatus.Synced
-  );
   const manager = {
     initialLayout,
     isConfiguringLayout,
     layout,
-    layoutStatus,
     setIsConfiguringLayout,
-    setLayout,
-    setLayoutStatus
+    setLayout
   };
   return useMemo(() => manager, Object.values(manager));
 };

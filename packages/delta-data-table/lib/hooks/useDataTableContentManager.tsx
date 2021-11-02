@@ -22,7 +22,8 @@ export const useDataTableContentManager = <T extends object>({
   const [hasNextChunk, setHasNextChunk] = useState(initialContent.hasNextChunk);
   const [isLoadingNextChunk, setIsLoadingNextChunk] = useState(false);
   const coercedColumns = useMemo(() => {
-    const orderedKeySet = new Set(columnOrder);
+    const keySet = new Set(columns.map(v => v.key));
+    const orderedKeySet = new Set(columnOrder.filter(v => keySet.has(v)));
     const orderedKeys = columnOrder
       .slice()
       .concat(columns.filter(v => !orderedKeySet.has(v.key)).map(v => v.key));

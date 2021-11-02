@@ -4,7 +4,6 @@ import { IoArrowUndoOutline, IoCloseOutline, IoOptions } from 'react-icons/io5';
 import { Button } from 'restyler';
 import { DataTableContext } from '../DataTableContext';
 import { ColumnExclusionAction } from './ColumnExclusionAction';
-import { SyncAction } from './SyncAction';
 
 export const Actions = () => {
   const {
@@ -22,7 +21,6 @@ export const Actions = () => {
   if (isConfiguringLayout) {
     return (
       <Fragment>
-        <SyncAction />
         <ColumnExclusionAction />
         <Button kind="icon" onClick={handleReset}>
           <IoArrowUndoOutline />

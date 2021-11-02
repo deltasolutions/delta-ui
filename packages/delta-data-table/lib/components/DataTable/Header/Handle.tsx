@@ -14,6 +14,7 @@ export interface HandleProps extends BoxProps {
 export const Handle = ({ index }: HandleProps) => {
   const {
     manager: {
+      columns,
       coercedColumns,
       activeTab: { columnExclusions = [] },
       updateActiveTab
@@ -27,13 +28,16 @@ export const Handle = ({ index }: HandleProps) => {
         canDrop: monitor.canDrop()
       }),
       drop: (dropped: { index?: number; exclusion?: string }) => {
+        const keySet = new Set(columns.map(v => v.key));
         const splitIndex = index + 1;
         const keys = coercedColumns.map(v => v.key);
         const left = keys.slice(0, splitIndex);
         const right = keys.slice(splitIndex);
         const droppedKey = (dropped.exclusion ??
           coercedColumns[dropped.index ?? -1].key)!;
-        const columnOrder = [...left, droppedKey, ...right];
+        const columnOrder = [...left, droppedKey, ...right].filter(v =>
+          keySet.has(v)
+        );
         if (dropped.index) {
           const formerIndex =
             index < dropped.index ? dropped.index + 1 : dropped.index;
@@ -47,7 +51,7 @@ export const Handle = ({ index }: HandleProps) => {
         });
       }
     }),
-    [coercedColumns, columnExclusions, updateActiveTab]
+    [columns, coercedColumns, columnExclusions, updateActiveTab]
   );
   const [_, dragRef, dragPreviewRef] = useDrag(() => ({
     type: 'resizer',
