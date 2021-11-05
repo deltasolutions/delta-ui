@@ -4,5 +4,6 @@ export * from './DataChestState';
 export * from './DataHandler';
 export * from './DataOperation';
 export * from './NatsContextValue';
+export * from './NatsDataHandler';
 export * from './NatsDataHandlerOptions';
 export * from './Subscription';
