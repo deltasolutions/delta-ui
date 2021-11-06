@@ -26,23 +26,26 @@ const Demo = () => {
     if (!connection) {
       return;
     }
-    const operator = createDatacenterCollectionOperator({ connection });
+    const operator = makeDatacenterOperator({ connection });
     operator.fetch({}).then(v => console.log(v));
   }, [connection]);
   return null;
 };
 
-const createDatacenterCollectionOperator = <Data extends object>(
-  options: Omit<NatsDataOperatorOptions<Data>, 'provider'>
+const makeDatacenterOperator = (
+  options: Omit<NatsDataOperatorOptions<number, any>, 'provider'>
 ) => {
   const codec = JSONCodec();
   const subject = 'DS.DCM.DATACENTER.REQUEST.SEARCH.DEFAULT';
   const provider = {
     fetch: async ({ connection }, search: { query?: string }) => {
       const message = await connection.request(subject, codec.encode(search));
-      const data = codec.decode(message.data);
+      const data = codec.decode(message.data) as number;
       return { data };
     }
   };
-  return createNatsDataOperator<any, typeof provider>({ ...options, provider });
+  return createNatsDataOperator<number, typeof provider>({
+    ...options,
+    provider
+  });
 };
