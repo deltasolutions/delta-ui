@@ -14,9 +14,3 @@ export type ProvidedDataOperator<
     ? () => ReturnType<Provider[K]>
     : (seed: Parameters<Provider[K]>[1]) => ReturnType<Provider[K]>;
 };
-
-// export type ProvidedDataOperatorContext<
-//   Provider extends DataOperatorProvider<any, any>
-// > = Provider extends DataOperatorProvider<any, infer Context>
-//   ? Context
-//   : unknown;
