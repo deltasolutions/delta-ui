@@ -14,7 +14,7 @@ export default {
 
 export const Basics = () => {
   return (
-    <NatsProvider connectOptions={{ servers: 'ws://192.168.200.49:2222' }}>
+    <NatsProvider servers="ws://192.168.200.49:2222">
       <Demo />
     </NatsProvider>
   );

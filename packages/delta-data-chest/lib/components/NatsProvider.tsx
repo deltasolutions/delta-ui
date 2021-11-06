@@ -9,29 +9,20 @@ import React, {
 import { hash } from 'restyler';
 import { NatsContext } from './NatsContext';
 
-export interface NatsProviderProps {
+export interface NatsProviderProps extends ConnectionOptions {
   children: ReactNode;
-  connectOptions: ConnectionOptions;
 }
 
-export const NatsProvider = ({
-  children,
-  connectOptions
-}: NatsProviderProps) => {
+export const NatsProvider = ({ children, ...options }: NatsProviderProps) => {
   const [connection, setConnection] = useState<NatsConnection | undefined>(
     undefined
   );
   const update = useCallback(async () => {
     try {
       const { connect } = await import('nats.ws/lib/src/mod'); // FIXME
-      const nc = await connect(connectOptions);
+      const nc = await connect(options);
       setConnection(nc);
       console.log('Connected to NATS network');
-      // const done = nc.closed();
-      // const e = await done;
-      // if (e) {
-      //   console.warn('Error while disconnecting from NATS network', e);
-      // }
       return () => {
         nc.close();
       };
@@ -39,7 +30,7 @@ export const NatsProvider = ({
       console.warn('Failed to connect to NATS network', e);
       return;
     }
-  }, [hash(connectOptions)]);
+  }, [hash(options)]);
   useEffect(() => {
     update();
   }, []);
