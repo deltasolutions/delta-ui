@@ -21,8 +21,8 @@ export const NatsProvider = ({ children, ...options }: NatsProviderProps) => {
     try {
       const { connect } = await import('nats.ws/lib/src/mod'); // FIXME
       const nc = await connect(options);
-      setConnection(nc);
       console.log('Connected to NATS network');
+      setConnection(nc);
       return () => {
         nc.close();
       };

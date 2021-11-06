@@ -6,13 +6,13 @@ export interface NatsContextValue {
 }
 
 export interface NatsDataOperatorContext {
-  connection: NatsConnection;
+  connection?: NatsConnection;
 }
 
 export interface NatsDataOperatorOptions<
   Data,
   Provider extends DataOperatorProvider<Data, NatsDataOperatorContext>
 > {
-  connection: NatsConnection;
+  connection?: NatsConnection;
   provider: Provider;
 }
