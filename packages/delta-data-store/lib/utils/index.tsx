@@ -1,1 +1,1 @@
-export * from './createNatsDataHandler';
+export * from './createNatsDataOperator';

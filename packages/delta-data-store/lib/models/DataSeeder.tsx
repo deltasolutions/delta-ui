@@ -1,7 +1,7 @@
-import { DataDispatcher } from './DataDispatcher';
+import { DataOperator } from './DataOperator';
 
-export type DataSeeder<Dispatcher extends DataDispatcher<any>> = {
-  [K in keyof Dispatcher]?: (
-    context: Dispatcher extends DataDispatcher<infer D> ? D : any
-  ) => Parameters<Dispatcher[K]>[0];
+export type DataSeeder<Operator extends DataOperator<any>> = {
+  [K in keyof Operator]?: (
+    context: Operator extends DataOperator<infer D> ? D : any
+  ) => Parameters<Operator[K]>[0];
 };

@@ -1,17 +1,17 @@
 import { useCallback, useMemo } from 'react';
 import {
-  NatsDataDispatcher,
-  NatsDataDispatcherOptions,
+  NatsDataOperator,
+  NatsDataOperatorOptions,
   NatsDataProvider
 } from '../models';
 
-export const createNatsDataDispatcher = <
+export const createNatsDataOperator = <
   Data,
   Provider extends NatsDataProvider<Data>
 >({
   connection,
   provider
-}: NatsDataDispatcherOptions<Data>): NatsDataDispatcher<Provider> => {
+}: NatsDataOperatorOptions<Data>): NatsDataOperator<Provider> => {
   const createDataOperation = useCallback(
     (fn: Provider[string]) => (seed: any) => fn({ connection }, seed),
     [connection]
@@ -23,7 +23,7 @@ export const createNatsDataDispatcher = <
           ...p,
           [k]: createDataOperation(v as any)
         }),
-        {} as NatsDataDispatcher<Provider>
+        {} as NatsDataOperator<Provider>
       ),
     [provider, createDataOperation]
   );
@@ -32,8 +32,8 @@ export const createNatsDataDispatcher = <
 // const provider = {
 //   fetch: (_, id: string) => null as any
 // };
-// const dispatcher = createNatsDataDispatcher<number, typeof provider>({
+// const operator = createNatsDataOperator<number, typeof provider>({
 //   connection: null as any,
 //   provider
 // });
-// dispatcher.fetch('');
+// operator.fetch('');
