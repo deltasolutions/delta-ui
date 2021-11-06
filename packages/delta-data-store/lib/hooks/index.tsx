@@ -1,1 +1,1 @@
-export * from './useDataChest';
+export * from './useNats';

@@ -1,4 +1,4 @@
-import { NatsConnection, connect, ConnectionOptions } from 'nats.ws';
+import { NatsConnection, ConnectionOptions } from 'nats.ws';
 import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 import { hash } from 'restyler';
 import { NatsContext } from './NatsContext';
@@ -17,8 +17,9 @@ export const NatsProvider = ({
   );
   const update = useCallback(async () => {
     try {
-      const nc = await connect(connectOptions);
-      setConnection(nc);
+      // const { connect } = await import('nats.ws');
+      // const nc = await connect(connectOptions);
+      // setConnection(nc);
       console.log('Connected to NATS network');
       // const done = nc.closed();
       // const e = await done;
