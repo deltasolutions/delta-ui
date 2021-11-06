@@ -1,9 +1,10 @@
-import { Subscription } from './Subscription';
+import { DataSubscription } from './DataSubscription';
 
-export interface DataOperation<Data, Seed> {
-  (seed: Seed): Promise<{
-    data?: Data;
-    seed?: Seed;
-    subscription?: Subscription<Data>;
-  } | void>;
+export interface DataOperationResult<Data> {
+  data?: Data;
+  subscription?: DataSubscription<Data>;
+}
+
+export interface DataOperation<Data, Seed = undefined> {
+  (seed: Seed): Promise<DataOperationResult<Data> | void>;
 }

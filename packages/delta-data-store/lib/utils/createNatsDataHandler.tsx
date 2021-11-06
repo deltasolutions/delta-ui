@@ -1,58 +1,39 @@
 import { useCallback, useMemo } from 'react';
 import {
-  DataOperation,
-  NatsDataHandler,
-  NatsDataHandlerOptions
+  NatsDataDispatcher,
+  NatsDataDispatcherOptions,
+  NatsDataProvider
 } from '../models';
 
-export const createNatsDataHandler = <
+export const createNatsDataDispatcher = <
   Data,
-  Seed,
-  Operations extends {
-    [operation: string]: string | DataOperation<Data, Seed>;
-  }
+  Provider extends NatsDataProvider<Data>
 >({
   connection,
-  operations,
-  pack,
-  unpack
-}: NatsDataHandlerOptions<Data, Seed, Operations>): NatsDataHandler<
-  Data,
-  Seed,
-  Operations
-> => {
-  const createRequestOperation = useCallback(
-    (subject: string, shouldReturn = false) => {
-      return async (seed: Seed) => {
-        const packed = pack(seed);
-        const response = await connection.request(subject, packed);
-        if (!shouldReturn) {
-          return;
-        }
-        const unpacked = unpack(response);
-        return { data: unpacked };
-      };
-    },
+  provider
+}: NatsDataDispatcherOptions<Data>): NatsDataDispatcher<Provider> => {
+  const createDataOperation = useCallback(
+    (fn: Provider[string]) => (seed: any) => fn({ connection }, seed),
     [connection]
   );
   return useMemo(
     () =>
-      Object.entries(operations).reduce(
-        (p, [k, v]) => ({ ...p, [k]: v }),
-        {} as NatsDataHandler<Data, Seed, Operations>
+      Object.entries(provider).reduce(
+        (p, [k, v]) => ({
+          ...p,
+          [k]: createDataOperation(v as any)
+        }),
+        {} as NatsDataDispatcher<Provider>
       ),
-    [connection, operations, pack, unpack]
+    [provider, createDataOperation]
   );
 };
 
-// const operations = {
-//   fetch: 'A'
+// const provider = {
+//   fetch: (_, id: string) => null as any
 // };
-// const h = createNatsDataHandler<number, number, typeof operations>({
+// const dispatcher = createNatsDataDispatcher<number, typeof provider>({
 //   connection: null as any,
-//   operations,
-//   pack: null as any,
-//   unpack: null as any
+//   provider
 // });
-
-// h.fetch(1);
+// dispatcher.fetch('');
