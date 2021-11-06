@@ -6,7 +6,6 @@
     "downlevelIteration": true,
     "emitDeclarationOnly": true,
     "jsx": "preserve",
-    "jsxFactory": "jsx",
     "rootDir": "./lib",
     "types": ["node", "react"]
   },

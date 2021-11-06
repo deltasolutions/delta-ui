@@ -1,5 +1,11 @@
 import { NatsConnection, ConnectionOptions } from 'nats.ws';
-import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
 import { hash } from 'restyler';
 import { NatsContext } from './NatsContext';
 
@@ -17,17 +23,21 @@ export const NatsProvider = ({
   );
   const update = useCallback(async () => {
     try {
-      // const { connect } = await import('nats.ws');
-      // const nc = await connect(connectOptions);
-      // setConnection(nc);
+      const { connect } = await import('nats.ws/lib/src/mod'); // FIXME
+      const nc = await connect(connectOptions);
+      setConnection(nc);
       console.log('Connected to NATS network');
       // const done = nc.closed();
       // const e = await done;
       // if (e) {
       //   console.warn('Error while disconnecting from NATS network', e);
       // }
+      return () => {
+        nc.close();
+      };
     } catch (e) {
       console.warn('Failed to connect to NATS network', e);
+      return;
     }
   }, [hash(connectOptions)]);
   useEffect(() => {

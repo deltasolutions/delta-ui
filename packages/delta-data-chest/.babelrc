@@ -7,23 +7,12 @@
         "shippedProposals": true
       }
     ],
-    [
-      "@babel/preset-react",
-      {
-        "pragma": "jsx"
-      }
-    ]
+    "@babel/preset-react"
   ],
   "plugins": [
     ["@babel/plugin-proposal-decorators", { "legacy": true }],
     ["@babel/plugin-proposal-class-properties", { "loose": true }],
-    [
-      "@babel/plugin-transform-typescript",
-      {
-        "isTSX": true,
-        "jsxPragma": "jsx"
-      }
-    ],
+    ["@babel/plugin-transform-typescript", { "isTSX": true }],
     "@babel/plugin-transform-runtime",
     "@babel/plugin-syntax-dynamic-import",
     "@babel/plugin-proposal-optional-chaining"

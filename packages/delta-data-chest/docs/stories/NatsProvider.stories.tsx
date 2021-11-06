@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/react';
-import { jsx } from '@theme-ui/core';
-import { useEffect } from 'react';
+import { JSONCodec } from 'nats.ws/lib/src/mod';
+import React, { useEffect } from 'react';
 import {
   createNatsDataOperator,
   NatsDataOperatorOptions,
@@ -14,7 +14,7 @@ export default {
 
 export const Basics = () => {
   return (
-    <NatsProvider connectOptions={{ servers: '' }}>
+    <NatsProvider connectOptions={{ servers: 'ws://192.168.200.49:2222' }}>
       <Demo />
     </NatsProvider>
   );
@@ -27,15 +27,22 @@ const Demo = () => {
       return;
     }
     const operator = createDatacenterCollectionOperator({ connection });
-    console.log(operator);
+    operator.fetch({}).then(v => console.log(v));
   }, [connection]);
   return null;
 };
 
 const createDatacenterCollectionOperator = <Data extends object>(
   options: Omit<NatsDataOperatorOptions<Data>, 'provider'>
-) =>
-  createNatsDataOperator({
-    ...options,
-    provider: {}
-  });
+) => {
+  const codec = JSONCodec();
+  const subject = 'DS.DCM.DATACENTER.REQUEST.SEARCH.DEFAULT';
+  const provider = {
+    fetch: async ({ connection }, search: { query?: string }) => {
+      const message = await connection.request(subject, codec.encode(search));
+      const data = codec.decode(message.data);
+      return { data };
+    }
+  };
+  return createNatsDataOperator<any, typeof provider>({ ...options, provider });
+};
