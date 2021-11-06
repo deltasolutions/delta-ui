@@ -1,6 +1,13 @@
 import { NatsConnection } from 'nats.ws';
-import { DataOperatorProvider } from './DataOperatorProvider';
-import { NatsDataOperatorContext } from './NatsDataOperatorContext';
+import { DataOperatorProvider } from './operators';
+
+export interface NatsContextValue {
+  connection?: NatsConnection;
+}
+
+export interface NatsDataOperatorContext {
+  connection: NatsConnection;
+}
 
 export interface NatsDataOperatorOptions<
   Data,
