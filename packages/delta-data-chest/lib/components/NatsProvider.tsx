@@ -19,7 +19,7 @@ export const NatsProvider = ({ children, ...options }: NatsProviderProps) => {
   );
   const update = useCallback(async () => {
     try {
-      const { connect } = await import('nats.ws/lib/src/mod'); // FIXME
+      const { connect } = await import('nats.ws');
       const nc = await connect(options);
       console.log('Connected to NATS network');
       setConnection(nc);

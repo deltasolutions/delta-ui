@@ -1,10 +1,9 @@
 import { Meta } from '@storybook/react';
-import { JSONCodec } from 'nats.ws/lib/src/mod';
+import { JSONCodec } from 'nats.ws';
 import React, { useEffect, useMemo } from 'react';
 import {
   makeNatsDataOperator,
   NatsDataOperatorContext,
-  NatsDataOperatorOptions,
   NatsProvider,
   useDataChest,
   useNats
@@ -50,16 +49,14 @@ const DataChestDemo = () => {
   return <div />;
 };
 
-const makeDatacenterOperator = (
-  options: Omit<NatsDataOperatorOptions<any>, 'provider'>
-) => {
+const makeDatacenterOperator = (context: NatsDataOperatorContext) => {
   const codec = JSONCodec();
   const subject = 'DS.DCM.DATACENTER.REQUEST.SEARCH.DEFAULT';
   return makeNatsDataOperator({
-    ...options,
+    ...context,
     provider: {
       fetch:
-        ({ connection }: NatsDataOperatorContext) =>
+        ({ connection }) =>
         async (search: { query?: string }) => {
           if (!connection) {
             console.log('no connection');
@@ -73,7 +70,7 @@ const makeDatacenterOperator = (
           return { data };
         },
       fetch2:
-        ({ connection }: NatsDataOperatorContext) =>
+        ({ connection }) =>
         async () => {
           if (!connection) {
             console.log('no connection');
@@ -93,11 +90,9 @@ const useDatacenterChest = () => {
     () => makeDatacenterOperator({ connection }),
     [connection]
   );
-  operator.fetch({});
-  operator.fetch2();
   const seeder = useMemo(() => ({}), []);
-  const chest = useDataChest<typeof operator, typeof seeder>({
-    operator
+  return useDataChest({
+    operator,
+    seeder
   });
-  return chest;
 };
