@@ -4,9 +4,7 @@ import {
   ProvidedDataOperator
 } from '../models';
 
-export const makeDataOperator = <
-  Provider extends DataOperatorProvider<any, any>
->({
+export const makeDataOperator = <Provider extends DataOperatorProvider<any>>({
   context,
   provider
 }: DataOperatorOptions<Provider>): ProvidedDataOperator<Provider> => {

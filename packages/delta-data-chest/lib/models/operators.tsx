@@ -17,21 +17,19 @@ export type OperatedData<Operator> = Operator extends DataOperator<infer Data>
   ? Data
   : never;
 
-export interface DataOperatorProvider<Data, Context> {
-  [operation: string]: (context: Context) => DataOperation<Data, any>;
+export interface DataOperatorProvider<Context> {
+  [operation: string]: (context: Context) => DataOperation<any, any>;
 }
 
 export type ProvidedDataOperatorContext<Provider> =
-  Provider extends DataOperatorProvider<any, infer Context> ? Context : never;
+  Provider extends DataOperatorProvider<infer Context> ? Context : never;
 
-export type ProvidedDataOperator<
-  Provider extends DataOperatorProvider<any, any>
-> = {
+export type ProvidedDataOperator<Provider extends DataOperatorProvider<any>> = {
   [K in keyof Provider]: ReturnType<Provider[K]>;
 };
 
 export interface DataOperatorOptions<
-  Provider extends DataOperatorProvider<any, any>
+  Provider extends DataOperatorProvider<any>
 > {
   context: ProvidedDataOperatorContext<Provider>;
   provider: Provider;

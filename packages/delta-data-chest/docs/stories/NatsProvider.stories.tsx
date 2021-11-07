@@ -1,8 +1,8 @@
 import { Meta } from '@storybook/react';
-import { JSONCodec, NatsConnection } from 'nats.ws/lib/src/mod';
+import { JSONCodec } from 'nats.ws/lib/src/mod';
 import React, { useEffect, useMemo } from 'react';
 import {
-  createNatsDataOperator,
+  makeNatsDataOperator,
   NatsDataOperatorContext,
   NatsDataOperatorOptions,
   NatsProvider,
@@ -55,11 +55,11 @@ const makeDatacenterOperator = (
 ) => {
   const codec = JSONCodec();
   const subject = 'DS.DCM.DATACENTER.REQUEST.SEARCH.DEFAULT';
-  return createNatsDataOperator({
+  return makeNatsDataOperator({
     ...options,
     provider: {
       fetch:
-        ({ connection }) =>
+        ({ connection }: NatsDataOperatorContext) =>
         async (search: { query?: string }) => {
           if (!connection) {
             console.log('no connection');
@@ -73,7 +73,7 @@ const makeDatacenterOperator = (
           return { data };
         },
       fetch2:
-        ({ connection }) =>
+        ({ connection }: NatsDataOperatorContext) =>
         async () => {
           if (!connection) {
             console.log('no connection');
