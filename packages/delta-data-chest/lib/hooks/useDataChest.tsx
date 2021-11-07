@@ -1,10 +1,11 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import {
   DataChest,
   DataChestOperator,
   DataChestOptions,
   DataChestSeeder,
   DataOperator,
+  DataSubscription,
   OperatedData
 } from '../models';
 
@@ -13,11 +14,22 @@ export const useDataChest = <
   Seeder extends DataChestSeeder<Operator>
 >({
   operator,
-  seeder,
-  isLive
+  seeder
 }: DataChestOptions<Operator, Seeder>): DataChest<Operator, Seeder> => {
+  const activeSubscription = useRef<
+    DataSubscription<OperatedData<Operator>> | undefined
+  >(undefined);
   const [data, setData] = useState<OperatedData<Operator> | undefined>(
     undefined
+  );
+  const subscribe = useCallback(
+    async (subscription: DataSubscription<OperatedData<Operator>>) => {
+      activeSubscription.current?.cancel();
+      for await (const v of subscription) {
+        setData(v);
+      }
+    },
+    []
   );
   const chestOperator = useMemo(() => {
     return Object.entries(operator ?? {}).reduce(
@@ -31,9 +43,7 @@ export const useDataChest = <
           if (result.data) {
             setData(result.data);
           } else if (result.subscription) {
-            // for await (const data of result.subscription) {
-            //   // ...
-            // }
+            subscribe(result.subscription);
           }
           return result;
         }

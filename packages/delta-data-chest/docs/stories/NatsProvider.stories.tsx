@@ -1,12 +1,12 @@
 import { Meta } from '@storybook/react';
 import { JSONCodec } from 'nats.ws';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import {
   makeNatsDataOperator,
   NatsDataOperatorContext,
   NatsProvider,
-  useDataChest,
-  useNats
+  useNats,
+  useNatsDataChest
 } from '../../lib';
 
 export default {
@@ -42,7 +42,7 @@ export const DataChest = () => {
 };
 
 const DataChestDemo = () => {
-  const { fetch } = useDatacenterChest();
+  const { fetch } = useNatsDataChest(makeDatacenterOperator);
   useEffect(() => {
     fetch({}).then(console.log);
   }, [fetch]);
@@ -68,31 +68,7 @@ const makeDatacenterOperator = (context: NatsDataOperatorContext) => {
           );
           const data = codec.decode(message.data) as number;
           return { data };
-        },
-      fetch2:
-        ({ connection }) =>
-        async () => {
-          if (!connection) {
-            console.log('no connection');
-            return;
-          }
-          const message = await connection.request(subject, codec.encode({}));
-          const data = codec.decode(message.data) as number;
-          return { data: null };
         }
     }
-  });
-};
-
-const useDatacenterChest = () => {
-  const { connection } = useNats();
-  const operator = useMemo(
-    () => makeDatacenterOperator({ connection }),
-    [connection]
-  );
-  const seeder = useMemo(() => ({}), []);
-  return useDataChest({
-    operator,
-    seeder
   });
 };

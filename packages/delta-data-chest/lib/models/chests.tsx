@@ -35,5 +35,4 @@ export interface DataChestOptions<
 > {
   operator?: Operator;
   seeder?: Seeder;
-  isLive?: boolean;
 }
