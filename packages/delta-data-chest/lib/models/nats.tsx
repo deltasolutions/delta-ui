@@ -10,8 +10,7 @@ export interface NatsDataOperatorContext {
 }
 
 export interface NatsDataOperatorOptions<
-  Data,
-  Provider extends DataOperatorProvider<Data, NatsDataOperatorContext>
+  Provider extends DataOperatorProvider<any, NatsDataOperatorContext>
 > {
   connection?: NatsConnection;
   provider: Provider;

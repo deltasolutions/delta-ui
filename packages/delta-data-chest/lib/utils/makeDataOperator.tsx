@@ -5,19 +5,13 @@ import {
 } from '../models';
 
 export const makeDataOperator = <
-  Data,
-  Context,
-  Provider extends DataOperatorProvider<Data, any>
+  Provider extends DataOperatorProvider<any, any>
 >({
   context,
   provider
-}: DataOperatorOptions<
-  Data,
-  Context,
-  Provider
->): ProvidedDataOperator<Provider> => {
+}: DataOperatorOptions<Provider>): ProvidedDataOperator<Provider> => {
   const makeOperation = (fn: Provider[string]) => (seed: any) =>
-    fn(context, seed);
+    fn(context)(seed);
   return Object.entries(provider).reduce(
     (p, [k, v]) => ({
       ...p,

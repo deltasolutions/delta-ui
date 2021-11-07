@@ -4,23 +4,21 @@ import {
   DataChestOperator,
   DataChestOptions,
   DataChestSeeder,
-  DataOperator
+  DataOperator,
+  OperatedData
 } from '../models';
 
 export const useDataChest = <
-  Data,
-  Operator extends DataOperator<Data>,
-  Seeder extends DataChestSeeder<Data, Operator>
+  Operator extends DataOperator<any>,
+  Seeder extends DataChestSeeder<Operator>
 >({
   operator,
   seeder,
   isLive
-}: DataChestOptions<Data, Operator, Seeder>): DataChest<
-  Data,
-  Operator,
-  Seeder
-> => {
-  const [data, setData] = useState<Data | undefined>(undefined);
+}: DataChestOptions<Operator, Seeder>): DataChest<Operator, Seeder> => {
+  const [data, setData] = useState<OperatedData<Operator> | undefined>(
+    undefined
+  );
   const chestOperator = useMemo(() => {
     return Object.entries(operator ?? {}).reduce(
       (p, [k, v]) => ({
@@ -40,7 +38,7 @@ export const useDataChest = <
           return result;
         }
       }),
-      {} as DataChestOperator<Data, Operator, Seeder>
+      {} as DataChestOperator<Operator, Seeder>
     );
   }, [operator, seeder]);
   return useMemo(

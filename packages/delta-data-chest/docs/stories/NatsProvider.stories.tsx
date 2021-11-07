@@ -51,27 +51,39 @@ const DataChestDemo = () => {
 };
 
 const makeDatacenterOperator = (
-  options: Omit<NatsDataOperatorOptions<number, any>, 'provider'>
+  options: Omit<NatsDataOperatorOptions<any>, 'provider'>
 ) => {
   const codec = JSONCodec();
   const subject = 'DS.DCM.DATACENTER.REQUEST.SEARCH.DEFAULT';
-  const provider = {
-    fetch: async (
-      { connection }: NatsDataOperatorContext,
-      search: { query?: string }
-    ) => {
-      if (!connection) {
-        console.log('no connection');
-        return;
-      }
-      const message = await connection.request(subject, codec.encode(search));
-      const data = codec.decode(message.data) as number;
-      return { data };
-    }
-  };
-  return createNatsDataOperator<number, typeof provider>({
+  return createNatsDataOperator({
     ...options,
-    provider
+    provider: {
+      fetch:
+        ({ connection }) =>
+        async (search: { query?: string }) => {
+          if (!connection) {
+            console.log('no connection');
+            return;
+          }
+          const message = await connection.request(
+            subject,
+            codec.encode(search)
+          );
+          const data = codec.decode(message.data) as number;
+          return { data };
+        },
+      fetch2:
+        ({ connection }) =>
+        async () => {
+          if (!connection) {
+            console.log('no connection');
+            return;
+          }
+          const message = await connection.request(subject, codec.encode({}));
+          const data = codec.decode(message.data) as number;
+          return { data: null };
+        }
+    }
   });
 };
 
@@ -81,8 +93,10 @@ const useDatacenterChest = () => {
     () => makeDatacenterOperator({ connection }),
     [connection]
   );
+  operator.fetch({});
+  operator.fetch2();
   const seeder = useMemo(() => ({}), []);
-  const chest = useDataChest<number, typeof operator, typeof seeder>({
+  const chest = useDataChest<typeof operator, typeof seeder>({
     operator
   });
   return chest;

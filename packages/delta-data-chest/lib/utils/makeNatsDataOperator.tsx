@@ -6,14 +6,13 @@ import {
 import { makeDataOperator } from './makeDataOperator';
 
 export const createNatsDataOperator = <
-  Data,
-  Provider extends DataOperatorProvider<Data, NatsDataOperatorContext>
+  Provider extends DataOperatorProvider<any, NatsDataOperatorContext>
 >({
   connection,
   provider
-}: NatsDataOperatorOptions<Data, Provider>) => {
-  return makeDataOperator<Data, NatsDataOperatorContext, Provider>({
+}: NatsDataOperatorOptions<Provider>) => {
+  return makeDataOperator<Provider>({
     provider,
-    context: { connection }
+    context: { connection } as any
   });
 };
