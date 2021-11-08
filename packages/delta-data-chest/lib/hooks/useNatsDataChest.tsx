@@ -18,14 +18,14 @@ export const useNatsDataChest = <
   provider,
   seeder
 }: NatsDataChestOptions<Provider, Seeder>) => {
-  const { connection } = useNats();
+  const { getConnection } = useNats();
   const operator = useMemo(() => {
     if (!make && !provider) {
       throw new Error('Either `make` or `provider` must be given');
     }
     return make
-      ? make({ connection })
-      : makeNatsDataOperator({ connection, provider: provider! });
-  }, [connection]);
+      ? make({ getConnection })
+      : makeNatsDataOperator({ getConnection, provider: provider! });
+  }, [getConnection]);
   return useDataChest({ operator, seeder });
 };

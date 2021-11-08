@@ -27,14 +27,11 @@ export const Basics = () => {
 };
 
 const BasicsDemo = () => {
-  const { connection } = useNats();
+  const { getConnection } = useNats();
   useEffect(() => {
-    if (!connection) {
-      return;
-    }
-    const operator = makeDatacenterOperator({ connection });
+    const operator = makeDatacenterOperator({ getConnection });
     operator.fetch({}).then(v => console.log(v));
-  }, [connection]);
+  }, []);
   return null;
 };
 
@@ -60,11 +57,9 @@ const makeDatacenterOperator = (context: NatsDataOperatorContext) => {
     ...context,
     provider: {
       fetch:
-        ({ connection }) =>
+        ({ getConnection }) =>
         async (search: { query?: string }) => {
-          if (!connection) {
-            return;
-          }
+          const connection = await getConnection();
           const message = await connection.request(
             samples.searchSubject,
             codec.encode(search)

@@ -9,11 +9,11 @@ import { makeDataOperator } from './makeDataOperator';
 export const makeNatsDataOperator = <
   Provider extends DataOperatorProvider<NatsDataOperatorContext>
 >({
-  connection,
+  getConnection,
   provider
 }: NatsDataOperatorOptions<Provider>) => {
   return makeDataOperator<Provider>({
     provider,
-    context: { connection } as ProvidedDataOperatorContext<Provider>
+    context: { getConnection } as ProvidedDataOperatorContext<Provider>
   });
 };

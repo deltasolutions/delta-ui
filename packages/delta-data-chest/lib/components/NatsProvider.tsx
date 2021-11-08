@@ -4,9 +4,8 @@ import React, {
   useCallback,
   useEffect,
   useMemo,
-  useState
+  useRef
 } from 'react';
-import { hash } from 'restyler';
 import { NatsContext } from './NatsContext';
 
 export interface NatsProviderProps extends ConnectionOptions {
@@ -14,27 +13,24 @@ export interface NatsProviderProps extends ConnectionOptions {
 }
 
 export const NatsProvider = ({ children, ...options }: NatsProviderProps) => {
-  const [connection, setConnection] = useState<NatsConnection | undefined>(
-    undefined
-  );
-  const update = useCallback(async () => {
-    try {
+  const connection = useRef<NatsConnection | undefined>(undefined);
+  const checkIfConnected = useCallback(() => !!connection.current, []);
+  const getConnection = useCallback(async () => {
+    if (!connection.current) {
       const { connect } = await import('nats.ws');
-      const nc = await connect(options);
-      console.log('Connected to NATS network');
-      setConnection(nc);
-      return () => {
-        nc.close();
-      };
-    } catch (e) {
-      console.warn('Failed to connect to NATS network', e);
-      return;
+      connection.current = await connect(options);
     }
-  }, [hash(options)]);
+    return connection.current;
+  }, [options]);
   useEffect(() => {
-    update();
+    return () => {
+      connection.current?.close();
+    };
   }, []);
-  const contextValue = useMemo(() => ({ connection }), [connection]);
+  const contextValue = useMemo(
+    () => ({ checkIfConnected, getConnection }),
+    [checkIfConnected, getConnection]
+  );
   return (
     <NatsContext.Provider value={contextValue}>{children}</NatsContext.Provider>
   );

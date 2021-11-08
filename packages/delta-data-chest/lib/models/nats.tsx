@@ -3,11 +3,12 @@ import { DataChestSeeder } from './chests';
 import { DataOperatorProvider, ProvidedDataOperator } from './operators';
 
 export interface NatsContextValue {
-  connection?: NatsConnection;
+  checkIfConnected: () => boolean;
+  getConnection: () => NatsConnection | Promise<NatsConnection>;
 }
 
 export interface NatsDataOperatorContext {
-  connection?: NatsConnection;
+  getConnection: () => NatsConnection | Promise<NatsConnection>;
 }
 
 export interface NatsDataOperatorOptions<
