@@ -42,7 +42,7 @@ export const DataChest = () => {
 };
 
 const DataChestDemo = () => {
-  const { fetch } = useNatsDataChest(makeDatacenterOperator);
+  const { fetch } = useNatsDataChest({ make: makeDatacenterOperator });
   useEffect(() => {
     fetch({}).then(console.log);
   }, [fetch]);
