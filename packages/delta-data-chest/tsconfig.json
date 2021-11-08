@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "declaration": true,
+    "declarationDir": "./build",
+    "downlevelIteration": true,
+    "emitDeclarationOnly": true,
+    "jsx": "preserve",
+    "rootDir": "./lib",
+    "types": ["node", "react"]
+  },
+  "extends": "../../tsconfig",
+  "include": ["./lib/**/*.ts", "./lib/**/*.tsx"]
+}
