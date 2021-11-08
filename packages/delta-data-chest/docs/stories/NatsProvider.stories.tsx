@@ -13,9 +13,14 @@ export default {
   title: 'General/Nats'
 } as Meta;
 
+const samples = {
+  servers: 'ws://192.168.200.49:2222',
+  searchSubject: 'DS.DCM.DATACENTER.REQUEST.SEARCH.DEFAULT'
+};
+
 export const Basics = () => {
   return (
-    <NatsProvider servers="ws://192.168.200.49:2222">
+    <NatsProvider servers={samples.servers}>
       <BasicsDemo />
     </NatsProvider>
   );
@@ -35,7 +40,7 @@ const BasicsDemo = () => {
 
 export const DataChest = () => {
   return (
-    <NatsProvider servers="ws://192.168.200.49:2222">
+    <NatsProvider servers={samples.servers}>
       <DataChestDemo />
     </NatsProvider>
   );
@@ -51,7 +56,6 @@ const DataChestDemo = () => {
 
 const makeDatacenterOperator = (context: NatsDataOperatorContext) => {
   const codec = JSONCodec();
-  const subject = 'DS.DCM.DATACENTER.REQUEST.SEARCH.DEFAULT';
   return makeNatsDataOperator({
     ...context,
     provider: {
@@ -59,11 +63,10 @@ const makeDatacenterOperator = (context: NatsDataOperatorContext) => {
         ({ connection }) =>
         async (search: { query?: string }) => {
           if (!connection) {
-            console.log('no connection');
             return;
           }
           const message = await connection.request(
-            subject,
+            samples.searchSubject,
             codec.encode(search)
           );
           const data = codec.decode(message.data) as number;
