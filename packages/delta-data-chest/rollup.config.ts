@@ -47,13 +47,7 @@ export default {
     })
   ],
 
-  external: [
-    '@emotion/react',
-    '@theme-ui/core',
-    'react',
-    'react-dnd',
-    'restyler'
-  ],
+  external: ['nats.ws', 'react', 'restyler'],
 
   onwarn: (warning, rollupWarn) => {
     if (!['THIS_IS_UNDEFINED'].includes(warning.code)) {
