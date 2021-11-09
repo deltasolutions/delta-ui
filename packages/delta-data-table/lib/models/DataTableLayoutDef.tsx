@@ -2,5 +2,5 @@ import { DataTableTabDef } from './DataTableTabDef';
 
 export interface DataTableLayoutDef {
   tabs: DataTableTabDef[];
-  maxColumnCount?: number;
+  maxRowCount?: number;
 }
