@@ -47,6 +47,7 @@ export const DataTable = <T extends object>({
           style={{
             ...style,
             width,
+            top: `${parseFloat(style.top) + rowHeight}px`,
             cursor: onClick ? 'pointer' : undefined
           }}
           onClick={onClick}
