@@ -16,8 +16,8 @@ export const Basics = () => {
   });
   return (
     <Box sx={{ padding: 5, minHeight: '100vh' }}>
-      <Card sx={{ height: '400px' }}>
-        <DataTable manager={manager} sx={{ height: '100%' }} />
+      <Card>
+        <DataTable manager={manager} />
       </Card>
     </Box>
   );
@@ -34,8 +34,8 @@ export const Empty = () => {
   });
   return (
     <Box sx={{ padding: 5, minHeight: '100vh' }}>
-      <Card sx={{ height: '400px' }}>
-        <DataTable manager={manager} sx={{ height: '100%' }} />
+      <Card>
+        <DataTable manager={manager} />
       </Card>
     </Box>
   );

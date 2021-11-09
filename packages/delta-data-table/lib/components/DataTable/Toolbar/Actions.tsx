@@ -9,6 +9,7 @@ import { TabResetAction } from './TabResetAction';
 
 export const Actions = () => {
   const {
+    isHeightAdaptive,
     manager: { isConfiguringLayout, setIsConfiguringLayout }
   } = useContext(DataTableContext);
 
@@ -16,7 +17,7 @@ export const Actions = () => {
     return (
       <Fragment>
         <ColumnExclusionAction />
-        <RowCountAction />
+        {!isHeightAdaptive && <RowCountAction />}
         <TabResetAction />
         <Button kind="icon" onClick={() => setIsConfiguringLayout(false)}>
           <IoCloseOutline />

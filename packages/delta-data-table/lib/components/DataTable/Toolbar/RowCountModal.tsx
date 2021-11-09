@@ -29,19 +29,13 @@ export const RowCountModal = ({
 }: RowCountModalProps) => {
   const [t] = useTranslation();
   const formManager = useFormManager({
-    values: {
-      stretched: maxRowCount === undefined,
-      maxRowCount: maxRowCount
-    }
+    values: { maxRowCount }
   });
   return (
     <Form
       manager={formManager}
-      onSubmit={({ values: { stretched, maxRowCount } }) => {
-        setLayout({
-          tabs,
-          maxRowCount: stretched ? undefined : +maxRowCount
-        });
+      onSubmit={({ values }) => {
+        setLayout({ tabs, maxRowCount: +values.maxRowCount });
         handleClose();
       }}
     >
@@ -49,22 +43,13 @@ export const RowCountModal = ({
         <Heading kind="modal">{t('common:sections.rows')}</Heading>
       </ModalHeader>
       <ModalBody>
-        <FormGrid>
-          <FormField name="stretched">
-            <Checkbox>{t('common:labels.stretched')}</Checkbox>
-          </FormField>
-          {!formManager.values.stretched && (
-            <FormField
-              name="maxRowCount"
-              label={t('common:labels.maxRowCount')}
-              validate={v =>
-                v && +v > 1 ? [] : [t('common:errors.wrongFormat')]
-              }
-            >
-              <Input type="number" />
-            </FormField>
-          )}
-        </FormGrid>
+        <FormField
+          name="maxRowCount"
+          label={t('common:labels.maxRowCount')}
+          validate={v => (v && +v > 0 ? [] : [t('common:errors.wrongFormat')])}
+        >
+          <Input type="number" />
+        </FormField>
       </ModalBody>
       <ModalFooter>
         <Button kind="secondary" onClick={handleClose}>

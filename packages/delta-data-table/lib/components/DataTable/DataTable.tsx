@@ -3,7 +3,7 @@ import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react';
 import { FixedSizeList } from 'react-window';
 import { Box, useThemed } from 'restyler';
 import { DataTableProps } from '../../models';
-import { getColumnWidth, getRowWidth } from '../../utils';
+import { getRowWidth } from '../../utils';
 import { DataRow } from './DataRow';
 import { DataTableContext } from './DataTableContext';
 import { EmptyRow } from './EmptyRow';
@@ -12,29 +12,33 @@ import { LoaderRow } from './LoaderRow';
 import { Toolbar } from './Toolbar';
 
 export const DataTable = <T extends object>({
-  manager,
-  manager: { data, coercedColumns, hasNextChunk },
   getRowProps,
+  isHeightAdaptive,
+  manager,
+  manager: {
+    layout: { maxRowCount = 5 },
+    coercedColumns,
+    data,
+    hasNextChunk
+  },
   ...rest
 }: DataTableProps<T>) => {
   const Table = useThemed('div', 'dataTable');
   const TableBody = useThemed('div', 'dataTable.body');
-  const TableRow = useThemed('div', 'dataTable.row');
-  const TableCell = useThemed('div', 'dataTable.cell');
 
-  const [element, setElement] = useState<HTMLDivElement | null>(null);
-  const [height, setHeight] = useState(0);
   const rowHeight = 56; // FIXME
+  const [container, setContainer] = useState<HTMLDivElement | null>(null);
+  const [containerHeight, setContainerHeight] = useState(200);
   useEffect(() => {
-    if (!element) {
+    if (!container) {
       return;
     }
-    const updateHeight = () => setHeight(element.clientHeight);
+    const updateHeight = () => setContainerHeight(container.clientHeight);
     updateHeight();
     const observer = new ResizeObserver(updateHeight);
-    observer.observe(element);
+    observer.observe(container);
     return () => observer.disconnect();
-  }, [element]);
+  }, [container]);
 
   const renderRow = useCallback(
     ({ index, style }) => {
@@ -65,7 +69,15 @@ export const DataTable = <T extends object>({
   const bodyContent = useMemo(
     () => (
       <FixedSizeList
-        height={height ? height - rowHeight : 300}
+        height={
+          isHeightAdaptive
+            ? containerHeight - rowHeight
+            : ((data.length <= maxRowCount
+                ? Math.max(data.length, 1)
+                : maxRowCount) +
+                1) *
+              rowHeight
+        }
         innerElementType={innerElementType}
         itemCount={Math.max(data.length, 1) + (hasNextChunk ? 1 : 0)}
         itemSize={rowHeight}
@@ -75,17 +87,25 @@ export const DataTable = <T extends object>({
         {renderRow}
       </FixedSizeList>
     ),
-    [height, data, renderRow, hasNextChunk]
+    [
+      isHeightAdaptive,
+      maxRowCount,
+      containerHeight,
+      data,
+      renderRow,
+      hasNextChunk
+    ]
   );
 
-  const contextValue = useMemo(
-    () => ({ manager, getRowProps }),
-    [manager, getRowProps]
+  const contextValue = { getRowProps, isHeightAdaptive, manager };
+  const memoizedContextValue = useMemo(
+    () => contextValue,
+    Object.values(contextValue)
   );
 
   return (
-    <Box ref={setElement} {...rest}>
-      <DataTableContext.Provider value={contextValue}>
+    <Box ref={setContainer} {...rest}>
+      <DataTableContext.Provider value={memoizedContextValue}>
         <Toolbar sx={{ height: rowHeight }} />
         <Table>
           <TableBody>{bodyContent}</TableBody>
