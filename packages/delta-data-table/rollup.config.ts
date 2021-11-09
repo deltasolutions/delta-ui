@@ -52,6 +52,7 @@ export default {
     '@theme-ui/core',
     'react',
     'react-dnd',
+    'react-i18next',
     'restyler'
   ],
 
