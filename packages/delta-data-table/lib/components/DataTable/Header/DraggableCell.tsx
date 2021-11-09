@@ -17,18 +17,18 @@ export const DraggableCell = ({
 }: DraggableCellProps) => {
   const TableCell = useThemed('div', 'dataTable.cell');
   const {
-    manager: { isConfiguringLayout }
+    manager: { isConfiguringLayout, coercedColumns }
   } = useContext(DataTableContext);
   const [{ isDragging }, dragRef, connectPreview] = useDrag(
     () => ({
       type: 'column',
       item: { index },
-      canDrag: isConfiguringLayout,
+      canDrag: isConfiguringLayout && coercedColumns.length > 1,
       collect: monitor => ({
         isDragging: monitor.isDragging()
       })
     }),
-    [isConfiguringLayout]
+    [isConfiguringLayout, coercedColumns]
   );
   return (
     <Fragment>

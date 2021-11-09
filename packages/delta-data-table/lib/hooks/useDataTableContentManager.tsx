@@ -7,7 +7,6 @@ import {
 
 export const useDataTableContentManager = <T extends object>({
   tabManager: {
-    activeTab,
     activeTab: {
       columnOrder = defaultColumnOrder,
       columnExclusions = defaultColumnExclusions,
@@ -34,12 +33,13 @@ export const useDataTableContentManager = <T extends object>({
       {}
     );
     const coerced: DataTableColumnDef[] = filteredKeys.reduce(
-      (p, v) => [
-        ...p,
-        columnSizes[v]
-          ? { ...columnMap[v], width: columnSizes[v] }
-          : columnMap[v]
-      ],
+      (p, v) =>
+        [
+          ...p,
+          columnSizes[v]
+            ? { ...columnMap[v], width: columnSizes[v] }
+            : columnMap[v]
+        ].filter(Boolean),
       []
     );
     return coerced;

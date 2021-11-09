@@ -9,22 +9,25 @@ export const dataTable: BasicTheme = {
     row: {
       style: {
         alignItems: 'center',
-        borderBottom: '1px solid',
-        borderBottomColor: 'border',
+        borderBottom: '1px solid transparent',
         fontSize: 3,
-        '&:hover': { backgroundColor: 'accentSurface' }
+        lineHeight: '1.5rem',
+        '&:hover': { backgroundColor: 'accentSurface' },
+        '&:not(:last-child)': {
+          borderBottomColor: 'border'
+        }
       },
       kinds: {
         head: {
           style: {
             backgroundColor: 'accentSurface',
+            borderBottom: '1px solid',
+            borderBottomColor: 'border',
             userSelect: 'none',
             fontWeight: 'heading',
             textTransform: 'uppercase',
             letterSpacing: '0.04em',
-            fontSize: 2,
-            borderBottom: '1px solid',
-            borderBottomColor: 'border'
+            fontSize: 2
           }
         }
       }

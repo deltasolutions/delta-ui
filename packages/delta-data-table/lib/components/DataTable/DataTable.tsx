@@ -5,6 +5,7 @@ import { Box, useThemed } from 'restyler';
 import { DataTableProps } from '../../models';
 import { getColumnWidth, getRowWidth } from '../../utils';
 import { DataTableContext } from './DataTableContext';
+import { EmptyRow } from './EmptyRow';
 import { Header } from './Header';
 import { LoaderRow } from './LoaderRow';
 import { Toolbar } from './Toolbar';
@@ -37,8 +38,12 @@ export const DataTable = <T extends object>({
   const renderRow = useCallback(
     ({ index, style }) => {
       const width = `max(${getRowWidth(coercedColumns)}px, 100%)`;
+      const top = `${parseFloat(style.top) + rowHeight}px`;
+      if (data.length === 0) {
+        return <EmptyRow style={{ ...style, top, width }} />;
+      }
       if (index === data.length) {
-        return <LoaderRow style={{ ...style, width }} />;
+        return <LoaderRow style={{ ...style, top, width }} />;
       }
       const datum = data[index] ?? {};
       const { onClick, ...rest } = getRowProps?.(datum, index) ?? {};
@@ -46,8 +51,8 @@ export const DataTable = <T extends object>({
         <TableRow
           style={{
             ...style,
+            top,
             width,
-            top: `${parseFloat(style.top) + rowHeight}px`,
             cursor: onClick ? 'pointer' : undefined
           }}
           onClick={onClick}
@@ -88,7 +93,7 @@ export const DataTable = <T extends object>({
       <FixedSizeList
         height={height ? height - rowHeight : 300}
         innerElementType={innerElementType}
-        itemCount={hasNextChunk ? data.length + 1 : data.length}
+        itemCount={Math.max(data.length, 1) + (hasNextChunk ? 1 : 0)}
         itemSize={rowHeight}
         overscanCount={5}
         width="100%"

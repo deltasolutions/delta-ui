@@ -11,8 +11,26 @@ export default {
 export const Basics = () => {
   const options = useMock({ columnCount: 5, rowCount: 30 });
   const manager = useStoredDataTableManager({
-    id: 'story-data-table',
+    id: 'story-data-table-basics',
     ...options
+  });
+  return (
+    <Box sx={{ padding: 5, minHeight: '100vh' }}>
+      <Card sx={{ height: '400px' }}>
+        <DataTable manager={manager} sx={{ height: '100%' }} />
+      </Card>
+    </Box>
+  );
+};
+
+export const Empty = () => {
+  const manager = useStoredDataTableManager({
+    id: 'story-data-table-empty',
+    initialContent: {
+      data: [],
+      columns: [{ key: 'id', header: '#' }],
+      hasNextChunk: false
+    }
   });
   return (
     <Box sx={{ padding: 5, minHeight: '100vh' }}>
