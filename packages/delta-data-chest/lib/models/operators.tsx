@@ -1,6 +1,7 @@
 import { DataSubscription } from './subscriptions';
 
 export interface DataOperationResult<Data> {
+  meta?: any;
   data?: Data;
   subscription?: DataSubscription<Data>;
 }
