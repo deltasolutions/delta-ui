@@ -4,6 +4,7 @@ import { FixedSizeList } from 'react-window';
 import { Box, useThemed } from 'restyler';
 import { DataTableProps } from '../../models';
 import { getColumnWidth, getRowWidth } from '../../utils';
+import { DataRow } from './DataRow';
 import { DataTableContext } from './DataTableContext';
 import { EmptyRow } from './EmptyRow';
 import { Header } from './Header';
@@ -45,34 +46,7 @@ export const DataTable = <T extends object>({
       if (index === data.length) {
         return <LoaderRow style={{ ...style, top, width }} />;
       }
-      const datum = data[index] ?? {};
-      const { onClick, ...rest } = getRowProps?.(datum, index) ?? {};
-      return (
-        <TableRow
-          style={{
-            ...style,
-            top,
-            width,
-            cursor: onClick ? 'pointer' : undefined
-          }}
-          onClick={onClick}
-          {...rest}
-        >
-          {coercedColumns.map(v => {
-            return (
-              <TableCell
-                key={v.key}
-                style={{
-                  display: 'inline-block',
-                  width: getColumnWidth(v) + 'px'
-                }}
-              >
-                {datum[v.key]}
-              </TableCell>
-            );
-          })}
-        </TableRow>
-      );
+      return <DataRow index={index} style={{ ...style, top, width }} />;
     },
     [coercedColumns, data]
   );
@@ -104,7 +78,10 @@ export const DataTable = <T extends object>({
     [height, data, renderRow, hasNextChunk]
   );
 
-  const contextValue = useMemo(() => ({ manager }), [manager]);
+  const contextValue = useMemo(
+    () => ({ manager, getRowProps }),
+    [manager, getRowProps]
+  );
 
   return (
     <Box ref={setElement} {...rest}>
