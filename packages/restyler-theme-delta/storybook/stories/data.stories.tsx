@@ -52,3 +52,15 @@ export const PieChart = () => {
     />
   );
 };
+
+export const PairList = () => {
+  return (
+    <R.PairList
+      pairs={[
+        ['Title 1', 'A'],
+        ['Title 2', 'B']
+      ]}
+    />
+  );
+};
+PairList.decorators = [compact()];

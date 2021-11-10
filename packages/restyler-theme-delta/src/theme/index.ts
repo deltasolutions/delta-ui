@@ -19,6 +19,7 @@ import { masonry } from './masonry';
 import { menu } from './menu';
 import { modal } from './modal';
 import { notification } from './notification';
+import { pairList } from './pairList';
 import { pieChart } from './pieChart';
 import { progress } from './progress';
 import { radio } from './radio';
@@ -122,6 +123,7 @@ export const theme: BasicTheme = {
     menu,
     modal,
     notification,
+    pairList,
     pieChart,
     progress,
     radio,
