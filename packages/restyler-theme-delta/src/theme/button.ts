@@ -14,7 +14,6 @@ const createKind = (color: string, extras?: any): BasicTheme => ({
     textTransform: 'uppercase',
     letterSpacing: '0.04em',
     outline: 'none',
-    transition: 'all 0.15s',
     ...(props.disabled
       ? {
           color: 'border',

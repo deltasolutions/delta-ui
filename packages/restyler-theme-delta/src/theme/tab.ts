@@ -4,14 +4,11 @@ export const tab: BasicTheme = {
   components: {
     group: {
       style: {
-        display: 'flex',
-        borderBottom: '1px solid',
-        borderBottomColor: 'border'
+        display: 'flex'
       }
     },
     option: {
       style: ({ isActive }) => ({
-        marginBottom: '-1px',
         paddingX: 3,
         paddingY: 3,
         borderBottom: '2px solid transparent',
@@ -21,7 +18,6 @@ export const tab: BasicTheme = {
         fontWeight: 'heading',
         textTransform: 'uppercase',
         letterSpacing: '0.04em',
-        transition: 'all 0.2s',
         '&:hover': { color: 'primary' },
         ...(isActive ? { color: 'primary', borderBottomColor: 'primary' } : {})
       })
