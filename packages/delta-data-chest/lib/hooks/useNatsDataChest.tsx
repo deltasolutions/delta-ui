@@ -14,6 +14,7 @@ export const useNatsDataChest = <
   Provider extends DataOperatorProvider<NatsDataOperatorContext>,
   Seeder extends DataChestSeeder<ProvidedDataOperator<Provider>>
 >({
+  initialData,
   make,
   provider,
   seeder
@@ -27,5 +28,5 @@ export const useNatsDataChest = <
       ? make({ getConnection })
       : makeNatsDataOperator({ getConnection, provider: provider! });
   }, [getConnection]);
-  return useDataChest({ operator, seeder });
+  return useDataChest({ initialData, operator, seeder });
 };

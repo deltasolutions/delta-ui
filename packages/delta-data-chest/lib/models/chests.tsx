@@ -33,6 +33,7 @@ export interface DataChestOptions<
   Operator extends DataOperator<any>,
   Seeder extends DataChestSeeder<Operator>
 > {
+  initialData?: OperatedData<Operator> | (() => OperatedData<Operator>);
   operator?: Operator;
   seeder?: Seeder;
 }

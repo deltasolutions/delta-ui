@@ -1,6 +1,10 @@
 import { NatsConnection } from 'nats.ws';
 import { DataChestSeeder } from './chests';
-import { DataOperatorProvider, ProvidedDataOperator } from './operators';
+import {
+  DataOperatorProvider,
+  OperatedData,
+  ProvidedDataOperator
+} from './operators';
 
 export interface NatsContextValue {
   checkIfConnected: () => boolean;
@@ -21,6 +25,9 @@ export interface NatsDataChestOptions<
   Provider extends DataOperatorProvider<NatsDataOperatorContext>,
   Seeder extends DataChestSeeder<ProvidedDataOperator<Provider>>
 > {
+  initialData?:
+    | OperatedData<ProvidedDataOperator<Provider>>
+    | (() => OperatedData<ProvidedDataOperator<Provider>>);
   make?: (context: NatsDataOperatorContext) => ProvidedDataOperator<Provider>;
   provider?: Provider;
   seeder?: Seeder;

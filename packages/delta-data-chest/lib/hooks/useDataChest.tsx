@@ -13,6 +13,7 @@ export const useDataChest = <
   Operator extends DataOperator<any>,
   Seeder extends DataChestSeeder<Operator>
 >({
+  initialData,
   operator,
   seeder
 }: DataChestOptions<Operator, Seeder>): DataChest<Operator, Seeder> => {
@@ -20,7 +21,7 @@ export const useDataChest = <
     DataSubscription<OperatedData<Operator>> | undefined
   >(undefined);
   const [data, setData] = useState<OperatedData<Operator> | undefined>(
-    undefined
+    initialData
   );
   const subscribe = useCallback(
     async (subscription: DataSubscription<OperatedData<Operator>>) => {
