@@ -12,23 +12,26 @@ export const Header = () => {
   const {
     manager: { coercedColumns, activeTab, updateActiveTab }
   } = useContext(DataTableContext);
-  const [_, dropRef] = useDrop(() => ({
-    accept: 'resizer',
-    drop: ({ index }, monitor) => {
-      const { x = 0 } = monitor.getDifferenceFromInitialOffset() ?? {};
-      const column = coercedColumns[index];
-      if (!column) {
-        return;
-      }
-      const width = Math.min(Math.max(getColumnWidth(column) + x, 30), 400);
-      updateActiveTab({
-        columnSizes: {
-          ...activeTab.columnSizes,
-          [column.key]: width
+  const [_, dropRef] = useDrop(
+    () => ({
+      accept: 'resizer',
+      drop: ({ index }, monitor) => {
+        const { x = 0 } = monitor.getDifferenceFromInitialOffset() ?? {};
+        const column = coercedColumns[index];
+        if (!column) {
+          return;
         }
-      });
-    }
-  }));
+        const width = Math.min(Math.max(getColumnWidth(column) + x, 30), 400);
+        updateActiveTab({
+          columnSizes: {
+            ...activeTab.columnSizes,
+            [column.key]: width
+          }
+        });
+      }
+    }),
+    [coercedColumns, activeTab, updateActiveTab]
+  );
   return (
     <TableRow
       key="head"
