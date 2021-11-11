@@ -8,7 +8,7 @@ const loaderAnimation = keyframes({
 
 export const loadScreen: BasicTheme = {
   style: {
-    zIndex: 9000,
+    zIndex: 9900,
     position: 'fixed',
     top: 0,
     left: 0,

@@ -5,7 +5,7 @@ export const layer: BasicTheme = {
     backdrop: {
       style: ({ isVisible }) => ({
         position: 'fixed',
-        zIndex: '1000',
+        zIndex: 9000,
         top: '0',
         left: '0',
         width: '100vw',
