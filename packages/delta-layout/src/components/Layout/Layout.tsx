@@ -21,6 +21,7 @@ export interface LayoutProps
 export const Layout = ({
   onSave,
   header,
+  footer,
   sidebar,
   logoSrc,
   children,
@@ -31,6 +32,7 @@ export const Layout = ({
   const ThemedLayoutMain = useThemed('div', 'layout.main');
   const contextValue = {
     header,
+    footer,
     sidebar,
     logoSrc
   };

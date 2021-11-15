@@ -2,6 +2,7 @@ import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { Fragment } from 'react';
 import { IoIosHeartEmpty, IoIosPower } from 'react-icons/io';
+import { Box } from 'restyler';
 import { useLocalLayoutMenu } from '../../hooks';
 import { LayoutMenuEntryDef } from '../../models';
 import { AppContainer } from '../AppContainer';
@@ -51,3 +52,25 @@ const entries: LayoutMenuEntryDef[] = [
     ]
   }
 ];
+
+export const CustomFooter = () => {
+  const menu = useLocalLayoutMenu({ entries, activeIds: [] });
+  return (
+    <AppContainer>
+      <Layout
+        header={{ title: 'Heading' }}
+        footer={{
+          left: <Box>Left</Box>,
+          right: <Box>Right</Box>
+        }}
+        sidebar={{
+          account: { title: 'root' },
+          menu
+        }}
+        logoSrc="http://www.deltasolutions.ru/images/logo-minimal.svg"
+      >
+        Content
+      </Layout>
+    </AppContainer>
+  );
+};
