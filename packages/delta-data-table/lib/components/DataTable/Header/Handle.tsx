@@ -29,8 +29,8 @@ export const Handle = ({ index }: HandleProps) => {
       }),
       drop: (dropped: { index?: number; exclusion?: string }) => {
         const keySet = new Set(columns.map(v => v.key));
-        const splitIndex = index + 1;
         const keys = coercedColumns.map(v => v.key);
+        const splitIndex = index + 1;
         const left = keys.slice(0, splitIndex);
         const right = keys.slice(splitIndex);
         const droppedKey = (dropped.exclusion ??
@@ -38,7 +38,7 @@ export const Handle = ({ index }: HandleProps) => {
         const columnOrder = [...left, droppedKey, ...right].filter(v =>
           keySet.has(v)
         );
-        if (dropped.index) {
+        if (dropped.index !== undefined) {
           const formerIndex =
             index < dropped.index ? dropped.index + 1 : dropped.index;
           columnOrder.splice(formerIndex, 1);
