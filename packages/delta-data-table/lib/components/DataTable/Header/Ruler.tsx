@@ -1,8 +1,10 @@
 import { jsx } from '@theme-ui/core';
 import { useMemo, useState } from 'react';
 import { useDragLayer } from 'react-dnd';
+import { useThemed } from 'restyler';
 
 export const Ruler = () => {
+  const Themed = useThemed('div', 'dataTable.ruler');
   const [element, setElement] = useState<HTMLDivElement | null>(null);
   const { shouldRender, mouseX } = useDragLayer(monitor => ({
     shouldRender: monitor.isDragging() && monitor.getItemType() === 'resizer',
@@ -27,21 +29,10 @@ export const Ruler = () => {
     return null;
   }
   return (
-    <div
+    <Themed
       ref={setElement}
       style={{
-        transform: `translateX(${mouseX + offset + 'px'})`
-      }}
-      sx={{
-        zIndex: 2,
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: 0,
-        height: '100vh',
-        borderRight: '2px dashed',
-        borderRightColor: 'primary',
-        pointerEvents: 'none',
+        transform: `translateX(${mouseX + offset + 'px'})`,
         willChange: 'transform'
       }}
     />
