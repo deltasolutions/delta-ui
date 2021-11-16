@@ -4,7 +4,7 @@ import { useDrag, useDrop } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import { HiOutlineArrowNarrowUp } from 'react-icons/hi';
 import { MdDragHandle } from 'react-icons/md';
-import { Box, BoxProps, useSharedRef } from 'restyler';
+import { BoxProps, useSharedRef, useThemed } from 'restyler';
 import { DataTableContext } from '../DataTableContext';
 
 export interface HandleProps extends BoxProps {
@@ -12,6 +12,9 @@ export interface HandleProps extends BoxProps {
 }
 
 export const Handle = ({ index }: HandleProps) => {
+  const Handle = useThemed('div', 'dataTable.handle');
+  const HandleIcon = useThemed('div', 'dataTable.handle.icon');
+  const HandleDropIcon = useThemed('div', 'dataTable.handle.dropIcon');
   const {
     manager: {
       columns,
@@ -62,48 +65,15 @@ export const Handle = ({ index }: HandleProps) => {
     dragPreviewRef(getEmptyImage(), { captureDraggingState: true });
   }, []);
   return (
-    <Box
-      ref={sharedRef}
-      sx={{
-        position: 'relative',
-        zIndex: 1,
-        display: 'inline-block',
-        marginLeft: '-1em',
-        marginRight: '-1em',
-        width: '2em',
-        height: '3em',
-        verticalAlign: 'middle',
-        background: 'transparent',
-        color: 'onSurface',
-        cursor: 'col-resize',
-        '&:hover': {
-          color: 'primary'
-        }
-      }}
-    >
-      <MdDragHandle
-        sx={{
-          width: '1.5em',
-          height: '1.5em',
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%) rotate(90deg)'
-        }}
-      />
+    <Handle ref={sharedRef}>
+      <HandleIcon>
+        <MdDragHandle />
+      </HandleIcon>
       {isOver && canDrop && (
-        <HiOutlineArrowNarrowUp
-          sx={{
-            width: '2em',
-            height: '2em',
-            position: 'absolute',
-            top: '100%',
-            left: '50%',
-            transform: 'translate(-50%, 1em)',
-            color: 'primary'
-          }}
-        />
+        <HandleDropIcon>
+          <HiOutlineArrowNarrowUp />
+        </HandleDropIcon>
       )}
-    </Box>
+    </Handle>
   );
 };

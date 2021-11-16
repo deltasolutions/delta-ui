@@ -15,7 +15,7 @@ export const DraggableCell = ({
   children,
   ...rest
 }: DraggableCellProps) => {
-  const TableCell = useThemed('div', 'dataTable.cell');
+  const Cell = useThemed('div', 'dataTable.cell');
   const {
     manager: { isConfiguringLayout, coercedColumns }
   } = useContext(DataTableContext);
@@ -32,7 +32,7 @@ export const DraggableCell = ({
   );
   return (
     <Fragment>
-      <TableCell
+      <Cell
         ref={dragRef}
         sx={
           isConfiguringLayout
@@ -42,9 +42,16 @@ export const DraggableCell = ({
         {...rest}
       >
         {children}
-      </TableCell>
-      <DragPreviewImage src={getColumnImageUri()} connect={connectPreview} />
-      {isConfiguringLayout && <Handle index={index} />}
+      </Cell>
+      {isConfiguringLayout && (
+        <Fragment>
+          <DragPreviewImage
+            src={getColumnImageUri()}
+            connect={connectPreview}
+          />
+          <Handle index={index} />
+        </Fragment>
+      )}
     </Fragment>
   );
 };
