@@ -1,5 +1,5 @@
 import { BasicTheme } from 'restyler';
 
-export const body: BasicTheme = {
+export const content: BasicTheme = {
   style: {}
 };

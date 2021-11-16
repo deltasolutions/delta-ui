@@ -1,12 +1,12 @@
 import { BasicTheme } from 'restyler';
-import { body } from './body';
 import { cell } from './cell';
+import { content } from './content';
 import { row } from './row';
 
 export const dataTable: BasicTheme = {
   style: {},
   components: {
-    body,
+    content,
     row,
     cell
   }

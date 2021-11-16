@@ -25,7 +25,7 @@ export const DataTable = <T extends object>({
   ...rest
 }: DataTableProps<T>) => {
   const Table = useThemed('div', 'dataTable');
-  const TableBody = useThemed('div', 'dataTable.body');
+  const TableContent = useThemed('div', 'dataTable.content');
 
   const rowHeight = 56; // FIXME
   const [container, setContainer] = useState<HTMLDivElement | null>(null);
@@ -67,7 +67,7 @@ export const DataTable = <T extends object>({
     [coercedColumns]
   );
 
-  const bodyContent = useMemo(
+  const rows = useMemo(
     () => (
       <FixedSizeList
         height={
@@ -113,7 +113,7 @@ export const DataTable = <T extends object>({
     <DataTableContext.Provider value={memoizedContextValue}>
       <Table ref={setContainer} {...rest}>
         <Toolbar sx={{ height: rowHeight }} />
-        <TableBody>{bodyContent}</TableBody>
+        <TableContent>{rows}</TableContent>
       </Table>
     </DataTableContext.Provider>
   );
