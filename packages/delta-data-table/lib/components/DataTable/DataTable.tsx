@@ -9,6 +9,7 @@ import { DataTableContext } from './DataTableContext';
 import { EmptyRow } from './EmptyRow';
 import { Header } from './Header';
 import { LoaderRow } from './LoaderRow';
+import { Ruler } from './Ruler';
 import { Toolbar } from './Toolbar';
 
 export const DataTable = <T extends object>({
@@ -113,7 +114,10 @@ export const DataTable = <T extends object>({
     <DataTableContext.Provider value={memoizedContextValue}>
       <Table ref={setContainer} {...rest}>
         <Toolbar sx={{ height: rowHeight }} />
-        <TableContent>{rows}</TableContent>
+        <TableContent>
+          {rows}
+          <Ruler />
+        </TableContent>
       </Table>
     </DataTableContext.Provider>
   );

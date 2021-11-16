@@ -2,10 +2,8 @@ import { jsx } from '@theme-ui/core';
 import { useTranslation } from 'react-i18next';
 import {
   Button,
-  Checkbox,
   Form,
   FormField,
-  FormGrid,
   Heading,
   Input,
   ModalBody,

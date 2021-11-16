@@ -1,18 +1,15 @@
 import { jsx } from '@theme-ui/core';
 import {
   forwardRef,
-  Fragment,
   RefObject,
   useCallback,
   useContext,
   useEffect,
   useMemo
 } from 'react';
-import { DragPreviewImage, useDrag } from 'react-dnd';
 import { IoPushOutline } from 'react-icons/io5';
 import {
   Button,
-  ButtonProps,
   Card,
   disableScroll,
   interactiveStackId,
@@ -21,8 +18,8 @@ import {
   useSharedRef,
   useStack
 } from 'restyler';
-import { getColumnImageUri } from '../../../../utils';
 import { DataTableContext } from '../../DataTableContext';
+import { ColumnExclusionItem } from './ColumnExclusionItem';
 
 export interface ColumnExclusionDropContext {
   anchorRef: RefObject<HTMLSpanElement>;
@@ -61,9 +58,9 @@ export const ColumnExclusionDrop = forwardRef<
   const content =
     columnExclusions.length > 0 ? (
       columnExclusions.map(exclusion => (
-        <Item key={exclusion} exclusion={exclusion}>
+        <ColumnExclusionItem key={exclusion} exclusion={exclusion}>
           {getColumnHeader(exclusion)}
-        </Item>
+        </ColumnExclusionItem>
       ))
     ) : (
       <Button disabled kind="icon" sx={{ pointerEvents: 'none', opacity: 0.6 }}>
@@ -77,7 +74,9 @@ export const ColumnExclusionDrop = forwardRef<
       style={{
         top: top + height + 10,
         left: left + width / 2 - 100,
-        width: 200
+        width: 200,
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? '' : 'translateY(10px)'
       }}
       sx={{
         zIndex: 1000,
@@ -85,8 +84,6 @@ export const ColumnExclusionDrop = forwardRef<
         display: 'flex',
         flexDirection: 'column',
         gap: 2,
-        transform: isVisible ? '' : 'translateY(10px)',
-        opacity: isVisible ? 1 : 0,
         transition: 'transform 0.2s, opacity 0.2s'
       }}
     >
@@ -94,34 +91,3 @@ export const ColumnExclusionDrop = forwardRef<
     </Card>
   );
 });
-
-interface ItemProps extends ButtonProps {
-  exclusion: string;
-}
-
-const Item = ({ exclusion, ...rest }: ItemProps) => {
-  const [{ isDragging }, dragRef, connectPreview] = useDrag(() => ({
-    type: 'column',
-    item: { exclusion },
-    collect: monitor => ({
-      isDragging: monitor.isDragging()
-    })
-  }));
-  return (
-    <Fragment>
-      <Button
-        ref={dragRef}
-        kind="primary"
-        sx={{
-          opacity: isDragging ? 0.5 : 1,
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap',
-          cursor: 'move'
-        }}
-        {...rest}
-      />
-      <DragPreviewImage src={getColumnImageUri()} connect={connectPreview} />
-    </Fragment>
-  );
-};

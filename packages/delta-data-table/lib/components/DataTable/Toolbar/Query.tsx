@@ -1,6 +1,9 @@
 import { jsx } from '@theme-ui/core';
-import { Input } from 'restyler';
+import { useTranslation } from 'react-i18next';
+import { useThemed } from 'restyler';
 
 export const Query = () => {
-  return <Input />;
+  const [t] = useTranslation();
+  const ThemedQuery = useThemed('input', 'dataTable.query');
+  return <ThemedQuery placeholder={t('common:labels.search')} />;
 };

@@ -11,19 +11,10 @@ export const Ruler = () => {
     mouseX: monitor.getClientOffset()?.x ?? 0
   }));
   const offset = useMemo(() => {
-    if (!shouldRender || !element) {
+    if (!shouldRender || !element || !element.parentElement) {
       return 0;
     }
-    let offset = 0;
-    let it: HTMLElement | null = element;
-    while (it) {
-      if (it.style.position === 'relative') {
-        const rect = it.getBoundingClientRect();
-        offset -= rect.left - it.scrollLeft;
-      }
-      it = it.parentElement;
-    }
-    return offset;
+    return -element.parentElement.getBoundingClientRect().left;
   }, [shouldRender, element]);
   if (!shouldRender) {
     return null;

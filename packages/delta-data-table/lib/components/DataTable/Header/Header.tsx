@@ -5,7 +5,6 @@ import { useThemed } from 'restyler';
 import { getColumnWidth, getRowWidth } from '../../../utils';
 import { DataTableContext } from '../DataTableContext';
 import { DraggableCell } from './DraggableCell';
-import { Ruler } from './Ruler';
 
 export const Header = () => {
   const TableRow = useThemed('div', 'dataTable.row');
@@ -57,7 +56,6 @@ export const Header = () => {
           {v.header}
         </DraggableCell>
       ))}
-      <Ruler />
     </TableRow>
   );
 };

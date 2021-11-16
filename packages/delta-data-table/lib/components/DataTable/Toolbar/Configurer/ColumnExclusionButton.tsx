@@ -6,6 +6,7 @@ import {
   Button,
   SystemContext,
   useImperativePortal,
+  useSharedRef,
   useStandaloneTransition
 } from 'restyler';
 import { DataTableContext } from '../../DataTableContext';
@@ -22,22 +23,16 @@ export const ColumnExclusionButton = () => {
       updateActiveTab
     }
   } = useContext(DataTableContext);
-
+  const anchorRef = useRef<HTMLButtonElement>(null);
   const {
     defaults: {
       standaloneTransitionOptions: { portal: rootPortal = null } = {}
     } = {}
   } = useContext(SystemContext);
   const portal = useImperativePortal(rootPortal);
-
-  const anchorRef = useRef<HTMLButtonElement>(null);
-  const [{ isOver, canDrop }, dropRef] = useDrop(
+  const [_, dropRef] = useDrop(
     () => ({
       accept: 'column',
-      collect: monitor => ({
-        isOver: monitor.isOver(),
-        canDrop: monitor.canDrop()
-      }),
       drop: ({ index }: { index: number }) => {
         const { key } = coercedColumns[index] ?? {};
         if (!key) {
@@ -52,7 +47,6 @@ export const ColumnExclusionButton = () => {
     }),
     [coercedColumns, columnExclusions, updateActiveTab]
   );
-
   const openFolder = useStandaloneTransition<
     HTMLDivElement,
     ColumnExclusionDropContext
@@ -60,26 +54,19 @@ export const ColumnExclusionButton = () => {
     deps: [columnExclusions],
     portal
   });
-
+  const sharedRef = useSharedRef<HTMLButtonElement>(null, [anchorRef, dropRef]);
   return (
     <Button
-      ref={dropRef}
+      ref={sharedRef}
       kind="icon"
-      sx={{ color: isOver && canDrop ? 'danger' : undefined }}
-      onClick={() =>
-        openFolder({
-          anchorRef
-        })
-      }
+      onClick={() => openFolder({ anchorRef })}
     >
       {portal}
-      <span ref={anchorRef}>
-        {columnExclusions.length > 0 ? (
-          <IoFileTrayFullOutline />
-        ) : (
-          <IoFileTrayOutline />
-        )}
-      </span>
+      {columnExclusions.length > 0 ? (
+        <IoFileTrayFullOutline />
+      ) : (
+        <IoFileTrayOutline />
+      )}
     </Button>
   );
 };

@@ -1,5 +1,8 @@
 import { BasicTheme } from 'restyler';
 
 export const content: BasicTheme = {
-  style: {}
+  style: {
+    position: 'relative',
+    overflow: 'hidden'
+  }
 };
