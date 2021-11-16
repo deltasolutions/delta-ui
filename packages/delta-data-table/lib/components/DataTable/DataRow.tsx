@@ -9,8 +9,8 @@ export interface DataRowProps extends BoxProps {
 }
 
 export const DataRow = ({ index, style, ...rest }: DataRowProps) => {
-  const TableRow = useThemed('div', 'dataTable.row');
-  const TableCell = useThemed('div', 'dataTable.cell');
+  const Row = useThemed('div', 'dataTable.row');
+  const Cell = useThemed('div', 'dataTable.cell');
   const {
     getRowProps,
     manager: { data, coercedColumns }
@@ -19,14 +19,10 @@ export const DataRow = ({ index, style, ...rest }: DataRowProps) => {
   const { style: styleOverrides, ...restOverrides } =
     getRowProps?.(datum, index) ?? {};
   return (
-    <TableRow
-      style={{ ...style, ...styleOverrides }}
-      {...rest}
-      {...restOverrides}
-    >
+    <Row style={{ ...style, ...styleOverrides }} {...rest} {...restOverrides}>
       {coercedColumns.map(v => {
         return (
-          <TableCell
+          <Cell
             key={v.key}
             style={{
               display: 'inline-block',
@@ -34,9 +30,9 @@ export const DataRow = ({ index, style, ...rest }: DataRowProps) => {
             }}
           >
             {datum[v.key]}
-          </TableCell>
+          </Cell>
         );
       })}
-    </TableRow>
+    </Row>
   );
 };

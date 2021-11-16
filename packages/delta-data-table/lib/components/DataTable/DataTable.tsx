@@ -1,7 +1,7 @@
 import { jsx } from '@theme-ui/core';
 import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react';
 import { FixedSizeList } from 'react-window';
-import { Box, useThemed } from 'restyler';
+import { useThemed } from 'restyler';
 import { DataTableProps } from '../../models';
 import { getRowWidth } from '../../utils';
 import { DataRow } from './DataRow';
@@ -110,13 +110,11 @@ export const DataTable = <T extends object>({
   );
 
   return (
-    <Box ref={setContainer} {...rest}>
-      <DataTableContext.Provider value={memoizedContextValue}>
+    <DataTableContext.Provider value={memoizedContextValue}>
+      <Table ref={setContainer} {...rest}>
         <Toolbar sx={{ height: rowHeight }} />
-        <Table>
-          <TableBody>{bodyContent}</TableBody>
-        </Table>
-      </DataTableContext.Provider>
-    </Box>
+        <TableBody>{bodyContent}</TableBody>
+      </Table>
+    </DataTableContext.Provider>
   );
 };
