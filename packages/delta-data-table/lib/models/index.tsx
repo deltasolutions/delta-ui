@@ -8,6 +8,7 @@ export * from './DataTableLayoutManagerOptions';
 export * from './DataTableManager';
 export * from './DataTableManagerOptions';
 export * from './DataTableProps';
+export * from './DataTableQueryManager';
 export * from './DataTableTabDef';
 export * from './DataTableTabManager';
 export * from './DataTableTabManagerOptions';

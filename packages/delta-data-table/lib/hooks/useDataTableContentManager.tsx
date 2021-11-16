@@ -6,6 +6,7 @@ import {
 } from '../models';
 
 export const useDataTableContentManager = <T extends object>({
+  queryManager: { query },
   tabManager: {
     activeTab: {
       columnOrder = defaultColumnOrder,
@@ -44,19 +45,25 @@ export const useDataTableContentManager = <T extends object>({
     );
     return coerced;
   }, [columns, columnOrder, columnExclusions, columnSizes]);
-  const requestNextChunk = useCallback(async () => {
-    if (isLoadingNextChunk) {
-      return;
-    }
-    setIsLoadingNextChunk(true);
-    const got = (await getNextChunk?.(data.length)) ?? {
-      data: [],
-      hasNextChunk: false
-    };
-    setData(data.concat(got.data));
-    setHasNextChunk(got.hasNextChunk);
-    setIsLoadingNextChunk(false);
-  }, [isLoadingNextChunk, getNextChunk, data]);
+  const requestNextChunk = useCallback(
+    async (options: { isFirst?: boolean } = {}) => {
+      if (isLoadingNextChunk) {
+        return;
+      }
+      setIsLoadingNextChunk(true);
+      const got = (await getNextChunk?.({
+        offset: options.isFirst ? 0 : data.length,
+        query
+      })) ?? {
+        data: [],
+        hasNextChunk: false
+      };
+      setData(data.concat(got.data));
+      setHasNextChunk(got.hasNextChunk);
+      setIsLoadingNextChunk(false);
+    },
+    [isLoadingNextChunk, getNextChunk, data, query]
+  );
   const manager = {
     coercedColumns,
     columns,

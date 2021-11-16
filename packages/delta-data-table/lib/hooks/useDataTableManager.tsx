@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { DataTableManager, DataTableManagerOptions } from '../models';
 import { useDataTableContentManager } from './useDataTableContentManager';
 import { useDataTableLayoutManager } from './useDataTableLayoutManager';
+import { useDataTableQueryManager } from './useDataTableQueryManager';
 import { useDataTableTabManager } from './useDataTableTabManager';
 
 export const useDataTableManager = <T extends object>({
@@ -10,13 +11,19 @@ export const useDataTableManager = <T extends object>({
 }: DataTableManagerOptions<T>): DataTableManager<T> => {
   const layoutManager = useDataTableLayoutManager({ initialLayout });
   const tabManager = useDataTableTabManager({ layoutManager });
-  const contentManager = useDataTableContentManager({ tabManager, ...rest });
+  const queryManager = useDataTableQueryManager();
+  const contentManager = useDataTableContentManager({
+    tabManager,
+    queryManager,
+    ...rest
+  });
   return useMemo(
     () => ({
       ...layoutManager,
       ...tabManager,
-      ...contentManager
+      ...contentManager,
+      ...queryManager
     }),
-    [layoutManager, tabManager, contentManager]
+    [layoutManager, tabManager, contentManager, queryManager]
   );
 };

@@ -3,4 +3,4 @@ import { DataTableLayoutManagerOptions } from './DataTableLayoutManagerOptions';
 
 export interface DataTableManagerOptions<T extends object>
   extends DataTableLayoutManagerOptions,
-    Omit<DataTableContentManagerOptions<T>, 'tabManager'> {}
+    Omit<DataTableContentManagerOptions<T>, 'tabManager' | 'queryManager'> {}
