@@ -2,10 +2,14 @@ import { jsx } from '@theme-ui/core';
 import { useContext, useMemo } from 'react';
 import { IoAdd, IoCloseOutline } from 'react-icons/io5';
 import { RiHome6Line } from 'react-icons/ri';
-import { Box, Button } from 'restyler';
+import { useThemed, useThemedFactory } from 'restyler';
 import { DataTableContext } from '../DataTableContext';
 
 export const Tabs = () => {
+  const ThemedTabs = useThemed('div', 'dataTable.tabs');
+  const useTypedThemed =
+    useThemedFactory<{ isMain: boolean; isActive: boolean }>();
+  const ThemedTabsItem = useTypedThemed('button', 'dataTable.tabs.item');
   const {
     manager: {
       layout: { tabs },
@@ -19,34 +23,40 @@ export const Tabs = () => {
   const canAdd = tabs.length < 6;
   return useMemo(
     () => (
-      <Box sx={{ display: 'flex', gap: 2, marginBottom: -3 }}>
+      <ThemedTabs>
         {tabNames.map((name, index) => {
           const isMain = name === mainTabName;
           const isActive = name === activeTabName;
           return (
-            <Button
+            <ThemedTabsItem
               key={name}
-              sx={getTabStyle(isMain, isActive)}
+              isMain={isMain}
+              isActive={isActive}
               onClick={() => {
                 isMain || !isActive
                   ? setActiveTabName(name ?? mainTabName)
                   : removeTab(name);
               }}
             >
-              {isMain ? <RiHome6Line /> : letters[index - 1]}
-              <IoCloseOutline role="close" />
-            </Button>
+              {isMain ? (
+                <RiHome6Line data-role="title" />
+              ) : (
+                <span data-role="title">{letters[index - 1]}</span>
+              )}
+              <IoCloseOutline data-role="close" />
+            </ThemedTabsItem>
           );
         })}
         {canAdd && (
-          <Button
-            sx={getTabStyle(false, false)}
+          <ThemedTabsItem
+            isMain={false}
+            isActive={false}
             onClick={() => addTab(getNewTabName())}
           >
-            <IoAdd />
-          </Button>
+            <IoAdd data-role="title" />
+          </ThemedTabsItem>
         )}
-      </Box>
+      </ThemedTabs>
     ),
     [
       tabNames.join(),
@@ -64,40 +74,3 @@ const letters = new Array(26)
   .fill('')
   .map((_, i) => String.fromCharCode('A'.charCodeAt(0) + i));
 const getNewTabName = () => Math.random().toString().slice(-4);
-const getTabStyle = (isMain: boolean, isActive: boolean) =>
-  ({
-    padding: 3,
-    marginTop: -3,
-    marginBottom: '-1px',
-    border: '1px solid',
-    borderColor: isActive ? 'border' : 'transparent',
-    borderTopColor: isActive ? 'accentSurface' : 'transparent',
-    borderBottomColor: isActive ? 'accentSurface' : 'transparent',
-    backgroundColor: isActive ? 'accentSurface' : 'transparent',
-    textTransform: 'uppercase',
-    letterSpacing: '0.04em',
-    cursor: 'pointer',
-    fontSize: 2,
-    '&:hover': isActive
-      ? isMain
-        ? {}
-        : {
-            color: 'transparent',
-            '& [role="close"]': { display: 'block' }
-          }
-      : { color: 'primary' },
-    position: 'relative',
-    '& svg': {
-      width: '1.45em',
-      height: '1.45em',
-      verticalAlign: 'middle',
-      '&[role="close"]': {
-        display: 'none',
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        color: 'primary'
-      }
-    }
-  } as const);

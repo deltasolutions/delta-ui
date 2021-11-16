@@ -6,6 +6,7 @@ import { handle } from './handle';
 import { query } from './query';
 import { row } from './row';
 import { ruler } from './ruler';
+import { tabs } from './tabs';
 import { toolbar } from './toolbar';
 
 export const dataTable: BasicTheme = {
@@ -18,6 +19,7 @@ export const dataTable: BasicTheme = {
     query,
     row,
     ruler,
+    tabs,
     toolbar
   }
 };
