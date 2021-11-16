@@ -1,25 +1,21 @@
-import { useEffect, useMemo } from 'react';
-import { DataTableLayoutDef, StoredDataTableManagerOptions } from '../models';
+import { useEffect } from 'react';
+import { StoredDataTableManagerOptions } from '../models';
 import { useDataTableManager } from './useDataTableManager';
 
 export const useStoredDataTableManager = <T extends object>({
   id,
   ...rest
 }: StoredDataTableManagerOptions<T>) => {
-  const stored = useMemo<{ layout?: DataTableLayoutDef }>(() => {
+  const manager = useDataTableManager(rest);
+  useEffect(() => {
     if (typeof window === undefined) {
-      return {};
+      return;
     }
-    let parsed = {};
     try {
-      parsed = JSON.parse(localStorage.getItem(id) ?? '{}');
+      const { layout } = JSON.parse(localStorage.getItem(id) ?? '');
+      manager.setLayout(layout);
     } catch {}
-    return parsed;
   }, [id]);
-  const manager = useDataTableManager({
-    initialLayout: stored.layout,
-    ...rest
-  });
   useEffect(() => {
     if (typeof window === undefined) {
       return;

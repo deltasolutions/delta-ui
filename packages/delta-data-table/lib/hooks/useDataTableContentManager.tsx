@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import {
   DataTableColumnDef,
   DataTableContentManager,
@@ -20,10 +20,7 @@ export const useDataTableContentManager = <T extends object>({
   const [columns, setColumns] = useState(initialContent.columns);
   const [hasNextChunk, setHasNextChunk] = useState(initialContent.hasNextChunk);
   const [isLoadingNextChunk, setIsLoadingNextChunk] = useState(false);
-  const [coercedColumns, setCoercedColumns] = useState<DataTableColumnDef[]>(
-    []
-  );
-  useEffect(() => {
+  const coercedColumns = useMemo(() => {
     const keySet = new Set(columns.map(v => v.key));
     const orderedKeySet = new Set(columnOrder.filter(v => keySet.has(v)));
     const orderedKeys = columnOrder
@@ -45,7 +42,7 @@ export const useDataTableContentManager = <T extends object>({
         ].filter(Boolean),
       []
     );
-    setCoercedColumns(coerced);
+    return coerced;
   }, [columns, columnOrder, columnExclusions, columnSizes]);
   const requestNextChunk = useCallback(async () => {
     if (isLoadingNextChunk) {
