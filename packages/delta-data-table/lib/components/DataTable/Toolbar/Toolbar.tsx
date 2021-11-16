@@ -73,6 +73,7 @@ export const Toolbar = (props: ToolbarProps) => {
           .map(v =>
             v.id === currentSectionId ? (
               <Button
+                key={v.id}
                 kind="icon"
                 onClick={() => setCurrentSectionId(initialSectionId)}
               >
