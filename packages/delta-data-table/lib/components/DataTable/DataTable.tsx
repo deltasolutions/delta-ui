@@ -14,6 +14,7 @@ import { Toolbar } from './Toolbar';
 export const DataTable = <T extends object>({
   getRowProps,
   isHeightAdaptive,
+  toolbar,
   manager,
   manager: {
     layout: { maxRowCount = 5 },
@@ -97,7 +98,12 @@ export const DataTable = <T extends object>({
     ]
   );
 
-  const contextValue = { getRowProps, isHeightAdaptive, manager };
+  const contextValue = {
+    getRowProps,
+    isHeightAdaptive,
+    toolbar,
+    manager
+  };
   const memoizedContextValue = useMemo(
     () => contextValue,
     Object.values(contextValue)

@@ -8,10 +8,13 @@ import {
   useImperativePortal,
   useStandaloneTransition
 } from 'restyler';
-import { DataTableContext } from '../DataTableContext';
-import { ColumnExclusions, ColumnExclusionsContext } from './ColumnExclusions';
+import { DataTableContext } from '../../DataTableContext';
+import {
+  ColumnExclusionDrop,
+  ColumnExclusionDropContext
+} from './ColumnExclusionDrop';
 
-export const ColumnExclusionAction = () => {
+export const ColumnExclusionButton = () => {
   const {
     manager: {
       coercedColumns,
@@ -52,8 +55,8 @@ export const ColumnExclusionAction = () => {
 
   const openFolder = useStandaloneTransition<
     HTMLDivElement,
-    ColumnExclusionsContext
-  >(ColumnExclusions, {
+    ColumnExclusionDropContext
+  >(ColumnExclusionDrop, {
     deps: [columnExclusions],
     portal
   });

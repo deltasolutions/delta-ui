@@ -21,16 +21,16 @@ import {
   useSharedRef,
   useStack
 } from 'restyler';
-import { getColumnImageUri } from '../../../utils';
-import { DataTableContext } from '../DataTableContext';
+import { getColumnImageUri } from '../../../../utils';
+import { DataTableContext } from '../../DataTableContext';
 
-export interface ColumnExclusionsContext {
+export interface ColumnExclusionDropContext {
   anchorRef: RefObject<HTMLSpanElement>;
 }
 
-export const ColumnExclusions = forwardRef<
+export const ColumnExclusionDrop = forwardRef<
   HTMLDivElement,
-  StandaloneTransitionerProps<ColumnExclusionsContext>
+  StandaloneTransitionerProps<ColumnExclusionDropContext>
 >(({ isVisible, handleClose, context: { anchorRef } = {} }, ref) => {
   const {
     manager: {

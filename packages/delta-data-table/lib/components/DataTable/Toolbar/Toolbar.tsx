@@ -1,15 +1,93 @@
 import { jsx } from '@theme-ui/core';
-import { Box, BoxProps } from 'restyler';
-import { Actions } from './Actions';
+import { cloneElement, Fragment, useContext, useMemo, useState } from 'react';
+import {
+  IoCloseOutline,
+  IoGridOutline,
+  IoHelpCircleOutline,
+  IoOptions,
+  IoSearchOutline
+} from 'react-icons/io5';
+import { Box, BoxProps, Button } from 'restyler';
+import { DataTableContext } from '../DataTableContext';
+import { Configurer } from './Configurer';
+import { Query } from './Query';
 import { Tabs } from './Tabs';
 
 export interface ToolbarProps extends BoxProps {}
 
 export const Toolbar = (props: ToolbarProps) => {
+  const {
+    toolbar: {
+      initialSection: proposedInitialSectionId = '',
+      sections = []
+    } = {}
+  } = useContext(DataTableContext);
+  const availableSections = useMemo(
+    () =>
+      sections.map(v =>
+        typeof v === 'string'
+          ? {
+              id: v,
+              toggler: (
+                <Button kind="icon">
+                  {{
+                    tabs: <IoGridOutline />,
+                    query: <IoSearchOutline />,
+                    configurer: <IoOptions />
+                  }[v] ?? <IoHelpCircleOutline />}
+                </Button>
+              ),
+              content:
+                {
+                  tabs: <Tabs />,
+                  query: <Query />,
+                  configurer: <Configurer />
+                }[v] ?? null
+            }
+          : v
+      ),
+    [sections]
+  );
+  const initialSectionId = useMemo(
+    () =>
+      availableSections.some(v => v.id === proposedInitialSectionId)
+        ? proposedInitialSectionId
+        : availableSections[0]?.id,
+    []
+  );
+  const [currentSectionId, setCurrentSectionId] = useState(initialSectionId);
+  if (availableSections.length < 1) {
+    return null;
+  }
+  const content = availableSections.find(
+    v => v.id === currentSectionId
+  )?.content;
+  const extras = (
+    <Fragment>
+      {availableSections
+        .filter(v => v.id !== initialSectionId)
+        .map(v =>
+          v.id === currentSectionId ? (
+            <Button
+              kind="icon"
+              onClick={() => setCurrentSectionId(initialSectionId)}
+            >
+              <IoCloseOutline />
+            </Button>
+          ) : (
+            cloneElement(v.toggler, {
+              key: v.id,
+              onClick: () => setCurrentSectionId(v.id)
+            })
+          )
+        )}
+    </Fragment>
+  );
   return (
     <Box
       sx={{
         display: 'flex',
+        alignItems: 'center',
         justifyContent: 'space-between',
         padding: 3,
         borderBottom: '1px solid',
@@ -17,10 +95,8 @@ export const Toolbar = (props: ToolbarProps) => {
       }}
       {...props}
     >
-      <Tabs />
-      <Box sx={{ display: 'flex', gap: 2 }}>
-        <Actions />
-      </Box>
+      <Box>{content}</Box>
+      <Box sx={{ display: 'flex', gap: 2 }}>{extras}</Box>
     </Box>
   );
 };

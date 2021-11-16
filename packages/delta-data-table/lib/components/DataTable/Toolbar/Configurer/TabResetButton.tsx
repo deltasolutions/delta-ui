@@ -2,9 +2,9 @@ import { jsx } from '@theme-ui/core';
 import { useCallback, useContext } from 'react';
 import { IoArrowUndoOutline } from 'react-icons/io5';
 import { Button } from 'restyler';
-import { DataTableContext } from '../DataTableContext';
+import { DataTableContext } from '../../DataTableContext';
 
-export const TabResetAction = () => {
+export const TabResetButton = () => {
   const {
     manager: { updateActiveTab }
   } = useContext(DataTableContext);

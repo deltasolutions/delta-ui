@@ -2,10 +2,10 @@ import { jsx } from '@theme-ui/core';
 import { useCallback, useContext } from 'react';
 import { IoBarcodeOutline } from 'react-icons/io5';
 import { Button, useModal } from 'restyler';
-import { DataTableContext } from '../DataTableContext';
+import { DataTableContext } from '../../DataTableContext';
 import { RowCountModal } from './RowCountModal';
 
-export const RowCountAction = () => {
+export const RowCountButton = () => {
   const { manager } = useContext(DataTableContext);
   const { openModal } = useModal();
   const handleClick = useCallback(() => {

@@ -14,7 +14,7 @@ import {
   ModalRendererProps,
   useFormManager
 } from 'restyler';
-import { DataTableManager } from '../../../models';
+import { DataTableManager } from '../../../../models';
 
 export interface RowCountModalProps extends ModalRendererProps {
   dataTableManager: DataTableManager<any>;

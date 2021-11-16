@@ -17,7 +17,12 @@ export const Basics = () => {
   return (
     <Box sx={{ padding: 5, minHeight: '100vh' }}>
       <Card>
-        <DataTable manager={manager} />
+        <DataTable
+          toolbar={{
+            sections: ['tabs', 'query', 'configurer']
+          }}
+          manager={manager}
+        />
       </Card>
     </Box>
   );

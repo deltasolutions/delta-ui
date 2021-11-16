@@ -5,8 +5,6 @@ import { RiHome6Line } from 'react-icons/ri';
 import { Box, Button } from 'restyler';
 import { DataTableContext } from '../DataTableContext';
 
-export * from './Toolbar';
-
 export const Tabs = () => {
   const {
     manager: {
