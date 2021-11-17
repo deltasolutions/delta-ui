@@ -2,18 +2,35 @@ import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { Fragment } from 'react';
 import { IoIosHeartEmpty, IoIosPower } from 'react-icons/io';
-import { Box } from 'restyler';
+import { IoArchiveOutline, IoArrowUndoOutline } from 'react-icons/io5';
+import { Button } from 'restyler';
 import { useLocalLayoutMenu } from '../../hooks';
-import { LayoutMenuEntryDef } from '../../models';
 import { AppContainer } from '../AppContainer';
 import { Layout } from './Layout';
+import { LayoutFooterCompanyInfo } from './LayoutFooterCompanyInfo';
 
 export default {
   title: 'General/Layout'
 } as Meta;
 
 export const Basics = () => {
-  const menu = useLocalLayoutMenu({ entries, activeIds: [] });
+  const menu = useLocalLayoutMenu({
+    entries: [
+      {
+        id: 'dashboard',
+        title: 'Dashboard'
+      },
+      {
+        id: 'settings',
+        title: 'Settings',
+        subs: [
+          { id: 'ui', title: 'UI' },
+          { id: 'users', title: 'Users' }
+        ]
+      }
+    ],
+    activeIds: []
+  });
   return (
     <AppContainer>
       <Layout
@@ -26,11 +43,20 @@ export const Basics = () => {
             </Fragment>
           )
         }}
+        footer={{
+          content: (
+            <LayoutFooterCompanyInfo
+              logoSrc="https://www.deltasolutions.ru/images/logo-minimal.svg"
+              companyName="Delta Solutions"
+              companyUrl="https://www.deltasolutions.ru/"
+              years={[2006, 2021]}
+            />
+          )
+        }}
         sidebar={{
           account: { title: 'root' },
           menu
         }}
-        logoSrc="http://www.deltasolutions.ru/images/logo-minimal.svg"
       >
         Content
       </Layout>
@@ -38,36 +64,26 @@ export const Basics = () => {
   );
 };
 
-const entries: LayoutMenuEntryDef[] = [
-  {
-    id: 'dashboard',
-    title: 'Dashboard'
-  },
-  {
-    id: 'settings',
-    title: 'Settings',
-    subs: [
-      { id: 'ui', title: 'UI' },
-      { id: 'users', title: 'Users' }
-    ]
-  }
-];
-
-export const CustomFooter = () => {
-  const menu = useLocalLayoutMenu({ entries, activeIds: [] });
+export const WithoutSidebar = () => {
   return (
     <AppContainer>
       <Layout
-        header={{ title: 'Heading' }}
+        header={{
+          title: 'Heading',
+          extras: (
+            <Fragment>
+              <Button>
+                <IoArrowUndoOutline />
+              </Button>
+              <Button>
+                <IoArchiveOutline />
+              </Button>
+            </Fragment>
+          )
+        }}
         footer={{
-          left: <Box>Left</Box>,
-          right: <Box>Right</Box>
+          content: 'Footer'
         }}
-        sidebar={{
-          account: { title: 'root' },
-          menu
-        }}
-        logoSrc="http://www.deltasolutions.ru/images/logo-minimal.svg"
       >
         Content
       </Layout>

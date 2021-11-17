@@ -1,39 +1,38 @@
 import { BasicTheme } from 'restyler';
 
 export const footer: BasicTheme = {
-  style: {
-    paddingY: 5,
+  style: ({ sidebar }) => ({
+    paddingY: sidebar ? 5 : 4,
     marginTop: 'auto',
     backgroundColor: 'exterior'
-  },
+  }),
   components: {
     content: {
       style: {
         fontSize: 2,
         letterSpacing: '0.04em',
         color: 'onExterior',
+        opacity: 0.6,
         // Always on dark.
-        fontWeight: 300,
-        '& > *': {
-          opacity: 0.6,
-          '&:hover': { opacity: 1 }
-        }
+        fontWeight: 300
       }
     },
     anchor: {
       style: {
-        textDecoration: 'none',
-        fontSize: 'inherit',
-        fontWeight: 'inherit',
-        letterSpacing: 'inherit',
-        textTransform: 'uppercase',
-        '& > img': {
-          filter: 'grayscale(1) contrast(0) brightness(1.7) opacity(0.8)'
+        '&, &:focus, &:visited': {
+          textDecoration: 'none',
+          fontSize: 'inherit',
+          fontWeight: 'inherit',
+          letterSpacing: 'inherit',
+          textTransform: 'uppercase'
         },
-        '&:hover': {
-          '& > img': {
-            filter: 'grayscale(1) contrast(0) brightness(1.5) opacity(1)'
-          }
+        '& img': {
+          display: 'inline-block',
+          width: '1.3em',
+          height: '1.3em',
+          marginRight: '0.4rem',
+          verticalAlign: 'top',
+          filter: 'contrast(0) grayscale(1) brightness(1.4)'
         }
       }
     }

@@ -1,11 +1,11 @@
 import { jsx } from '@theme-ui/core';
 import { useMemo } from 'react';
-import { BoxProps, useThemed, hash } from 'restyler';
+import { BoxProps, hash, useThemedFactory } from 'restyler';
 import {
   LayoutUpdateManagerOptions,
   useLayoutUpdateManager
 } from '../../hooks';
-import { LayoutOptions } from '../../models';
+import { LayoutContextValue, LayoutOptions } from '../../models';
 import { LayoutContainer } from './LayoutContainer';
 import { LayoutContext } from './LayoutContext';
 import { LayoutFooter } from './LayoutFooter';
@@ -23,18 +23,17 @@ export const Layout = ({
   header,
   footer,
   sidebar,
-  logoSrc,
   children,
   ...rest
 }: LayoutProps) => {
+  const useThemed = useThemedFactory<LayoutContextValue>();
   const ThemedLayout = useThemed('div', 'layout');
   const ThemedLayoutContent = useThemed('div', 'layout.content');
   const ThemedLayoutMain = useThemed('div', 'layout.main');
   const contextValue = {
     header,
     footer,
-    sidebar,
-    logoSrc
+    sidebar
   };
   const memoizedContextValue = useMemo(
     () => contextValue,
@@ -45,12 +44,14 @@ export const Layout = ({
     () => (
       <LayoutUpdateContext.Provider value={updateManager}>
         <LayoutContext.Provider value={contextValue}>
-          <ThemedLayout {...rest}>
+          <ThemedLayout {...memoizedContextValue} {...rest}>
             <LayoutHeader />
             <LayoutContainer>
-              <ThemedLayoutContent>
+              <ThemedLayoutContent {...memoizedContextValue}>
                 <LayoutSidebar />
-                <ThemedLayoutMain>{children}</ThemedLayoutMain>
+                <ThemedLayoutMain {...memoizedContextValue}>
+                  {children}
+                </ThemedLayoutMain>
               </ThemedLayoutContent>
             </LayoutContainer>
             <LayoutFooter />

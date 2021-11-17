@@ -2,6 +2,7 @@ import { BasicTheme } from 'restyler';
 
 export const container: BasicTheme = {
   style: {
+    width: '100%',
     display: 'flex',
     justifyContent: 'center'
   },

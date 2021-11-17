@@ -6,5 +6,4 @@ export interface LayoutOptions {
   header?: LayoutHeaderOptions;
   footer?: LayoutFooterOptions;
   sidebar?: LayoutSidebarOptions;
-  logoSrc?: string;
 }

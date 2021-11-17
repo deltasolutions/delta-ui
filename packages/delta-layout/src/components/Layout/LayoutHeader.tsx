@@ -1,28 +1,34 @@
 import { jsx } from '@theme-ui/core';
 import { useContext, useMemo } from 'react';
-import { Heading, useThemed } from 'restyler';
+import { Heading, useThemedFactory } from 'restyler';
+import { LayoutContextValue } from '../../models';
 import { LayoutContainer } from './LayoutContainer';
 import { LayoutContext } from './LayoutContext';
 
 export const LayoutHeader = () => {
+  const useThemed = useThemedFactory<LayoutContextValue>();
   const ThemedLayoutHeader = useThemed('div', 'layout.header');
   const ThemedLayoutHeaderContent = useThemed('div', 'layout.header.content');
   const ThemedLayoutHeaderExtras = useThemed('div', 'layout.header.extras');
-  const { header } = useContext(LayoutContext);
-  if (!header) {
+  const context = useContext(LayoutContext);
+  if (!context.header) {
     return null;
   }
-  const { title, extras } = header;
+  const {
+    header: { title, extras }
+  } = context;
   return useMemo(
     () => (
-      <ThemedLayoutHeader>
+      <ThemedLayoutHeader {...context}>
         <LayoutContainer>
-          <ThemedLayoutHeaderContent>
+          <ThemedLayoutHeaderContent {...context}>
             <Heading level={1} kind="layout">
               {title}
             </Heading>
             {extras && (
-              <ThemedLayoutHeaderExtras>{extras}</ThemedLayoutHeaderExtras>
+              <ThemedLayoutHeaderExtras {...context}>
+                {extras}
+              </ThemedLayoutHeaderExtras>
             )}
           </ThemedLayoutHeaderContent>
         </LayoutContainer>
