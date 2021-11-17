@@ -1,6 +1,6 @@
 import { BasicTheme } from 'restyler';
+import { body } from './body';
 import { container } from './container';
-import { content } from './content';
 import { footer } from './footer';
 import { header } from './header';
 import { main } from './main';
@@ -13,11 +13,11 @@ export const layout: BasicTheme = {
     minHeight: '100vh'
   },
   components: {
+    body,
     container,
-    content,
-    main,
-    sidebar,
+    footer,
     header,
-    footer
+    main,
+    sidebar
   }
 };

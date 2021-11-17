@@ -6,11 +6,10 @@ import {
   useLayoutUpdateManager
 } from '../../hooks';
 import { LayoutContextValue, LayoutOptions } from '../../models';
-import { LayoutContainer } from './LayoutContainer';
+import { LayoutBody } from './LayoutBody';
 import { LayoutContext } from './LayoutContext';
 import { LayoutFooter } from './LayoutFooter';
 import { LayoutHeader } from './LayoutHeader';
-import { LayoutSidebar } from './LayoutSidebar';
 import { LayoutUpdateContext } from './LayoutUpdateContext';
 
 export interface LayoutProps
@@ -28,8 +27,6 @@ export const Layout = ({
 }: LayoutProps) => {
   const useThemed = useThemedFactory<LayoutContextValue>();
   const ThemedLayout = useThemed('div', 'layout');
-  const ThemedLayoutContent = useThemed('div', 'layout.content');
-  const ThemedLayoutMain = useThemed('div', 'layout.main');
   const contextValue = {
     header,
     footer,
@@ -46,14 +43,7 @@ export const Layout = ({
         <LayoutContext.Provider value={contextValue}>
           <ThemedLayout {...memoizedContextValue} {...rest}>
             <LayoutHeader />
-            <LayoutContainer>
-              <ThemedLayoutContent {...memoizedContextValue}>
-                <LayoutSidebar />
-                <ThemedLayoutMain {...memoizedContextValue}>
-                  {children}
-                </ThemedLayoutMain>
-              </ThemedLayoutContent>
-            </LayoutContainer>
+            <LayoutBody>{children}</LayoutBody>
             <LayoutFooter />
           </ThemedLayout>
         </LayoutContext.Provider>

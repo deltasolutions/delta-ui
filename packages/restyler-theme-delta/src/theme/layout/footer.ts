@@ -2,8 +2,8 @@ import { BasicTheme } from 'restyler';
 
 export const footer: BasicTheme = {
   style: ({ sidebar }) => ({
+    flex: '0 0 auto',
     paddingY: sidebar ? 5 : 4,
-    marginTop: 'auto',
     backgroundColor: 'exterior'
   }),
   components: {

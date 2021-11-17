@@ -3,6 +3,7 @@ import { headerHeight, sidebarWidth } from './constants';
 
 export const header: BasicTheme = {
   style: ({ sidebar }) => ({
+    flex: '0 0 auto',
     display: 'flex',
     alignItems: 'flex-end',
     margin: 0,

@@ -4,7 +4,8 @@ export const container: BasicTheme = {
   style: {
     width: '100%',
     display: 'flex',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignItems: 'stretch'
   },
   components: {
     content: {
