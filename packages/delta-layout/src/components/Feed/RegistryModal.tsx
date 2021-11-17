@@ -13,7 +13,7 @@ import {
   ModalRendererProps
 } from 'restyler';
 import { useDebounce } from '../../hooks';
-import { ComponentDef, FeedManager, FeedSectionDef } from '../../models';
+import { ComponentDef, FeedManager } from '../../models';
 
 export interface RegistryModalProps extends ModalRendererProps {
   manager: FeedManager;
@@ -82,7 +82,7 @@ export const RegistryModal = ({
           <Input
             placeholder={t('common:labels.search')}
             value={query}
-            onChange={v => setQuery(v)}
+            onChange={(v: string) => setQuery(v)}
           />
         </ThemedRegistryQuery>
         {content}
