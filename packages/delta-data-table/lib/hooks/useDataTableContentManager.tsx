@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 import {
+  DataTableChunkOptions,
   DataTableColumnDef,
   DataTableContentManager,
   DataTableContentManagerOptions
@@ -46,19 +47,16 @@ export const useDataTableContentManager = <T extends object>({
     return coerced;
   }, [columns, columnOrder, columnExclusions, columnSizes]);
   const requestNextChunk = useCallback(
-    async (options: { isFirst?: boolean } = {}) => {
+    async ({ offset, query }: DataTableChunkOptions) => {
       if (isLoadingNextChunk) {
         return;
       }
       setIsLoadingNextChunk(true);
-      const got = (await getNextChunk?.({
-        offset: options.isFirst ? 0 : data.length,
-        query
-      })) ?? {
+      const got = (await getNextChunk?.({ offset, query })) ?? {
         data: [],
         hasNextChunk: false
       };
-      setData(data.concat(got.data));
+      setData(offset < data.length ? got.data : data.concat(got.data));
       setHasNextChunk(got.hasNextChunk);
       setIsLoadingNextChunk(false);
     },

@@ -1,3 +1,4 @@
+export * from './DataTableChunkOptions';
 export * from './DataTableColumnDef';
 export * from './DataTableContentManager';
 export * from './DataTableContentManagerOptions';

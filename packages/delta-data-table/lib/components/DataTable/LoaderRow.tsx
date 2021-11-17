@@ -8,11 +8,14 @@ export const LoaderRow = (props: BoxProps) => {
   const Row = useThemed('div', 'dataTable.row');
   const Cell = useThemed('div', 'dataTable.cell');
   const {
-    manager: { requestNextChunk }
+    manager: { data, query, isLoadingNextChunk, requestNextChunk }
   } = useContext(DataTableContext);
   useEffect(() => {
-    requestNextChunk();
-  }, [requestNextChunk]);
+    requestNextChunk({
+      offset: data.length,
+      query
+    });
+  }, [data, query, isLoadingNextChunk]);
   return (
     <Row {...props}>
       <Cell kind="loader">

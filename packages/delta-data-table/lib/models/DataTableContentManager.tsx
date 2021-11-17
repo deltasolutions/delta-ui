@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
+import { DataTableChunkOptions } from './DataTableChunkOptions';
 import { DataTableColumnDef } from './DataTableColumnDef';
 import { DataTableContentManagerOptions } from './DataTableContentManagerOptions';
 
@@ -12,13 +13,9 @@ export interface DataTableContentManager<T extends object>
   data: T[];
   hasNextChunk: boolean;
   isLoadingNextChunk: boolean;
-  requestNextChunk: (options?: { isFirst?: boolean }) => Promise<void>;
+  requestNextChunk: (options: DataTableChunkOptions) => Promise<void>;
   setColumns: Dispatch<SetStateAction<DataTableColumnDef[]>>;
   setData: Dispatch<SetStateAction<T[]>>;
   setHasNextChunk: Dispatch<SetStateAction<boolean>>;
   setIsLoadingNextChunk: Dispatch<SetStateAction<boolean>>;
-  // Future:
-  //   - sorts
-  //   - query
-  //   ...
 }
