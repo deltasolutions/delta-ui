@@ -9,7 +9,7 @@ export default {
 } as Meta;
 
 export const Basics = () => {
-  const options = useMock({ columnCount: 5, rowCount: 30 });
+  const options = useMock({ columnCount: 15, rowCount: 30 });
   const manager = useStoredDataTableManager({
     id: 'story-data-table-basics',
     ...options
@@ -18,10 +18,10 @@ export const Basics = () => {
     <Box sx={{ padding: 5, minHeight: '100vh' }}>
       <Card>
         <DataTable
+          manager={manager}
           toolbar={{
             sections: ['tabs', 'query', 'configurer']
           }}
-          manager={manager}
         />
       </Card>
     </Box>
@@ -40,7 +40,12 @@ export const Empty = () => {
   return (
     <Box sx={{ padding: 5, minHeight: '100vh' }}>
       <Card>
-        <DataTable manager={manager} />
+        <DataTable
+          manager={manager}
+          toolbar={{
+            sections: ['tabs', 'query', 'configurer']
+          }}
+        />
       </Card>
     </Box>
   );

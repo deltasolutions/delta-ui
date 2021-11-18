@@ -1,6 +1,5 @@
 import { jsx } from '@theme-ui/core';
 import { useContext, useEffect } from 'react';
-import { RiLoaderLine } from 'react-icons/ri';
 import { BoxProps, useThemed } from 'restyler';
 import { DataTableContext } from './DataTableContext';
 
@@ -17,10 +16,8 @@ export const LoaderRow = (props: BoxProps) => {
     });
   }, [data, query, isLoadingNextChunk]);
   return (
-    <Row {...props}>
-      <Cell kind="loader">
-        <RiLoaderLine />
-      </Cell>
+    <Row kind="loader" {...props}>
+      <Cell />
     </Row>
   );
 };
