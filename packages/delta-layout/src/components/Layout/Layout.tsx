@@ -1,6 +1,6 @@
 import { jsx } from '@theme-ui/core';
 import { useMemo } from 'react';
-import { BoxProps, hash, useThemedFactory } from 'restyler';
+import { BoxProps, useThemedFactory } from 'restyler';
 import {
   LayoutUpdateManagerOptions,
   useLayoutUpdateManager
@@ -37,19 +37,16 @@ export const Layout = ({
     Object.values(contextValue)
   );
   const updateManager = useLayoutUpdateManager({ onSave });
-  return useMemo(
-    () => (
-      <LayoutUpdateContext.Provider value={updateManager}>
-        <LayoutContext.Provider value={contextValue}>
-          <ThemedLayout {...memoizedContextValue} {...rest}>
-            <LayoutHeader />
-            <LayoutBody>{children}</LayoutBody>
-            <LayoutFooter />
-          </ThemedLayout>
-        </LayoutContext.Provider>
-      </LayoutUpdateContext.Provider>
-    ),
-    [children, memoizedContextValue, hash(rest)]
+  return (
+    <LayoutUpdateContext.Provider value={updateManager}>
+      <LayoutContext.Provider value={contextValue}>
+        <ThemedLayout {...memoizedContextValue} {...rest}>
+          <LayoutHeader />
+          <LayoutBody>{children}</LayoutBody>
+          <LayoutFooter />
+        </ThemedLayout>
+      </LayoutContext.Provider>
+    </LayoutUpdateContext.Provider>
   );
 };
 
