@@ -1,9 +1,9 @@
 /** @jsx jsx */
 import isPropValid from '@emotion/is-prop-valid';
-import { Global } from '@emotion/react';
+import { AppContainer } from 'delta-layout';
 import { forwardRef } from 'react';
-import { Box, mergeBasicThemes, SystemContainer } from 'restyler';
-import { jsx, ThemeProvider } from 'theme-ui';
+import { Box, mergeBasicThemes } from 'restyler';
+import { jsx } from 'theme-ui';
 import { theme as packageTheme } from '../src';
 
 const styled = (Tag: any, fn: Function) =>
@@ -25,20 +25,9 @@ const theme = mergeBasicThemes({}, packageTheme, {
 
 export const systemized = (Story, context) => {
   return (
-    <ThemeProvider theme={theme as any}>
-      <SystemContainer styled={styled} theme={theme}>
-        <Global
-          styles={{
-            'html, body, #root': {
-              margin: '0 !important',
-              padding: '0 !important',
-              minHeight: '100vh'
-            }
-          }}
-        />
-        <Story {...context} />
-      </SystemContainer>
-    </ThemeProvider>
+    <AppContainer theme={theme as any}>
+      <Story {...context} />
+    </AppContainer>
   );
 };
 

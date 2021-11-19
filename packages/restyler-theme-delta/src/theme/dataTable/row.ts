@@ -1,23 +1,35 @@
 import { keyframes } from '@emotion/react';
 import { BasicTheme } from 'restyler';
 
-const getStripedStyle = ({ theme: { colors } }) => ({
-  backgroundImage:
-    'repeating-linear-gradient(' +
-    '-45deg,' +
-    'transparent,' +
-    'transparent 1rem,' +
-    `${colors.accentSurface} 1rem,` +
-    `${colors.accentSurface} 2rem` +
-    ')',
-  backgroundSize: '200% 200%',
-  pointerEvents: 'none'
+const getStripedStyle = (
+  { theme: { colors } }: { [key: string]: any },
+  isAnimated = false
+) => ({
+  pointerEvents: 'none',
+  position: 'relative',
+  overflow: 'hidden',
+  '& > *': {
+    background:
+      'repeating-linear-gradient(' +
+      '-55deg,' +
+      'transparent 1px,' +
+      `${colors.accentSurface} 2px,` +
+      `${colors.accentSurface} 11px,` +
+      'transparent 12px,' +
+      'transparent 20px' +
+      ')',
+    position: 'absolute',
+    left: '-46px',
+    right: '0',
+    top: '0',
+    bottom: '0',
+    animation: isAnimated ? `${barberpole} 1s linear infinite` : undefined
+  }
 });
 
 const barberpole = keyframes({
-  '100%': {
-    backgroundPosition: '100% 100%'
-  }
+  from: { transform: 'translateX(0)' },
+  to: { transform: 'translateX(46px)' }
 });
 
 export const row: BasicTheme = {
@@ -45,13 +57,10 @@ export const row: BasicTheme = {
       }
     },
     empty: {
-      style: getStripedStyle
+      style: props => getStripedStyle(props, false)
     },
     loader: {
-      style: props => ({
-        ...getStripedStyle(props as any),
-        animation: `${barberpole} 10s linear infinite`
-      })
+      style: props => getStripedStyle(props, true)
     }
   }
 };
