@@ -14,16 +14,16 @@ const getStripedStyle = (
       '-55deg,' +
       'transparent 1px,' +
       `${colors.accentSurface} 2px,` +
-      `${colors.accentSurface} 11px,` +
-      'transparent 12px,' +
-      'transparent 20px' +
+      `${colors.accentSurface} 20px,` +
+      'transparent 21px,' +
+      'transparent 39px' +
       ')',
     position: 'absolute',
     left: '-46px',
     right: '0',
     top: '0',
     bottom: '0',
-    animation: isAnimated ? `${barberpole} 1s linear infinite` : undefined
+    animation: isAnimated ? `${barberpole} 0.7s linear infinite` : undefined
   }
 });
 
