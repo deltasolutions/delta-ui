@@ -1,5 +1,5 @@
 import { jsx } from '@theme-ui/core';
-import { useContext, useRef } from 'react';
+import { Fragment, useContext, useRef } from 'react';
 import { useDrop } from 'react-dnd';
 import { IoFileTrayFullOutline, IoFileTrayOutline } from 'react-icons/io5';
 import {
@@ -10,10 +10,7 @@ import {
   useStandaloneTransition
 } from 'restyler';
 import { DataTableContext } from '../../DataTableContext';
-import {
-  ColumnExclusionDrop,
-  ColumnExclusionDropContext
-} from './ColumnExclusionDrop';
+import { ColumnExclusions, ColumnExclusionsContext } from './ColumnExclusions';
 
 export const ColumnExclusionButton = () => {
   const {
@@ -49,24 +46,26 @@ export const ColumnExclusionButton = () => {
   );
   const openFolder = useStandaloneTransition<
     HTMLDivElement,
-    ColumnExclusionDropContext
-  >(ColumnExclusionDrop, {
+    ColumnExclusionsContext
+  >(ColumnExclusions, {
     deps: [columnExclusions],
     portal
   });
   const sharedRef = useSharedRef<HTMLButtonElement>(null, [anchorRef, dropRef]);
   return (
-    <Button
-      ref={sharedRef}
-      kind="icon"
-      onClick={() => openFolder({ anchorRef })}
-    >
+    <Fragment>
       {portal}
-      {columnExclusions.length > 0 ? (
-        <IoFileTrayFullOutline />
-      ) : (
-        <IoFileTrayOutline />
-      )}
-    </Button>
+      <Button
+        ref={sharedRef}
+        kind="icon"
+        onClick={() => openFolder({ anchorRef })}
+      >
+        {columnExclusions.length > 0 ? (
+          <IoFileTrayFullOutline />
+        ) : (
+          <IoFileTrayOutline />
+        )}
+      </Button>
+    </Fragment>
   );
 };

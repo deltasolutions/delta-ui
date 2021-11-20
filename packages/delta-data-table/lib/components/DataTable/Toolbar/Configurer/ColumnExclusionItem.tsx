@@ -1,10 +1,10 @@
 import { jsx } from '@theme-ui/core';
 import { Fragment } from 'react';
 import { DragPreviewImage, useDrag } from 'react-dnd';
-import { Button, ButtonProps } from 'restyler';
+import { BoxProps, useThemedFactory } from 'restyler';
 import { getColumnImageUri } from '../../../../utils';
 
-export interface ColumnExclusionItemProps extends ButtonProps {
+export interface ColumnExclusionItemProps extends BoxProps {
   exclusion: string;
 }
 
@@ -12,6 +12,11 @@ export const ColumnExclusionItem = ({
   exclusion,
   ...rest
 }: ColumnExclusionItemProps) => {
+  const useThemed = useThemedFactory<{ isDragging: boolean }>();
+  const ThemedItem = useThemed(
+    'div',
+    'dataTable.configurer.columnExclusions.item'
+  );
   const [{ isDragging }, dragRef, connectPreview] = useDrag(() => ({
     type: 'column',
     item: { exclusion },
@@ -21,18 +26,7 @@ export const ColumnExclusionItem = ({
   }));
   return (
     <Fragment>
-      <Button
-        ref={dragRef}
-        kind="primary"
-        sx={{
-          opacity: isDragging ? 0.5 : 1,
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap',
-          cursor: 'move'
-        }}
-        {...rest}
-      />
+      <ThemedItem ref={dragRef} isDragging={isDragging} {...rest} />
       <DragPreviewImage src={getColumnImageUri()} connect={connectPreview} />
     </Fragment>
   );
