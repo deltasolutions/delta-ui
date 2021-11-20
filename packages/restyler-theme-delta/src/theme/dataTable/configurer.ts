@@ -20,9 +20,9 @@ export const configurer: BasicTheme = {
       components: {
         query: {
           style: {
-            px: 3,
-            pt: 3,
-            pb: 2,
+            paddingX: 3,
+            paddingTop: 3,
+            paddingBottom: 2,
             borderBottom: '1px solid',
             borderBottomColor: 'border',
             width: '100%',
@@ -34,9 +34,9 @@ export const configurer: BasicTheme = {
         },
         content: {
           style: {
-            px: 3,
-            pt: 2,
-            pb: 3,
+            paddingX: 3,
+            paddingTop: 2,
+            paddingBottom: 3,
             maxHeight: '250px',
             overflowY: 'auto',
             overflowX: 'hidden',
@@ -57,7 +57,10 @@ export const configurer: BasicTheme = {
         },
         item: {
           style: ({ isDragging }) => ({
-            py: 1,
+            paddingY: 1,
+            overflowX: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
             cursor: 'move',
             opacity: isDragging ? 0.5 : 1,
             '&:hover': {
