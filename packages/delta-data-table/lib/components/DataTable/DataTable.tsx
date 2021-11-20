@@ -1,17 +1,17 @@
 import { jsx } from '@theme-ui/core';
-import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { FixedSizeList } from 'react-window';
-import { useSharedRef, useThemed } from 'restyler';
+import { useThemed } from 'restyler';
 import { DataTableProps } from '../../models';
 import { getRowWidth } from '../../utils';
 import { DataRow } from './DataRow';
 import { DataTableContext } from './DataTableContext';
 import { EmptyRow } from './EmptyRow';
-import { InnerElement } from './InnerElement';
+import { InnerContainer } from './InnerContainer';
 import { LoaderRow } from './LoaderRow';
 import { Ruler } from './Ruler';
 import { Toolbar } from './Toolbar';
-import { useOuterElement } from './useOuterElement';
+import { useOuterContainer } from './useOuterContainer';
 
 export const DataTable = <T extends object>({
   getRowProps,
@@ -58,10 +58,7 @@ export const DataTable = <T extends object>({
     [coercedColumns, data]
   );
 
-  const [scrollbarHeight, setScrollbarHeight] = useState(0);
-  const OuterElement = useOuterElement({
-    onHorizontalScrollbarChange: setScrollbarHeight
-  });
+  const [OuterContainer, scrollbarHeight] = useOuterContainer();
 
   const rows = useMemo(
     () => (
@@ -74,8 +71,8 @@ export const DataTable = <T extends object>({
             rowHeight +
           scrollbarHeight
         }
-        outerElementType={OuterElement}
-        innerElementType={InnerElement}
+        outerElementType={OuterContainer}
+        innerElementType={InnerContainer}
         itemCount={Math.max(data.length, 1) + (hasNextChunk ? 1 : 0)}
         itemSize={rowHeight}
         overscanCount={5}
@@ -85,7 +82,7 @@ export const DataTable = <T extends object>({
       </FixedSizeList>
     ),
     [
-      OuterElement,
+      OuterContainer,
       scrollbarHeight,
       isHeightAdaptive,
       maxRowCount,

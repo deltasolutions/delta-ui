@@ -2,14 +2,9 @@ import { jsx } from '@theme-ui/core';
 import { forwardRef, useEffect, useMemo, useState } from 'react';
 import { useSharedRef } from 'restyler';
 
-export interface OuterElementOptions {
-  onHorizontalScrollbarChange?: (width: number) => void;
-}
-
-export const useOuterElement = ({
-  onHorizontalScrollbarChange
-}: OuterElementOptions) => {
-  return useMemo(
+export const useOuterContainer = () => {
+  const [scrollbarHeight, setScrollbarHeight] = useState(0);
+  const Container = useMemo(
     () =>
       forwardRef<HTMLDivElement, any>(({ style, ...rest }, ref) => {
         const [shouldHideVerticalScroll, setShouldHideVerticalScroll] =
@@ -23,10 +18,8 @@ export const useOuterElement = ({
           setShouldHideVerticalScroll(
             element.scrollHeight - element.offsetHeight < 2
           );
-          onHorizontalScrollbarChange?.(
-            element.offsetHeight - element.clientHeight
-          );
-        }, [element, onHorizontalScrollbarChange]);
+          setScrollbarHeight(element.offsetHeight - element.clientHeight);
+        }, [element]);
         return (
           <div
             ref={sharedRef}
@@ -40,4 +33,5 @@ export const useOuterElement = ({
       }),
     []
   );
+  return [Container, scrollbarHeight] as const;
 };
