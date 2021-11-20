@@ -9,7 +9,7 @@ import { TabResetButton } from './TabResetButton';
 export const Configurer = () => {
   const ThemedConfigurer = useThemed('div', 'dataTable.configurer');
   const {
-    isHeightAdaptive,
+    maxHeight,
     manager: { setIsConfiguringLayout }
   } = useContext(DataTableContext);
   useEffect(() => {
@@ -21,7 +21,7 @@ export const Configurer = () => {
   return (
     <ThemedConfigurer>
       <TabResetButton />
-      {!isHeightAdaptive && <RowCountButton />}
+      {maxHeight === undefined && <RowCountButton />}
       <ColumnExclusionButton />
     </ThemedConfigurer>
   );

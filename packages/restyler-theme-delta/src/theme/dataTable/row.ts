@@ -35,8 +35,8 @@ const barberpole = keyframes({
 export const row: BasicTheme = {
   style: {
     alignItems: 'center',
-    borderTop: '1px solid',
-    borderTopColor: 'border',
+    borderBottom: '1px solid',
+    borderBottomColor: 'border',
     fontSize: 3,
     lineHeight: '1.5rem',
     '&:hover': { backgroundColor: 'accentSurface' }
@@ -45,7 +45,6 @@ export const row: BasicTheme = {
     head: {
       style: {
         backgroundColor: 'accentSurface',
-        borderTop: 'none',
         borderBottom: '1px solid',
         borderBottomColor: 'border',
         userSelect: 'none',

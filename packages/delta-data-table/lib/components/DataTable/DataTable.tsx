@@ -12,10 +12,12 @@ import { LoaderRow } from './LoaderRow';
 import { Ruler } from './Ruler';
 import { Toolbar } from './Toolbar';
 import { useOuterContainer } from './useOuterContainer';
+import { useRowHeight } from './useRowHeight';
 
 export const DataTable = <T extends object>({
   getRowProps,
-  isHeightAdaptive,
+  rowHeight: forcedRowHeight,
+  maxHeight,
   toolbar,
   manager,
   manager: {
@@ -29,19 +31,8 @@ export const DataTable = <T extends object>({
   const Table = useThemed('div', 'dataTable');
   const TableContent = useThemed('div', 'dataTable.content');
 
-  const rowHeight = 56; // FIXME
-  const [container, setContainer] = useState<HTMLDivElement | null>(null);
-  const [containerHeight, setContainerHeight] = useState(200);
-  useEffect(() => {
-    if (!container) {
-      return;
-    }
-    const updateHeight = () => setContainerHeight(container.clientHeight);
-    updateHeight();
-    const observer = new ResizeObserver(updateHeight);
-    observer.observe(container);
-    return () => observer.disconnect();
-  }, [container]);
+  const rowHeight = useRowHeight({ forcedRowHeight });
+  const [OuterContainer, scrollbarHeight] = useOuterContainer();
 
   const renderRow = useCallback(
     ({ index, style }) => {
@@ -55,25 +46,35 @@ export const DataTable = <T extends object>({
       }
       return <DataRow index={index} style={{ ...style, top, width }} />;
     },
-    [coercedColumns, data]
+    [coercedColumns, rowHeight, data]
   );
 
-  const [OuterContainer, scrollbarHeight] = useOuterContainer();
+  // Determine the count of rows that are rendered
+  // dynamically by react-window. This list excludes
+  // the header since it is added in InnerContainer directly.
+  const listRowCount =
+    data.length +
+    // Reserving space for either loader or empty row.
+    (hasNextChunk || data.length === 0 ? 1 : 0);
+  // Reserving space for header anyways.
+  const listReservedHeight = rowHeight;
+  // Combining reserved height with dynamically
+  // rendered rows height and scrollbar height.
+  const listHeight = maxHeight
+    ? maxHeight - (toolbar ? rowHeight : 0)
+    : listReservedHeight +
+      Math.min(listRowCount, maxRowCount) * rowHeight +
+      scrollbarHeight;
+
+  console.log(maxHeight);
 
   const rows = useMemo(
     () => (
       <FixedSizeList
-        height={
-          ((data.length <= maxRowCount
-            ? Math.max(data.length, 1)
-            : maxRowCount) +
-            1) *
-            rowHeight +
-          scrollbarHeight
-        }
+        height={listHeight}
         outerElementType={OuterContainer}
         innerElementType={InnerContainer}
-        itemCount={Math.max(data.length, 1) + (hasNextChunk ? 1 : 0)}
+        itemCount={listRowCount}
         itemSize={rowHeight}
         overscanCount={5}
         width="100%"
@@ -81,23 +82,15 @@ export const DataTable = <T extends object>({
         {renderRow}
       </FixedSizeList>
     ),
-    [
-      OuterContainer,
-      scrollbarHeight,
-      isHeightAdaptive,
-      maxRowCount,
-      containerHeight,
-      data,
-      renderRow,
-      hasNextChunk
-    ]
+    [listHeight, OuterContainer, listRowCount, rowHeight, renderRow]
   );
 
   const contextValue = {
-    getRowProps,
-    isHeightAdaptive,
+    manager,
+    rowHeight,
+    maxHeight,
     toolbar,
-    manager
+    getRowProps
   };
   const memoizedContextValue = useMemo(
     () => contextValue,
@@ -106,7 +99,7 @@ export const DataTable = <T extends object>({
 
   return (
     <DataTableContext.Provider value={memoizedContextValue}>
-      <Table ref={setContainer} {...rest}>
+      <Table {...rest}>
         <Toolbar sx={{ height: rowHeight }} />
         <TableContent>
           {rows}

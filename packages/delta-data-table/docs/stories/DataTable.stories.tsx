@@ -1,5 +1,6 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
+import { useState } from 'react';
 import { Box, Card } from 'restyler';
 import {
   DataTable,
@@ -37,20 +38,30 @@ export const Basics = () => {
 };
 
 export const HeightAdaptive = () => {
-  const options = useMock({ columnCount: 15, rowCount: 2 });
+  const [element, setElement] = useState<HTMLElement | null>(null);
+  const options = useMock({ columnCount: 15, rowCount: 20 });
   const manager = useDataTableManager(options);
   return (
-    <Box sx={{ padding: 5, minHeight: '100vh' }}>
-      <Card>
-        <DataTable
-          // sx={{ height: '400px' }}
-          // isHeightAdaptive
-          manager={manager}
-          toolbar={{
-            sections: ['tabs', 'query', 'configurer']
-          }}
-        />
-      </Card>
+    <Box
+      sx={{
+        padding: 5,
+        minHeight: '100vh',
+        maxHeight: '100vh',
+        display: 'flex',
+        alignItems: 'stretch'
+      }}
+    >
+      <Box ref={setElement}>
+        <Card>
+          <DataTable
+            manager={manager}
+            maxHeight={element?.offsetHeight}
+            toolbar={{
+              sections: ['tabs', 'query', 'configurer']
+            }}
+          />
+        </Card>
+      </Box>
     </Box>
   );
 };

@@ -6,30 +6,28 @@ export const useOuterContainer = () => {
   const [scrollbarHeight, setScrollbarHeight] = useState(0);
   const Container = useMemo(
     () =>
-      forwardRef<HTMLDivElement, any>(({ style, ...rest }, ref) => {
-        const [shouldHideVerticalScroll, setShouldHideVerticalScroll] =
-          useState(false);
+      forwardRef<HTMLDivElement, any>((props, ref) => {
         const [element, setElement] = useState<HTMLDivElement | null>(null);
         const sharedRef = useSharedRef<HTMLDivElement>(null, [ref, setElement]);
         useEffect(() => {
           if (!element) {
             return;
           }
-          setShouldHideVerticalScroll(
-            element.scrollHeight - element.offsetHeight < 2
-          );
-          setScrollbarHeight(element.offsetHeight - element.clientHeight);
+          const update = () => {
+            setScrollbarHeight(element.offsetHeight - element.clientHeight);
+          };
+          update();
+          const observer = new MutationObserver(update);
+          observer.observe(element, {
+            attributes: true,
+            childList: true,
+            subtree: true
+          });
+          return () => {
+            observer.disconnect();
+          };
         }, [element]);
-        return (
-          <div
-            ref={sharedRef}
-            style={{
-              ...style,
-              overflowY: shouldHideVerticalScroll ? 'hidden' : undefined
-            }}
-            {...rest}
-          />
-        );
+        return <div ref={sharedRef} {...props} />;
       }),
     []
   );
