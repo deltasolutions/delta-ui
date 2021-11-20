@@ -35,18 +35,17 @@ const barberpole = keyframes({
 export const row: BasicTheme = {
   style: {
     alignItems: 'center',
-    borderBottom: '1px solid transparent',
+    borderTop: '1px solid',
+    borderTopColor: 'border',
     fontSize: 3,
     lineHeight: '1.5rem',
-    '&:hover': { backgroundColor: 'accentSurface' },
-    '&:not(:last-child)': {
-      borderBottomColor: 'border'
-    }
+    '&:hover': { backgroundColor: 'accentSurface' }
   },
   kinds: {
     head: {
       style: {
         backgroundColor: 'accentSurface',
+        borderTop: 'none',
         borderBottom: '1px solid',
         borderBottomColor: 'border',
         userSelect: 'none',

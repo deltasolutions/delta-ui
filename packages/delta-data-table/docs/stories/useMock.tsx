@@ -3,9 +3,14 @@ import { useCallback, useMemo } from 'react';
 export interface MockDataOptions {
   columnCount: number;
   rowCount: number;
+  shouldLoadChunks?: boolean;
 }
 
-export const useMock = ({ columnCount, rowCount }: MockDataOptions) => {
+export const useMock = ({
+  columnCount,
+  rowCount,
+  shouldLoadChunks
+}: MockDataOptions) => {
   const randomize = useCallback(() => Math.random().toString().slice(-4), []);
   const keys = useMemo(
     () =>
@@ -32,10 +37,10 @@ export const useMock = ({ columnCount, rowCount }: MockDataOptions) => {
       initialContent: {
         columns,
         data,
-        hasNextChunk: true
+        hasNextChunk: !!shouldLoadChunks
       },
       getNextChunk
     }),
-    [data, columns, getNextChunk]
+    [data, columns, shouldLoadChunks, getNextChunk]
   );
 };
