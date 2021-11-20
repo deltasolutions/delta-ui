@@ -1,16 +1,17 @@
 import { jsx } from '@theme-ui/core';
 import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react';
 import { FixedSizeList } from 'react-window';
-import { useThemed } from 'restyler';
+import { useSharedRef, useThemed } from 'restyler';
 import { DataTableProps } from '../../models';
 import { getRowWidth } from '../../utils';
 import { DataRow } from './DataRow';
 import { DataTableContext } from './DataTableContext';
 import { EmptyRow } from './EmptyRow';
-import { Header } from './Header';
+import { InnerElement } from './InnerElement';
 import { LoaderRow } from './LoaderRow';
 import { Ruler } from './Ruler';
 import { Toolbar } from './Toolbar';
+import { useOuterElement } from './useOuterElement';
 
 export const DataTable = <T extends object>({
   getRowProps,
@@ -57,30 +58,24 @@ export const DataTable = <T extends object>({
     [coercedColumns, data]
   );
 
-  const innerElementType = useMemo(
-    () =>
-      forwardRef<HTMLDivElement>(({ children, ...rest }, ref) => (
-        <div ref={ref} {...rest}>
-          <Header />
-          {children}
-        </div>
-      )),
-    [coercedColumns]
-  );
+  const [scrollbarHeight, setScrollbarHeight] = useState(0);
+  const OuterElement = useOuterElement({
+    onHorizontalScrollbarChange: setScrollbarHeight
+  });
 
   const rows = useMemo(
     () => (
       <FixedSizeList
         height={
-          isHeightAdaptive
-            ? containerHeight - rowHeight
-            : ((data.length <= maxRowCount
-                ? Math.max(data.length, 1)
-                : maxRowCount) +
-                1) *
-              rowHeight
+          ((data.length <= maxRowCount
+            ? Math.max(data.length, 1)
+            : maxRowCount) +
+            1) *
+            rowHeight +
+          scrollbarHeight
         }
-        innerElementType={innerElementType}
+        outerElementType={OuterElement}
+        innerElementType={InnerElement}
         itemCount={Math.max(data.length, 1) + (hasNextChunk ? 1 : 0)}
         itemSize={rowHeight}
         overscanCount={5}
@@ -90,6 +85,8 @@ export const DataTable = <T extends object>({
       </FixedSizeList>
     ),
     [
+      OuterElement,
+      scrollbarHeight,
       isHeightAdaptive,
       maxRowCount,
       containerHeight,

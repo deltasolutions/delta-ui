@@ -43,6 +43,8 @@ export const HeightAdaptive = () => {
     <Box sx={{ padding: 5, minHeight: '100vh' }}>
       <Card>
         <DataTable
+          // sx={{ height: '400px' }}
+          // isHeightAdaptive
           manager={manager}
           toolbar={{
             sections: ['tabs', 'query', 'configurer']
