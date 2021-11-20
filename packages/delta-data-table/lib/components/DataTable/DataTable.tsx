@@ -1,5 +1,5 @@
 import { jsx } from '@theme-ui/core';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 import { FixedSizeList } from 'react-window';
 import { useThemed } from 'restyler';
 import { DataTableProps } from '../../models';
@@ -60,13 +60,14 @@ export const DataTable = <T extends object>({
   const listReservedHeight = rowHeight;
   // Combining reserved height with dynamically
   // rendered rows height and scrollbar height.
-  const listHeight = maxHeight
-    ? maxHeight - (toolbar ? rowHeight : 0)
+  let listHeight = maxHeight
+    ? Math.min(
+        maxHeight - (toolbar ? rowHeight : 0),
+        listReservedHeight + scrollbarHeight + listRowCount * rowHeight
+      )
     : listReservedHeight +
-      Math.min(listRowCount, maxRowCount) * rowHeight +
-      scrollbarHeight;
-
-  console.log(maxHeight);
+      scrollbarHeight +
+      Math.min(listRowCount, maxRowCount) * rowHeight;
 
   const rows = useMemo(
     () => (

@@ -1,7 +1,7 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { useState } from 'react';
-import { Box, Card } from 'restyler';
+import { Box, Button, Card } from 'restyler';
 import {
   DataTable,
   useDataTableManager,
@@ -48,10 +48,23 @@ export const HeightAdaptive = () => {
         minHeight: '100vh',
         maxHeight: '100vh',
         display: 'flex',
-        alignItems: 'stretch'
+        flexDirection: 'column',
+        gap: 4
       }}
     >
-      <Box ref={setElement}>
+      <Box>
+        <Button
+          kind="primary"
+          onClick={() => {
+            manager.setData(
+              manager.data.length > 0 ? [] : options.initialContent.data
+            );
+          }}
+        >
+          Toggle Data
+        </Button>
+      </Box>
+      <Box ref={setElement} sx={{ flex: '1 0 200px' }}>
         <Card>
           <DataTable
             manager={manager}
