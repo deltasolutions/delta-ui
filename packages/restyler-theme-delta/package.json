@@ -1,6 +1,6 @@
 {
   "name": "restyler-theme-delta",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "license": "MIT",
   "main": "build/index.cjs",
   "module": "build/index.js",
