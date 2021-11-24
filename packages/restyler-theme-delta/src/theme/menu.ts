@@ -11,9 +11,9 @@ const titleStyle = {
   letterSpacing: '0.04em',
   cursor: 'pointer',
   '& svg': {
-    width: '18px',
-    height: '18px',
-    marginRight: 1,
+    width: '1.3em',
+    height: '1.3em',
+    marginRight: '0.4em',
     transform: 'translateY(-1.5px)',
     verticalAlign: 'middle'
   },

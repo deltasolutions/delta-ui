@@ -1,5 +1,5 @@
 import { jsx } from '@theme-ui/core';
-import { useCallback, useContext, useMemo } from 'react';
+import { Fragment, useCallback, useContext, useMemo } from 'react';
 import { Menu, MenuGroup, MenuItem } from 'restyler';
 import { LayoutMenuEntryDef } from '../../models';
 import { LayoutContext } from './LayoutContext';
@@ -11,24 +11,35 @@ export const LayoutMenu = () => {
         entries = [],
         activeIds = [],
         onGroupClick = undefined,
-        onItemClick = undefined
+        onItemClick = undefined,
+        icons = {}
       } = {}
     } = {}
   } = useContext(LayoutContext);
-  const renderPage = useCallback(({ id, title, subs }: LayoutMenuEntryDef) => {
-    if (subs) {
-      return (
-        <MenuGroup key={id} id={id} title={title}>
-          {subs.map(v => renderPage(v))}
-        </MenuGroup>
+  const renderPage = useCallback(
+    ({ id, title, icon, subs }: LayoutMenuEntryDef) => {
+      const Icon = icon && icons[icon];
+      const titleElement = (
+        <Fragment>
+          {Icon && <Icon />}
+          {title}
+        </Fragment>
       );
-    }
-    return (
-      <MenuItem key={id} id={id}>
-        {title}
-      </MenuItem>
-    );
-  }, []);
+      if (subs) {
+        return (
+          <MenuGroup key={id} id={id} title={titleElement}>
+            {subs.map(v => renderPage(v))}
+          </MenuGroup>
+        );
+      }
+      return (
+        <MenuItem key={id} id={id}>
+          {titleElement}
+        </MenuItem>
+      );
+    },
+    []
+  );
   return useMemo(
     () => (
       <Menu

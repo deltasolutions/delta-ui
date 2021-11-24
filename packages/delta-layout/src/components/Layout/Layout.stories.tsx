@@ -3,6 +3,7 @@ import { jsx } from '@theme-ui/core';
 import { Fragment } from 'react';
 import { IoIosHeartEmpty, IoIosPower } from 'react-icons/io';
 import { IoArchiveOutline, IoArrowUndoOutline } from 'react-icons/io5';
+import { IoBook, IoSettings } from 'react-icons/io5';
 import { Button } from 'restyler';
 import { useLocalLayoutMenu } from '../../hooks';
 import { AppContainer } from '../AppContainer';
@@ -18,18 +19,24 @@ export const Basics = () => {
     entries: [
       {
         id: 'dashboard',
-        title: 'Dashboard'
+        title: 'Dashboard',
+        icon: 'IoBook'
       },
       {
         id: 'settings',
         title: 'Settings',
+        icon: 'IoSettings',
         subs: [
           { id: 'ui', title: 'UI' },
           { id: 'users', title: 'Users' }
         ]
       }
     ],
-    activeIds: []
+    activeIds: [],
+    icons: {
+      IoBook,
+      IoSettings
+    }
   });
   return (
     <AppContainer>

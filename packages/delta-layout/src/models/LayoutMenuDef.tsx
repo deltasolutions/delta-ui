@@ -6,8 +6,6 @@ export interface LayoutMenuDef {
 export interface LayoutMenuEntryDef {
   id: string;
   title: string;
+  icon?: string;
   subs?: LayoutMenuEntryDef[];
-
-  // Will be added later.
-  // icon?: string;
 }

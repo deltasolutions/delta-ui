@@ -1,9 +1,9 @@
 import { useCallback, useMemo, useState } from 'react';
 import { LayoutMenuEntryDef, LayoutMenuOptions } from '../models';
 
-export interface LocalLayoutMenuOptions {
-  entries: LayoutMenuEntryDef[];
-  activeIds: string[];
+export interface LocalLayoutMenuOptions extends Partial<LayoutMenuOptions> {
+  // Making entries required.
+  entries: LayoutMenuOptions['entries'];
 }
 
 export const useLocalLayoutMenu = (
@@ -33,7 +33,7 @@ export const useLocalLayoutMenu = (
     [entryIdSet]
   );
   return {
-    entries: options.entries,
+    ...options,
     activeIds,
     onGroupClick,
     onItemClick
