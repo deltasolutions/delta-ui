@@ -4,7 +4,8 @@ import { useLayoutEffect } from 'react';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 
 export const parameters = {
-  controls: { hideNoControlsWarning: true }
+  controls: { hideNoControlsWarning: true },
+  layout: 'fullscreen'
 };
 
 export const decorators = [
