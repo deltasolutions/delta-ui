@@ -1,9 +1,14 @@
 import { DataSubscription } from './subscriptions';
 
-export interface DataOperationResult<Data> {
-  meta?: any;
+export interface DataOperationMutatingResult<Data> {
   data?: Data;
-  subscription?: DataSubscription<Data>;
+  patch?: Partial<Data>;
+}
+
+export interface DataOperationResult<Data>
+  extends DataOperationMutatingResult<Data> {
+  subscription?: DataSubscription<DataOperationMutatingResult<Data>>;
+  meta?: any;
 }
 
 export interface DataOperation<Data, Seed = undefined> {

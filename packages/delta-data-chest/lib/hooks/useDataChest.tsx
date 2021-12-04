@@ -1,9 +1,11 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
+import { merge } from 'restyler';
 import {
   DataChest,
   DataChestOperator,
   DataChestOptions,
   DataChestSeeder,
+  DataOperationMutatingResult,
   DataOperator,
   DataSubscription,
   OperatedData
@@ -23,11 +25,25 @@ export const useDataChest = <
   const [data, setData] = useState<OperatedData<Operator> | undefined>(
     initialData
   );
+  const handleMutatingResult = useCallback(
+    ({ data, patch }: DataOperationMutatingResult<OperatedData<Operator>>) => {
+      if (data) {
+        setData(data);
+      } else if (patch) {
+        setData(v => merge({}, v, patch));
+      }
+    },
+    []
+  );
   const subscribe = useCallback(
-    async (subscription: DataSubscription<OperatedData<Operator>>) => {
+    async (
+      subscription: DataSubscription<
+        DataOperationMutatingResult<OperatedData<Operator>>
+      >
+    ) => {
       activeSubscription.current?.cancel();
       for await (const v of subscription) {
-        setData(v);
+        handleMutatingResult(v);
       }
     },
     []
@@ -41,9 +57,10 @@ export const useDataChest = <
           if (!result) {
             return;
           }
-          if (result.data) {
-            setData(result.data);
-          } else if (result.subscription) {
+          if (result.data || result.patch) {
+            handleMutatingResult(result);
+          }
+          if (result.subscription) {
             subscribe(result.subscription);
           }
           return result;
