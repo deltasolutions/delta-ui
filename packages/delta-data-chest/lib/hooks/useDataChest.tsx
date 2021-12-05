@@ -2,48 +2,46 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 import { merge } from 'restyler';
 import {
   DataChest,
-  DataChestOperator,
-  DataChestOptions,
-  DataChestSeeder,
-  DataOperationMutatingResult,
+  DataOperationAsyncResult,
+  DataOperationSyncResult,
   DataOperator,
   DataSubscription,
   OperatedData
 } from '../models';
 
-export const useDataChest = <
-  Operator extends DataOperator<any>,
-  Seeder extends DataChestSeeder<Operator>
->({
-  initialData,
-  operator,
-  seeder
-}: DataChestOptions<Operator, Seeder>): DataChest<Operator, Seeder> => {
-  const activeSubscription = useRef<
-    DataSubscription<OperatedData<Operator>> | undefined
-  >(undefined);
+export const useDataChest = <Operator extends DataOperator<any>>(
+  initialData:
+    | OperatedData<Operator>
+    | undefined
+    | (() => OperatedData<Operator> | undefined),
+  operator: Operator
+): DataChest<Operator> => {
   const [data, setData] = useState<OperatedData<Operator> | undefined>(
     initialData
   );
-  const handleMutatingResult = useCallback(
-    ({ data, patch }: DataOperationMutatingResult<OperatedData<Operator>>) => {
+  const activeSubscription = useRef<
+    DataSubscription<OperatedData<Operator>> | undefined
+  >(undefined);
+  const handleOperationSyncResult = useCallback(
+    ({ data, dataPatch }: DataOperationSyncResult<OperatedData<Operator>>) => {
       if (data) {
         setData(data);
-      } else if (patch) {
-        setData(v => merge({}, v, patch));
+      } else if (dataPatch) {
+        setData(v => merge({}, v, dataPatch));
       }
     },
     []
   );
-  const subscribe = useCallback(
-    async (
-      subscription: DataSubscription<
-        DataOperationMutatingResult<OperatedData<Operator>>
-      >
-    ) => {
+  const handleOperationAsyncResult = useCallback(
+    async ({
+      subscription
+    }: DataOperationAsyncResult<OperatedData<Operator>>) => {
+      if (!subscription) {
+        return;
+      }
       activeSubscription.current?.cancel();
       for await (const v of subscription) {
-        handleMutatingResult(v);
+        handleOperationSyncResult(v);
       }
     },
     []
@@ -53,22 +51,18 @@ export const useDataChest = <
       (p, [k, v]) => ({
         ...p,
         [k]: async (seed: any) => {
-          const result = await v(seed ?? seeder?.[k]?.(data));
+          const result = await v(seed);
           if (!result) {
             return;
           }
-          if (result.data || result.patch) {
-            handleMutatingResult(result);
-          }
-          if (result.subscription) {
-            subscribe(result.subscription);
-          }
+          handleOperationSyncResult(result);
+          handleOperationAsyncResult(result);
           return result;
         }
       }),
-      {} as DataChestOperator<Operator, Seeder>
+      {} as Operator
     );
-  }, [operator, seeder]);
+  }, [operator]);
   return useMemo(
     () => ({
       data,

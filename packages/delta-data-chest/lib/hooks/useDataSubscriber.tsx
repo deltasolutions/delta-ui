@@ -1,10 +1,7 @@
 import { useEffect } from 'react';
 import { DataOperation } from '../models';
 
-export const useDataSubscriber = <Data, Seed>(
-  fn: DataOperation<Data, Seed>,
-  seed?: Seed
-) => {
+export const useDataSubscriber = (fn: DataOperation<any>, seed?: any) => {
   useEffect(() => {
     if (!seed) {
       return;
@@ -15,5 +12,5 @@ export const useDataSubscriber = <Data, Seed>(
         result?.subscription?.cancel();
       });
     };
-  }, [seed]);
+  }, [fn, seed]);
 };
