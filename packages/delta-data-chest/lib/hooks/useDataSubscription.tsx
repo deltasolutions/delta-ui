@@ -1,7 +1,7 @@
 import { DependencyList, useCallback, useEffect } from 'react';
 
 export const useSubscription = <Event extends unknown>(
-  subscribe: () => AsyncIterable<Event>,
+  subscribe: () => AsyncIterable<Event> | Promise<AsyncIterable<Event>>,
   options: {
     deps: DependencyList;
     onEvent?: (event: Event) => void;
@@ -9,27 +9,29 @@ export const useSubscription = <Event extends unknown>(
   }
 ) => {
   const handleSubscription = useCallback(
-    async (subscription: AsyncIterable<Event>) => {
-      for await (const update of subscription) {
+    async (subscriptionPromise: Promise<AsyncIterable<Event>>) => {
+      for await (const update of await subscriptionPromise) {
         options.onEvent?.(update);
       }
     },
     [options.onEvent]
   );
   useEffect(() => {
-    const subscription = subscribe();
-    handleSubscription(subscription);
+    const subscriptionPromise = Promise.resolve(subscribe());
+    handleSubscription(subscriptionPromise);
     return () => {
-      if (options.onCancelRequest) {
-        options.onCancelRequest(subscription);
-      } else {
-        for (const fnName of cancelFnNames) {
-          if (subscription[fnName]) {
-            subscription[fnName]();
-            break;
+      subscriptionPromise.then(subscription => {
+        if (options.onCancelRequest) {
+          options.onCancelRequest(subscription);
+        } else {
+          for (const fnName of cancelFnNames) {
+            if (subscription[fnName]) {
+              subscription[fnName]();
+              break;
+            }
           }
         }
-      }
+      });
     };
   }, options.deps);
 };
