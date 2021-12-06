@@ -1,74 +1,28 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
-import { merge } from 'restyler';
-import {
-  DataChest,
-  DataOperationAsyncResult,
-  DataOperationSyncResult,
-  DataOperator,
-  DataSubscription,
-  OperatedData
-} from '../models';
+import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
+import { DataChest, DataChestInitializer } from '../models';
 
-export const useDataChest = <Operator extends DataOperator<any>>(
-  initialData:
-    | OperatedData<Operator>
-    | undefined
-    | (() => OperatedData<Operator> | undefined),
-  operator: Operator
-): DataChest<Operator> => {
-  const [data, setData] = useState<OperatedData<Operator> | undefined>(
-    initialData
+export const useDataChest = <Data extends unknown>(
+  initializer: DataChestInitializer<Data>
+): DataChest<Data> => {
+  const dataRef = useRef<Data>(
+    initializer instanceof Function ? initializer() : initializer
   );
-  const activeSubscription = useRef<
-    DataSubscription<OperatedData<Operator>> | undefined
-  >(undefined);
-  const handleOperationSyncResult = useCallback(
-    ({ data, dataPatch }: DataOperationSyncResult<OperatedData<Operator>>) => {
-      if (data) {
-        setData(data);
-      } else if (dataPatch) {
-        setData(v => merge({}, v, dataPatch));
-      }
-    },
-    []
-  );
-  const handleOperationAsyncResult = useCallback(
-    async ({
-      subscription
-    }: DataOperationAsyncResult<OperatedData<Operator>>) => {
-      if (!subscription) {
-        return;
-      }
-      activeSubscription.current?.cancel();
-      for await (const v of subscription) {
-        handleOperationSyncResult(v);
-      }
-    },
-    []
-  );
-  const chestOperator = useMemo(() => {
-    return Object.entries(operator ?? {}).reduce(
-      (p, [k, v]) => ({
-        ...p,
-        [k]: async (seed: any) => {
-          const result = await v(seed);
-          if (!result) {
-            return;
-          }
-          handleOperationSyncResult(result);
-          handleOperationAsyncResult(result);
-          return result;
-        }
-      }),
-      {} as Operator
-    );
-  }, [operator]);
-  return useMemo(
-    () => ({
-      data,
-      setData,
-      ...chestOperator
-    }),
-    [data, chestOperator]
-  );
+  const usesRef = useRef(new Set<() => void>());
+  const use = useCallback<DataChest<Data>['get']>(() => {
+    const [_, update] = useReducer(v => (v + 1) % 1000, 0);
+    useEffect(() => {
+      usesRef.current.add(update);
+      return () => {
+        usesRef.current.delete(update);
+      };
+    }, []);
+    return dataRef.current;
+  }, []);
+  const get = useCallback<DataChest<Data>['get']>(() => dataRef.current, []);
+  const set = useCallback<DataChest<Data>['set']>(update => {
+    dataRef.current =
+      update instanceof Function ? update(dataRef.current) : update;
+    usesRef.current.forEach(fn => fn());
+  }, []);
+  return useMemo(() => ({ use, get, set }), []);
 };

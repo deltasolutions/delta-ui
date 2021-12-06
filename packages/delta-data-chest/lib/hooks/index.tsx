@@ -1,2 +1,2 @@
 export * from './useDataChest';
-export * from './useDataSubscriber';
+export * from './useDataSubscription';

@@ -1,15 +1,9 @@
-import { Dispatch, SetStateAction } from 'react';
-import { DataOperator, OperatedData } from './operators';
+export type DataChestInitializer<Data> = Data | (() => Data);
 
-export interface DataChestState<Data> {
-  data: Data | undefined;
-  setData: Dispatch<SetStateAction<Data>>;
-}
+export type DataChestUpdate<Data> = Data | ((prior: Data) => Data);
 
-export type DataChest<Operator extends DataOperator<any>> = Operator &
-  DataChestState<OperatedData<Operator>>;
-
-export interface DataChestOptions<Operator extends DataOperator<any>> {
-  initialData?: OperatedData<Operator> | (() => OperatedData<Operator>);
-  operator?: Operator;
+export interface DataChest<Data> {
+  get: () => Data;
+  set: (update: DataChestUpdate<Data>) => void;
+  use: () => Data;
 }
