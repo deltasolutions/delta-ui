@@ -1,15 +1,17 @@
 import { DependencyList, useCallback, useEffect } from 'react';
 
+type Subscription<Event> = AsyncIterable<Event> | AsyncGenerator<Event>;
+
 export const useSubscription = <Event extends unknown>(
-  subscribe: () => AsyncIterable<Event> | Promise<AsyncIterable<Event>>,
+  subscribe: () => Subscription<Event> | Promise<Subscription<Event>>,
   options: {
     deps: DependencyList;
     onEvent?: (event: Event) => void;
-    onCancelRequest?: (subscription: AsyncIterable<Event>) => void;
+    onCancelRequest?: (subscription: Subscription<Event>) => void;
   }
 ) => {
   const handleSubscription = useCallback(
-    async (subscriptionPromise: Promise<AsyncIterable<Event>>) => {
+    async (subscriptionPromise: Promise<Subscription<Event>>) => {
       for await (const update of await subscriptionPromise) {
         options.onEvent?.(update);
       }
