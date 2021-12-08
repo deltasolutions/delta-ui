@@ -13,7 +13,7 @@ const theme = mergeBasicThemes({}, packageTheme, {
 export const systemized = (Story, context) => {
   return (
     <AppContainer theme={theme as any}>
-      <Box sx={{ padding: 3 }}>
+      <Box sx={{ padding: '20px' }}>
         <Story {...context} />
       </Box>
     </AppContainer>
@@ -26,8 +26,7 @@ export const centered = Story => (
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      minHeight: '100vh',
-      paddingX: 3
+      minHeight: 'calc(100vh - 40px)'
     }}
   >
     <Story />
