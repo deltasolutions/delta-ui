@@ -17,18 +17,6 @@
     "lint:static": "eslint ./{lib,docs}/**/*.{ts,tsx} --fix",
     "release": "delta-release"
   },
-  "devDependencies": {
-    "@storybook/addon-docs": "^6.3.10",
-    "@storybook/addon-essentials": "^6.3.10",
-    "@storybook/react": "^6.3.10",
-    "@types/node": "^16.11.4",
-    "@types/react": "^16.14.8",
-    "@types/react-dom": "^16.9.13",
-    "nats.ws": "^1.4.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "tsup": "^5.10.3"
-  },
   "peerDependencies": {
     "nats.ws": "^1.4.1",
     "react": ">=16.13.1",
