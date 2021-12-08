@@ -5,10 +5,10 @@ import { IoIosHeartEmpty, IoIosPower } from 'react-icons/io';
 import { IoArchiveOutline, IoArrowUndoOutline } from 'react-icons/io5';
 import { IoBook, IoSettings } from 'react-icons/io5';
 import { Button } from 'restyler';
-import { useLocalLayoutMenu } from '../../hooks';
-import { AppContainer } from '../AppContainer';
-import { Layout } from './Layout';
-import { LayoutFooterCompanyInfo } from './LayoutFooterCompanyInfo';
+import { AppContainer } from '../../lib/components/AppContainer';
+import { Layout } from '../../lib/components/Layout/Layout';
+import { LayoutFooterCompanyInfo } from '../../lib/components/Layout/LayoutFooterCompanyInfo';
+import { useLocalLayoutMenu } from '../../lib/hooks';
 
 export default {
   title: 'General/Layout'

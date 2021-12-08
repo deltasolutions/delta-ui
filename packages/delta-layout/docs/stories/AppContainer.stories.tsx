@@ -3,8 +3,8 @@ import { jsx } from '@theme-ui/core';
 import { Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box } from 'restyler';
-import { LoadScreen } from '../LoadScreen';
-import { AppContainer } from './AppContainer';
+import { AppContainer } from '../../lib/components/AppContainer/AppContainer';
+import { LoadScreen } from '../../lib/components/LoadScreen';
 
 export default {
   title: 'General/AppContinaer'

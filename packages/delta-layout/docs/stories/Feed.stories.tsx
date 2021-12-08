@@ -1,12 +1,12 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { useCallback, useContext, useState } from 'react';
-import { useLayoutUpdateManager } from '../../hooks';
-import { FeedSectionDef, LayoutUpdateTarget } from '../../models';
-import { AppContainer } from '../AppContainer';
-import { LayoutUpdateContext } from '../Layout/LayoutUpdateContext';
-import { Feed } from './Feed';
-import { FeedItem } from './FeedItem';
+import { AppContainer } from '../../lib/components/AppContainer';
+import { Feed } from '../../lib/components/Feed/Feed';
+import { FeedItem } from '../../lib/components/Feed/FeedItem';
+import { LayoutUpdateContext } from '../../lib/components/Layout/LayoutUpdateContext';
+import { useLayoutUpdateManager } from '../../lib/hooks';
+import { FeedSectionDef, LayoutUpdateTarget } from '../../lib/models';
 
 export default {
   title: 'General/ConfiguredFeed'
