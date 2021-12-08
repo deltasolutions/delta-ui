@@ -1,5 +1,5 @@
 {
-  "script": "build:lib",
+  "script": "build",
   "message": "chore({{name}}): {{version}}",
   "tag": "{{name}}@{{version}}",
   "publish": true

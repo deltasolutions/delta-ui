@@ -1,3 +1,4 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
 import { Meta } from '@storybook/react';
 import * as DDT from 'delta-data-table';

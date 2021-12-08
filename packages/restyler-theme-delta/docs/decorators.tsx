@@ -1,20 +1,7 @@
-/** @jsx jsx */
-import isPropValid from '@emotion/is-prop-valid';
 import { AppContainer } from 'delta-layout';
-import { forwardRef } from 'react';
 import { Box, mergeBasicThemes } from 'restyler';
 import { jsx } from 'theme-ui';
-import { theme as packageTheme } from '../src';
-
-const styled = (Tag: any, fn: Function) =>
-  forwardRef((props: any, ref: any) => {
-    const { theme, kind, ...rest } = props as any;
-    const validProps = Object.keys(rest).reduce(
-      (p, k) => (isPropValid(k) ? { ...p, [k]: rest[k] } : p),
-      { sx: fn(props) }
-    );
-    return <Tag ref={ref} {...validProps} />;
-  }) as any;
+import { theme as packageTheme } from '../lib';
 
 const theme = mergeBasicThemes({}, packageTheme, {
   colors: {
