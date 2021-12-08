@@ -1,4 +1,4 @@
-import { BasicTheme, mergeBasicThemes } from 'restyler';
+import { mergeBasicThemes, BasicTheme } from 'restyler';
 import { createInputLikeTheme } from './input';
 
 const markMargin = '1em';
@@ -94,7 +94,7 @@ export const select: BasicTheme = {
 
     drop: {
       style: ({ isVisible }) => ({
-        zIndex: 9001,
+        zIndex: 1001,
         backgroundColor: 'surface',
         color: 'onSurface',
         borderRadius: 2,

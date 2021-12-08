@@ -1,5 +1,6 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
+import { useState } from 'react';
 import * as R from 'restyler';
 import { compact } from '../decorators';
 
@@ -16,26 +17,48 @@ TextArea.decorators = [compact('300px')];
 export const FormField = () => <R.FormField name="_" label="Field Name" />;
 FormField.decorators = [compact('300px')];
 
-export const Form = () => (
-  <R.Form>
-    <R.FormGrid>
-      <R.FormField name="a" label="Field A" />
-      <R.FormField name="b" label="Field B">
-        <R.Select>
-          <R.SelectOption value="a">Option A</R.SelectOption>
-          <R.SelectOption value="b">Option B</R.SelectOption>
-          <R.SelectOption value="c">Option C</R.SelectOption>
-        </R.Select>
-      </R.FormField>
-      <R.FormField name="c" label="Field C">
-        <R.File>
-          {names => (names.length > 0 ? names.join(', ') : 'Select File')}
-        </R.File>
-      </R.FormField>
-      <R.FormField name="d">
-        <R.Checkbox>Field D</R.Checkbox>
-      </R.FormField>
-    </R.FormGrid>
-  </R.Form>
-);
+export const Form = () => {
+  const [disabled, setDisabled] = useState(false);
+  const [readOnly, setReadOnly] = useState(false);
+  return (
+    <R.Box>
+      <R.Box sx={{ mb: 3 }}>
+        <R.Checkbox value={disabled} onChange={setDisabled}>
+          Disabled
+        </R.Checkbox>
+        <R.Checkbox value={readOnly} onChange={setReadOnly}>
+          ReadOnly
+        </R.Checkbox>
+      </R.Box>
+      <R.Form disabled={disabled} readOnly={readOnly}>
+        <R.FormGrid>
+          <R.FormField label="A" name="a" />
+          <R.FormField label="A" name="b">
+            <R.Select isMultiple>
+              <R.SelectOption value="a1">a1</R.SelectOption>
+              <R.SelectOption value="a2">a2</R.SelectOption>
+              <R.SelectOption value="a3">a3</R.SelectOption>
+            </R.Select>
+          </R.FormField>
+          <R.FormField name="c">
+            <R.Checkbox>C</R.Checkbox>
+          </R.FormField>
+          <R.FormField label="D" name="d">
+            <R.File />
+          </R.FormField>
+          <R.FormField label="E" name="e">
+            <R.RadioGroup>
+              <R.RadioOption value="A">Option A</R.RadioOption>
+              <R.RadioOption value="B">Option B</R.RadioOption>
+              <R.RadioOption value="C">Option C</R.RadioOption>
+            </R.RadioGroup>
+          </R.FormField>
+          <R.FormField label="F" name="f">
+            <R.TextArea />
+          </R.FormField>
+        </R.FormGrid>
+      </R.Form>
+    </R.Box>
+  );
+};
 Form.decorators = [compact()];

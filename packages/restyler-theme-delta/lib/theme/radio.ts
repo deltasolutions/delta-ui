@@ -8,17 +8,17 @@ export const radio: BasicTheme = {
       },
       components: {
         checker: {
-          style: ({ isActive }) => {
+          style: ({ isActive, disabled }) => {
             const createStateStyle = (
               borderColor,
               checkerColor,
               checkerSize
             ) => ({
-              border: '1px solid',
+              border: disabled ? '1px dashed' : '1px solid',
               borderColor,
               marginRight: 2,
               borderRadius: '100vw',
-              backgroundColor: 'transparent',
+              backgroundColor: 'white',
               position: 'relative',
               display: 'inline-block',
               width: '1rem',
@@ -41,7 +41,7 @@ export const radio: BasicTheme = {
             });
             return isActive
               ? createStateStyle('primary', 'primary', '0.5rem')
-              : createStateStyle('border', 'transparent', 0);
+              : createStateStyle('border', 'white', 0);
           }
         },
         label: {
