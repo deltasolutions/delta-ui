@@ -1,0 +1,9 @@
+{
+  "name": "delta-ui-docs",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "build": "ts-node ./build.ts",
+    "deploy": "gh-pages -d dist"
+  }
+}
