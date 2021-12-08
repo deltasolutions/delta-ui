@@ -8,5 +8,5 @@
 
 **/node_modules
 **/build
+**/dist
 **/stats.html
-**/.parcel-cache

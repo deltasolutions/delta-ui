@@ -2,19 +2,15 @@
   "name": "delta-data-chest",
   "version": "0.3.3",
   "license": "MIT",
-  "main": "build/index.cjs",
-  "module": "build/index.js",
-  "source": "lib/index.tsx",
-  "types": "build/index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
   "files": [
-    "build/**/*"
+    "dist/**/*"
   ],
   "scripts": {
-    "prebuild": "rimraf build",
-    "build": "parcel build",
+    "build": "tsup",
     "dev": "start-storybook -c docs -p 6006 --ci",
-    "predoc": "rimraf build",
-    "doc": "build-storybook -c docs -o build/docs",
+    "doc": "build-storybook -c docs -o dist/docs",
     "lint": "npm run lint:static && npm run lint:format",
     "lint:format": "prettier ./{lib,docs}/**/*.{ts,tsx} --write",
     "lint:static": "eslint ./{lib,docs}/**/*.{ts,tsx} --fix",
@@ -29,7 +25,8 @@
     "@types/react-dom": "^16.9.13",
     "nats.ws": "^1.4.1",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "tsup": "^5.10.3"
   },
   "peerDependencies": {
     "nats.ws": "^1.4.1",
@@ -40,5 +37,19 @@
     "nats.ws": {
       "optional": true
     }
+  },
+  "tsup": {
+    "clean": true,
+    "dts": true,
+    "splitting": false,
+    "sourcemap": true,
+    "platform": "browser",
+    "format": [
+      "cjs",
+      "esm"
+    ],
+    "entryPoints": [
+      "lib/index.tsx"
+    ]
   }
 }
