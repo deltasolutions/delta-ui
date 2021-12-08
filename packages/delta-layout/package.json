@@ -23,7 +23,6 @@
     "@storybook/addon-docs": "^6.3.10",
     "@storybook/addon-essentials": "^6.3.10",
     "@storybook/react": "^6.3.10",
-    "@theme-ui/core": "^0.11.3",
     "@types/node": "^16.11.4",
     "@types/react": "^16.14.8",
     "@types/react-dom": "^16.9.13",

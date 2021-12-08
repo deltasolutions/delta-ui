@@ -1,10 +1,7 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
+/** @jsxImportSource @theme-ui/core */
 import { Meta } from '@storybook/react';
 import * as DDT from 'delta-data-table';
-import * as DL from 'delta-layout';
 import * as R from 'restyler';
-import { jsx } from 'theme-ui';
 import { compact } from '../decorators';
 
 export default {

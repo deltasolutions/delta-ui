@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
-    "jsx": "preserve",
-    "jsxFactory": "jsx"
+    "jsx": "react-jsx"
   },
   "extends": "../tsconfig.json"
 }

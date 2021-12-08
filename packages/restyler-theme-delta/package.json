@@ -17,22 +17,6 @@
     "lint:static": "eslint ./{lib,docs}/**/*.{ts,tsx} --fix",
     "release": "delta-release"
   },
-  "devDependencies": {
-    "@emotion/react": "^11.5.0",
-    "@storybook/addon-docs": "^6.4.8",
-    "@storybook/addon-essentials": "^6.4.8",
-    "@storybook/builder-webpack5": "^6.3.10",
-    "@storybook/manager-webpack5": "^6.3.10",
-    "@storybook/react": "^6.4.8",
-    "@types/node": "^16.10.3",
-    "@types/react": "^16.14.8",
-    "@types/react-dom": "^16.9.13",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "theme-ui": "^0.11.3",
-    "tsup": "^5.10.3",
-    "webpack": "^5.65.0"
-  },
   "peerDependencies": {
     "@emotion/react": "^11.5.0",
     "restyler": ">=0.30.0"
