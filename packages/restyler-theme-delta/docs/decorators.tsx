@@ -1,6 +1,6 @@
+import { jsx } from '@theme-ui/core';
 import { AppContainer } from 'delta-layout';
 import { Box, mergeBasicThemes } from 'restyler';
-import { jsx } from 'theme-ui';
 import { theme as packageTheme } from '../lib';
 
 const theme = mergeBasicThemes({}, packageTheme, {
@@ -13,7 +13,9 @@ const theme = mergeBasicThemes({}, packageTheme, {
 export const systemized = (Story, context) => {
   return (
     <AppContainer theme={theme as any}>
-      <Story {...context} />
+      <Box sx={{ padding: 3 }}>
+        <Story {...context} />
+      </Box>
     </AppContainer>
   );
 };

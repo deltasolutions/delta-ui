@@ -2,6 +2,7 @@ import { centered, systemized } from './decorators';
 
 export const parameters = {
   controls: { hideNoControlsWarning: true },
+  layout: 'fullscreen',
   backgrounds: {
     values: [
       {

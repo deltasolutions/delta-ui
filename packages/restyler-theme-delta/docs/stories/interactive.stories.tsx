@@ -1,5 +1,5 @@
-/** @jsxImportSource @theme-ui/core */
 import { Meta } from '@storybook/react';
+import { jsx } from '@theme-ui/core';
 import { Fragment, useCallback } from 'react';
 import * as R from 'restyler';
 

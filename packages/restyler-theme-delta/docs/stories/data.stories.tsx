@@ -1,5 +1,5 @@
-/** @jsxImportSource @theme-ui/core */
 import { Meta } from '@storybook/react';
+import { jsx } from '@theme-ui/core';
 import * as DDT from 'delta-data-table';
 import * as R from 'restyler';
 import { compact } from '../decorators';
@@ -58,6 +58,9 @@ export const DataTable = () => {
   );
 };
 DataTable.decorators = [compact()];
+DataTable.parameters = {
+  backgrounds: { default: 'lightGrey' }
+};
 
 export const PieChart = () => {
   return (
