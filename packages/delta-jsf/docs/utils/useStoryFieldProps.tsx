@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { defaults, Validity } from 'src';
+import { defaults, Validity } from '../../lib';
 
 export const useStoryFieldProps = (props, initialValue: any = undefined) => {
   const [value, setValue] = useState<any>(initialValue);

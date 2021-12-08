@@ -1,5 +1,10 @@
 import React from 'react';
-import { defaults, useFormManager, FormProps, FormManagerOptions } from 'src';
+import {
+  defaults,
+  useFormManager,
+  FormProps,
+  FormManagerOptions
+} from '../../lib';
 
 export const useStoryFormProps = <T extends unknown>(
   options: FormManagerOptions<T>

@@ -1,4 +1,4 @@
-import { getConditionals, Schema } from 'src';
+import { getConditionals, Schema } from '../../lib';
 
 const schemaA: Schema = {
   type: 'object',

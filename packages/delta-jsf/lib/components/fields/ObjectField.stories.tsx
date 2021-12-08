@@ -1,7 +1,7 @@
 import { Meta } from '@storybook/react';
 import React from 'react';
+import { formStoryParameters, useStoryFieldProps } from '../../../docs/utils';
 import { ObjectField } from './ObjectField';
-import { formStoryParameters, useStoryFieldProps } from 'storybook/utils';
 
 const meta: Meta = {
   title: 'fields/ObjectField',

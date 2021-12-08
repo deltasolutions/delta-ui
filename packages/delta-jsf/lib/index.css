@@ -1,0 +1,119 @@
+.djsf-primitive {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 1rem;
+  font-family: Arial;
+}
+
+.djsf-primitive > .error {
+  margin-top: 0.2rem;
+  display: flex;
+  flex-direction: column;
+  font-size: 0.8rem;
+  color: red;
+}
+
+.djsf-primitive > .error div + div {
+  margin-top: 0.2rem;
+}
+
+.djsf-primitive > .title {
+  margin-bottom: 0.2rem;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.djsf-primitive > .content > input,
+.djsf-primitive > .content > select {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 1rem;
+  font-family: Arial;
+  width: 250px;
+  height: 2.2rem;
+  line-height: 2.2rem;
+  padding: 0 0.5rem;
+}
+
+.djsf-object {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 1rem;
+  font-family: Arial;
+}
+
+.djsf-object > .error {
+  margin-top: 0.2rem;
+  display: flex;
+  flex-direction: column;
+  font-size: 0.8rem;
+  color: red;
+}
+
+.djsf-object > .error div + div {
+  margin-top: 0.2rem;
+}
+
+.djsf-object > .title {
+  margin-bottom: 0.7rem;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.djsf-object > .content {
+  display: flex;
+  flex-direction: column;
+}
+
+.djsf-object > .content > *:not(:first-child) {
+  margin-top: 1rem;
+}
+
+.djsf-array {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 1rem;
+  font-family: Arial;
+}
+
+.djsf-array > .error {
+  margin-top: 0.2rem;
+  display: flex;
+  flex-direction: column;
+  font-size: 0.8rem;
+  color: red;
+}
+
+.djsf-array > .error div + div {
+  margin-top: 0.2rem;
+}
+
+.djsf-array > * {
+  margin-bottom: 0.7rem;
+}
+
+.djsf-array > .content {
+  display: flex;
+  flex-direction: column;
+}
+
+.djsf-array > .content > .item {
+  display: flex;
+  margin-bottom: 0.7rem;
+}
+
+.djsf-array > .content > .item > *:not(:last-child) {
+  margin-right: 0.7rem;
+}
+
+.djsf-panic {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 1rem;
+  font-family: Arial;
+  color: red;
+}

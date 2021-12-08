@@ -1,5 +1,5 @@
 import { configureActions } from '@storybook/addon-actions';
-import 'src/index.scss';
+import '../lib/index.css';
 
 configureActions({
   depth: 100,

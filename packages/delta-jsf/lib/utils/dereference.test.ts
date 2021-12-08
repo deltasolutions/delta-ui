@@ -1,4 +1,4 @@
-import { dereference } from 'src';
+import { dereference } from '../../lib';
 
 const a: any = {
   type: 'object',
