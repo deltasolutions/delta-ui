@@ -1,7 +1,9 @@
 import { Dispatch, SetStateAction } from 'react';
 import { DataTableTabDef } from './DataTableTabDef';
+import { DataTableTabManagerOptions } from './DataTableTabManagerOptions';
 
-export interface DataTableTabManager {
+export interface DataTableTabManager
+  extends Omit<DataTableTabManagerOptions, 'layoutManager'> {
   activeTab: DataTableTabDef;
   activeTabName: string;
   setActiveTabName: Dispatch<SetStateAction<string>>;

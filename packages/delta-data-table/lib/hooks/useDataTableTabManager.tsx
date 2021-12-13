@@ -6,7 +6,8 @@ import {
 } from '../models';
 
 export const useDataTableTabManager = ({
-  layoutManager
+  layoutManager,
+  defaultTab = { columnOrder: [], columnSizes: {}, columnExclusions: [] }
 }: DataTableTabManagerOptions): DataTableTabManager => {
   const { layout, setLayout } = layoutManager;
   const [activeTabName, setActiveTabName] = useState('main');
@@ -31,13 +32,11 @@ export const useDataTableTabManager = ({
     (name: string) => {
       setLayout({
         ...layout,
-        tabs: layout.tabs.concat([
-          { name, columnOrder: [], columnSizes: {}, columnExclusions: [] }
-        ])
+        tabs: layout.tabs.concat({ ...defaultTab, name })
       });
       setActiveTabName(name);
     },
-    [layout]
+    [layout, defaultTab]
   );
   const removeTab = useCallback(
     (name: string) => {
@@ -57,6 +56,7 @@ export const useDataTableTabManager = ({
     [activeTabName, layout]
   );
   const manager = {
+    defaultTab,
     activeTab,
     activeTabName,
     setActiveTabName,

@@ -37,6 +37,36 @@ export const Basics = () => {
   );
 };
 
+export const WithDefaultTab = () => {
+  const options = useMock({
+    columnCount: 15,
+    rowCount: 30,
+    shouldLoadChunks: true
+  });
+  const manager = useStoredDataTableManager({
+    id: 'story-data-table-basics',
+    defaultTab: {
+      columnSizes: options.initialContent.columns.reduce(
+        (p, v) => ({ ...p, [v.key]: 40 }),
+        {}
+      )
+    },
+    ...options
+  });
+  return (
+    <Box sx={{ padding: 5, minHeight: '100vh' }}>
+      <Card>
+        <DataTable
+          manager={manager}
+          toolbar={{
+            sections: ['tabs', 'query', 'configurer']
+          }}
+        />
+      </Card>
+    </Box>
+  );
+};
+
 export const HeightAdaptive = () => {
   const [element, setElement] = useState<HTMLElement | null>(null);
   const options = useMock({ columnCount: 15, rowCount: 20 });

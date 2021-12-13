@@ -6,15 +6,16 @@ import { DataTableContext } from '../../DataTableContext';
 
 export const TabResetButton = () => {
   const {
-    manager: { updateActiveTab }
+    manager: { defaultTab, updateActiveTab }
   } = useContext(DataTableContext);
   const handleReset = useCallback(() => {
     updateActiveTab({
       columnExclusions: [],
       columnOrder: [],
-      columnSizes: {}
+      columnSizes: {},
+      ...defaultTab
     });
-  }, [updateActiveTab]);
+  }, [defaultTab, updateActiveTab]);
   return (
     <Button kind="icon" onClick={handleReset}>
       <IoArrowUndoOutline />
