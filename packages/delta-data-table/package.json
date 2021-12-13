@@ -1,6 +1,6 @@
 {
   "name": "delta-data-table",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "license": "MIT",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
