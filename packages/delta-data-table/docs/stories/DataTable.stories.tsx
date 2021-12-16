@@ -43,11 +43,10 @@ export const WithDefaultTab = () => {
     rowCount: 30,
     shouldLoadChunks: true
   });
-  const manager = useStoredDataTableManager({
-    id: 'story-data-table-basics',
+  const manager = useDataTableManager({
     defaultTab: {
       columnSizes: options.initialContent.columns.reduce(
-        (p, v) => ({ ...p, [v.key]: 40 }),
+        (p, v) => ({ ...p, [v.key]: 60 }),
         {}
       )
     },

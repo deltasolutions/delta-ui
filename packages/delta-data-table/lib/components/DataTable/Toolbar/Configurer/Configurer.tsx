@@ -1,8 +1,9 @@
 import { jsx } from '@theme-ui/core';
 import { useContext, useEffect } from 'react';
-import { Box, useThemed } from 'restyler';
+import { useThemed } from 'restyler';
 import { DataTableContext } from '../../DataTableContext';
 import { ColumnExclusionButton } from './ColumnExclusionButton';
+import { NameButton } from './NameButton';
 import { RowCountButton } from './RowCountButton';
 import { TabResetButton } from './TabResetButton';
 
@@ -20,9 +21,10 @@ export const Configurer = () => {
   }, []);
   return (
     <ThemedConfigurer>
-      <TabResetButton />
+      <NameButton />
       {maxHeight === undefined && <RowCountButton />}
       <ColumnExclusionButton />
+      <TabResetButton />
     </ThemedConfigurer>
   );
 };

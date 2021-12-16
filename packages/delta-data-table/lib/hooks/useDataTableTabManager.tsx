@@ -6,11 +6,10 @@ import {
 } from '../models';
 
 export const useDataTableTabManager = ({
-  layoutManager,
-  defaultTab = { columnOrder: [], columnSizes: {}, columnExclusions: [] }
+  layoutManager
 }: DataTableTabManagerOptions): DataTableTabManager => {
   const { layout, setLayout } = layoutManager;
-  const [activeTabName, setActiveTabName] = useState('main');
+  const [activeTabName, setActiveTabName] = useState(layout.tabs[0].name);
   const activeTab = useMemo(
     () => layout.tabs.find(v => v.name === activeTabName) ?? layout.tabs[0]!,
     [activeTabName, layout]
@@ -18,7 +17,7 @@ export const useDataTableTabManager = ({
   const updateActiveTab = useCallback(
     (dispatcher: SetStateAction<Partial<DataTableTabDef>>) => {
       const tab =
-        typeof dispatcher === 'function' ? dispatcher(activeTab) : dispatcher;
+        dispatcher instanceof Function ? dispatcher(activeTab) : dispatcher;
       setLayout({
         ...layout,
         tabs: layout.tabs.map(v =>
@@ -28,16 +27,24 @@ export const useDataTableTabManager = ({
     },
     [layout, activeTab, activeTabName]
   );
-  const addTab = useCallback(
-    (name: string) => {
-      setLayout({
-        ...layout,
-        tabs: layout.tabs.concat({ ...defaultTab, name })
-      });
-      setActiveTabName(name);
-    },
-    [layout, defaultTab]
-  );
+  const addTab = useCallback(() => {
+    const repeatingRegExp = / \((\d+)\)$/;
+    const lastTab = layout.tabs[layout.tabs.length - 1];
+    const nextTab = {
+      ...lastTab,
+      name: repeatingRegExp.test(lastTab.name)
+        ? lastTab.name.replace(
+            repeatingRegExp,
+            (_, v) => ` (${parseInt(v) + 1})`
+          )
+        : lastTab.name + ' (1)'
+    };
+    setLayout({
+      ...layout,
+      tabs: layout.tabs.concat([nextTab])
+    });
+    setActiveTabName(nextTab.name);
+  }, [layout]);
   const removeTab = useCallback(
     (name: string) => {
       setLayout({
@@ -56,7 +63,6 @@ export const useDataTableTabManager = ({
     [activeTabName, layout]
   );
   const manager = {
-    defaultTab,
     activeTab,
     activeTabName,
     setActiveTabName,

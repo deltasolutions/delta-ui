@@ -1,5 +1,5 @@
 export interface DataTableTabDef {
-  name?: string;
+  name: string;
   columnOrder?: string[];
   columnSizes?: { [key: string]: number };
   columnExclusions?: string[];

@@ -1,14 +1,13 @@
 import { jsx } from '@theme-ui/core';
 import { useContext, useMemo } from 'react';
 import { IoAdd, IoCloseOutline } from 'react-icons/io5';
-import { RiHome6Line } from 'react-icons/ri';
 import { useThemed, useThemedFactory } from 'restyler';
 import { DataTableContext } from '../DataTableContext';
 
 export const Tabs = () => {
   const ThemedTabs = useThemed('div', 'dataTable.tabs');
   const useTypedThemed =
-    useThemedFactory<{ isMain: boolean; isActive: boolean }>();
+    useThemedFactory<{ isActive: boolean; isLast: boolean }>();
   const ThemedTabsItem = useTypedThemed('button', 'dataTable.tabs.item');
   const {
     manager: {
@@ -24,34 +23,28 @@ export const Tabs = () => {
   return useMemo(
     () => (
       <ThemedTabs>
-        {tabNames.map((name, index) => {
-          const isMain = name === mainTabName;
+        {tabNames.map(name => {
           const isActive = name === activeTabName;
+          const isLast = tabNames.length === 1;
           return (
             <ThemedTabsItem
               key={name}
-              isMain={isMain}
               isActive={isActive}
-              onClick={() => {
-                isMain || !isActive
-                  ? setActiveTabName(name ?? mainTabName)
-                  : removeTab(name);
-              }}
+              isLast={isLast}
+              onClick={() =>
+                isActive && !isLast ? removeTab(name) : setActiveTabName(name)
+              }
             >
-              {isMain ? (
-                <RiHome6Line data-role="title" />
-              ) : (
-                <span data-role="title">{letters[index - 1]}</span>
-              )}
+              <span data-role="title">{name}</span>
               <IoCloseOutline data-role="close" />
             </ThemedTabsItem>
           );
         })}
         {canAdd && (
           <ThemedTabsItem
-            isMain={false}
             isActive={false}
-            onClick={() => addTab(getNewTabName())}
+            isLast={false}
+            onClick={() => addTab()}
           >
             <IoAdd data-role="title" />
           </ThemedTabsItem>
@@ -68,9 +61,3 @@ export const Tabs = () => {
     ]
   );
 };
-
-const mainTabName = 'main';
-const letters = new Array(26)
-  .fill('')
-  .map((_, i) => String.fromCharCode('A'.charCodeAt(0) + i));
-const getNewTabName = () => Math.random().toString().slice(-4);

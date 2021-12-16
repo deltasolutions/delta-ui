@@ -9,6 +9,7 @@ import { DraggableCell } from './DraggableCell';
 export const Header = () => {
   const TableRow = useThemed('div', 'dataTable.row');
   const {
+    rowHeight,
     manager: { coercedColumns, activeTab, updateActiveTab }
   } = useContext(DataTableContext);
   const [_, dropRef] = useDrop(
@@ -38,6 +39,7 @@ export const Header = () => {
       kind="head"
       style={{
         zIndex: 1,
+        height: rowHeight,
         position: 'sticky',
         top: 0,
         width: `max(${getRowWidth(coercedColumns)}px, 100%)`,

@@ -4,29 +4,36 @@ export const tabs: BasicTheme = {
   style: { display: 'flex', alignItems: 'center' },
   components: {
     item: {
-      style: ({ isMain, isActive }) => ({
-        padding: 2,
-        borderRadius: '50%',
+      style: ({ isActive, isLast }) => ({
+        position: 'relative',
+        paddingY: '0.5em',
+        paddingX: '0.75em',
+        borderRadius: '100vw',
         backgroundColor: isActive ? 'accentSurface' : 'transparent',
         cursor: 'pointer',
         border: '1px solid',
-        width: '2.4em',
         height: '2.4em',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         borderColor: isActive ? 'border' : 'transparent',
         '& svg': {
-          width: '1.7em',
-          height: '1.7em'
+          width: '1.5em',
+          height: '1.5em'
         },
-        '& [data-role="title"]': { display: 'block' },
-        '& [data-role="close"]': { display: 'none' },
+        '& [data-role="title"]': { visibility: 'visible' },
+        '& [data-role="close"]': {
+          display: 'none',
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)'
+        },
         '&:hover': isActive
-          ? isMain
+          ? isLast
             ? {}
             : {
-                '& [data-role="title"]': { display: 'none' },
+                '& [data-role="title"]': { visibility: 'hidden' },
                 '& [data-role="close"]': { display: 'block' }
               }
           : {
