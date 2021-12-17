@@ -4,7 +4,7 @@ export const tabs: BasicTheme = {
   style: { display: 'flex', alignItems: 'center' },
   components: {
     item: {
-      style: ({ isActive, isLast }) => ({
+      style: ({ isActive }) => ({
         position: 'relative',
         paddingY: '0.5em',
         paddingX: '0.75em',
@@ -21,21 +21,8 @@ export const tabs: BasicTheme = {
           width: '1.5em',
           height: '1.5em'
         },
-        '& [data-role="title"]': { visibility: 'visible' },
-        '& [data-role="close"]': {
-          display: 'none',
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)'
-        },
         '&:hover': isActive
-          ? isLast
-            ? {}
-            : {
-                '& [data-role="title"]': { visibility: 'hidden' },
-                '& [data-role="close"]': { display: 'block' }
-              }
+          ? {}
           : {
               color: 'primary'
             }

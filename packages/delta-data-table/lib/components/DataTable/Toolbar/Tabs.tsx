@@ -6,8 +6,7 @@ import { DataTableContext } from '../DataTableContext';
 
 export const Tabs = () => {
   const ThemedTabs = useThemed('div', 'dataTable.tabs');
-  const useTypedThemed =
-    useThemedFactory<{ isActive: boolean; isLast: boolean }>();
+  const useTypedThemed = useThemedFactory<{ isActive: boolean }>();
   const ThemedTabsItem = useTypedThemed('button', 'dataTable.tabs.item');
   const {
     manager: {
@@ -25,27 +24,18 @@ export const Tabs = () => {
       <ThemedTabs>
         {tabNames.map(name => {
           const isActive = name === activeTabName;
-          const isLast = tabNames.length === 1;
           return (
             <ThemedTabsItem
               key={name}
               isActive={isActive}
-              isLast={isLast}
-              onClick={() =>
-                isActive && !isLast ? removeTab(name) : setActiveTabName(name)
-              }
+              onClick={() => !isActive && setActiveTabName(name)}
             >
-              <span data-role="title">{name}</span>
-              <IoCloseOutline data-role="close" />
+              {name}
             </ThemedTabsItem>
           );
         })}
         {canAdd && (
-          <ThemedTabsItem
-            isActive={false}
-            isLast={false}
-            onClick={() => addTab()}
-          >
+          <ThemedTabsItem isActive={false} onClick={() => addTab()}>
             <IoAdd data-role="title" />
           </ThemedTabsItem>
         )}

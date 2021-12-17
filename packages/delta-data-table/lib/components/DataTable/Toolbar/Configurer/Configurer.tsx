@@ -4,6 +4,7 @@ import { useThemed } from 'restyler';
 import { DataTableContext } from '../../DataTableContext';
 import { ColumnExclusionButton } from './ColumnExclusionButton';
 import { NameButton } from './NameButton';
+import { RemoveButton } from './RemoveButton';
 import { RowCountButton } from './RowCountButton';
 import { TabResetButton } from './TabResetButton';
 
@@ -11,7 +12,10 @@ export const Configurer = () => {
   const ThemedConfigurer = useThemed('div', 'dataTable.configurer');
   const {
     maxHeight,
-    manager: { setIsConfiguringLayout }
+    manager: {
+      layout: { tabs },
+      setIsConfiguringLayout
+    }
   } = useContext(DataTableContext);
   useEffect(() => {
     setIsConfiguringLayout(true);
@@ -22,8 +26,9 @@ export const Configurer = () => {
   return (
     <ThemedConfigurer>
       <NameButton />
-      {maxHeight === undefined && <RowCountButton />}
       <ColumnExclusionButton />
+      {maxHeight === undefined && <RowCountButton />}
+      {tabs.length > 1 && <RemoveButton />}
       <TabResetButton />
     </ThemedConfigurer>
   );

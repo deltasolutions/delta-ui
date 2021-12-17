@@ -1,5 +1,5 @@
 import { jsx } from '@theme-ui/core';
-import { cloneElement, useContext, useMemo, useState } from 'react';
+import { cloneElement, useContext, useEffect, useMemo, useState } from 'react';
 import {
   IoCloseOutline,
   IoGridOutline,
@@ -7,7 +7,7 @@ import {
   IoOptions,
   IoSearchOutline
 } from 'react-icons/io5';
-import { BoxProps, Button, useThemed } from 'restyler';
+import { BoxProps, Button, useThemed, useUpdateEffect } from 'restyler';
 import { DataTableContext } from '../DataTableContext';
 import { Configurer } from './Configurer';
 import { Query } from './Query';
@@ -20,6 +20,7 @@ export const Toolbar = (props: ToolbarProps) => {
   const ThemedToolbarContent = useThemed('div', 'dataTable.toolbar.content');
   const ThemedToolbarExtras = useThemed('div', 'dataTable.toolbar.extras');
   const {
+    manager: { layout },
     toolbar: {
       initialSection: proposedInitialSectionId = '',
       sections = []
@@ -59,6 +60,9 @@ export const Toolbar = (props: ToolbarProps) => {
     []
   );
   const [currentSectionId, setCurrentSectionId] = useState(initialSectionId);
+  useUpdateEffect(() => {
+    setCurrentSectionId(initialSectionId);
+  }, [layout.tabs.length]);
   if (availableSections.length < 1) {
     return null;
   }
