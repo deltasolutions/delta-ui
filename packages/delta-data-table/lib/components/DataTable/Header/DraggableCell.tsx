@@ -2,7 +2,7 @@ import { jsx } from '@theme-ui/core';
 import { Fragment, useContext } from 'react';
 import { DragPreviewImage, useDrag } from 'react-dnd';
 import { BoxProps, useThemed } from 'restyler';
-import { getColumnImageUri } from '../../../utils';
+import { getTabImageUri } from '../../../utils';
 import { DataTableContext } from '../DataTableContext';
 import { Handle } from './Handle';
 
@@ -45,10 +45,7 @@ export const DraggableCell = ({
       </Cell>
       {isConfiguringLayout && (
         <Fragment>
-          <DragPreviewImage
-            src={getColumnImageUri()}
-            connect={connectPreview}
-          />
+          <DragPreviewImage src={getTabImageUri()} connect={connectPreview} />
           <Handle index={index} />
         </Fragment>
       )}

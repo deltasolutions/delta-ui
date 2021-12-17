@@ -5,6 +5,7 @@ export const toolbar: BasicTheme = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+    gap: 4,
     padding: 3,
     borderBottom: '1px solid',
     borderBottomColor: 'border'
@@ -12,7 +13,8 @@ export const toolbar: BasicTheme = {
   components: {
     content: {
       style: {
-        flex: '1 1 auto'
+        flex: '1 1 auto',
+        minWidth: 0
       }
     },
     extras: {

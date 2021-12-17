@@ -1,13 +1,12 @@
 import { jsx } from '@theme-ui/core';
 import { useContext, useMemo } from 'react';
-import { IoAdd, IoCloseOutline } from 'react-icons/io5';
-import { useThemed, useThemedFactory } from 'restyler';
-import { DataTableContext } from '../DataTableContext';
+import { IoAdd } from 'react-icons/io5';
+import { Button, useThemed } from 'restyler';
+import { DataTableContext } from '../../DataTableContext';
+import { Item } from './Item';
 
 export const Tabs = () => {
   const ThemedTabs = useThemed('div', 'dataTable.tabs');
-  const useTypedThemed = useThemedFactory<{ isActive: boolean }>();
-  const ThemedTabsItem = useTypedThemed('button', 'dataTable.tabs.item');
   const {
     manager: {
       layout: { tabs },
@@ -22,22 +21,23 @@ export const Tabs = () => {
   return useMemo(
     () => (
       <ThemedTabs>
-        {tabNames.map(name => {
+        {tabNames.map((name, index) => {
           const isActive = name === activeTabName;
           return (
-            <ThemedTabsItem
+            <Item
               key={name}
+              index={index}
               isActive={isActive}
               onClick={() => !isActive && setActiveTabName(name)}
             >
               {name}
-            </ThemedTabsItem>
+            </Item>
           );
         })}
         {canAdd && (
-          <ThemedTabsItem isActive={false} onClick={() => addTab()}>
+          <Button kind="icon" sx={{ ml: 2 }} onClick={() => addTab()}>
             <IoAdd data-role="title" />
-          </ThemedTabsItem>
+          </Button>
         )}
       </ThemedTabs>
     ),

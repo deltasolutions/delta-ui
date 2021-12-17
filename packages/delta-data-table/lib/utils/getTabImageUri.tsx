@@ -1,4 +1,4 @@
-export const getColumnImageUri = () => {
+export const getTabImageUri = () => {
   return `data:image/svg+xml;utf8,${svg}`;
 };
 

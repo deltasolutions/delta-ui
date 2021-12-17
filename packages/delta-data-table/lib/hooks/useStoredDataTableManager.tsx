@@ -14,6 +14,7 @@ export const useStoredDataTableManager = <T extends object>({
     try {
       const { layout } = JSON.parse(localStorage.getItem(id) ?? '');
       manager.setLayout(layout);
+      manager.setActiveTabName(layout.tabs[0].name);
     } catch {}
   }, [id]);
   useEffect(() => {

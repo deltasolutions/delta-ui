@@ -2,7 +2,7 @@ import { jsx } from '@theme-ui/core';
 import { Fragment } from 'react';
 import { DragPreviewImage, useDrag } from 'react-dnd';
 import { BoxProps, useThemedFactory } from 'restyler';
-import { getColumnImageUri } from '../../../../utils';
+import { getTabImageUri } from '../../../../utils';
 
 export interface ColumnExclusionItemProps extends BoxProps {
   exclusion: string;
@@ -27,7 +27,7 @@ export const ColumnExclusionItem = ({
   return (
     <Fragment>
       <ThemedItem ref={dragRef} isDragging={isDragging} {...rest} />
-      <DragPreviewImage src={getColumnImageUri()} connect={connectPreview} />
+      <DragPreviewImage src={getTabImageUri()} connect={connectPreview} />
     </Fragment>
   );
 };

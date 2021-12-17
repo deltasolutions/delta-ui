@@ -10,6 +10,7 @@ export const useDataTableTabManager = ({
 }: DataTableTabManagerOptions): DataTableTabManager => {
   const { layout, setLayout } = layoutManager;
   const [activeTabName, setActiveTabName] = useState(layout.tabs[0].name);
+  console.log('activeTabName', activeTabName, layout);
   const activeTab = useMemo(
     () => layout.tabs.find(v => v.name === activeTabName) ?? layout.tabs[0]!,
     [activeTabName, layout]
