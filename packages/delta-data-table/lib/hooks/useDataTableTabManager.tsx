@@ -1,4 +1,5 @@
 import { SetStateAction, useCallback, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   DataTableTabDef,
   DataTableTabManagerOptions,
@@ -8,6 +9,7 @@ import {
 export const useDataTableTabManager = ({
   layoutManager
 }: DataTableTabManagerOptions): DataTableTabManager => {
+  const [t] = useTranslation();
   const { layout, setLayout } = layoutManager;
   const [activeTabName, setActiveTabName] = useState(layout.tabs[0].name);
   const activeTab = useMemo(
@@ -28,23 +30,17 @@ export const useDataTableTabManager = ({
     [layout, activeTab, activeTabName]
   );
   const addTab = useCallback(() => {
-    const repeatingRegExp = / \((\d+)\)$/;
     const lastTab = layout.tabs[layout.tabs.length - 1];
     const nextTab = {
       ...lastTab,
-      name: repeatingRegExp.test(lastTab.name)
-        ? lastTab.name.replace(
-            repeatingRegExp,
-            (_, v) => ` (${parseInt(v) + 1})`
-          )
-        : lastTab.name + ' (1)'
+      name: `${lastTab.name} (${t('common:labels.copy')})`
     };
     setLayout({
       ...layout,
       tabs: layout.tabs.concat([nextTab])
     });
     setActiveTabName(nextTab.name);
-  }, [layout]);
+  }, [layout, t]);
   const removeTab = useCallback(
     (name: string) => {
       setLayout({
