@@ -7,9 +7,13 @@ import { useDataTableTabManager } from './useDataTableTabManager';
 
 export const useDataTableManager = <T extends object>({
   initialLayout,
+  initialTab,
   ...rest
 }: DataTableManagerOptions<T>): DataTableManager<T> => {
-  const layoutManager = useDataTableLayoutManager({ initialLayout });
+  const layoutManager = useDataTableLayoutManager({
+    initialLayout,
+    initialTab
+  });
   const tabManager = useDataTableTabManager({ layoutManager });
   const queryManager = useDataTableQueryManager();
   const contentManager = useDataTableContentManager({

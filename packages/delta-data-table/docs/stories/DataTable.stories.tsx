@@ -21,6 +21,9 @@ export const Basics = () => {
   });
   const manager = useStoredDataTableManager({
     id: 'story-data-table-basics',
+    initialTab: {
+      name: 'New tab'
+    },
     ...options
   });
   return (

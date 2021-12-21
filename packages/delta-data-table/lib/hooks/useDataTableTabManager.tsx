@@ -1,5 +1,6 @@
 import { SetStateAction, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { clone } from 'restyler';
 import {
   DataTableTabDef,
   DataTableTabManagerOptions,
@@ -7,10 +8,9 @@ import {
 } from '../models';
 
 export const useDataTableTabManager = ({
-  layoutManager
+  layoutManager: { initialTab, layout, setLayout }
 }: DataTableTabManagerOptions): DataTableTabManager => {
   const [t] = useTranslation();
-  const { layout, setLayout } = layoutManager;
   const [activeTabName, setActiveTabName] = useState(layout.tabs[0].name);
   const activeTab = useMemo(
     () => layout.tabs.find(v => v.name === activeTabName) ?? layout.tabs[0]!,
@@ -30,11 +30,18 @@ export const useDataTableTabManager = ({
     [layout, activeTab, activeTabName]
   );
   const addTab = useCallback(() => {
-    const lastTab = layout.tabs[layout.tabs.length - 1];
-    const nextTab = {
-      ...lastTab,
-      name: `${lastTab.name} (${t('common:labels.copy')})`
-    };
+    const nextTab = clone(initialTab);
+    let priorCount = layout.tabs.reduce(
+      (p, v) => p + (v.name.startsWith(nextTab.name) ? 1 : 0),
+      0
+    );
+    if (priorCount) {
+      const getSuffix = () => ` (${priorCount})`;
+      while (layout.tabs.some(v => v.name === nextTab.name + getSuffix())) {
+        priorCount++;
+      }
+      nextTab.name += getSuffix();
+    }
     setLayout({
       ...layout,
       tabs: layout.tabs.concat([nextTab])

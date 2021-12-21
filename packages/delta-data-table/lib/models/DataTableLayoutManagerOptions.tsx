@@ -3,4 +3,5 @@ import { DataTableTabDef } from './DataTableTabDef';
 
 export interface DataTableLayoutManagerOptions {
   initialLayout?: DataTableLayoutDef;
+  initialTab?: DataTableTabDef;
 }

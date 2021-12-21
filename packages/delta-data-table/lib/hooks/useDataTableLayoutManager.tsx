@@ -1,5 +1,4 @@
 import { useMemo, useState } from 'react';
-import { clone } from 'restyler';
 import {
   DataTableLayoutDef,
   DataTableLayoutManager,
@@ -7,18 +6,20 @@ import {
 } from '../models';
 
 export const useDataTableLayoutManager = ({
-  initialLayout
+  initialLayout,
+  initialTab = { name: '?' }
 }: DataTableLayoutManagerOptions): DataTableLayoutManager => {
   const [layout, setLayout] = useState<DataTableLayoutDef>(() => ({
     ...initialLayout,
     tabs:
       initialLayout && initialLayout.tabs.length > 0
         ? initialLayout.tabs
-        : [{ name: '@' }]
+        : [initialTab]
   }));
   const [isConfiguringLayout, setIsConfiguringLayout] = useState(false);
   const manager = {
     initialLayout,
+    initialTab,
     isConfiguringLayout,
     layout,
     setIsConfiguringLayout,
