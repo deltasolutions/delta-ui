@@ -5,7 +5,6 @@ export const toolbar: BasicTheme = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    gap: 4,
     padding: 3,
     borderBottom: '1px solid',
     borderBottomColor: 'border'
@@ -17,8 +16,9 @@ export const toolbar: BasicTheme = {
         minWidth: 0
       }
     },
-    extras: {
+    switcher: {
       style: {
+        ml: 4,
         display: 'flex',
         gap: 2
       }

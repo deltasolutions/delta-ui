@@ -18,6 +18,7 @@ export interface DataTableProps<T extends object> extends BoxProps {
           content: ReactNode;
         }
     )[];
+    extras?: ReactNode;
   };
   manager: DataTableManager<T>;
 }

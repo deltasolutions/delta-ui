@@ -18,12 +18,13 @@ export interface ToolbarProps extends BoxProps {}
 export const Toolbar = (props: ToolbarProps) => {
   const ThemedToolbar = useThemed('div', 'dataTable.toolbar');
   const ThemedToolbarContent = useThemed('div', 'dataTable.toolbar.content');
-  const ThemedToolbarExtras = useThemed('div', 'dataTable.toolbar.extras');
+  const ThemedToolbarSwitcher = useThemed('div', 'dataTable.toolbar.switcher');
   const {
     manager: { layout },
     toolbar: {
       initialSection: proposedInitialSectionId = '',
-      sections = []
+      sections = [],
+      extras = null
     } = {}
   } = useContext(DataTableContext);
   const availableSections = useMemo(
@@ -71,7 +72,7 @@ export const Toolbar = (props: ToolbarProps) => {
       <ThemedToolbarContent>
         {availableSections.find(v => v.id === currentSectionId)?.content}
       </ThemedToolbarContent>
-      <ThemedToolbarExtras>
+      <ThemedToolbarSwitcher>
         {availableSections
           .filter(v => v.id !== initialSectionId)
           .map(v =>
@@ -90,7 +91,8 @@ export const Toolbar = (props: ToolbarProps) => {
               })
             )
           )}
-      </ThemedToolbarExtras>
+      </ThemedToolbarSwitcher>
+      {extras}
     </ThemedToolbar>
   );
 };

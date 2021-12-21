@@ -1,6 +1,7 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { useState } from 'react';
+import { IoBalloonOutline } from 'react-icons/io5';
 import { Box, Button, Card } from 'restyler';
 import {
   DataTable,
@@ -92,6 +93,28 @@ export const Empty = () => {
           manager={manager}
           toolbar={{
             sections: ['tabs', 'query', 'configurer']
+          }}
+        />
+      </Card>
+    </Box>
+  );
+};
+
+export const WithToolbarExtras = () => {
+  const options = useMock({ columnCount: 15, rowCount: 100 });
+  const manager = useDataTableManager(options);
+  return (
+    <Box sx={{ padding: 5, minHeight: '100vh' }}>
+      <Card>
+        <DataTable
+          manager={manager}
+          toolbar={{
+            sections: ['tabs', 'query', 'configurer'],
+            extras: (
+              <Button kind="icon" sx={{ ml: 2 }}>
+                <IoBalloonOutline />
+              </Button>
+            )
           }}
         />
       </Card>
