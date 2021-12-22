@@ -3,4 +3,5 @@ export interface DataTableTabDef {
   columnOrder?: string[];
   columnSizes?: { [key: string]: number };
   columnExclusions?: string[];
+  [key: string]: any;
 }
