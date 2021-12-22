@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import {
   DataTableChunkOptions,
-  DataTableColumnDef,
+  DataTableColumnOptions,
   DataTableContentManager,
   DataTableContentManagerOptions
 } from '../models';
@@ -30,11 +30,9 @@ export const useDataTableContentManager = <T extends object>({
       .concat(columns.filter(v => !orderedKeySet.has(v.key)).map(v => v.key));
     const exclusionSet = new Set(columnExclusions);
     const filteredKeys = orderedKeys.filter(v => !exclusionSet.has(v));
-    const columnMap: { [key: string]: DataTableColumnDef } = columns.reduce(
-      (p, v) => ({ ...p, [v.key]: v }),
-      {}
-    );
-    const coerced: DataTableColumnDef[] = filteredKeys.reduce(
+    const columnMap: { [key: string]: DataTableColumnOptions<T> } =
+      columns.reduce((p, v) => ({ ...p, [v.key]: v }), {});
+    const coerced: DataTableColumnOptions<T>[] = filteredKeys.reduce(
       (p, v) =>
         [
           ...p,

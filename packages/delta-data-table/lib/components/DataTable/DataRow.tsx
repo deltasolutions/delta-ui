@@ -29,7 +29,7 @@ export const DataRow = ({ index, style, ...rest }: DataRowProps) => {
               width: getColumnWidth(v) + 'px'
             }}
           >
-            {datum[v.key]}
+            {v.render ? v.render(datum) : datum[v.key]}
           </Cell>
         );
       })}

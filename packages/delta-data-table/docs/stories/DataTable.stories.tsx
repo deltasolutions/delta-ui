@@ -1,8 +1,8 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { IoBalloonOutline } from 'react-icons/io5';
-import { Box, Button, Card } from 'restyler';
+import { Box, Button, Card, clone } from 'restyler';
 import {
   DataTable,
   useDataTableManager,
@@ -27,6 +27,34 @@ export const Basics = () => {
     },
     ...options
   });
+  return (
+    <Box sx={{ padding: 5, minHeight: '100vh' }}>
+      <Card>
+        <DataTable
+          manager={manager}
+          toolbar={{
+            sections: ['tabs', 'query', 'configurer']
+          }}
+        />
+      </Card>
+    </Box>
+  );
+};
+
+export const ColumnRenderer = () => {
+  const options = useMock({
+    columnCount: 15,
+    rowCount: 30,
+    shouldLoadChunks: true
+  });
+  const modifiedOptions = useMemo(() => {
+    const cloned = clone(options);
+    Object.assign(cloned.initialContent.columns[0], {
+      render: v => JSON.stringify(v)
+    });
+    return cloned;
+  }, [options]);
+  const manager = useDataTableManager(modifiedOptions);
   return (
     <Box sx={{ padding: 5, minHeight: '100vh' }}>
       <Card>

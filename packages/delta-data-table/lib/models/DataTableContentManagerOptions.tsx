@@ -1,5 +1,5 @@
 import { DataTableChunkOptions } from './DataTableChunkOptions';
-import { DataTableColumnDef } from './DataTableColumnDef';
+import { DataTableColumnOptions } from './DataTableColumnOptions';
 import { DataTableQueryManager } from './DataTableQueryManager';
 import { DataTableTabManager } from './DataTableTabManager';
 
@@ -8,7 +8,7 @@ export interface DataTableContentManagerOptions<T extends object> {
   queryManager: DataTableQueryManager;
   initialContent: {
     data: T[];
-    columns: DataTableColumnDef[];
+    columns: DataTableColumnOptions<T>[];
     hasNextChunk: boolean;
   };
   getNextChunk?: (

@@ -1,5 +1,5 @@
-import { DataTableColumnDef } from '../models';
+import { DataTableColumnOptions } from '../models';
 
-export const getColumnWidth = (column: DataTableColumnDef) => {
+export const getColumnWidth = (column: DataTableColumnOptions<object>) => {
   return column.width || 150;
 };

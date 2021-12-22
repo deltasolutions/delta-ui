@@ -1,5 +1,5 @@
 export * from './DataTableChunkOptions';
-export * from './DataTableColumnDef';
+export * from './DataTableColumnOptions';
 export * from './DataTableContentManager';
 export * from './DataTableContentManagerOptions';
 export * from './DataTableContextValue';
