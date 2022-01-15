@@ -64,7 +64,7 @@ export const ColumnExclusionButton = () => {
         kind="icon"
         onClick={() => openFolder({ anchorRef })}
       >
-        <Tooltip content={t('common:tabColumnExclusions')}>
+        <Tooltip content={t('common:sections.tabColumnExclusions')}>
           <Box>
             {columnExclusions.length > 0 ? (
               <IoFileTrayFullOutline />
