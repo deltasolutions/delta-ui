@@ -54,12 +54,15 @@ export const Handle = ({ index }: HandleProps) => {
         });
       }
     }),
-    [columns, coercedColumns, columnExclusions, updateActiveTab]
+    [index, columns, coercedColumns, columnExclusions, updateActiveTab]
   );
-  const [_, dragRef, dragPreviewRef] = useDrag(() => ({
-    type: 'resizer',
-    item: { index }
-  }));
+  const [_, dragRef, dragPreviewRef] = useDrag(
+    () => ({
+      type: 'resizer',
+      item: { index }
+    }),
+    [index]
+  );
   const sharedRef = useSharedRef<HTMLDivElement>(null, [dragRef, dropRef]);
   useEffect(() => {
     dragPreviewRef(getEmptyImage(), { captureDraggingState: true });
