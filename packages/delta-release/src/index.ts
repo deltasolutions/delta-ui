@@ -1,4 +1,4 @@
-#!/bin/env node
+#!/usr/bin/env node
 import { promises as fsp } from 'fs';
 import * as path from 'path';
 import { exit } from 'process';
