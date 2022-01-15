@@ -29,6 +29,7 @@ import { systemContainer } from './systemContainer';
 import { tab } from './tab';
 import { table } from './table';
 import { textArea } from './textArea';
+import { tooltip } from './tooltip';
 
 export const theme: BasicTheme = {
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
@@ -132,6 +133,7 @@ export const theme: BasicTheme = {
     systemContainer,
     tab,
     table,
-    textArea
+    textArea,
+    tooltip
   }
 };
