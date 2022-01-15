@@ -1,5 +1,7 @@
 import { jsx } from '@theme-ui/core';
-import { cloneElement, useContext, useEffect, useMemo, useState } from 'react';
+import { Tooltip } from 'delta-tooltip';
+import { cloneElement, useContext, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   IoCloseOutline,
   IoGridOutline,
@@ -7,7 +9,7 @@ import {
   IoOptions,
   IoSearchOutline
 } from 'react-icons/io5';
-import { BoxProps, Button, useThemed, useUpdateEffect } from 'restyler';
+import { Box, BoxProps, Button, useThemed, useUpdateEffect } from 'restyler';
 import { DataTableContext } from '../DataTableContext';
 import { Configurer } from './Configurer';
 import { Query } from './Query';
@@ -16,6 +18,7 @@ import { Tabs } from './Tabs';
 export interface ToolbarProps extends BoxProps {}
 
 export const Toolbar = (props: ToolbarProps) => {
+  const [t] = useTranslation();
   const ThemedToolbar = useThemed('div', 'dataTable.toolbar');
   const ThemedToolbarContent = useThemed('div', 'dataTable.toolbar.content');
   const ThemedToolbarSwitcher = useThemed('div', 'dataTable.toolbar.switcher');
@@ -35,11 +38,23 @@ export const Toolbar = (props: ToolbarProps) => {
               id: v,
               toggler: (
                 <Button kind="icon">
-                  {{
-                    tabs: <IoGridOutline />,
-                    query: <IoSearchOutline />,
-                    configurer: <IoOptions />
-                  }[v] ?? <IoHelpCircleOutline />}
+                  <Tooltip
+                    content={
+                      {
+                        tabs: t('common:sections.tabs'),
+                        query: t('common:sections.query'),
+                        configurer: t('common:sections.configurer')
+                      }[v] ?? t('common:labels.unknown')
+                    }
+                  >
+                    <Box>
+                      {{
+                        tabs: <IoGridOutline />,
+                        query: <IoSearchOutline />,
+                        configurer: <IoOptions />
+                      }[v] ?? <IoHelpCircleOutline />}
+                    </Box>
+                  </Tooltip>
                 </Button>
               ),
               content:

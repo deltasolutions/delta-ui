@@ -14,8 +14,8 @@ export interface DataTableProps<T extends object> extends BoxProps {
       | 'configurer'
       | {
           id: string;
-          toggler: ReactElement;
           content: ReactNode;
+          toggler: ReactElement;
         }
     )[];
     extras?: ReactNode;

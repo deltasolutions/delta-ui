@@ -1,11 +1,14 @@
 import { jsx } from '@theme-ui/core';
+import { Tooltip } from 'delta-tooltip';
 import { useContext, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { IoAdd } from 'react-icons/io5';
-import { Button, useThemed } from 'restyler';
+import { Box, Button, useThemed } from 'restyler';
 import { DataTableContext } from '../../DataTableContext';
 import { Item } from './Item';
 
 export const Tabs = () => {
+  const [t] = useTranslation();
   const ThemedTabs = useThemed('div', 'dataTable.tabs');
   const {
     manager: {
@@ -36,7 +39,11 @@ export const Tabs = () => {
         })}
         {canAdd && (
           <Button kind="icon" sx={{ ml: 2 }} onClick={() => addTab()}>
-            <IoAdd data-role="title" />
+            <Tooltip content={t('common:actions.add')}>
+              <Box>
+                <IoAdd data-role="title" />
+              </Box>
+            </Tooltip>
           </Button>
         )}
       </ThemedTabs>

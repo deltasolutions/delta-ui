@@ -1,11 +1,14 @@
 import { jsx } from '@theme-ui/core';
+import { Tooltip } from 'delta-tooltip';
 import { useCallback, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 import { IoBarcodeOutline } from 'react-icons/io5';
-import { Button, useModal } from 'restyler';
+import { Box, Button, useModal } from 'restyler';
 import { DataTableContext } from '../../DataTableContext';
 import { RowCountModal } from './RowCountModal';
 
 export const RowCountButton = () => {
+  const [t] = useTranslation();
   const { manager } = useContext(DataTableContext);
   const { openModal } = useModal();
   const handleClick = useCallback(() => {
@@ -16,7 +19,11 @@ export const RowCountButton = () => {
   }, [openModal, manager]);
   return (
     <Button kind="icon" onClick={handleClick}>
-      <IoBarcodeOutline sx={{ transform: 'rotate(90deg)' }} />
+      <Tooltip content={t('common:sections.rowCount')}>
+        <Box>
+          <IoBarcodeOutline sx={{ transform: 'rotate(90deg)' }} />
+        </Box>
+      </Tooltip>
     </Button>
   );
 };

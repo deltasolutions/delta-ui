@@ -28,7 +28,7 @@
     "clean": true,
     "dts": true,
     "splitting": false,
-    "sourcemap": true,
+    "sourcemap": false,
     "platform": "browser",
     "format": [
       "cjs",

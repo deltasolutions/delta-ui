@@ -11,7 +11,7 @@ import {
 import { useMock } from './useMock';
 
 export default {
-  title: 'General/DataTable'
+  title: 'DataTable'
 } as Meta;
 
 export const Basics = () => {

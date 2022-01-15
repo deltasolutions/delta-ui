@@ -1,8 +1,11 @@
 import { jsx } from '@theme-ui/core';
+import { Tooltip } from 'delta-tooltip';
 import { Fragment, useContext, useRef } from 'react';
 import { useDrop } from 'react-dnd';
+import { useTranslation } from 'react-i18next';
 import { IoFileTrayFullOutline, IoFileTrayOutline } from 'react-icons/io5';
 import {
+  Box,
   Button,
   SystemContext,
   useImperativePortal,
@@ -13,6 +16,7 @@ import { DataTableContext } from '../../DataTableContext';
 import { ColumnExclusions, ColumnExclusionsContext } from './ColumnExclusions';
 
 export const ColumnExclusionButton = () => {
+  const [t] = useTranslation();
   const {
     manager: {
       coercedColumns,
@@ -60,11 +64,15 @@ export const ColumnExclusionButton = () => {
         kind="icon"
         onClick={() => openFolder({ anchorRef })}
       >
-        {columnExclusions.length > 0 ? (
-          <IoFileTrayFullOutline />
-        ) : (
-          <IoFileTrayOutline />
-        )}
+        <Tooltip content={t('common:tabColumnExclusions')}>
+          <Box>
+            {columnExclusions.length > 0 ? (
+              <IoFileTrayFullOutline />
+            ) : (
+              <IoFileTrayOutline />
+            )}
+          </Box>
+        </Tooltip>
       </Button>
     </Fragment>
   );

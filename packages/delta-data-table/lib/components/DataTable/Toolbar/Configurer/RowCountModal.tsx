@@ -38,7 +38,7 @@ export const RowCountModal = ({
       }}
     >
       <ModalHeader>
-        <Heading kind="modal">{t('common:sections.rows')}</Heading>
+        <Heading kind="modal">{t('common:sections.rowCount')}</Heading>
       </ModalHeader>
       <ModalBody>
         <FormField
