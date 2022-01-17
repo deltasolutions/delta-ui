@@ -1,7 +1,18 @@
-import { jsx } from '@theme-ui/core';
-import { AppContainer } from 'delta-layout';
-import { Box, mergeBasicThemes } from 'restyler';
+import isPropValid from '@emotion/is-prop-valid';
+import { jsx, ThemeProvider } from '@theme-ui/core';
+import { forwardRef } from 'react';
+import { Box, mergeBasicThemes, SystemContainer } from 'restyler';
 import { theme as packageTheme } from '../lib';
+
+export const styled = (Tag: any, fn: Function) =>
+  forwardRef((props: any, ref: any) => {
+    const { theme, kind, ...rest } = props as any;
+    const validProps = Object.keys(rest).reduce(
+      (p, k) => (isPropValid(k) ? { ...p, [k]: rest[k] } : p),
+      { sx: fn(props) }
+    );
+    return <Tag ref={ref} {...validProps} />;
+  }) as any;
 
 const theme = mergeBasicThemes({}, packageTheme, {
   colors: {
@@ -12,11 +23,13 @@ const theme = mergeBasicThemes({}, packageTheme, {
 
 export const systemized = (Story, context) => {
   return (
-    <AppContainer theme={theme as any}>
-      <Box sx={{ padding: '20px' }}>
-        <Story {...context} />
-      </Box>
-    </AppContainer>
+    <ThemeProvider theme={theme as any}>
+      <SystemContainer styled={styled} theme={theme as any}>
+        <Box sx={{ padding: '20px' }}>
+          <Story {...context} />
+        </Box>
+      </SystemContainer>
+    </ThemeProvider>
   );
 };
 

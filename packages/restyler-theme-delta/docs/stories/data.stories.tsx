@@ -1,6 +1,5 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import * as DDT from 'delta-data-table';
 import * as R from 'restyler';
 import { compact } from '../decorators';
 
@@ -37,30 +36,6 @@ export const Table = () => (
   </R.Table>
 );
 Table.decorators = [compact()];
-
-export const DataTable = () => {
-  const manager = DDT.useDataTableManager({
-    initialContent: {
-      data: [],
-      columns: [{ key: 'id', header: '#' }],
-      hasNextChunk: false
-    }
-  });
-  return (
-    <R.Card>
-      <DDT.DataTable
-        manager={manager}
-        toolbar={{
-          sections: ['tabs', 'query', 'configurer']
-        }}
-      />
-    </R.Card>
-  );
-};
-DataTable.decorators = [compact()];
-DataTable.parameters = {
-  backgrounds: { default: 'lightGrey' }
-};
 
 export const PieChart = () => {
   return (
