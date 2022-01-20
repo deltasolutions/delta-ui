@@ -1,56 +1,62 @@
 import { Meta } from '@storybook/react';
-import { JSONCodec } from 'nats.ws';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import {
   getNatsConnection,
+  makeChest,
   setDefaultNatsConnectionOptions,
-  useDataChest
+  useChest
 } from '../../lib';
 
 export default {
-  title: 'Basics'
+  title: 'General'
 } as Meta;
 
-export const Operator = () => {
+export const Chest = () => {
+  const todoCollection = useChest<object[]>([]);
+  const todos = todoCollection.use();
+  const handleFetching = useCallback(async () => {
+    const response = await fetch('https://jsonplaceholder.typicode.com/todos');
+    const json = await response.json();
+    todoCollection.set(json);
+  }, []);
   useEffect(() => {
-    setDefaultNatsConnectionOptions({ servers: demo.servers });
-    collectioner.search({}).then(v => console.log(v));
+    handleFetching();
+  }, []);
+  return (
+    <div>
+      <div>Todos:</div>
+      <div>{JSON.stringify(todos)}</div>
+    </div>
+  );
+};
+
+export const GlobalChests = () => {
+  // One can make these globally and use via direct import.
+  const appChests = useMemo(() => {
+    return makeChest({
+      todoCollection: makeChest([] as object[]),
+      todoResource: makeChest({})
+    });
+  }, []);
+  // Using in various components.ß
+  const { todoResource } = appChests.use();
+  const todo = todoResource.use();
+  return (
+    <div>
+      <div>Todo</div>
+      <div>{JSON.stringify(todo)}</div>
+    </div>
+  );
+};
+
+export const Nats = () => {
+  const handleConnection = useCallback(async () => {
+    const connection = await getNatsConnection();
+    console.log(connection);
+  }, []);
+  useEffect(() => {
+    setDefaultNatsConnectionOptions({ servers: 'demo.nats.io' });
+    handleConnection();
   }, []);
   return null;
-};
-
-export const DataChest = () => {
-  const collection = useDataChest<object[]>([]);
-  useEffect(() => {
-    setDefaultNatsConnectionOptions({ servers: demo.servers });
-    collectioner.search({}).then(collection.set);
-  }, []);
-  return <div>{JSON.stringify(collection.get(), null, 2)}</div>;
-};
-
-export const ReactiveDataChest = () => {
-  const collection = useDataChest<object[]>([]);
-  const data = collection.use();
-  useEffect(() => {
-    setDefaultNatsConnectionOptions({ servers: demo.servers });
-    collectioner.search({}).then(collection.set);
-  }, []);
-  return <div>{JSON.stringify(data, null, 2)}</div>;
-};
-
-const demo = {
-  servers: 'ws://192.168.200.49:2222',
-  searchSubject: 'DS.DCM.DATACENTER.REQUEST.SEARCH.DEFAULT'
-};
-const codec = JSONCodec();
-const collectioner = {
-  search: async (search: { query?: string }) => {
-    const connection = await getNatsConnection();
-    const message = await connection.request(
-      demo.searchSubject,
-      codec.encode(search)
-    );
-    const data = codec.decode(message.data) as object[];
-    return data;
-  }
 };

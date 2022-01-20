@@ -1,2 +1,2 @@
-export * from './useDataChest';
-export * from './useDataSubscription';
+export * from './useChest';
+export * from './useSubscription';

@@ -1,9 +1,9 @@
-export type DataChestInitializer<Data> = Data | (() => Data);
+export type ChestInitializer<Data> = Data | (() => Data);
 
-export type DataChestUpdate<Data> = Data | ((prior: Data) => Data);
+export type ChestUpdate<Data> = Data | ((prior: Data) => Data);
 
-export interface DataChest<Data> {
+export interface Chest<Data> {
   get: () => Data;
-  set: (update: DataChestUpdate<Data>) => void;
+  set: (update: ChestUpdate<Data>) => void;
   use: () => Data;
 }
