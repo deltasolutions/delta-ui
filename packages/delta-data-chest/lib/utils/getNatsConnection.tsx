@@ -1,4 +1,4 @@
-import { ConnectionOptions, NatsConnection } from 'nats.ws';
+import { connect, ConnectionOptions, NatsConnection } from 'nats.ws';
 import { hash } from 'restyler';
 
 let defaultConnectionOptions: ConnectionOptions | undefined = undefined;
@@ -18,7 +18,6 @@ export const getNatsConnection = async (options?: ConnectionOptions) => {
   }
   const id = hash(options);
   if (!connections.has(id)) {
-    const { connect } = await import('nats.ws');
     const connection = await connect(options);
     connections.set(id, connection);
     connection.closed().finally(() => connections.delete(id));
