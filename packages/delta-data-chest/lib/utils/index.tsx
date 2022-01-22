@@ -1,2 +1,2 @@
 export * from './getNatsConnection';
-export * from './makeChest';
+export * from './createChest';

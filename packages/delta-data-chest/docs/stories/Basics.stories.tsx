@@ -2,7 +2,7 @@ import { Meta } from '@storybook/react';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import {
   getNatsConnection,
-  makeChest,
+  createChest,
   setDefaultNatsConnectionOptions,
   useChest
 } from '../../lib';
@@ -33,9 +33,9 @@ export const Chest = () => {
 export const GlobalChests = () => {
   // One can make these globally and use via direct import.
   const appChests = useMemo(() => {
-    return makeChest({
-      todoCollection: makeChest([] as object[]),
-      todoResource: makeChest({})
+    return createChest({
+      todoCollection: createChest([] as object[]),
+      todoResource: createChest({})
     });
   }, []);
   // Using in various components.ß

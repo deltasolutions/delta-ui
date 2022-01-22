@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 import { Chest, ChestInitializer } from '../models';
-import { makeChest } from '../utils';
+import { createChest } from '../utils';
 
 export const useChest = <Data extends unknown>(
   initializer: ChestInitializer<Data>
 ): Chest<Data> => {
-  return useMemo(() => makeChest(initializer), []);
+  return useMemo(() => createChest(initializer), []);
 };

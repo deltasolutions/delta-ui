@@ -1,7 +1,7 @@
 import { useEffect, useReducer } from 'react';
 import { Chest, ChestInitializer } from '../models';
 
-export const makeChest = <Data extends unknown>(
+export const createChest = <Data extends unknown>(
   initializer: ChestInitializer<Data>
 ): Chest<Data> => {
   const dataHolder = {
