@@ -94,7 +94,7 @@ export const select: BasicTheme = {
 
     drop: {
       style: ({ isVisible }) => ({
-        zIndex: 1001,
+        zIndex: 9000,
         backgroundColor: 'surface',
         color: 'onSurface',
         borderRadius: 2,
