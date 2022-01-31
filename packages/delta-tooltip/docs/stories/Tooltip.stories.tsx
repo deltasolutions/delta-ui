@@ -11,7 +11,10 @@ export const Basics = () => {
   return (
     <Box sx={{ overflow: 'hidden' }}>
       <Tooltip content="Sample content">
-        <Box>Hover me!</Box>
+        <Box>Tooltip 1</Box>
+      </Tooltip>
+      <Tooltip content="Other content">
+        <Box>Tooltip 2</Box>
       </Tooltip>
     </Box>
   );
