@@ -29,9 +29,9 @@ export const Tooltip = ({ content, ...rest }: TooltipProps) => {
   }, [portal]);
   return (
     <Tippy
-      appendTo={appendTo?.current ?? document.body}
       animation="shift-away"
       content={<ThemedTooltipContent>{content}</ThemedTooltipContent>}
+      {...(appendTo?.current ? { appendTo: appendTo.current } : {})}
       {...rest}
     />
   );
