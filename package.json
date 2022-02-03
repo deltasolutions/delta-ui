@@ -9,6 +9,9 @@
     "@commitlint/config-conventional": "^13.2.0",
     "@emotion/react": "^11.5.0",
     "@mdx-js/react": "^1.6.22",
+    "@nrwl/cli": "latest",
+    "@nrwl/tao": "latest",
+    "@nrwl/workspace": "latest",
     "@storybook/addon-actions": "^6.4.13",
     "@storybook/addon-docs": "^6.4.13",
     "@storybook/addon-essentials": "^6.4.13",
@@ -37,6 +40,7 @@
     "fs-extra": "^10.0.0",
     "gh-pages": "^3.2.3",
     "husky": "^7.0.2",
+    "i18next": "^21.6.10",
     "jest": "^27.4.3",
     "nats.ws": "^1.5.0",
     "postcss": "^8.4.5",
@@ -48,12 +52,9 @@
     "react-i18next": "^11.13.0",
     "react-icons": "^4.3.1",
     "react-window": "^1.8.6",
-    "restyler": "^0.35.7",
+    "restyler": "^0.35.8",
     "ts-node": "^10.4.0",
     "tsup": "^5.10.3",
-    "typescript": "4.3.5",
-    "@nrwl/workspace": "latest",
-    "@nrwl/cli": "latest",
-    "@nrwl/tao": "latest"
+    "typescript": "4.3.5"
   }
 }

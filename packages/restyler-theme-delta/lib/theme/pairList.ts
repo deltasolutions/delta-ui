@@ -40,10 +40,28 @@ export const pairList: BasicTheme = {
           opacity: 0.5,
           overflow: 'hidden',
           whiteSpace: 'nowrap'
+        },
+        '& > *': {
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap'
+        }
+      },
+      kinds: {
+        expanded: {
+          style: {
+            flexDirection: 'column',
+            '&::after': {
+              display: 'none'
+            },
+            '& > *': {
+              whiteSpace: 'normal'
+            }
+          }
         }
       },
       components: {
-        left: {
+        title: {
           style: {
             order: 1,
             flex: '0 1 auto',
@@ -51,19 +69,13 @@ export const pairList: BasicTheme = {
             letterSpacing: '0.04em',
             fontWeight: 'heading',
             textTransform: 'uppercase',
-            color: 'onSurface',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap'
+            color: 'onSurface'
           }
         },
-        right: {
+        content: {
           style: {
             flex: '0 1 auto',
-            order: 3,
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap'
+            order: 3
           }
         }
       }

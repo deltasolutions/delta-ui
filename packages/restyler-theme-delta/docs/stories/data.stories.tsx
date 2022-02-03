@@ -57,7 +57,17 @@ export const PairList = () => {
     <R.PairList
       pairs={[
         ['Title 1', 'A'],
-        ['Title 2', 'B']
+        ['Title 2', 'Ufjeisua nf'],
+        {
+          title: 'Title 3',
+          content:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ' +
+            'sed do eiusmod tempor incididunt ut labore et dolore magna ' +
+            'aliqua. Ut enim ad minim veniam, quis nostrud exercitation ' +
+            'ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+          kind: 'expanded'
+        },
+        ['Title 4', 'D']
       ]}
     />
   );
