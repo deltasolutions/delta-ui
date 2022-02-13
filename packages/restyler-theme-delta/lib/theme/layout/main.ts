@@ -1,11 +1,18 @@
 import { BasicTheme } from 'restyler';
 
 export const main: BasicTheme = {
-  style: ({ sidebar }) => ({
+  style: {
     flex: '1 1 auto',
-    height: '100%',
-    minWidth: 0,
-    paddingLeft: sidebar ? 4 : undefined,
-    paddingY: 4
-  })
+    backgroundColor: 'exterior',
+    color: 'onExterior'
+  },
+  components: {
+    content: {
+      style: {
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column'
+      }
+    }
+  }
 };

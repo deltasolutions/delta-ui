@@ -1,53 +1,47 @@
 import { jsx } from '@theme-ui/core';
-import { useMemo } from 'react';
-import { BoxProps, useThemedFactory } from 'restyler';
-import {
-  LayoutUpdateManagerOptions,
-  useLayoutUpdateManager
-} from '../../hooks';
-import { LayoutContextValue, LayoutOptions } from '../../models';
-import { LayoutBody } from './LayoutBody';
-import { LayoutContext } from './LayoutContext';
-import { LayoutFooter } from './LayoutFooter';
-import { LayoutHeader } from './LayoutHeader';
-import { LayoutUpdateContext } from './LayoutUpdateContext';
+import { forwardRef } from 'react';
+import { BoxProps, useThemed } from 'restyler';
 
-export interface LayoutProps
-  extends BoxProps,
-    LayoutOptions,
-    LayoutUpdateManagerOptions {}
-
-export const Layout = ({
-  onSave,
-  header,
-  footer,
-  sidebar,
-  children,
-  ...rest
-}: LayoutProps) => {
-  const useThemed = useThemedFactory<LayoutContextValue>();
-  const ThemedLayout = useThemed('div', 'layout');
-  const contextValue = {
-    header,
-    footer,
-    sidebar
-  };
-  const memoizedContextValue = useMemo(
-    () => contextValue,
-    Object.values(contextValue)
+const createLayoutComponent = (path: string, displayName: string) => {
+  const Component = forwardRef<HTMLDivElement, BoxProps>(
+    ({ children, ...rest }, ref) => {
+      const ThemedComponent = useThemed('div', path);
+      const ThemedComponentContent = useThemed('div', path + '.content');
+      return (
+        <ThemedComponent ref={ref} {...rest}>
+          <ThemedComponentContent>{children}</ThemedComponentContent>
+        </ThemedComponent>
+      );
+    }
   );
-  const updateManager = useLayoutUpdateManager({ onSave });
-  return (
-    <LayoutUpdateContext.Provider value={updateManager}>
-      <LayoutContext.Provider value={contextValue}>
-        <ThemedLayout {...memoizedContextValue} {...rest}>
-          <LayoutHeader />
-          <LayoutBody>{children}</LayoutBody>
-          <LayoutFooter />
-        </ThemedLayout>
-      </LayoutContext.Provider>
-    </LayoutUpdateContext.Provider>
-  );
+  Component.displayName = displayName;
+  return Component;
 };
 
-Layout.displayName = 'Layout';
+export const Layout = createLayoutComponent('layout', 'Layout');
+export const LayoutHeader = createLayoutComponent(
+  'layout.header',
+  'LayoutHeader'
+);
+export const LayoutBody = createLayoutComponent('layout.body', 'LayoutBody');
+export const LayoutFooter = createLayoutComponent(
+  'layout.footer',
+  'LayoutFooter'
+);
+export const LayoutMain = createLayoutComponent('layout.main', 'LayoutMain');
+export const LayoutNavbar = createLayoutComponent(
+  'layout.navbar',
+  'LayoutNavbar'
+);
+export const LayoutNavbarExtras = createLayoutComponent(
+  'layout.navbar.extras',
+  'LayoutNavbarExtras'
+);
+export const LayoutSidebar = createLayoutComponent(
+  'layout.sidebar',
+  'LayoutSidebar'
+);
+export const LayoutSidebarExtras = createLayoutComponent(
+  'layout.sidebar.extras',
+  'LayoutSidebarExtras'
+);

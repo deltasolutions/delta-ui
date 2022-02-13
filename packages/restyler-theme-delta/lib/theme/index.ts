@@ -34,7 +34,7 @@ import { tooltip } from './tooltip';
 export const theme: BasicTheme = {
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   radii: [0, 2, 4, 8],
-  fontSizes: [10, 12, 14, 16, 20, 26, 42, 48, 56],
+  fontSizes: [10, 12, 14, 16, 18, 22, 40, 48, 56],
   fonts: {
     body: 'Roboto, "Helvetica Neue", sans-serif',
     heading: 'inherit',

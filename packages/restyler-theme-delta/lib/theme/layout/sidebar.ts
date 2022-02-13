@@ -1,40 +1,36 @@
 import { BasicTheme } from 'restyler';
-import { headerHeight, sidebarWidth } from './constants';
+import { createCommonExtras, headerHeight, sidebarWidth } from './common';
 
 export const sidebar: BasicTheme = {
   style: {
-    position: 'relative',
-    top: `calc(-${headerHeight} + 30px)`,
+    position: 'sticky',
     left: 0,
+    top: 0,
     flex: `0 0 ${sidebarWidth}`,
     width: sidebarWidth,
-    marginBottom: `calc(-${headerHeight} + 30px)`,
-    color: 'onSurface',
-    backgroundColor: 'surface',
-    boxShadow: 3,
-    borderRadius: 2,
-    paddingTop: 4,
-    paddingBottom: 3
+    color: 'onExterior',
+    backgroundColor: 'exterior'
   },
   components: {
-    account: {
+    content: {
       style: {
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
-        gap: 1,
-        marginBottom: 3,
-        paddingBottom: 3,
-        borderBottom: '1px solid',
-        borderBottomColor: 'border',
+        height: '100%'
+      }
+    },
+    extras: createCommonExtras({
+      style: {
+        flex: '0 0 auto',
+        paddingTop: 3,
+        paddingBottom: 4,
         '& svg': {
-          width: '60px',
-          height: '60px'
-        },
-        '& a': {
-          fontWeight: 500
+          opacity: 0.6,
+          '&:hover': {
+            opacity: 1
+          }
         }
       }
-    }
+    })
   }
 };

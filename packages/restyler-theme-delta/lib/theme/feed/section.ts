@@ -8,41 +8,14 @@ export const section: BasicTheme = {
     gap: 3
   },
   kinds: {
-    dragReady: {
-      style: {
-        padding: 3,
-        cursor: 'move',
-        backgroundColor: 'accentBackground',
-        borderRadius: 2
-      }
+    small: {
+      style: { maxWidth: '550px' }
     },
-    dragActive: {
-      style: {
-        padding: 3,
-        visibility: 'hidden'
-      }
+    medium: {
+      style: { maxWidth: '700px' }
     },
-    dropReady: {
-      style: {
-        padding: 3,
-        borderRadius: 2,
-        backdropFilter: 'sepia(1)'
-      }
-    }
-  },
-  components: {
-    extras: {
-      style: {
-        order: -1,
-        position: 'relative',
-        display: 'flex',
-        justifyContent: 'right',
-        alignItems: 'center',
-        gap: 2,
-        opacity: 0.7,
-        color: 'onBackground',
-        fontSize: 4
-      }
+    large: {
+      style: { maxWidth: '1000px' }
     }
   }
 };

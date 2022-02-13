@@ -1,54 +1,45 @@
 import { BasicTheme } from 'restyler';
 
-const titleStyle = {
+const dimmed = 'rgba(0, 0, 0, 0.25)';
+
+const selectionStyle = ({ isActive }) => ({
+  backgroundColor: isActive ? dimmed : undefined
+});
+
+const titleStyle = ({ isActive }: { [key: string]: any }) => ({
   zIndex: 1,
   position: 'relative',
-  padding: 2,
+  paddingY: 2,
+  paddingX: 4,
   color: 'inherit',
-  fontWeight: 'heading',
-  textTransform: 'uppercase',
+  fontWeight: 300,
   fontSize: 2,
-  letterSpacing: '0.04em',
+  textTransform: 'uppercase',
+  letterSpacing: '0.06em',
   cursor: 'pointer',
+  opacity: 0.6,
   '& svg': {
     width: '1.3em',
     height: '1.3em',
-    marginRight: '0.4em',
+    marginRight: '0.5em',
     transform: 'translateY(-1.5px)',
     verticalAlign: 'middle'
   },
   '&:hover': {
-    opacity: 1,
+    backgroundColor: isActive ? undefined : dimmed,
     color: 'primary',
-    svg: {
+    opacity: 1,
+    '& svg': {
       color: 'primary'
     }
   }
-};
+});
 
 export const menu: BasicTheme = {
-  style: {
-    paddingX: 3
-  },
+  style: {},
   components: {
     item: {
-      style: ({ isActive }) => ({
-        position: 'relative',
-        '&:not(:first-of-type)': { marginTop: 1 },
-        '&::before': {
-          zIndex: 0,
-          content: '""',
-          display: 'block',
-          position: 'absolute',
-          top: 0,
-          left: isActive ? 0 : '15px',
-          width: '100%',
-          height: '100%',
-          borderRadius: 2,
-          backgroundColor: isActive ? 'accentSurface' : 'transparent',
-          transition: 'all 0.2s'
-        }
-      }),
+      style: selectionStyle,
       components: {
         title: {
           style: titleStyle
@@ -56,12 +47,14 @@ export const menu: BasicTheme = {
       }
     },
     group: {
-      style: {
-        '&:not(:first-of-type)': { marginTop: '1' }
-      },
+      style: selectionStyle,
       components: {
-        title: { style: titleStyle },
-        items: { style: { paddingTop: 1, paddingLeft: 4 } }
+        title: {
+          style: titleStyle
+        },
+        items: {
+          style: {}
+        }
       }
     }
   }
