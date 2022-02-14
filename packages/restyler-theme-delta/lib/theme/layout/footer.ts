@@ -1,20 +1,20 @@
 import { BasicTheme } from 'restyler';
 
 export const footer: BasicTheme = {
-  style: ({ sidebar }) => ({
+  style: {
     flex: '0 0 auto',
-    paddingY: sidebar ? 5 : 4,
-    backgroundColor: 'exterior'
-  }),
+    backgroundColor: 'accentBackground',
+    color: 'onBackground'
+  },
   components: {
     content: {
       style: {
+        paddingX: 4,
+        paddingTop: 3,
+        paddingBottom: 4,
         fontSize: 2,
         letterSpacing: '0.04em',
-        color: 'onExterior',
-        opacity: 0.6,
-        // Always on dark.
-        fontWeight: 300
+        opacity: 0.6
       }
     },
     anchor: {

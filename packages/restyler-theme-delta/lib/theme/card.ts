@@ -2,7 +2,7 @@ import { BasicTheme } from 'restyler';
 
 export const card: BasicTheme = {
   style: {
-    borderRadius: 2,
+    borderRadius: 3,
     boxShadow: 2,
     backgroundColor: 'surface',
     color: 'onSurface'

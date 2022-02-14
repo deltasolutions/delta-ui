@@ -2,7 +2,7 @@ import { BasicTheme } from 'restyler';
 
 export const modal: BasicTheme = {
   style: ({ isVisible, isEntering }) => ({
-    borderRadius: 2,
+    borderRadius: 3,
     boxShadow: 4,
     color: 'onSurface',
     backgroundColor: 'surface',

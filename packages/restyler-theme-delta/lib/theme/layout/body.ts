@@ -1,19 +1,19 @@
 import { BasicTheme } from 'restyler';
+import { roundedMainSegmentKind } from './common';
 
 export const body: BasicTheme = {
   style: {
     flex: '1 0 auto',
-    // Stretching inner LayoutContainer,
-    // then will stretch content too.
-    display: 'flex',
-    alignItems: 'stretch'
+    backgroundColor: 'background',
+    color: 'onBackground'
+  },
+  kinds: {
+    rounded: roundedMainSegmentKind
   },
   components: {
     content: {
       style: {
-        height: '100%',
-        display: 'flex',
-        alignItems: 'flex-start'
+        padding: 4
       }
     }
   }

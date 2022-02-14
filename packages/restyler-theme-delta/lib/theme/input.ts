@@ -28,7 +28,6 @@ export const createInputLikeTheme = ({
     const { colors = {} } = props.theme ?? {};
     return {
       width: '100%',
-      transition: 'border 0.2s linear, box-shadow 0.2s linear',
       border: '1px solid',
       borderColor: color,
       ...(canBeFocused

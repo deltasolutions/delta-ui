@@ -27,13 +27,13 @@ export const heading: BasicTheme = {
         }
       }
     },
-    layout: {
+    layoutNavbar: {
       style: {
         '&&': {
           margin: 0,
           textTransform: 'uppercase',
           color: 'inherit',
-          fontSize: 6,
+          fontSize: 5,
           letterSpacing: '0.04em',
           // Always on dark.
           fontWeight: 300

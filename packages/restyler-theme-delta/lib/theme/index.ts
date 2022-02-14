@@ -34,7 +34,7 @@ import { tooltip } from './tooltip';
 export const theme: BasicTheme = {
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   radii: [0, 2, 4, 8],
-  fontSizes: [10, 12, 14, 16, 20, 26, 42, 48, 56],
+  fontSizes: [10, 12, 14, 16, 18, 22, 40, 48, 56],
   fonts: {
     body: 'Roboto, "Helvetica Neue", sans-serif',
     heading: 'inherit',
@@ -50,6 +50,7 @@ export const theme: BasicTheme = {
   },
   colors: {
     primary: '#5DA2DE',
+    secondary: '#EEEEEE',
     success: '#53B956',
     warning: '#ECA843',
     danger: '#EF6D64',
@@ -59,6 +60,7 @@ export const theme: BasicTheme = {
     exterior: '#2C2F31',
     border: 'rgba(0, 0, 0, 0.17)',
     accentPrimary: '#4A8DC7',
+    accentSecondary: '#E0E0E0',
     accentSuccess: '#40AA44',
     accentWarning: '#D69431',
     accentDanger: '#DF5248',
@@ -68,6 +70,7 @@ export const theme: BasicTheme = {
     accentExterior: '#1C1D1F',
     accentBorder: 'rgba(0, 0, 0, 0.45)',
     onPrimary: '#FFFFFF',
+    onSecondary: '#525252',
     onSuccess: '#FFFFFF',
     onDanger: '#FFFFFF',
     onUnknown: '#FFFFFF',

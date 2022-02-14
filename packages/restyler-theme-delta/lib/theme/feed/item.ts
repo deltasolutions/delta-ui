@@ -13,45 +13,10 @@ export const item: BasicTheme = {
     color: 'onSurface',
     backgroundColor: 'surface',
     boxShadow: 2,
-    borderRadius: 2,
+    borderRadius: 3,
     position: 'relative'
   },
-  kinds: {
-    dragReady: {
-      style: {
-        cursor: 'move',
-        filter: 'opacity(0.75) grayscale(1)',
-        '&:hover': { filter: 'unset' }
-      }
-    },
-    dragActive: {
-      style: {
-        visibility: 'hidden'
-      }
-    },
-    dropReady: {
-      style: {
-        filter: 'sepia(1)'
-      }
-    }
-  },
   components: {
-    extras: {
-      style: {
-        position: 'absolute',
-        top: 3,
-        right: 3,
-        display: 'flex',
-        gap: 1,
-        padding: 2,
-        backgroundColor: 'accentSurface',
-        borderRadius: 2,
-        opacity: 0.6,
-        '&:hover': {
-          opacity: 0.9
-        }
-      }
-    },
     loader: {
       style: ({ isVisible }) => ({
         position: 'absolute',
@@ -79,36 +44,39 @@ export const item: BasicTheme = {
     },
     header: {
       style: {
-        position: 'relative',
-        py: 3,
         px: 3,
+        py: 3,
         borderBottom: '1px solid',
         borderBottomColor: 'border'
+      },
+      kinds: {
+        tabs: {
+          style: {
+            py: 0
+          }
+        }
       }
     },
     body: {
-      style: ({ isLoading }) => ({
-        paddingY: 3,
+      style: {
         paddingX: 3,
-        transition: 'filter 0.2s linear, opacity 0.2s linear',
-        filter: isLoading ? 'grayscale(1)' : 'grayscale(0)',
-        opacity: isLoading ? 0.5 : 1,
-        pointerEvents: isLoading ? 'none' : 'all',
+        paddingY: 3,
         '&:not(:last-of-type)': {
           borderBottom: '1px solid',
           borderBottomColor: 'border'
         }
-      })
+      },
+      kinds: {
+        table: {
+          style: { px: 0, py: 0 }
+        }
+      }
     },
-    footer: {},
-    table: {
-      style: ({ isLoading }) => ({
-        transition: 'filter 0.2s linear, opacity 0.2s linear',
-        filter: isLoading ? 'grayscale(1)' : 'grayscale(0)',
-        opacity: isLoading ? 0.5 : 1,
-        pointerEvents: isLoading ? 'none' : 'all'
-      })
-    },
-    tabs: {}
+    footer: {
+      style: {
+        px: 3,
+        py: 3
+      }
+    }
   }
 };

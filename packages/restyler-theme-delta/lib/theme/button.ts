@@ -1,13 +1,17 @@
 import { BasicTheme } from 'restyler';
 
-const createKind = (color: string, extras?: any): BasicTheme => ({
+const createKind = (
+  backgroundColor: string,
+  accentBackgroundColor: string,
+  color: string,
+  extras?: any
+): BasicTheme => ({
   style: props => ({
     paddingX: 3,
     paddingY: 2,
     borderRadius: 2,
-    border: '1px solid',
-    borderColor: 'border',
-    backgroundColor: 'transparent',
+    backgroundColor,
+    color,
     fontSize: 2,
     fontFamily: 'body',
     cursor: 'pointer',
@@ -16,15 +20,12 @@ const createKind = (color: string, extras?: any): BasicTheme => ({
     outline: 'none',
     ...(props.disabled
       ? {
-          color: 'border',
-          borderStyle: 'dashed',
+          filter: 'saturate(0.65)',
           pointerEvents: 'none'
         }
       : {
-          color: 'inherit',
           '&:hover, &:focus': {
-            color,
-            borderColor: color
+            backgroundColor: accentBackgroundColor
           }
         }),
     ...extras
@@ -33,11 +34,11 @@ const createKind = (color: string, extras?: any): BasicTheme => ({
 
 export const button: BasicTheme = {
   kinds: {
-    primary: createKind('primary'),
-    secondary: createKind('primary', { borderStyle: 'dashed' }),
-    success: createKind('success'),
-    warning: createKind('warning'),
-    danger: createKind('danger'),
+    primary: createKind('primary', 'accentPrimary', 'onPrimary'),
+    secondary: createKind('secondary', 'accentSecondary', 'onSecondary'),
+    success: createKind('success', 'accentSuccess', 'onSuccess'),
+    warning: createKind('warning', 'accentWarning', 'onWarning'),
+    danger: createKind('danger', 'accentDanger', 'onDanger'),
     icon: {
       style: {
         cursor: 'pointer',
