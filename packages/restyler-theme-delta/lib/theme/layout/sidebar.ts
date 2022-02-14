@@ -3,7 +3,9 @@ import { createCommonExtras, headerHeight, sidebarWidth } from './common';
 
 export const sidebar: BasicTheme = {
   style: {
+    zIndex: 1,
     position: 'sticky',
+    height: '100vh',
     left: 0,
     top: 0,
     flex: `0 0 ${sidebarWidth}`,

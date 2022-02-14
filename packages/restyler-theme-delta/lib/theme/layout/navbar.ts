@@ -3,6 +3,7 @@ import { createCommonExtras } from './common';
 
 export const navbar: BasicTheme = {
   style: {
+    zIndex: 1,
     position: 'sticky',
     left: 0,
     top: 0,

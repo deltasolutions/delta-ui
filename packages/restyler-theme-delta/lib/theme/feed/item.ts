@@ -44,36 +44,39 @@ export const item: BasicTheme = {
     },
     header: {
       style: {
-        position: 'relative',
-        py: 3,
         px: 3,
+        py: 3,
         borderBottom: '1px solid',
         borderBottomColor: 'border'
+      },
+      kinds: {
+        tabs: {
+          style: {
+            py: 0
+          }
+        }
       }
     },
     body: {
-      style: ({ isLoading }) => ({
-        paddingY: 3,
+      style: {
         paddingX: 3,
-        transition: 'filter 0.2s linear, opacity 0.2s linear',
-        filter: isLoading ? 'grayscale(1)' : 'grayscale(0)',
-        opacity: isLoading ? 0.5 : 1,
-        pointerEvents: isLoading ? 'none' : 'all',
+        paddingY: 3,
         '&:not(:last-of-type)': {
           borderBottom: '1px solid',
           borderBottomColor: 'border'
         }
-      })
+      },
+      kinds: {
+        table: {
+          style: { px: 0, py: 0 }
+        }
+      }
     },
-    footer: {},
-    table: {
-      style: ({ isLoading }) => ({
-        transition: 'filter 0.2s linear, opacity 0.2s linear',
-        filter: isLoading ? 'grayscale(1)' : 'grayscale(0)',
-        opacity: isLoading ? 0.5 : 1,
-        pointerEvents: isLoading ? 'none' : 'all'
-      })
-    },
-    tabs: {}
+    footer: {
+      style: {
+        px: 3,
+        py: 3
+      }
+    }
   }
 };

@@ -43,5 +43,3 @@ const createFeedItemSection = (path: string) =>
 export const FeedItemHeader = createFeedItemSection('feed.item.header');
 export const FeedItemBody = createFeedItemSection('feed.item.body');
 export const FeedItemFooter = createFeedItemSection('feed.item.footer');
-export const FeedItemTable = createFeedItemSection('feed.item.table');
-export const FeedItemTabs = createFeedItemSection('feed.item.tabs');
