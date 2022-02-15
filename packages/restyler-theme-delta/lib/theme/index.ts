@@ -72,11 +72,13 @@ export const theme: BasicTheme = {
     onPrimary: '#FFFFFF',
     onSecondary: '#525252',
     onSuccess: '#FFFFFF',
+    onWarning: '#FFFFFF',
     onDanger: '#FFFFFF',
     onUnknown: '#FFFFFF',
     onSurface: '#525252',
     onBackground: '#121212',
-    onExterior: '#FAFAFA'
+    onExterior: '#FAFAFA',
+    onBorder: '#525252'
   },
   shadows: [
     'none',

@@ -15,12 +15,12 @@ export const FeedItem = forwardRef<HTMLDivElement, FeedItemProps>(
   ({ isLoading, children, ...rest }, ref) => {
     const useThemed = useThemedFactory<FeedItemContextValue>();
     const ThemedFeedItem = useThemed('div', 'feed.item');
-    const ThemedFeedItemLoader = useThemed('div', 'feed.item.loader');
+    const ThemedFeedItemLoader = useThemed('span', 'feed.item.loader');
     const contextValue = useMemo(
       () => ({ isLoading: !!isLoading }),
       [isLoading]
     );
-    const loader = useTransition<HTMLDivElement>(
+    const loader = useTransition<HTMLSpanElement>(
       (transitionProps, ref) => (
         <ThemedFeedItemLoader
           ref={ref}

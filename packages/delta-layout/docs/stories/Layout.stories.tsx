@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { Fragment, Suspense } from 'react';
+import { Fragment, Suspense, useState } from 'react';
 import {
   IoBagHandle,
   IoGrid,
@@ -13,7 +13,8 @@ import {
   IoPeople,
   IoSchool,
   IoShieldHalf,
-  IoSparkles
+  IoSparkles,
+  IoInvertMode
 } from 'react-icons/io5';
 import {
   Box,
@@ -30,7 +31,7 @@ import {
   useModal
 } from 'restyler';
 import { Table as TableStory } from '../../../restyler-theme-delta/docs/stories/data.stories';
-import { theme } from '../../../restyler-theme-delta/lib/index';
+import { darkTheme, theme } from '../../../restyler-theme-delta/lib/index';
 import {
   Layout,
   LayoutFooter,
@@ -186,8 +187,9 @@ const loadingItem = (
 );
 
 export const Basics = () => {
+  const [isDark, setIsDark] = useState(true);
   return (
-    <AppContainer theme={theme}>
+    <AppContainer theme={isDark ? darkTheme : theme}>
       <Suspense fallback={<LoadScreen />}>
         <Layout>
           <LayoutSidebar>
@@ -198,6 +200,9 @@ export const Basics = () => {
                 <IoPersonCircle />
               </Button>
               <LocaleButton />
+              <Button onClick={() => setIsDark(v => !v)}>
+                <IoInvertMode />
+              </Button>
             </LayoutSidebarExtras>
           </LayoutSidebar>
           <LayoutMain>
