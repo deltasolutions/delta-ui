@@ -1,6 +1,11 @@
 import { jsx } from '@theme-ui/core';
-import { forwardRef } from 'react';
+import { createContext, forwardRef, useContext, useMemo } from 'react';
 import { BoxProps, useThemed, useThemedFactory, useTransition } from 'restyler';
+
+export interface FeedItemContextValue {
+  isLoading: boolean;
+}
+export const FeedItemContext = createContext({ isLoading: false });
 
 export interface FeedItemProps extends BoxProps {
   isLoading?: boolean;
@@ -8,13 +13,20 @@ export interface FeedItemProps extends BoxProps {
 
 export const FeedItem = forwardRef<HTMLDivElement, FeedItemProps>(
   ({ isLoading, children, ...rest }, ref) => {
-    const useThemed = useThemedFactory<Pick<FeedItemProps, 'isLoading'>>();
+    const useThemed = useThemedFactory<FeedItemContextValue>();
     const ThemedFeedItem = useThemed('div', 'feed.item');
     const ThemedFeedItemLoader = useThemed('div', 'feed.item.loader');
-    const extraProps = { isLoading };
+    const contextValue = useMemo(
+      () => ({ isLoading: !!isLoading }),
+      [isLoading]
+    );
     const loader = useTransition<HTMLDivElement>(
       (transitionProps, ref) => (
-        <ThemedFeedItemLoader {...transitionProps} ref={ref} />
+        <ThemedFeedItemLoader
+          ref={ref}
+          isLoading={!!isLoading}
+          {...transitionProps}
+        />
       ),
       {
         deps: [],
@@ -22,9 +34,11 @@ export const FeedItem = forwardRef<HTMLDivElement, FeedItemProps>(
       }
     );
     return (
-      <ThemedFeedItem ref={ref} {...extraProps} {...rest}>
-        {children}
-        {loader}
+      <ThemedFeedItem ref={ref} {...contextValue} {...rest}>
+        <FeedItemContext.Provider value={contextValue}>
+          {children}
+          {loader}
+        </FeedItemContext.Provider>
       </ThemedFeedItem>
     );
   }
@@ -32,9 +46,11 @@ export const FeedItem = forwardRef<HTMLDivElement, FeedItemProps>(
 
 const createFeedItemSection = (path: string) =>
   forwardRef<HTMLDivElement, BoxProps>(({ children, ...rest }, ref) => {
+    const useThemed = useThemedFactory<FeedItemContextValue>();
     const ThemedFeedItemSection = useThemed('div', path);
+    const contextValue = useContext(FeedItemContext);
     return (
-      <ThemedFeedItemSection ref={ref} {...rest}>
+      <ThemedFeedItemSection ref={ref} {...contextValue} {...rest}>
         {children}
       </ThemedFeedItemSection>
     );

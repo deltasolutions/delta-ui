@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { Fragment, useCallback } from 'react';
+import { Fragment, useCallback, useState } from 'react';
 import * as R from 'restyler';
 
 export default {
@@ -12,14 +12,30 @@ export const Anchor = () => {
 };
 
 export const Buttons = () => {
+  const [disabled, setDisabled] = useState(false);
   return (
     <R.Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-      <R.Button kind="default">Default</R.Button>
-      <R.Button kind="primary">Primary</R.Button>
-      <R.Button kind="secondary">Secondary</R.Button>
-      <R.Button kind="success">Success</R.Button>
-      <R.Button kind="warning">Warning</R.Button>
-      <R.Button kind="danger">Danger</R.Button>
+      <R.Checkbox value={disabled} onChange={setDisabled}>
+        Disabled
+      </R.Checkbox>
+      <R.Button disabled={disabled} kind="default">
+        Default
+      </R.Button>
+      <R.Button disabled={disabled} kind="primary">
+        Primary
+      </R.Button>
+      <R.Button disabled={disabled} kind="secondary">
+        Secondary
+      </R.Button>
+      <R.Button disabled={disabled} kind="success">
+        Success
+      </R.Button>
+      <R.Button disabled={disabled} kind="warning">
+        Warning
+      </R.Button>
+      <R.Button disabled={disabled} kind="danger">
+        Danger
+      </R.Button>
     </R.Box>
   );
 };

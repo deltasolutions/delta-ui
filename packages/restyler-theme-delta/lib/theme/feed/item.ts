@@ -20,11 +20,10 @@ export const item: BasicTheme = {
     loader: {
       style: ({ isVisible }) => ({
         position: 'absolute',
-        top: '50%',
-        right: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: '22px',
-        height: '22px',
+        top: 3,
+        right: 3,
+        width: '1.3rem',
+        height: '1.3rem',
         transition: 'opacity 0.2s linear',
         opacity: 1,
         ...(isVisible ? {} : { opacity: 0 }),
@@ -58,14 +57,18 @@ export const item: BasicTheme = {
       }
     },
     body: {
-      style: {
+      style: ({ isLoading }) => ({
         paddingX: 3,
         paddingY: 3,
+        opacity: isLoading ? 0.5 : 1,
+        filter: isLoading ? 'grayscale(1)' : 'grayscale(0)',
+        pointerEvents: isLoading ? 'none' : undefined,
+        transition: 'opacity 0.2s linear, filter 0.2s linear',
         '&:not(:last-of-type)': {
           borderBottom: '1px solid',
           borderBottomColor: 'border'
         }
-      },
+      }),
       kinds: {
         table: {
           style: { px: 0, py: 0 }

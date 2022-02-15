@@ -14,16 +14,16 @@ const createKind = (
     color,
     fontSize: 2,
     fontFamily: 'body',
-    cursor: 'pointer',
     textTransform: 'uppercase',
     letterSpacing: '0.04em',
     outline: 'none',
     ...(props.disabled
       ? {
-          filter: 'saturate(0.65)',
-          pointerEvents: 'none'
+          cursor: 'not-allowed',
+          filter: 'saturate(0.5)'
         }
       : {
+          cursor: 'pointer',
           '&:hover, &:focus': {
             backgroundColor: accentBackgroundColor
           }
