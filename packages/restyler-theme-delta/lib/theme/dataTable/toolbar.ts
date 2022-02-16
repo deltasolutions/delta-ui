@@ -16,7 +16,7 @@ export const toolbar: BasicTheme = {
         minWidth: 0
       }
     },
-    switcher: {
+    toggler: {
       style: {
         ml: 4,
         display: 'flex',

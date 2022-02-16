@@ -7,18 +7,11 @@ export interface DataTableProps<T extends object> extends BoxProps {
   rowHeight?: number;
   maxHeight?: number;
   toolbar?: {
-    initialSection?: string;
-    sections: (
-      | 'tabs'
-      | 'query'
-      | 'configurer'
-      | {
-          id: string;
-          content: ReactNode;
-          toggler: ReactElement;
-        }
-    )[];
-    extras?: ReactNode;
+    sections: {
+      id: string;
+      toggler?: ReactElement;
+      content?: ReactNode;
+    }[];
   };
   manager: DataTableManager<T>;
 }

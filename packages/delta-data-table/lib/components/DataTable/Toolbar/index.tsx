@@ -1,4 +1,4 @@
-export * from './Configurer';
-export * from './Query';
-export * from './Tabs';
 export * from './Toolbar';
+export * from './ToolbarQuery';
+export * from './ToolbarTabs';
+export * from './ToolbarTabsConfigModal';

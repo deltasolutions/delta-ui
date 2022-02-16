@@ -6,7 +6,10 @@ import { Box, Button, Card, clone } from 'restyler';
 import {
   DataTable,
   useDataTableManager,
-  useStoredDataTableManager
+  useStoredDataTableManager,
+  useToolbarQuery,
+  useToolbarTabs,
+  useToolbarTabsConfig
 } from '../../lib';
 import { useMock } from './useMock';
 
@@ -15,6 +18,9 @@ export default {
 } as Meta;
 
 export const Basics = () => {
+  const tabs = useToolbarTabs();
+  const tabsConfig = useToolbarTabsConfig();
+  const query = useToolbarQuery();
   const options = useMock({
     columnCount: 15,
     rowCount: 30,
@@ -29,11 +35,11 @@ export const Basics = () => {
   });
   return (
     <Box sx={{ padding: 5, minHeight: '100vh' }}>
-      <Card>
+      <Card sx={{ overflow: 'hidden' }}>
         <DataTable
           manager={manager}
           toolbar={{
-            sections: ['tabs', 'query', 'configurer']
+            sections: [tabs, tabsConfig, query]
           }}
         />
       </Card>
@@ -57,7 +63,7 @@ export const ColumnRenderer = () => {
   const manager = useDataTableManager(modifiedOptions);
   return (
     <Box sx={{ padding: 5, minHeight: '100vh' }}>
-      <Card>
+      <Card sx={{ overflow: 'hidden' }}>
         <DataTable
           manager={manager}
           toolbar={{
@@ -97,7 +103,7 @@ export const HeightAdaptive = () => {
         </Button>
       </Box>
       <Box ref={setElement} sx={{ flex: '1 0 200px' }}>
-        <Card>
+        <Card sx={{ overflow: 'hidden' }}>
           <DataTable
             manager={manager}
             maxHeight={element?.offsetHeight}
@@ -116,7 +122,7 @@ export const Empty = () => {
   const manager = useDataTableManager(options);
   return (
     <Box sx={{ padding: 5, minHeight: '100vh' }}>
-      <Card>
+      <Card sx={{ overflow: 'hidden' }}>
         <DataTable
           manager={manager}
           toolbar={{
@@ -133,7 +139,7 @@ export const WithToolbarExtras = () => {
   const manager = useDataTableManager(options);
   return (
     <Box sx={{ padding: 5, minHeight: '100vh' }}>
-      <Card>
+      <Card sx={{ overflow: 'hidden' }}>
         <DataTable
           manager={manager}
           toolbar={{

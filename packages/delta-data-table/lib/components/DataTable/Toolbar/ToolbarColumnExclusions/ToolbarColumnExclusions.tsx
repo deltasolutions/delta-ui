@@ -10,9 +10,7 @@ import {
 } from 'react';
 import { useDragLayer } from 'react-dnd';
 import { useTranslation } from 'react-i18next';
-import { IoPushOutline } from 'react-icons/io5';
 import {
-  Button,
   disableScroll,
   interactiveStackId,
   StandaloneTransitionerProps,
@@ -24,21 +22,21 @@ import {
 import { DataTableContext } from '../../DataTableContext';
 import { ColumnExclusionItem } from './ColumnExclusionItem';
 
-export interface ColumnExclusionsContext {
+export interface ToolbarColumnExclusionsContext {
   anchorRef: RefObject<HTMLSpanElement>;
 }
 
-export type ColumnExclusionsThemedPartProps =
-  StandaloneTransitionerProps<ColumnExclusionsContext> & {
+export type ToolbarColumnExclusionsThemedPartProps =
+  StandaloneTransitionerProps<ToolbarColumnExclusionsContext> & {
     isDragging: boolean;
   };
 
-export const ColumnExclusions = forwardRef<
+export const ToolbarColumnExclusions = forwardRef<
   HTMLDivElement,
-  StandaloneTransitionerProps<ColumnExclusionsContext>
+  StandaloneTransitionerProps<ToolbarColumnExclusionsContext>
 >((props, ref) => {
-  const [t] = useTranslation();
-  const useThemed = useThemedFactory<ColumnExclusionsThemedPartProps>();
+  const [t] = useTranslation('common');
+  const useThemed = useThemedFactory<ToolbarColumnExclusionsThemedPartProps>();
   const ThemedExclusions = useThemed(
     'div',
     'dataTable.configurer.columnExclusions'
@@ -108,7 +106,7 @@ export const ColumnExclusions = forwardRef<
       <ThemedExclusionsQuery
         value={query}
         onChange={e => setQuery(e.target.value)}
-        placeholder={t('common:labels.search')}
+        placeholder={t('labels.search')}
         isDragging={isDragging}
         {...props}
       />
@@ -126,7 +124,7 @@ export const ColumnExclusions = forwardRef<
           isDragging={isDragging}
           {...props}
         >
-          {t('common:labels.empty')}
+          {t('labels.empty')}
         </ThemedExclusionsContent>
       )}
     </ThemedExclusions>

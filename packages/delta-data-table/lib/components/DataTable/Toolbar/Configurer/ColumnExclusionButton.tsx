@@ -13,7 +13,10 @@ import {
   useStandaloneTransition
 } from 'restyler';
 import { DataTableContext } from '../../DataTableContext';
-import { ColumnExclusions, ColumnExclusionsContext } from './ColumnExclusions';
+import {
+  ToolbarColumnExclusions,
+  ToolbarColumnExclusionsContext
+} from '../ToolbarColumnExclusions/ToolbarColumnExclusions';
 
 export const ColumnExclusionButton = () => {
   const [t] = useTranslation();
@@ -50,8 +53,8 @@ export const ColumnExclusionButton = () => {
   );
   const openFolder = useStandaloneTransition<
     HTMLDivElement,
-    ColumnExclusionsContext
-  >(ColumnExclusions, {
+    ToolbarColumnExclusionsContext
+  >(ToolbarColumnExclusions, {
     deps: [columnExclusions],
     portal
   });
