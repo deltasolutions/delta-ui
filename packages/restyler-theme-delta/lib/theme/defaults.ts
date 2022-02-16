@@ -9,6 +9,11 @@ export const defaults: BasicTheme = {
     font: 'inherit',
     fontSize: 'inherit',
     color: 'inherit',
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    '&::selection': {
+      backgroundColor: 'primary',
+      color: 'onPrimary',
+      borderRadius: 2
+    }
   }
 };

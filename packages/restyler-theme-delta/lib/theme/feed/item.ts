@@ -72,6 +72,9 @@ export const item: BasicTheme = {
       kinds: {
         table: {
           style: { px: 0, py: 0 }
+        },
+        pairList: {
+          style: { px: 0, py: 0 }
         }
       }
     },

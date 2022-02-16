@@ -30,7 +30,10 @@ import {
   TabOption,
   useModal
 } from 'restyler';
-import { Table as TableStory } from '../../../restyler-theme-delta/docs/stories/data.stories';
+import {
+  Table as TableStory,
+  PairList as PairListStory
+} from '../../../restyler-theme-delta/docs/stories/data.stories';
 import { darkTheme, theme } from '../../../restyler-theme-delta/lib/index';
 import {
   Layout,
@@ -177,6 +180,17 @@ const dataItem = (
   </FeedItem>
 );
 
+const pairListItem = (
+  <FeedItem>
+    <FeedItemHeader>
+      <Heading kind="feedItem">Pair List</Heading>
+    </FeedItemHeader>
+    <FeedItemBody kind="pairList">
+      <PairListStory />
+    </FeedItemBody>
+  </FeedItem>
+);
+
 const loadingItem = (
   <FeedItem isLoading>
     <FeedItemHeader>
@@ -221,6 +235,7 @@ export const Basics = () => {
                 <FeedSection kind="small">
                   {settingsItem}
                   {dataItem}
+                  {pairListItem}
                   {loadingItem}
                 </FeedSection>
               </Feed>
