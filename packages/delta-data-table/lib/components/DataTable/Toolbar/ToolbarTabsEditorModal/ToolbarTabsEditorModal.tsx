@@ -13,14 +13,14 @@ import {
 import { DataTableManager } from '../../../../models';
 import { Item, ItemDef } from './Item';
 
-export interface ToolbarTabsConfigModalProps extends ModalRendererProps {
+export interface ToolbarTabsEditorModalProps extends ModalRendererProps {
   manager: DataTableManager<object>;
 }
 
-export const ToolbarTabsConfigModal = ({
+export const ToolbarTabsEditorModal = ({
   manager: { initialTab, layout, setLayout, activeTabName, setActiveTabName },
   handleClose
-}: ToolbarTabsConfigModalProps) => {
+}: ToolbarTabsEditorModalProps) => {
   const [t] = useTranslation('common');
   const [items, setItems] = useState<ItemDef[]>(() =>
     layout.tabs.map(v => ({ ...v, id: hash(v) }))
@@ -84,8 +84,9 @@ export const ToolbarTabsConfigModal = ({
   return (
     <Fragment>
       <ModalHeader>
-        <Heading kind="modal">{t('sections.tabsConfig')}</Heading>
+        <Heading kind="modal">{t('sections.tabsEditor')}</Heading>
       </ModalHeader>
+      {/* TODO: Move styles to theme. */}
       <ModalBody sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         {items.map((card, i) => renderItem(card, i))}
       </ModalBody>

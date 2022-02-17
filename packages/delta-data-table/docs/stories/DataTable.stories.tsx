@@ -7,9 +7,10 @@ import {
   DataTable,
   useDataTableManager,
   useStoredDataTableManager,
+  useToolbarColumnsEditor,
   useToolbarQuery,
   useToolbarTabs,
-  useToolbarTabsConfig
+  useToolbarTabsEditor
 } from '../../lib';
 import { useMock } from './useMock';
 
@@ -19,8 +20,9 @@ export default {
 
 export const Basics = () => {
   const tabs = useToolbarTabs();
-  const tabsConfig = useToolbarTabsConfig();
+  const tabsEditor = useToolbarTabsEditor();
   const query = useToolbarQuery();
+  const columnsEditor = useToolbarColumnsEditor();
   const options = useMock({
     columnCount: 15,
     rowCount: 30,
@@ -39,7 +41,7 @@ export const Basics = () => {
         <DataTable
           manager={manager}
           toolbar={{
-            sections: [tabs, tabsConfig, query]
+            sections: [tabs, query, tabsEditor, columnsEditor]
           }}
         />
       </Card>

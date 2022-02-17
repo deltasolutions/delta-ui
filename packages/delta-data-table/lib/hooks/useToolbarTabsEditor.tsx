@@ -2,14 +2,14 @@ import { jsx } from '@theme-ui/core';
 import { Tooltip } from 'delta-tooltip';
 import { useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IoFolderOutline } from 'react-icons/io5';
+import { BsWindow } from 'react-icons/bs';
 import { Box, Button, useModal } from 'restyler';
-import { DataTableContext, ToolbarTabsConfigModal } from '../components';
+import { DataTableContext, ToolbarTabsEditorModal } from '../components';
 
-export const useToolbarTabsConfig = () => {
+export const useToolbarTabsEditor = () => {
   return useMemo(
     () => ({
-      id: 'tabsConfig',
+      id: 'tabsEditor',
       toggler: <Toggler />
     }),
     []
@@ -26,14 +26,14 @@ const Toggler = () => {
       onClick={() =>
         openModal({
           render: props => (
-            <ToolbarTabsConfigModal manager={manager} {...props} />
+            <ToolbarTabsEditorModal manager={manager} {...props} />
           )
         })
       }
     >
-      <Tooltip content={t('sections.tabsConfig')}>
+      <Tooltip content={t('sections.tabsEditor')}>
         <Box>
-          <IoFolderOutline />
+          <BsWindow />
         </Box>
       </Tooltip>
     </Button>

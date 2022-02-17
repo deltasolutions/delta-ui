@@ -22,7 +22,7 @@ export interface ItemProps {
 
 export const Item = ({ def, index, onMove, onRemove, onRename }: ItemProps) => {
   const [t] = useTranslation('common');
-  const ThemedItem = useThemed('div', 'dataTable.tabsConfig.item');
+  const ThemedItem = useThemed('div', 'dataTable.tabsEditor.item');
   const ref = useRef<HTMLDivElement>(null);
   const handleRef = useRef<HTMLButtonElement>(null);
   const [{ handlerId }, drop] = useDrop<
