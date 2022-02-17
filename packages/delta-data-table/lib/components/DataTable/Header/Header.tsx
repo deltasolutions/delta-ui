@@ -48,9 +48,8 @@ export const Header = () => {
       }}
     >
       {coercedColumns.map((v, i) => (
-        <Fragment>
+        <Fragment key={v.key}>
           <TableCell
-            key={v.key + '-head'}
             style={{
               display: 'inline-block',
               width: getColumnWidth(v) + 'px'
@@ -58,7 +57,7 @@ export const Header = () => {
           >
             {v.header}
           </TableCell>
-          <Handle key={v.key + '-handle'} index={i} />
+          <Handle index={i} />
         </Fragment>
       ))}
     </TableRow>

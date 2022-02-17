@@ -31,7 +31,7 @@ export const Toolbar = (props: ToolbarProps) => {
           .filter(v => v.id !== initialSectionId && v.toggler)
           .map(v => {
             if (!v.content) {
-              return v.toggler;
+              return cloneElement(v.toggler!, { key: v.id });
             }
             return v.id === currentSectionId ? (
               <Button
