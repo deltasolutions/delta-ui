@@ -8,6 +8,8 @@ import { IoMove, IoRemoveCircleOutline } from 'react-icons/io5';
 import { Box, Button, Input, useThemed } from 'restyler';
 import { DataTableTabDef } from '../../../../models';
 
+const itemType = Symbol('tabsEditorItem');
+
 export interface ItemDef extends DataTableTabDef {
   id: string;
 }
@@ -25,17 +27,8 @@ export const Item = ({ def, index, onMove, onRemove, onRename }: ItemProps) => {
   const ThemedItem = useThemed('div', 'dataTable.tabsEditor.item');
   const ref = useRef<HTMLDivElement>(null);
   const handleRef = useRef<HTMLButtonElement>(null);
-  const [{ handlerId }, drop] = useDrop<
-    Pick<ItemProps, 'def' | 'index'>,
-    void,
-    { handlerId: string | number | symbol | null }
-  >({
-    accept: 'card',
-    collect(monitor) {
-      return {
-        handlerId: monitor.getHandlerId()
-      };
-    },
+  const [_, drop] = useDrop<Pick<ItemProps, 'def' | 'index'>, void, void>({
+    accept: itemType,
     hover(item, monitor) {
       if (!ref.current) {
         return;
@@ -61,7 +54,7 @@ export const Item = ({ def, index, onMove, onRemove, onRename }: ItemProps) => {
     }
   });
   const [{ isDragging }, drag, dragPreview] = useDrag({
-    type: 'card',
+    type: itemType,
     item: () => {
       return { def, index };
     },
@@ -72,11 +65,7 @@ export const Item = ({ def, index, onMove, onRemove, onRename }: ItemProps) => {
   dragPreview(drop(ref));
   drag(handleRef);
   return (
-    <ThemedItem
-      ref={ref}
-      style={{ opacity: isDragging ? 0 : 1 }}
-      data-handler-id={handlerId}
-    >
+    <ThemedItem ref={ref} style={{ opacity: isDragging ? 0 : 1 }}>
       <Box sx={{ display: 'flex', gap: 2 }}>
         <Input value={def.name} onChange={onRename} />
         <Button ref={handleRef} kind="icon" sx={{ cursor: 'move' }}>

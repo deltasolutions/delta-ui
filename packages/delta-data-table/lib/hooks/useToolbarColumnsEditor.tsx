@@ -1,10 +1,10 @@
 import { jsx } from '@theme-ui/core';
 import { Tooltip } from 'delta-tooltip';
-import { useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BsLayoutThreeColumns } from 'react-icons/bs';
 import { Box, Button, useModal } from 'restyler';
-import { ToolbarColumnsEditorModal } from '../components';
+import { DataTableContext, ToolbarColumnsEditorModal } from '../components';
 
 export const useToolbarColumnsEditor = () => {
   return useMemo(
@@ -19,12 +19,15 @@ export const useToolbarColumnsEditor = () => {
 const Toggler = () => {
   const [t] = useTranslation('common');
   const { openModal } = useModal();
+  const { manager } = useContext(DataTableContext);
   return (
     <Button
       kind="icon"
       onClick={() =>
         openModal({
-          render: props => <ToolbarColumnsEditorModal {...props} />
+          render: props => (
+            <ToolbarColumnsEditorModal manager={manager} {...props} />
+          )
         })
       }
     >
