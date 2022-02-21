@@ -5,6 +5,7 @@ export * from './useDataTableTabManager';
 export * from './useDebounce';
 export * from './useStoredDataTableManager';
 export * from './useToolbarColumnsEditor';
+export * from './useToolbarMaxRowCountEditor';
 export * from './useToolbarQuery';
 export * from './useToolbarTabs';
 export * from './useToolbarTabsEditor';

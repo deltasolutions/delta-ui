@@ -12,19 +12,19 @@ import {
   ModalRendererProps,
   useFormManager
 } from 'restyler';
-import { DataTableManager } from '../../../../models';
+import { DataTableManager } from '../../../models';
 
-export interface RowCountModalProps extends ModalRendererProps {
-  dataTableManager: DataTableManager<any>;
+export interface ToolbarMaxRowCountEditorModalProps extends ModalRendererProps {
+  manager: DataTableManager<any>;
 }
 
-export const RowCountModal = ({
-  dataTableManager: {
+export const ToolbarMaxRowCountEditorModal = ({
+  manager: {
     layout: { tabs, maxRowCount },
     setLayout
   },
   handleClose
-}: RowCountModalProps) => {
+}: ToolbarMaxRowCountEditorModalProps) => {
   const [t] = useTranslation();
   const formManager = useFormManager({
     values: { maxRowCount }
@@ -38,7 +38,7 @@ export const RowCountModal = ({
       }}
     >
       <ModalHeader>
-        <Heading kind="modal">{t('common:sections.rowCount')}</Heading>
+        <Heading kind="modal">{t('common:sections.maxRowCountEditor')}</Heading>
       </ModalHeader>
       <ModalBody>
         <FormField

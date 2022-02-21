@@ -8,6 +8,7 @@ import {
   useDataTableManager,
   useStoredDataTableManager,
   useToolbarColumnsEditor,
+  useToolbarMaxRowCountEditor,
   useToolbarQuery,
   useToolbarTabs,
   useToolbarTabsEditor
@@ -23,6 +24,7 @@ export const Basics = () => {
   const tabsEditor = useToolbarTabsEditor();
   const query = useToolbarQuery();
   const columnsEditor = useToolbarColumnsEditor();
+  const maxRowCountEditor = useToolbarMaxRowCountEditor();
   const options = useMock({
     columnCount: 15,
     rowCount: 30,
@@ -41,116 +43,13 @@ export const Basics = () => {
         <DataTable
           manager={manager}
           toolbar={{
-            sections: [tabs, query, tabsEditor, columnsEditor]
-          }}
-        />
-      </Card>
-    </Box>
-  );
-};
-
-export const ColumnRenderer = () => {
-  const options = useMock({
-    columnCount: 15,
-    rowCount: 30,
-    shouldLoadChunks: true
-  });
-  const modifiedOptions = useMemo(() => {
-    const cloned = clone(options);
-    Object.assign(cloned.initialContent.columns[0], {
-      render: v => JSON.stringify(v)
-    });
-    return cloned;
-  }, [options]);
-  const manager = useDataTableManager(modifiedOptions);
-  return (
-    <Box sx={{ padding: 5, minHeight: '100vh' }}>
-      <Card sx={{ overflow: 'hidden' }}>
-        <DataTable
-          manager={manager}
-          toolbar={{
-            sections: ['tabs', 'query', 'configurer']
-          }}
-        />
-      </Card>
-    </Box>
-  );
-};
-
-export const HeightAdaptive = () => {
-  const [element, setElement] = useState<HTMLElement | null>(null);
-  const options = useMock({ columnCount: 15, rowCount: 20 });
-  const manager = useDataTableManager(options);
-  return (
-    <Box
-      sx={{
-        padding: 5,
-        minHeight: '100vh',
-        maxHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 4
-      }}
-    >
-      <Box>
-        <Button
-          kind="primary"
-          onClick={() => {
-            manager.setData(
-              manager.data.length > 0 ? [] : options.initialContent.data
-            );
-          }}
-        >
-          Toggle Data
-        </Button>
-      </Box>
-      <Box ref={setElement} sx={{ flex: '1 0 200px' }}>
-        <Card sx={{ overflow: 'hidden' }}>
-          <DataTable
-            manager={manager}
-            maxHeight={element?.offsetHeight}
-            toolbar={{
-              sections: ['tabs', 'query', 'configurer']
-            }}
-          />
-        </Card>
-      </Box>
-    </Box>
-  );
-};
-
-export const Empty = () => {
-  const options = useMock({ columnCount: 15, rowCount: 0 });
-  const manager = useDataTableManager(options);
-  return (
-    <Box sx={{ padding: 5, minHeight: '100vh' }}>
-      <Card sx={{ overflow: 'hidden' }}>
-        <DataTable
-          manager={manager}
-          toolbar={{
-            sections: ['tabs', 'query', 'configurer']
-          }}
-        />
-      </Card>
-    </Box>
-  );
-};
-
-export const WithToolbarExtras = () => {
-  const options = useMock({ columnCount: 15, rowCount: 100 });
-  const manager = useDataTableManager(options);
-  return (
-    <Box sx={{ padding: 5, minHeight: '100vh' }}>
-      <Card sx={{ overflow: 'hidden' }}>
-        <DataTable
-          manager={manager}
-          toolbar={{
-            sections: ['tabs', 'query', 'configurer'],
-            extras: (
-              <Button kind="icon" sx={{ ml: 2 }}>
-                <IoBalloonOutline />
-              </Button>
-            )
+            sections: [
+              tabs,
+              query,
+              tabsEditor,
+              columnsEditor,
+              maxRowCountEditor
+            ]
           }}
         />
       </Card>
