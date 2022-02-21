@@ -38,7 +38,10 @@ export const ToolbarColumnsEditorModal = ({
   handleClose
 }: ToolbarColumnsEditorModalProps) => {
   const [t] = useTranslation('common');
-  const ThemedColumnsEditor = useThemed('div', 'dataTable.columnsEditor');
+  const ThemedColumnsEditor = useThemed(
+    'div',
+    'dataTable.toolbar.columnsEditor'
+  );
   const [exclusionItems, setExclusionItems] = useState<ItemOptions[]>(() =>
     columns
       .filter(v => columnExclusions?.includes(v.key))

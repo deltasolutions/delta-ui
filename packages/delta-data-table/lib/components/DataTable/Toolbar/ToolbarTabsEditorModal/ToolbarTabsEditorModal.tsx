@@ -8,7 +8,8 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
-  ModalRendererProps
+  ModalRendererProps,
+  useThemed
 } from 'restyler';
 import { DataTableManager } from '../../../../models';
 import { Item, ItemDef } from './Item';
@@ -22,6 +23,7 @@ export const ToolbarTabsEditorModal = ({
   handleClose
 }: ToolbarTabsEditorModalProps) => {
   const [t] = useTranslation('common');
+  const ThemedList = useThemed('div', 'dataTable.toolbar.tabsEditor.list');
   const [items, setItems] = useState<ItemDef[]>(() =>
     layout.tabs.map(v => ({ ...v, id: hash(v) }))
   );
@@ -86,9 +88,8 @@ export const ToolbarTabsEditorModal = ({
       <ModalHeader>
         <Heading kind="modal">{t('sections.tabsEditor')}</Heading>
       </ModalHeader>
-      {/* TODO: Move styles to theme. */}
-      <ModalBody sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-        {items.map((card, i) => renderItem(card, i))}
+      <ModalBody>
+        <ThemedList>{items.map((card, i) => renderItem(card, i))}</ThemedList>
       </ModalBody>
       <ModalFooter>
         <Button

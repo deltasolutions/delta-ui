@@ -4,9 +4,9 @@ import { useThemed, useThemedFactory } from 'restyler';
 import { DataTableContext } from '../DataTableContext';
 
 export const ToolbarTabs = () => {
-  const ThemedToolbarTabs = useThemed('div', 'dataTable.tabs');
+  const ThemedToolbarTabs = useThemed('div', 'dataTable.toolbar.tabs');
   const useTypedThemed = useThemedFactory<{ isActive?: boolean }>();
-  const ThemedItem = useTypedThemed('button', 'dataTable.tabs.item');
+  const ThemedItem = useTypedThemed('button', 'dataTable.toolbar.tabs.item');
   const {
     manager: {
       layout: { tabs },

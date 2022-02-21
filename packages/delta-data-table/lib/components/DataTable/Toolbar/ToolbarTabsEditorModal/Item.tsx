@@ -24,7 +24,7 @@ export interface ItemProps {
 
 export const Item = ({ def, index, onMove, onRemove, onRename }: ItemProps) => {
   const [t] = useTranslation('common');
-  const ThemedItem = useThemed('div', 'dataTable.tabsEditor.item');
+  const ThemedItem = useThemed('div', 'dataTable.toolbar.tabsEditor.list.item');
   const ref = useRef<HTMLDivElement>(null);
   const handleRef = useRef<HTMLButtonElement>(null);
   const [_, drop] = useDrop<Pick<ItemProps, 'def' | 'index'>, void, void>({
@@ -66,19 +66,17 @@ export const Item = ({ def, index, onMove, onRemove, onRename }: ItemProps) => {
   drag(handleRef);
   return (
     <ThemedItem ref={ref} style={{ opacity: isDragging ? 0 : 1 }}>
-      <Box sx={{ display: 'flex', gap: 2 }}>
-        <Input value={def.name} onChange={onRename} />
-        <Button ref={handleRef} kind="icon" sx={{ cursor: 'move' }}>
-          <IoMove />
-        </Button>
-        {onRemove && (
-          <Tooltip content={t('actions.remove')}>
-            <Button kind="icon" onClick={onRemove}>
-              <IoRemoveCircleOutline />
-            </Button>
-          </Tooltip>
-        )}
-      </Box>
+      <Input value={def.name} onChange={onRename} />
+      <Button ref={handleRef} kind="icon" sx={{ cursor: 'move' }}>
+        <IoMove />
+      </Button>
+      {onRemove && (
+        <Tooltip content={t('actions.remove')}>
+          <Button kind="icon" onClick={onRemove}>
+            <IoRemoveCircleOutline />
+          </Button>
+        </Tooltip>
+      )}
     </ThemedItem>
   );
 };

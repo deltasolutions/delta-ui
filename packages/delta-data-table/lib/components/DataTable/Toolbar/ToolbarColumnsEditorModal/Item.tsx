@@ -17,7 +17,10 @@ export interface ItemProps {
 }
 
 export const Item = ({ options: options, index, onMove }: ItemProps) => {
-  const ThemedItem = useThemed('div', 'dataTable.columnsEditor.list.item');
+  const ThemedItem = useThemed(
+    'div',
+    'dataTable.toolbar.columnsEditor.list.item'
+  );
   const ref = useRef<HTMLDivElement>(null);
   const [_, drop] = useDrop<Pick<ItemProps, 'options' | 'index'>, void, void>({
     accept: itemType,

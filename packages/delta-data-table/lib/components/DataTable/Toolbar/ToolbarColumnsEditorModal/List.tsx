@@ -24,18 +24,18 @@ export const List = ({
 }: ListProps) => {
   const [t] = useTranslation('common');
   const useThemed = useThemedFactory<{ isDroppable?: boolean }>();
-  const ThemedList = useThemed('div', 'dataTable.columnsEditor.list');
+  const ThemedList = useThemed('div', 'dataTable.toolbar.columnsEditor.list');
   const ThemedListTitle = useThemed(
     'div',
-    'dataTable.columnsEditor.list.title'
+    'dataTable.toolbar.columnsEditor.list.title'
   );
   const ThemedListQuery = useThemed(
     'div',
-    'dataTable.columnsEditor.list.query'
+    'dataTable.toolbar.columnsEditor.list.query'
   );
   const ThemedListContent = useThemed(
     'div',
-    'dataTable.columnsEditor.list.content'
+    'dataTable.toolbar.columnsEditor.list.content'
   );
   const [query, setQuery] = useState('');
   const debouncedLowercasedQuery = useDebounce(query.toLocaleLowerCase(), 300);

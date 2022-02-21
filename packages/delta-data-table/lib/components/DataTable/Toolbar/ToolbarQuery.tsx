@@ -7,7 +7,7 @@ import { DataTableContext } from '../DataTableContext';
 
 export const ToolbarQuery = () => {
   const [t] = useTranslation('common');
-  const ThemedQuery = useThemed('input', 'dataTable.query');
+  const ThemedQuery = useThemed('input', 'dataTable.toolbar.query');
   const {
     manager: { query, setQuery, requestNextChunk }
   } = useContext(DataTableContext);
