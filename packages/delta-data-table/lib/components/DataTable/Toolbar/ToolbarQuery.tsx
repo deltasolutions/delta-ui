@@ -5,9 +5,9 @@ import { useThemed } from 'restyler';
 import { useDebounce } from '../../../hooks';
 import { DataTableContext } from '../DataTableContext';
 
-export const Query = () => {
-  const [t] = useTranslation();
-  const ThemedQuery = useThemed('input', 'dataTable.query');
+export const ToolbarQuery = () => {
+  const [t] = useTranslation('common');
+  const ThemedQuery = useThemed('input', 'dataTable.toolbar.query');
   const {
     manager: { query, setQuery, requestNextChunk }
   } = useContext(DataTableContext);
@@ -36,7 +36,7 @@ export const Query = () => {
     <ThemedQuery
       value={value}
       onChange={e => setValue(e.target.value)}
-      placeholder={t('common:labels.search')}
+      placeholder={t('labels.search')}
     />
   );
 };

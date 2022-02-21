@@ -20,7 +20,7 @@ const createKind = (
     ...(props.disabled
       ? {
           cursor: 'not-allowed',
-          filter: 'saturate(0.5)'
+          opacity: '0.65'
         }
       : {
           cursor: 'pointer',

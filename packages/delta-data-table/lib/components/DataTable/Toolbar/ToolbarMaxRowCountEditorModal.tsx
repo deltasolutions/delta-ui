@@ -12,20 +12,20 @@ import {
   ModalRendererProps,
   useFormManager
 } from 'restyler';
-import { DataTableManager } from '../../../../models';
+import { DataTableManager } from '../../../models';
 
-export interface RowCountModalProps extends ModalRendererProps {
-  dataTableManager: DataTableManager<any>;
+export interface ToolbarMaxRowCountEditorModalProps extends ModalRendererProps {
+  manager: DataTableManager<any>;
 }
 
-export const RowCountModal = ({
-  dataTableManager: {
+export const ToolbarMaxRowCountEditorModal = ({
+  manager: {
     layout: { tabs, maxRowCount },
     setLayout
   },
   handleClose
-}: RowCountModalProps) => {
-  const [t] = useTranslation();
+}: ToolbarMaxRowCountEditorModalProps) => {
+  const [t] = useTranslation('common');
   const formManager = useFormManager({
     values: { maxRowCount }
   });
@@ -38,13 +38,13 @@ export const RowCountModal = ({
       }}
     >
       <ModalHeader>
-        <Heading kind="modal">{t('common:sections.rowCount')}</Heading>
+        <Heading kind="modal">{t('sections.maxRowCountEditor')}</Heading>
       </ModalHeader>
       <ModalBody>
         <FormField
           name="maxRowCount"
-          label={t('common:labels.maxRowCount')}
-          validate={v => (v && +v > 0 ? [] : [t('common:errors.wrongFormat')])}
+          label={t('labels.maxRowCount')}
+          validate={v => (v && +v > 0 ? [] : [t('errors.wrongFormat')])}
         >
           <Input type="number" />
         </FormField>

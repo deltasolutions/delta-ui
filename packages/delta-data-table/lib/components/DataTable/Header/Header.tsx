@@ -1,13 +1,14 @@
 import { jsx } from '@theme-ui/core';
-import { useContext } from 'react';
+import { Fragment, useContext } from 'react';
 import { useDrop } from 'react-dnd';
 import { useThemed } from 'restyler';
 import { getColumnWidth, getRowWidth } from '../../../utils';
 import { DataTableContext } from '../DataTableContext';
-import { DraggableCell } from './DraggableCell';
+import { Handle } from './Handle';
 
 export const Header = () => {
   const TableRow = useThemed('div', 'dataTable.row');
+  const TableCell = useThemed('div', 'dataTable.cell');
   const {
     rowHeight,
     manager: { coercedColumns, activeTab, updateActiveTab }
@@ -47,16 +48,17 @@ export const Header = () => {
       }}
     >
       {coercedColumns.map((v, i) => (
-        <DraggableCell
-          key={v.key + '-head'}
-          index={i}
-          style={{
-            display: 'inline-block',
-            width: getColumnWidth(v) + 'px'
-          }}
-        >
-          {v.header}
-        </DraggableCell>
+        <Fragment key={v.key}>
+          <TableCell
+            style={{
+              display: 'inline-block',
+              width: getColumnWidth(v) + 'px'
+            }}
+          >
+            {v.header}
+          </TableCell>
+          <Handle index={i} />
+        </Fragment>
       ))}
     </TableRow>
   );
