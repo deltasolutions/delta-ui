@@ -3,7 +3,7 @@ import { ReactNode, useMemo } from 'react';
 import { useThemed } from 'restyler';
 
 export const useToolbarTitle = (title: ReactNode) => {
-  const ThemedTitle = useThemed('div', 'dataTable.title');
+  const ThemedTitle = useThemed('div', 'dataTable.toolbar.title');
   return useMemo(
     () => ({
       id: 'title',
