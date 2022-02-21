@@ -25,7 +25,7 @@ export const ToolbarMaxRowCountEditorModal = ({
   },
   handleClose
 }: ToolbarMaxRowCountEditorModalProps) => {
-  const [t] = useTranslation();
+  const [t] = useTranslation('common');
   const formManager = useFormManager({
     values: { maxRowCount }
   });
@@ -38,13 +38,13 @@ export const ToolbarMaxRowCountEditorModal = ({
       }}
     >
       <ModalHeader>
-        <Heading kind="modal">{t('common:sections.maxRowCountEditor')}</Heading>
+        <Heading kind="modal">{t('sections.maxRowCountEditor')}</Heading>
       </ModalHeader>
       <ModalBody>
         <FormField
           name="maxRowCount"
-          label={t('common:labels.maxRowCount')}
-          validate={v => (v && +v > 0 ? [] : [t('common:errors.wrongFormat')])}
+          label={t('labels.maxRowCount')}
+          validate={v => (v && +v > 0 ? [] : [t('errors.wrongFormat')])}
         >
           <Input type="number" />
         </FormField>
