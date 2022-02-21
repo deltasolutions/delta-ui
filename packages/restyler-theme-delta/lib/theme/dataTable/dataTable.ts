@@ -9,6 +9,7 @@ import { row } from './row';
 import { ruler } from './ruler';
 import { tabs } from './tabs';
 import { tabsEditor } from './tabsEditor';
+import { title } from './title';
 import { toolbar } from './toolbar';
 
 export const dataTable: BasicTheme = {
@@ -24,6 +25,7 @@ export const dataTable: BasicTheme = {
     ruler,
     tabs,
     tabsEditor,
+    title,
     toolbar
   }
 };

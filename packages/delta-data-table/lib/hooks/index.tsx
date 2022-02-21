@@ -9,3 +9,4 @@ export * from './useToolbarMaxRowCountEditor';
 export * from './useToolbarQuery';
 export * from './useToolbarTabs';
 export * from './useToolbarTabsEditor';
+export * from './useToolbarTitle';

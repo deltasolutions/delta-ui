@@ -25,6 +25,7 @@ const Toggler = () => {
       kind="icon"
       onClick={() =>
         openModal({
+          kind: 'medium',
           render: props => (
             <ToolbarTabsEditorModal manager={manager} {...props} />
           )

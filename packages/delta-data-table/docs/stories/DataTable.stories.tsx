@@ -11,7 +11,8 @@ import {
   useToolbarMaxRowCountEditor,
   useToolbarQuery,
   useToolbarTabs,
-  useToolbarTabsEditor
+  useToolbarTabsEditor,
+  useToolbarTitle
 } from '../../lib';
 import { useMock } from './useMock';
 
@@ -50,6 +51,31 @@ export const Basics = () => {
               columnsEditor,
               maxRowCountEditor
             ]
+          }}
+        />
+      </Card>
+    </Box>
+  );
+};
+
+export const SimpleOne = () => {
+  const title = useToolbarTitle('Table Title');
+  const options = useMock({
+    columnCount: 15,
+    rowCount: 30,
+    shouldLoadChunks: true
+  });
+  const manager = useStoredDataTableManager({
+    id: 'story-data-table-simple-one',
+    ...options
+  });
+  return (
+    <Box sx={{ padding: 5, minHeight: '100vh' }}>
+      <Card sx={{ overflow: 'hidden' }}>
+        <DataTable
+          manager={manager}
+          toolbar={{
+            sections: [title]
           }}
         />
       </Card>
