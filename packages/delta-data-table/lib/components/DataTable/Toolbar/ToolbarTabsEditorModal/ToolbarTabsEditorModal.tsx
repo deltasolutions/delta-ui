@@ -51,7 +51,7 @@ export const ToolbarTabsEditorModal = ({
     const { name, ...rest } = initialTab;
     const randomId = Math.random().toString().slice(-4);
     setItems((prior: ItemDef[]) =>
-      prior.concat([{ rest, name: '', id: randomId }])
+      prior.concat([{ ...rest, name: '', id: randomId }])
     );
   }, []);
   const renderItem = useCallback(
