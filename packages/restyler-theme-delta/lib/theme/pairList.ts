@@ -20,6 +20,7 @@ export const pairList: BasicTheme = {
         padding: 0,
         display: 'flex',
         justifyContent: 'space-between',
+        alignItems: 'center',
         gap: 3,
         '&:not(:first-of-type)': {
           marginTop: 3,
