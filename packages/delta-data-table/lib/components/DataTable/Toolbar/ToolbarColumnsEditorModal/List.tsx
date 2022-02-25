@@ -48,6 +48,17 @@ export const List = ({
         : items,
     [items, debouncedLowercasedQuery]
   );
+  const content = useMemo(
+    () =>
+      filtered.length > 0 ? (
+        filtered.map((v, i) => (
+          <Item key={v.id} options={v} index={i} onMove={moveItem} />
+        ))
+      ) : (
+        <IoFolderOpenOutline />
+      ),
+    [filtered, moveItem]
+  );
   const itemIdSet = useMemo(() => new Set(items.map(v => v.id)), [items]);
   const [isDroppable, dropRef] = useDrop<
     Pick<ItemProps, 'options' | 'index'>,
@@ -72,13 +83,7 @@ export const List = ({
         </ThemedListQuery>
       )}
       <ThemedListContent ref={dropRef} isDroppable={isDroppable}>
-        {filtered.length > 0 ? (
-          filtered.map((v, i) => (
-            <Item key={v.id} options={v} index={i} onMove={moveItem} />
-          ))
-        ) : (
-          <IoFolderOpenOutline />
-        )}
+        {content}
       </ThemedListContent>
     </ThemedList>
   );
