@@ -4,5 +4,5 @@ export interface DataTableColumnOptions<T extends object> {
   key: string;
   header?: string;
   width?: number;
-  render?: (datum: T) => ReactNode;
+  render?: (datum: T, index: number) => ReactNode;
 }
