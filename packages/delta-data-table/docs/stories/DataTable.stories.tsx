@@ -1,8 +1,6 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { useMemo, useState } from 'react';
-import { IoBalloonOutline } from 'react-icons/io5';
-import { Box, Button, Card, clone } from 'restyler';
+import { Box, Card } from 'restyler';
 import {
   DataTable,
   useDataTableManager,
@@ -77,6 +75,34 @@ export const SimpleOne = () => {
           toolbar={{
             sections: [title]
           }}
+        />
+      </Card>
+    </Box>
+  );
+};
+
+export const ScrollTo = () => {
+  const options = useMock({
+    columnCount: 10,
+    rowCount: 50,
+    shouldLoadChunks: false
+  });
+  const manager = useDataTableManager({
+    ...options
+  });
+  return (
+    <Box sx={{ padding: 5, minHeight: '100vh' }}>
+      <Card sx={{ overflow: 'hidden' }}>
+        <DataTable
+          ref={list => {
+            if (!list) {
+              return;
+            }
+            requestAnimationFrame(() => {
+              list.scrollTo(500);
+            });
+          }}
+          manager={manager}
         />
       </Card>
     </Box>

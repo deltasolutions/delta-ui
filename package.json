@@ -28,6 +28,7 @@
     "@types/node": "^16.10.3",
     "@types/react": "^16.14.8",
     "@types/react-dom": "^16.9.13",
+    "@types/react-window": "^1.8.5",
     "@typescript-eslint/eslint-plugin": "^4.28.0",
     "@typescript-eslint/parser": "^4.28.0",
     "ajv": "^8.8.2",
