@@ -16,7 +16,7 @@ export interface ItemProps {
   onMove?: (dragIndex: number, hoverIndex: number) => void;
 }
 
-export const Item = ({ options: options, index, onMove }: ItemProps) => {
+export const Item = ({ options, index, onMove }: ItemProps) => {
   const ThemedItem = useThemed(
     'div',
     'dataTable.toolbar.columnsEditor.list.item'
