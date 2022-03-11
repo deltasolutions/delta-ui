@@ -43,10 +43,10 @@ export const ToolbarColumnsEditorModal = ({
   const [exclusionItems, setExclusionItems] = useState<ItemOptions[]>(() =>
     columns
       .filter(v => columnExclusions?.includes(v.key))
-      .map(v => ({ ...v, id: hash(v) }))
+      .map(v => ({ ...v, id: v.key }))
   );
   const [useItems, setUseItems] = useState<ItemOptions[]>(() =>
-    coercedColumns.map(v => ({ ...v, id: hash(v) }))
+    coercedColumns.map(v => ({ ...v, id: v.key }))
   );
   const traverseItem = useCallback(
     (
@@ -72,12 +72,12 @@ export const ToolbarColumnsEditorModal = ({
     setExclusionItems(
       columns
         .filter(v => initialExclusionSet.has(v.key))
-        .map(v => ({ ...v, id: hash(v) }))
+        .map(v => ({ ...v, id: v.key }))
     );
     setUseItems(
       columns
         .filter(v => !initialExclusionSet.has(v.key))
-        .map(v => ({ ...v, id: hash(v) }))
+        .map(v => ({ ...v, id: v.key }))
     );
   }, [exclusionItems, useItems, handleClose]);
   const handleSave = useCallback(() => {

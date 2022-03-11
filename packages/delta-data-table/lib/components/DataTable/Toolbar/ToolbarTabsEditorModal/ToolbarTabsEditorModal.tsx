@@ -25,7 +25,7 @@ export const ToolbarTabsEditorModal = ({
   const [t] = useTranslation('common');
   const ThemedList = useThemed('div', 'dataTable.toolbar.tabsEditor.list');
   const [items, setItems] = useState<ItemDef[]>(() =>
-    layout.tabs.map(v => ({ ...v, id: hash(v) }))
+    layout.tabs.map(v => ({ ...v, id: v.name }))
   );
   const canAdd = items.length < 6;
   const canRemove = items.length > 1;
