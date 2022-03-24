@@ -3,6 +3,7 @@ import { BasicTheme } from 'restyler';
 const dimmed = 'rgba(0, 0, 0, 0.25)';
 
 const selectionStyle = ({ isActive }) => ({
+  textDecoration: 'none',
   backgroundColor: isActive ? dimmed : undefined
 });
 
@@ -14,6 +15,7 @@ const titleStyle = ({ isActive }: { [key: string]: any }) => ({
   color: 'inherit',
   fontWeight: 300,
   fontSize: 2,
+  textDecoration: 'none',
   textTransform: 'uppercase',
   letterSpacing: '0.06em',
   cursor: 'pointer',
