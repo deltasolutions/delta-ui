@@ -8,9 +8,7 @@ import {
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  Box,
   Button,
-  clone,
   hash,
   Heading,
   ModalBody,
@@ -45,10 +43,10 @@ export const ToolbarColumnsEditorModal = ({
   const [exclusionItems, setExclusionItems] = useState<ItemOptions[]>(() =>
     columns
       .filter(v => columnExclusions?.includes(v.key))
-      .map(v => ({ ...clone(v), id: hash(v) }))
+      .map(v => ({ ...v, id: v.key }))
   );
   const [useItems, setUseItems] = useState<ItemOptions[]>(() =>
-    coercedColumns.map(v => ({ ...clone(v), id: hash(v) }))
+    coercedColumns.map(v => ({ ...v, id: v.key }))
   );
   const traverseItem = useCallback(
     (
@@ -74,12 +72,12 @@ export const ToolbarColumnsEditorModal = ({
     setExclusionItems(
       columns
         .filter(v => initialExclusionSet.has(v.key))
-        .map(v => ({ ...clone(v), id: hash(v) }))
+        .map(v => ({ ...v, id: v.key }))
     );
     setUseItems(
       columns
         .filter(v => !initialExclusionSet.has(v.key))
-        .map(v => ({ ...clone(v), id: hash(v) }))
+        .map(v => ({ ...v, id: v.key }))
     );
   }, [exclusionItems, useItems, handleClose]);
   const handleSave = useCallback(() => {

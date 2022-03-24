@@ -42,8 +42,10 @@ export const List = ({
   const filtered = useMemo(
     () =>
       debouncedLowercasedQuery
-        ? items.filter(v =>
-            v.header?.toLocaleLowerCase().includes(debouncedLowercasedQuery)
+        ? items.filter(
+            v =>
+              typeof v.header === 'string' &&
+              v.header.toLocaleLowerCase().includes(debouncedLowercasedQuery)
           )
         : items,
     [items, debouncedLowercasedQuery]
