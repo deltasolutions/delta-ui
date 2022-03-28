@@ -122,21 +122,17 @@ const menu = (
 );
 
 const LocaleButton = () => {
-  const { openModal } = useModal();
+  const openModal = useModal(
+    props => (
+      <LocaleModal
+        locales={[{ title: 'English' }, { title: 'Русский' }]}
+        {...props}
+      />
+    ),
+    { deps: [] }
+  );
   return (
-    <Button
-      onClick={() =>
-        openModal({
-          kind: 'small',
-          render: props => (
-            <LocaleModal
-              locales={[{ title: 'English' }, { title: 'Русский' }]}
-              {...props}
-            />
-          )
-        })
-      }
-    >
+    <Button onClick={() => openModal()}>
       <IoLanguage />
     </Button>
   );

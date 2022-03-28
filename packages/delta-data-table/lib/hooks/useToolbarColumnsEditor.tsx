@@ -18,19 +18,13 @@ export const useToolbarColumnsEditor = () => {
 
 const Toggler = () => {
   const [t] = useTranslation('common');
-  const { openModal } = useModal();
   const { manager } = useContext(DataTableContext);
+  const openModal = useModal(
+    props => <ToolbarColumnsEditorModal manager={manager} {...props} />,
+    { deps: [manager] }
+  );
   return (
-    <Button
-      kind="icon"
-      onClick={() =>
-        openModal({
-          render: props => (
-            <ToolbarColumnsEditorModal manager={manager} {...props} />
-          )
-        })
-      }
-    >
+    <Button kind="icon" onClick={() => openModal()}>
       <Tooltip content={t('sections.columnsEditor')}>
         <Box>
           <BsLayoutThreeColumns />

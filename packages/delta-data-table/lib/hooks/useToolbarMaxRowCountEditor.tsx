@@ -18,20 +18,16 @@ export const useToolbarMaxRowCountEditor = () => {
 
 const Toggler = () => {
   const [t] = useTranslation('common');
-  const { openModal } = useModal();
   const { manager } = useContext(DataTableContext);
+  const openModal = useModal(
+    props => <ToolbarMaxRowCountEditorModal manager={manager} {...props} />,
+    {
+      deps: [manager],
+      kind: 'small'
+    }
+  );
   return (
-    <Button
-      kind="icon"
-      onClick={() =>
-        openModal({
-          kind: 'small',
-          render: props => (
-            <ToolbarMaxRowCountEditorModal manager={manager} {...props} />
-          )
-        })
-      }
-    >
+    <Button kind="icon" onClick={() => openModal()}>
       <Tooltip content={t('sections.maxRowCountEditor')}>
         <Box>
           <BsViewList />

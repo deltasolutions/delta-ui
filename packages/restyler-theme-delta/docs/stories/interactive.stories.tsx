@@ -41,34 +41,29 @@ export const Buttons = () => {
 };
 
 export const Modals = () => {
-  const { openModal, openQuestion } = R.useModal();
-  const handleModal = useCallback(
-    () =>
-      openModal({
-        render: () => (
-          <Fragment>
-            <R.ModalHeader>Modal Header</R.ModalHeader>
-            <R.ModalBody>Modal Body</R.ModalBody>
-            <R.ModalFooter>Modal Footer</R.ModalFooter>
-          </Fragment>
-        )
-      }),
-    [openModal]
+  const openModal = R.useModal(
+    () => (
+      <Fragment>
+        <R.ModalHeader>Modal Header</R.ModalHeader>
+        <R.ModalBody>Modal Body</R.ModalBody>
+        <R.ModalFooter>Modal Footer</R.ModalFooter>
+      </Fragment>
+    ),
+    { deps: [] }
   );
-  const handleQuestion = useCallback(
-    () =>
-      openQuestion({
-        heading: 'Question Heading',
-        content: 'Question content here.'
-      }),
-    [openQuestion]
+  const openQuestion = R.useQuestion(
+    {
+      heading: 'Question Heading',
+      content: 'Question content here.'
+    },
+    { deps: [] }
   );
   return (
     <R.Box sx={{ display: 'flex', gap: 2 }}>
-      <R.Button kind="primary" onClick={handleModal}>
+      <R.Button kind="primary" onClick={() => openModal()}>
         Open Modal
       </R.Button>
-      <R.Button kind="primary" onClick={handleQuestion}>
+      <R.Button kind="primary" onClick={() => openQuestion()}>
         Open Question
       </R.Button>
     </R.Box>
@@ -76,7 +71,7 @@ export const Modals = () => {
 };
 
 export const Notifications = () => {
-  const { openNotification } = R.useNotification();
+  const openNotification = R.useNotification();
   return (
     <R.Button
       kind="primary"

@@ -18,20 +18,16 @@ export const useToolbarTabsEditor = () => {
 
 const Toggler = () => {
   const [t] = useTranslation('common');
-  const { openModal } = useModal();
   const { manager } = useContext(DataTableContext);
+  const openModal = useModal(
+    props => <ToolbarTabsEditorModal manager={manager} {...props} />,
+    {
+      deps: [manager],
+      kind: 'medium'
+    }
+  );
   return (
-    <Button
-      kind="icon"
-      onClick={() =>
-        openModal({
-          kind: 'medium',
-          render: props => (
-            <ToolbarTabsEditorModal manager={manager} {...props} />
-          )
-        })
-      }
-    >
+    <Button kind="icon" onClick={() => openModal()}>
       <Tooltip content={t('sections.tabsEditor')}>
         <Box>
           <BsWindow />

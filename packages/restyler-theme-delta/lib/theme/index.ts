@@ -7,6 +7,7 @@ import { checkbox } from './checkbox';
 import { collapse } from './collapse';
 import { dataTable } from './dataTable';
 import { defaults } from './defaults';
+import { drop } from './drop';
 import { feed } from './feed';
 import { file } from './file';
 import { form } from './form';
@@ -117,6 +118,7 @@ export const theme: BasicTheme = {
     collapse,
     dataTable,
     defaults,
+    drop,
     feed,
     file,
     form,
