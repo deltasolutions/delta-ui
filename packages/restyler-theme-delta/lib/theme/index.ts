@@ -1,5 +1,6 @@
 import { BasicTheme } from 'restyler';
 import { anchor } from './anchor';
+import { autocomplete } from './autocomplete';
 import { box } from './box';
 import { button } from './button';
 import { card } from './card';
@@ -13,6 +14,7 @@ import { file } from './file';
 import { form } from './form';
 import { heading } from './heading';
 import { input } from './input';
+import { inputable } from './inputable';
 import { layer } from './layer';
 import { layout } from './layout';
 import { loadScreen } from './loadScreen';
@@ -111,6 +113,7 @@ export const theme: BasicTheme = {
   },
   components: {
     anchor,
+    autocomplete,
     box,
     button,
     card,
@@ -124,6 +127,7 @@ export const theme: BasicTheme = {
     form,
     heading,
     input,
+    inputable,
     layer,
     layout,
     loadScreen,

@@ -11,6 +11,12 @@ export default {
 export const Input = () => <R.Input />;
 Input.decorators = [compact('300px')];
 
+export const Inputable = () => <R.Inputable />;
+Inputable.decorators = [compact('300px')];
+
+export const Autocomplete = () => <R.Autocomplete getOptions={() => []} />;
+Autocomplete.decorators = [compact('300px')];
+
 export const TextArea = () => <R.TextArea />;
 TextArea.decorators = [compact('300px')];
 
@@ -20,6 +26,7 @@ FormField.decorators = [compact('300px')];
 export const Form = () => {
   const [disabled, setDisabled] = useState(false);
   const [readOnly, setReadOnly] = useState(false);
+  const manager = R.useFormManager();
   return (
     <R.Box>
       <R.Box sx={{ mb: 3 }}>
@@ -30,7 +37,7 @@ export const Form = () => {
           ReadOnly
         </R.Checkbox>
       </R.Box>
-      <R.Form disabled={disabled} readOnly={readOnly}>
+      <R.Form disabled={disabled} readOnly={readOnly} manager={manager}>
         <R.FormGrid>
           <R.FormField label="A" name="a" />
           <R.FormField label="A" name="b">
@@ -56,8 +63,19 @@ export const Form = () => {
           <R.FormField label="F" name="f">
             <R.TextArea />
           </R.FormField>
+          <R.FormField label="G" name="g">
+            <R.Autocomplete
+              getOptions={v => {
+                const x = Math.random().toString().slice(-4);
+                return [{ key: x, query: v + '/' + x }];
+              }}
+            />
+          </R.FormField>
         </R.FormGrid>
       </R.Form>
+      <R.Box sx={{ mt: 3 }}>
+        <pre>{JSON.stringify(manager.values, null, 2)}</pre>
+      </R.Box>
     </R.Box>
   );
 };

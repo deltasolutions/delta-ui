@@ -32,7 +32,7 @@ export const createInputLikeTheme = ({
       borderColor: color,
       ...(canBeFocused
         ? createConditionalStyle({
-            selector: '&:focus',
+            selector: '&:focus, &:focus-within',
             isForced: props.focused,
             style: {
               border: '1px solid',
