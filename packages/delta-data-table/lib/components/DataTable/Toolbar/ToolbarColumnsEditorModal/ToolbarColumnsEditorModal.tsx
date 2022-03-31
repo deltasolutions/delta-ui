@@ -59,13 +59,24 @@ export const ToolbarColumnsEditorModal = ({
     },
     []
   );
-  const moveUseItem = useCallback((dragIndex: number, hoverIndex: number) => {
-    setUseItems((prior: ItemOptions[]) => {
-      const removed = prior.splice(dragIndex, 1).pop()!;
-      prior.splice(hoverIndex, 0, removed);
-      return prior.slice();
-    });
-  }, []);
+  const handleExclusionItemTraverse = useCallback(
+    (item: ItemOptions) => traverseItem(item, setExclusionItems, setUseItems),
+    []
+  );
+  const handleUseItemTraverse = useCallback(
+    (item: ItemOptions) => traverseItem(item, setUseItems, setExclusionItems),
+    []
+  );
+  const handleUseItemMove = useCallback(
+    (dragIndex: number, hoverIndex: number) => {
+      setUseItems((prior: ItemOptions[]) => {
+        const removed = prior.splice(dragIndex, 1).pop()!;
+        prior.splice(hoverIndex, 0, removed);
+        return prior.slice();
+      });
+    },
+    []
+  );
   const canSave = useItems.length > 0;
   const handleReset = useCallback(() => {
     const initialExclusionSet = new Set(initialTab.columnExclusions);
@@ -96,16 +107,18 @@ export const ToolbarColumnsEditorModal = ({
       <ModalBody>
         <ThemedColumnsEditor>
           <List
+            isSorted
             title={t('sections.unusedColumns')}
-            hasQuery
             items={exclusionItems}
-            acceptItem={v => traverseItem(v, setUseItems, setExclusionItems)}
+            traverseDirection="right"
+            onItemTraverse={handleExclusionItemTraverse}
           />
           <List
             title={t('sections.usedColumns')}
             items={useItems}
-            moveItem={moveUseItem}
-            acceptItem={v => traverseItem(v, setExclusionItems, setUseItems)}
+            traverseDirection="left"
+            onItemTraverse={handleUseItemTraverse}
+            onItemMove={handleUseItemMove}
           />
         </ThemedColumnsEditor>
       </ModalBody>

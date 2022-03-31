@@ -54,9 +54,9 @@ export const columnsEditor: BasicTheme = {
             py: 2,
             borderRadius: 2,
             display: 'flex',
+            justifyContent: 'space-between',
             gap: 2,
-            backgroundColor: 'secondary',
-            cursor: 'move'
+            backgroundColor: 'secondary'
           }
         }
       }

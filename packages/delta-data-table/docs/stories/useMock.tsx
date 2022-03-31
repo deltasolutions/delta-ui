@@ -30,7 +30,15 @@ export const useMock = ({
     await new Promise<void>(resolve => setTimeout(resolve, 1000));
     return { data: generate(), hasNextChunk: true };
   }, [generate]);
-  const columns = useMemo(() => keys.map(key => ({ key, header: key })), []);
+  const columns = useMemo(
+    () =>
+      keys.map(key => ({
+        key,
+        header: key,
+        description: `Description of ${key.toLocaleLowerCase()}`
+      })),
+    []
+  );
   const data = useMemo(generate, []);
   return useMemo(
     () => ({

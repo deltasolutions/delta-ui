@@ -1,7 +1,9 @@
 import { jsx } from '@theme-ui/core';
+import { Tooltip } from 'delta-tooltip';
 import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
-import { useThemed } from 'restyler';
+import { IoMove } from 'react-icons/io5';
+import { Box, Button, useThemed } from 'restyler';
 import { DataTableColumnOptions } from '../../../../models';
 
 export const itemType = Symbol('columnsEditorItem');
@@ -13,15 +15,24 @@ export interface ItemOptions extends DataTableColumnOptions<object> {
 export interface ItemProps {
   options: ItemOptions;
   index: number;
+  traverseDirection?: 'left' | 'right';
+  onTraverse?: (item: ItemOptions) => void;
   onMove?: (dragIndex: number, hoverIndex: number) => void;
 }
 
-export const Item = ({ options, index, onMove }: ItemProps) => {
+export const Item = ({
+  options,
+  index,
+  traverseDirection = 'right',
+  onTraverse,
+  onMove
+}: ItemProps) => {
   const ThemedItem = useThemed(
     'div',
     'dataTable.toolbar.columnsEditor.list.item'
   );
   const ref = useRef<HTMLDivElement>(null);
+  const handleRef = useRef<HTMLButtonElement>(null);
   const [_, drop] = useDrop<Pick<ItemProps, 'options' | 'index'>, void, void>({
     accept: itemType,
     hover(item, monitor) {
@@ -48,19 +59,34 @@ export const Item = ({ options, index, onMove }: ItemProps) => {
       item.index = hoverIndex;
     }
   });
-  const [{ isDragging }, drag] = useDrag({
-    type: itemType,
-    item: () => {
-      return { options, index };
+  const [{ isDragging }, drag, dragPreview] = useDrag(
+    {
+      type: itemType,
+      canDrag: !!onMove,
+      item: () => ({ options, index }),
+      collect: (monitor: any) => ({ isDragging: monitor.isDragging() })
     },
-    collect: (monitor: any) => ({
-      isDragging: monitor.isDragging()
-    })
-  });
-  drag(drop(ref));
+    [!!onMove, options, index]
+  );
+  dragPreview(drop(ref));
+  drag(handleRef);
   return (
-    <ThemedItem ref={ref} style={{ opacity: isDragging ? 0 : 1 }}>
-      {options.header ?? options.key}
+    <ThemedItem
+      ref={ref}
+      style={{
+        opacity: isDragging ? 0 : 1,
+        cursor: traverseDirection === 'right' ? 'e-resize' : 'w-resize'
+      }}
+      onClick={() => onTraverse?.(options)}
+    >
+      <Tooltip content={options.description} disabled={!options.description}>
+        <Box>{options.header ?? options.key}</Box>
+      </Tooltip>
+      {onMove && (
+        <Button ref={handleRef} kind="icon" sx={{ cursor: 'move' }}>
+          <IoMove />
+        </Button>
+      )}
     </ThemedItem>
   );
 };

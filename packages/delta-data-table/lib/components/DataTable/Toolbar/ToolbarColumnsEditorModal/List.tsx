@@ -10,17 +10,19 @@ import { Item, ItemOptions, ItemProps, itemType } from './Item';
 export interface ListProps extends BoxProps {
   title: string;
   items: ItemOptions[];
-  acceptItem: (item: ItemOptions) => void;
-  moveItem?: ItemProps['onMove'];
-  hasQuery?: boolean;
+  isSorted?: boolean;
+  traverseDirection?: ItemProps['traverseDirection'];
+  onItemTraverse?: ItemProps['onTraverse'];
+  onItemMove?: ItemProps['onMove'];
 }
 
 export const List = ({
   title,
   items,
-  acceptItem,
-  moveItem,
-  hasQuery
+  isSorted,
+  traverseDirection,
+  onItemTraverse,
+  onItemMove
 }: ListProps) => {
   const [t] = useTranslation('common');
   const useThemed = useThemedFactory<{ isDroppable?: boolean }>();
@@ -44,8 +46,16 @@ export const List = ({
       debouncedLowercasedQuery
         ? items.filter(
             v =>
-              typeof v.header === 'string' &&
-              v.header.toLocaleLowerCase().includes(debouncedLowercasedQuery)
+              (typeof v.header === 'string' &&
+                v.header
+                  .toLocaleLowerCase()
+                  .includes(debouncedLowercasedQuery)) ||
+              (typeof v.description === 'string' &&
+                v.description
+                  .toLocaleLowerCase()
+                  .includes(debouncedLowercasedQuery)) ||
+              (typeof v.query === 'string' &&
+                v.query.toLocaleLowerCase().includes(debouncedLowercasedQuery))
           )
         : items,
     [items, debouncedLowercasedQuery]
@@ -53,40 +63,41 @@ export const List = ({
   const content = useMemo(
     () =>
       filtered.length > 0 ? (
-        filtered.map((v, i) => (
-          <Item key={v.id} options={v} index={i} onMove={moveItem} />
+        (isSorted
+          ? filtered.sort((a, b) =>
+              typeof a.header === 'string' && typeof b.header === 'string'
+                ? a.header.localeCompare(b.header)
+                : typeof a.query === 'string' && typeof b.query === 'string'
+                ? a.query.localeCompare(b.query)
+                : 0
+            )
+          : filtered
+        ).map((v, i) => (
+          <Item
+            key={v.id}
+            options={v}
+            index={i}
+            traverseDirection={traverseDirection}
+            onTraverse={onItemTraverse}
+            onMove={onItemMove}
+          />
         ))
       ) : (
         <IoFolderOpenOutline />
       ),
-    [filtered, moveItem]
+    [filtered, isSorted, traverseDirection, onItemTraverse, onItemMove]
   );
-  const itemIdSet = useMemo(() => new Set(items.map(v => v.id)), [items]);
-  const [isDroppable, dropRef] = useDrop<
-    Pick<ItemProps, 'options' | 'index'>,
-    void,
-    boolean
-  >({
-    accept: itemType,
-    drop: v => acceptItem(v.options),
-    canDrop: v => !itemIdSet.has(v.options.id),
-    collect: monitor => Boolean(monitor.canDrop() && monitor.isOver())
-  });
   return (
     <ThemedList>
       <ThemedListTitle>{title}</ThemedListTitle>
-      {hasQuery && (
-        <ThemedListQuery>
-          <Input
-            value={query}
-            placeholder={t('labels.search')}
-            onChange={(v: string) => setQuery(v)}
-          />
-        </ThemedListQuery>
-      )}
-      <ThemedListContent ref={dropRef} isDroppable={isDroppable}>
-        {content}
-      </ThemedListContent>
+      <ThemedListQuery>
+        <Input
+          value={query}
+          placeholder={t('labels.search')}
+          onChange={(v: string) => setQuery(v)}
+        />
+      </ThemedListQuery>
+      <ThemedListContent>{content}</ThemedListContent>
     </ThemedList>
   );
 };

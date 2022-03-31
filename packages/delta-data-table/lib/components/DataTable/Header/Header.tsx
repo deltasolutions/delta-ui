@@ -1,4 +1,5 @@
 import { jsx } from '@theme-ui/core';
+import { Tooltip } from 'delta-tooltip';
 import { Fragment, useContext } from 'react';
 import { useDrop } from 'react-dnd';
 import { useThemed } from 'restyler';
@@ -49,14 +50,16 @@ export const Header = () => {
     >
       {coercedColumns.map((v, i) => (
         <Fragment key={v.key}>
-          <TableCell
-            style={{
-              display: 'inline-block',
-              width: getColumnWidth(v) + 'px'
-            }}
-          >
-            {v.header}
-          </TableCell>
+          <Tooltip content={v.description} disabled={!v.description}>
+            <TableCell
+              style={{
+                display: 'inline-block',
+                width: getColumnWidth(v) + 'px'
+              }}
+            >
+              {v.header}
+            </TableCell>
+          </Tooltip>
           <Handle index={i} />
         </Fragment>
       ))}
