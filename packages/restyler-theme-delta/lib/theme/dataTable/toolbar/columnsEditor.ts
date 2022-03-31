@@ -9,6 +9,7 @@ export const columnsEditor: BasicTheme = {
     list: {
       style: {
         flex: '1 1 100%',
+        minWidth: 0,
         display: 'flex',
         flexDirection: 'column',
         gap: 2,
@@ -57,6 +58,16 @@ export const columnsEditor: BasicTheme = {
             justifyContent: 'space-between',
             gap: 2,
             backgroundColor: 'secondary'
+          },
+          components: {
+            content: {
+              style: {
+                flex: '0 1 auto',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap'
+              }
+            }
           }
         }
       }

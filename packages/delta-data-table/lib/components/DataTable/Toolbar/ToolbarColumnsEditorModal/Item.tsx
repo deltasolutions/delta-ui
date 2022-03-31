@@ -31,6 +31,10 @@ export const Item = ({
     'div',
     'dataTable.toolbar.columnsEditor.list.item'
   );
+  const ThemedItemContent = useThemed(
+    'div',
+    'dataTable.toolbar.columnsEditor.list.item.content'
+  );
   const ref = useRef<HTMLDivElement>(null);
   const handleRef = useRef<HTMLButtonElement>(null);
   const [_, drop] = useDrop<Pick<ItemProps, 'options' | 'index'>, void, void>({
@@ -80,7 +84,7 @@ export const Item = ({
       onClick={() => onTraverse?.(options)}
     >
       <Tooltip content={options.description} disabled={!options.description}>
-        <Box>{options.header ?? options.key}</Box>
+        <ThemedItemContent>{options.header ?? options.key}</ThemedItemContent>
       </Tooltip>
       {onMove && (
         <Button ref={handleRef} kind="icon" sx={{ cursor: 'move' }}>
