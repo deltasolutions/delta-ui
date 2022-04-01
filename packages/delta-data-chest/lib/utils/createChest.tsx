@@ -5,6 +5,7 @@ export const createChest = <Data extends unknown>(
   initializer: ChestInitializer<Data>
 ): Chest<Data> => {
   const dataHolder = {
+    token: Math.random().toString().slice(-8),
     current: initializer instanceof Function ? initializer() : initializer
   };
   const updaters = new Set<() => void>();
@@ -15,7 +16,9 @@ export const createChest = <Data extends unknown>(
       return () => {
         updaters.delete(update);
       };
-    }, []);
+      // When actual chest changes, one should re-add
+      // it to new updaters set and remove it from the old one.
+    }, [updaters]);
     return dataHolder.current;
   };
   const get: Chest<Data>['get'] = () => dataHolder.current;

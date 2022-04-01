@@ -38,7 +38,7 @@ export const GlobalChests = () => {
       todoResource: createChest({})
     });
   }, []);
-  // Using in various components.ß
+  // Using in various components.
   const { todoResource } = appChests.use();
   const todo = todoResource.use();
   return (
