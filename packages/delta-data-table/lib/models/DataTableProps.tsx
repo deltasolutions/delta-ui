@@ -6,6 +6,7 @@ export interface DataTableProps<T extends object> extends BoxProps {
   getRowProps?: (datum: T, index: number) => BoxProps;
   rowHeight?: number;
   maxHeight?: number;
+  overscanCount?: number;
   toolbar?: {
     sections: {
       id: string;

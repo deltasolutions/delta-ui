@@ -20,6 +20,7 @@ const UntypedDataTable = forwardRef<FixedSizeList, DataTableProps<object>>(
       getRowProps,
       rowHeight: forcedRowHeight,
       maxHeight,
+      overscanCount = 5,
       toolbar,
       manager,
       manager: {
@@ -78,13 +79,21 @@ const UntypedDataTable = forwardRef<FixedSizeList, DataTableProps<object>>(
           innerElementType={InnerContainer}
           itemCount={listRowCount}
           itemSize={rowHeight}
-          overscanCount={5}
+          overscanCount={overscanCount}
           width="100%"
         >
           {renderRow}
         </FixedSizeList>
       ),
-      [ref, listHeight, OuterContainer, listRowCount, rowHeight, renderRow]
+      [
+        ref,
+        overscanCount,
+        listHeight,
+        OuterContainer,
+        listRowCount,
+        rowHeight,
+        renderRow
+      ]
     );
     const contextValue = {
       manager,
