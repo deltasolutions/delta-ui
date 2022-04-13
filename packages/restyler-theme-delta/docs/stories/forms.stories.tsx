@@ -14,8 +14,10 @@ Input.decorators = [compact('300px')];
 export const Inputable = () => <R.Inputable />;
 Inputable.decorators = [compact('300px')];
 
-export const Autocomplete = () => <R.Autocomplete getOptions={() => []} />;
-Autocomplete.decorators = [compact('300px')];
+export const TextCompletion = () => (
+  <R.TextCompletion getOptions={() => [{ value: 'x' }]} />
+);
+TextCompletion.decorators = [compact('300px')];
 
 export const TextArea = () => <R.TextArea />;
 TextArea.decorators = [compact('300px')];
@@ -64,10 +66,10 @@ export const Form = () => {
             <R.TextArea />
           </R.FormField>
           <R.FormField label="G" name="g">
-            <R.Autocomplete
+            <R.TextCompletion
               getOptions={v => {
                 const x = Math.random().toString().slice(-4);
-                return [{ key: x, query: v + '/' + x }];
+                return [{ value: v + '/' + x }];
               }}
             />
           </R.FormField>
