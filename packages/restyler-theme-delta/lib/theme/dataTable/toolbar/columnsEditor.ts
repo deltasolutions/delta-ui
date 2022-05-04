@@ -13,7 +13,7 @@ export const columnsEditor: BasicTheme = {
         display: 'flex',
         flexDirection: 'column',
         gap: 2,
-        height: '300px'
+        height: 'min(calc(100vh - 150px), 500px)'
       },
       components: {
         title: {

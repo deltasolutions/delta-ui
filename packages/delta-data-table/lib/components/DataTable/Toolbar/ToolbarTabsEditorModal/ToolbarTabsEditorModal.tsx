@@ -3,12 +3,16 @@ import { Fragment, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Button,
-  hash,
+  Form,
+  FormField,
   Heading,
   ModalBody,
   ModalFooter,
   ModalHeader,
   ModalRendererProps,
+  Select,
+  SelectOption,
+  useFormManager,
   useThemed
 } from 'restyler';
 import { DataTableManager } from '../../../../models';
@@ -24,6 +28,7 @@ export const ToolbarTabsEditorModal = ({
 }: ToolbarTabsEditorModalProps) => {
   const [t] = useTranslation('common');
   const ThemedList = useThemed('div', 'dataTable.toolbar.tabsEditor.list');
+  const formManager = useFormManager({ values: { templateTab: initialTab } });
   const [items, setItems] = useState<ItemDef[]>(() =>
     layout.tabs.map(v => ({ ...v, id: v.name }))
   );
@@ -48,12 +53,12 @@ export const ToolbarTabsEditorModal = ({
     );
   }, []);
   const addItem = useCallback(() => {
-    const { name, ...rest } = initialTab;
-    const randomId = Math.random().toString().slice(-4);
+    const { name, ...rest } = formManager.values.templateTab ?? initialTab;
+    const randomId = Math.random().toString().slice(-6);
     setItems((prior: ItemDef[]) =>
       prior.concat([{ ...rest, name: '', id: randomId }])
     );
-  }, []);
+  }, [formManager.values]);
   const renderItem = useCallback(
     (item: ItemDef, index: number) => {
       return (
@@ -90,6 +95,23 @@ export const ToolbarTabsEditorModal = ({
       </ModalHeader>
       <ModalBody>
         <ThemedList>{items.map((card, i) => renderItem(card, i))}</ThemedList>
+        <Form manager={formManager} sx={{ mt: 3 }}>
+          <FormField name="templateTab" label={t('labels.templateTab')}>
+            <Select>
+              {[
+                <SelectOption key="default" value={initialTab}>
+                  {t('labels.initialTab')}
+                </SelectOption>
+              ].concat(
+                Object.values(layout.tabs).map(v => (
+                  <SelectOption key={v.name} value={v}>
+                    {v.name}
+                  </SelectOption>
+                ))
+              )}
+            </Select>
+          </FormField>
+        </Form>
       </ModalBody>
       <ModalFooter>
         <Button

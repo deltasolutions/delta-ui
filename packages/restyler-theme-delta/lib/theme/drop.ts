@@ -2,7 +2,7 @@ import { BasicTheme } from 'restyler';
 
 export const drop: BasicTheme = {
   style: ({ isVisible, isEntering }) => ({
-    zIndex: 9000,
+    zIndex: 9100,
     borderRadius: 2,
     boxShadow: 2,
     backgroundColor: 'white',
