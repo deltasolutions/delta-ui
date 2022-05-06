@@ -1,7 +1,9 @@
 import { jsx } from '@theme-ui/core';
 import { HTMLAttributes } from 'react';
 import { Box } from '../Box';
+
 export interface CardBodyProps extends HTMLAttributes<HTMLDivElement> {}
+
 export const CardBody = ({ children, ...rest }: CardBodyProps) => {
   return (
     <Box

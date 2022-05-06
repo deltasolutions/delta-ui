@@ -1,15 +1,17 @@
 import { jsx } from '@theme-ui/core';
-import { Children, cloneElement, HTMLAttributes, ReactElement } from 'react';
+import {
+  Children,
+  cloneElement,
+  HTMLAttributes,
+  ReactElement,
+  ReactNode
+} from 'react';
 import { FaAngleRight } from 'react-icons/fa';
 import { Box } from '../Box';
-export interface BreadCrumbsProps extends HTMLAttributes<HTMLDivElement> {
-  activeId: string;
-}
-export const BreadCrumbs = ({
-  children,
-  activeId,
-  ...rest
-}: BreadCrumbsProps) => {
+
+export interface BreadCrumbsProps extends HTMLAttributes<HTMLDivElement> {}
+
+export const BreadCrumbs = ({ children, ...rest }: BreadCrumbsProps) => {
   return (
     <Box
       sx={{
@@ -19,22 +21,30 @@ export const BreadCrumbs = ({
       }}
       {...rest}
     >
-      {Children.map(children, (child: ReactElement<any, any>, index) => {
-        return cloneElement(child, {
-          isActive: activeId === child.props.id
-        });
-      })?.reduce(
-        (prev, curr, index) =>
-          [
-            prev,
-            <FaAngleRight
-              sx={{ whiteSpace: 'nowrap', minHeight: '24px', minWidth: '24px' }}
-              key={index}
-              size={24}
-            />,
-            curr
-          ] as any
-      )}
+      {Children.map(children, (child: ReactElement<any, any>, index) =>
+        cloneElement(child, {
+          isActive: index === Children.count(children) - 1
+        })
+      )
+        ?.reduce(
+          (p, v, i) => [
+            p,
+            i > 0 ? (
+              <FaAngleRight
+                sx={{
+                  whiteSpace: 'nowrap',
+                  minHeight: '24px',
+                  minWidth: '24px'
+                }}
+                key={i}
+                size={24}
+              />
+            ) : null,
+            v
+          ],
+          [] as ReactNode[]
+        )
+        .filter(Boolean)}
     </Box>
   );
 };

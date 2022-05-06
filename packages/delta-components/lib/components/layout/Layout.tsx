@@ -8,7 +8,8 @@ export const Layout = ({ ...rest }: LayoutProps) => {
     <BackgroundBase
       sx={{
         display: 'flex',
-        width: '100vw'
+        width: '100vw',
+        minHeight: '100%'
       }}
       {...rest}
     />

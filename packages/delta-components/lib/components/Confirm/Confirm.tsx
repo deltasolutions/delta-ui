@@ -2,7 +2,9 @@ import { keyframes } from '@emotion/react';
 import { jsx } from '@theme-ui/core';
 import { forwardRef } from 'react';
 import { Box, BoxProps } from '../Box';
+
 export interface ConfirmProps extends BoxProps {}
+
 export const Confirm = forwardRef<HTMLDivElement, ConfirmProps>(
   ({ children, ...rest }: ConfirmProps, ref) => {
     return (
@@ -25,6 +27,7 @@ export const Confirm = forwardRef<HTMLDivElement, ConfirmProps>(
     );
   }
 );
+
 const animation = keyframes`
   from {
     opacity: 0;

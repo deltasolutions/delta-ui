@@ -1,7 +1,9 @@
 import { jsx } from '@theme-ui/core';
 import { HTMLAttributes } from 'react';
 import { Box } from '../Box';
+
 export interface CardHeadingProps extends HTMLAttributes<HTMLDivElement> {}
+
 export const CardHeading = ({ children, ...rest }: CardHeadingProps) => {
   return (
     <Box

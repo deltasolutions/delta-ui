@@ -1,9 +1,11 @@
 import { jsx } from '@theme-ui/core';
 import { forwardRef, HTMLAttributes } from 'react';
 import { Box } from '../Box';
+
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
   size?: 'small' | 'medium' | 'large' | 'auto';
 }
+
 export const Card = forwardRef<HTMLDivElement, CardProps>(
   ({ children, size = 'medium', ...rest }: CardProps, ref) => {
     return (
