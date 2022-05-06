@@ -1,0 +1,37 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+export const encoreDarkScheme = {
+  colorScheme: 'dark',
+  fontFamily: 'Montserrat, sans-serif',
+  colors: {
+    background_base: '#121212',
+    background_highlight: '#1a1a1a',
+    background_press: '#000',
+    background_elevated_base: '#242424',
+    background_elevated_highlight: '#2a2a2a',
+    background_elevated_press: '#000',
+    text_base: '#FFF',
+    text_subdued: '#B3B3B3',
+    text_bright_accent: '#1ed760',
+    text_pepega: '#FFFFE6',
+    text_warning: '#ffa42b',
+    text_negative: '#000000',
+    text_positive: '#1ed760',
+    text_opposite_subdued: '#6A6A6A',
+    text_announcement: '#3d91f4',
+    border_base: '#535353',
+    essential_accent: '#333333',
+    essential_outline: '#78b0fc',
+    essential_base: '#fff',
+    essential_subdued: '#727272',
+    essential_bright_accent: '#1ed760',
+    essential_negative: '#e91429',
+    essential_danger: '#FF0000',
+    essential_warning: '#ffa42b',
+    essenital_primary: '#FFFFFF',
+    essential_secondary: '#0d72ea',
+    essential_positive: '#1cb454',
+    essential_announcement: '#0d72ea',
+    decorative_base: '#fff',
+    decorative_subdued: '#282828'
+  }
+};
