@@ -7,7 +7,7 @@ export const ConfirmCancelButton = forwardRef<
   ConfirmCancelButtonProps
 >(({ children, ...rest }: ConfirmCancelButtonProps) => (
   <Button
-    size="large"
+    size="medium"
     zoomable
     uppercase
     variant="text"

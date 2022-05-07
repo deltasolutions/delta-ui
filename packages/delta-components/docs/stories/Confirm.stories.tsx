@@ -6,7 +6,6 @@ import {
   Heading,
   Button,
   Dialog,
-  Paragraph,
   Confirm,
   ConfirmHeader,
   ConfirmBody,

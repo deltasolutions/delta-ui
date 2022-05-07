@@ -5,7 +5,7 @@ export interface ConfirmButtonProps extends ButtonProps {}
 export const ConfirmButton = forwardRef<HTMLButtonElement, ConfirmButtonProps>(
   ({ children, ...rest }: ConfirmButtonProps) => (
     <Button
-      size="large"
+      size="medium"
       zoomable
       uppercase
       variant="contained"
