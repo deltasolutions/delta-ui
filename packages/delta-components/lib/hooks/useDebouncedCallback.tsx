@@ -1,5 +1,10 @@
 import { useCallback, useRef } from 'react';
-export const useDebounce = (callback, delay) => {
+import { ArgumentTypes } from '../models';
+
+export const useDebouncedCallback = <T extends Function>(
+  callback: T,
+  delay: number
+): ((...args: ArgumentTypes<T>) => void) => {
   const timer = useRef<any>(null);
   return useCallback(
     (...args) => {
