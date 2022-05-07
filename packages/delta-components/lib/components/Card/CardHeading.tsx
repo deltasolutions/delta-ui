@@ -14,7 +14,7 @@ export const CardHeading = ({ children, ...rest }: CardHeadingProps) => {
         justifyContent: 'space-between',
         paddingLeft: 6,
         paddingRight: 6,
-        paddingBottom: 0,
+        paddingBottom: 4,
         paddingTop: 6,
         alignItems: 'start'
       }}

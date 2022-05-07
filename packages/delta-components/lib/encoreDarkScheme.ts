@@ -50,7 +50,6 @@ export const darkTheme = {
     success: '#1CB454',
     errorContainer: '',
     outline: '#313030',
-    shadow: '',
     surfaceTint: '#242424',
     inverseSurface: '#FFFFFF',
     inverseOnSurface: '#6A6A6A',

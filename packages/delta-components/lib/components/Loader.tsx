@@ -9,7 +9,7 @@ export interface LoaderProps extends HtmlHTMLAttributes<HTMLDivElement> {
 export const Loader = forwardRef<HTMLDivElement, LoaderProps>(
   (
     {
-      size: propSize = 'medium',
+      size: propSize = 'small',
       speed: propSpeed = 'normal',
       ...rest
     }: LoaderProps,
