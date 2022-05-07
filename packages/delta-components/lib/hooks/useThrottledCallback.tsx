@@ -1,5 +1,9 @@
 import { useCallback, useRef } from 'react';
-export const useThrottle = (callback, delay) => {
+import { ArgumentTypes } from '../models';
+export const useThrottledCallback = <T extends Function>(
+  callback: T,
+  delay: number
+): ((...args: ArgumentTypes<T>) => void) => {
   const isThrottled = useRef<any>(null);
   const throttledCallback = useCallback(
     (...args) => {
