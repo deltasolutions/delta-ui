@@ -1,30 +1,42 @@
 import { jsx } from '@theme-ui/core';
-import { forwardRef, useContext } from 'react';
+import { forwardRef, useCallback } from 'react';
 import { Anchor, AnchorProps } from '../Anchor';
-import { TabContext } from './TabContext';
+import { Heading } from '../Heading';
 export interface TabOptionProps extends AnchorProps {
   id: string;
+  isActive?: boolean;
 }
 export const TabOption = forwardRef<HTMLAnchorElement, TabOptionProps>(
-  ({ children, id, ...rest }, ref) => {
-    const { activeId } = useContext(TabContext);
+  ({ children, onClick, href, id, isActive, ...rest }, ref) => {
+    const handleClick = useCallback(
+      e => {
+        if (!href) {
+          onClick?.(e);
+          e.preventDefault();
+        } else {
+          onClick?.(e);
+        }
+      },
+      [href]
+    );
     return (
       <Anchor
         ref={ref}
         underline="none"
-        variant="h5"
         sx={{
-          padding: '12px 20px',
+          padding: '8px 16px',
           borderRadius: 5,
           textAlign: 'center',
           display: 'inline-block',
-          ...(activeId === id && {
+          ...(isActive && {
             backgroundColor: 'essential_accent'
           })
         }}
+        href={href ?? '#'}
+        onClick={handleClick}
         {...rest}
       >
-        {children}
+        <Heading level={5}>{children}</Heading>
       </Anchor>
     );
   }

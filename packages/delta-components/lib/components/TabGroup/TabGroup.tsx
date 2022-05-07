@@ -1,7 +1,13 @@
 import { jsx } from '@theme-ui/core';
-import { Children, FC, forwardRef, HTMLAttributes, ReactElement } from 'react';
+import {
+  Children,
+  cloneElement,
+  FC,
+  forwardRef,
+  HTMLAttributes,
+  ReactElement
+} from 'react';
 import { Box } from '../Box';
-import { TabContext } from './TabContext';
 import { TabOptionProps } from './TabOption';
 
 export interface TabGroupProps
@@ -27,20 +33,18 @@ export const TabGroup: FC<TabGroupProps> = forwardRef<
         }}
         {...rest}
       >
-        <TabContext.Provider value={{ activeId }}>
-          {Children.map(children, (child: ReactElement<TabOptionProps>) => (
-            <li
-              sx={{
-                textDecoration: 'none',
-                listStyle: 'none',
-                padding: 0,
-                margin: 0
-              }}
-            >
-              {child}
-            </li>
-          ))}
-        </TabContext.Provider>
+        {Children.map(children, (child: ReactElement<TabOptionProps>) => (
+          <li
+            sx={{
+              textDecoration: 'none',
+              listStyle: 'none',
+              padding: 0,
+              margin: 0
+            }}
+          >
+            {cloneElement(child, { isActive: activeId === child.props.id })}
+          </li>
+        ))}
       </ul>
     </Box>
   );
