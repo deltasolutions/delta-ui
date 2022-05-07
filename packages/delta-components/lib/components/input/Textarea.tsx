@@ -1,6 +1,6 @@
 import { jsx } from '@theme-ui/core';
 import { forwardRef, TextareaHTMLAttributes } from 'react';
-import { DISABLED_OPACITY } from '../../variables';
+
 export interface TextAreaProps
   extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   size?: 'small' | 'medium';
@@ -23,8 +23,8 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
       <textarea
         ref={ref}
         disabled={disabled}
-        style={{ opacity: disabled ? DISABLED_OPACITY : 1 }}
         sx={{
+          opacity: disabled ? 1 : 2,
           border: 'none',
           borderRadius: 5,
           lineHeight: '1rem',

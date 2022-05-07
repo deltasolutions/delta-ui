@@ -5,11 +5,12 @@ import {
   InputHTMLAttributes,
   useCallback
 } from 'react';
-import { DISABLED_OPACITY } from '../../variables';
+
 export interface SliderProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
   onChange?: (value: ChangeEvent<HTMLInputElement>['target']['value']) => void;
 }
+
 export const Slider = forwardRef<HTMLInputElement, SliderProps>(
   ({ disabled, onChange, ...rest }: SliderProps, ref) => {
     const handleOnChange = useCallback(e => onChange?.(e.target.value), []);

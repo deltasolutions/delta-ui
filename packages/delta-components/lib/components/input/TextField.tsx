@@ -5,7 +5,7 @@ import {
   InputHTMLAttributes,
   useCallback
 } from 'react';
-import { DISABLED_OPACITY } from '../../variables';
+
 export interface TextFieldProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
   size?: 'small' | 'medium';

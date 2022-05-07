@@ -1,6 +1,5 @@
 import { jsx } from '@theme-ui/core';
 import { forwardRef, SelectHTMLAttributes } from 'react';
-import { DISABLED_OPACITY } from '../../variables';
 export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {}
 
 export const Select = forwardRef<HTMLSelectElement, SelectProps>(
@@ -8,8 +7,8 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
     return (
       <select
         disabled={disabled}
-        style={{ opacity: disabled ? DISABLED_OPACITY : 1 }}
         sx={{
+          opacity: disabled ? 1 : 2,
           height: 2,
           border: 'none',
           borderRadius: 4,

@@ -1,8 +1,9 @@
 import { jsx } from '@theme-ui/core';
 import { InputHTMLAttributes } from 'react';
-import { DISABLED_OPACITY } from '../../variables';
 import { Box } from '../Box';
+
 export interface RadioProps extends InputHTMLAttributes<HTMLInputElement> {}
+
 export const Radio = ({ disabled, name, id, ...rest }: RadioProps) => {
   return (
     <Box

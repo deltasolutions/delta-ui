@@ -5,7 +5,6 @@ import {
   Dropdown,
   DropdownItem,
   Box,
-  ICON_MEDIUM_SIZE,
   Button,
   Anchor,
   Tooltip
@@ -22,7 +21,7 @@ const Template: ComponentStory<typeof Dropdown> = args => {
       <Dropdown
         component={
           <Button>
-            <BsThreeDots size={ICON_MEDIUM_SIZE} />
+            <BsThreeDots size={22} />
           </Button>
         }
       >

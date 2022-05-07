@@ -1,7 +1,6 @@
 import { jsx } from '@theme-ui/core';
 import { forwardRef } from 'react';
 import { IoCloseOutline } from 'react-icons/io5';
-import { MODAL_PADDING, ICON_MEDIUM_SIZE } from '../../variables';
 import { Box, BoxProps } from '../Box';
 import { Button } from '../Button';
 export interface ModalProps extends BoxProps {

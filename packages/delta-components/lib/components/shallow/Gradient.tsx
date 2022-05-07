@@ -1,12 +1,11 @@
 import { jsx } from '@theme-ui/core';
 import { forwardRef, HTMLAttributes } from 'react';
-import { SHALLOW_GRADIENT_COLOR } from '../../variables';
 import { Box } from '../Box';
 export interface GradientProps extends HTMLAttributes<HTMLDivElement> {
   color?: string;
 }
 export const Gradient = forwardRef<HTMLDivElement, GradientProps>(
-  ({ color = SHALLOW_GRADIENT_COLOR, ...rest }: GradientProps, ref) => {
+  ({ color = 'red', ...rest }: GradientProps, ref) => {
     return (
       <Box
         ref={ref}

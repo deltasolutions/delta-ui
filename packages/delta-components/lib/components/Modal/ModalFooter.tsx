@@ -1,8 +1,9 @@
 import { jsx } from '@theme-ui/core';
 import { forwardRef, HTMLAttributes } from 'react';
-import { MODAL_PADDING } from '../../variables';
 import { Box } from '../Box';
+
 export interface ModalFooterProps extends HTMLAttributes<HTMLDivElement> {}
+
 export const ModalFooter = forwardRef<HTMLDivElement, ModalFooterProps>(
   ({ children, ...rest }, ref) => {
     return (

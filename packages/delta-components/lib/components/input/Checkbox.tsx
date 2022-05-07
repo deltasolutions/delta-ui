@@ -1,7 +1,8 @@
 import { jsx } from '@theme-ui/core';
 import { forwardRef, InputHTMLAttributes, useCallback } from 'react';
-import { DISABLED_OPACITY } from '../../variables';
+
 export interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {}
+
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
   ({ disabled, value, ...rest }: CheckboxProps, ref) => {
     return (

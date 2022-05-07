@@ -1,13 +1,14 @@
 import { jsx } from '@theme-ui/core';
 import { forwardRef, InputHTMLAttributes, useCallback, useRef } from 'react';
-import { DISABLED_OPACITY } from '../../variables';
+
 export interface SwitchProps extends InputHTMLAttributes<HTMLInputElement> {}
+
 export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
   ({ disabled, onKeyDown, value, ...rest }: SwitchProps, ref) => {
     return (
       <label
-        style={{ ...(disabled && { opacity: DISABLED_OPACITY }) }}
         sx={{
+          opacity: disabled ? 1 : 2,
           display: 'inline-block',
           height: '26px',
           position: 'relative',
