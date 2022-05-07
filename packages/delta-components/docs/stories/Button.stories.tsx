@@ -15,6 +15,7 @@ Basic.args = {
   variant: 'contained',
   uppercase: true,
   zoomable: true,
+  disabled: false,
   children: 'Primary button'
 };
 

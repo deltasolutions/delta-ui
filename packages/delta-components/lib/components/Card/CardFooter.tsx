@@ -6,7 +6,16 @@ export interface CardFooterProps extends HTMLAttributes<HTMLDivElement> {}
 
 export const CardFooter = ({ children, ...rest }: CardFooterProps) => {
   return (
-    <Box sx={{ padding: '0 24px 24px 24px', display: 'flex' }} {...rest}>
+    <Box
+      sx={{
+        paddingTop: 0,
+        paddingLeft: 6,
+        paddingRight: 6,
+        paddingBottom: 6,
+        display: 'flex'
+      }}
+      {...rest}
+    >
       {children}
     </Box>
   );

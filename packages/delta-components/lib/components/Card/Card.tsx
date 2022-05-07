@@ -20,7 +20,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
             large: { maxWidth: '800px' },
             auto: {}
           }[size],
-          backgroundColor: 'rgb(24, 24, 24)'
+          backgroundColor: 'surface'
         }}
         {...rest}
       >

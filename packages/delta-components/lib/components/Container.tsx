@@ -1,7 +1,7 @@
 import { Global } from '@emotion/react';
 import { jsx, ThemeProvider } from '@theme-ui/core';
 import { FC, Fragment, HTMLAttributes, useContext } from 'react';
-import { encoreDarkScheme } from '../encoreDarkScheme';
+import { darkTheme } from '../encoreDarkScheme';
 import { ColorScheme } from '../models';
 import { Box } from './Box';
 export interface ContainerProps extends HTMLAttributes<HTMLDivElement> {
@@ -12,7 +12,7 @@ export const Container: FC<ContainerProps> = ({
   theme: propsTheme,
   ...rest
 }) => {
-  const theme = propsTheme || encoreDarkScheme;
+  const theme = propsTheme || darkTheme;
   return (
     <Fragment>
       <ThemeProvider theme={theme} {...rest}>

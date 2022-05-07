@@ -21,11 +21,10 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(
           WebkitAppearance: 'none',
           height: '6px',
           borderRadius: 5,
-          opacity: disabled ? DISABLED_OPACITY : 1,
+          opacity: disabled ? 1 : 2,
           background: '#1cb454',
           outline: 'none',
           '&:focus-visible': {
-            outlineColor: 'essential_outline',
             outlineOffset: 6,
             outlineWidth: 3,
             outlineStyle: 'solid'
@@ -38,14 +37,14 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(
             width: '18px',
             borderRadius: '100%',
             height: '18px',
-            background: 'white',
+            backgroundColor: 'onPrimary',
             cursor: disabled ? 'auto' : 'pointer'
           },
           '&::-moz-range-thumb': {
             width: '12px',
             borderRadius: '100%',
             height: '12px',
-            background: '#1cb454',
+            backgroundColor: 'primary',
             cursor: 'pointer'
           }
         }}

@@ -10,7 +10,7 @@ export const CardBody = ({ children, ...rest }: CardBodyProps) => {
       sx={{
         width: '100%',
         display: 'flex',
-        padding: '24px',
+        padding: 6,
         flexDirection: 'column',
         gap: 2
       }}

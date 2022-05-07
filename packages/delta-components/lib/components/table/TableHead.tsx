@@ -10,8 +10,8 @@ export const TableHead = forwardRef<HTMLTableSectionElement, TableHeadProps>(
       <thead
         ref={ref}
         sx={{
-          borderBottomWidth: '1px',
-          borderBottomColor: '#313030',
+          borderBottomWidth: 1,
+          borderBottomColor: 'outline',
           borderBottomStyle: 'solid'
         }}
         {...rest}

@@ -36,6 +36,46 @@ const Template: ComponentStory<typeof Modal> = args => {
                 dolor sit amet consectetur, adipisicing elit. Exercitationem
                 expedita itaque cum inventore reprehenderit ad voluptatem
                 veritatis aperiam praesentium recusandae debitis ipsam aliquam
+                quia facilis voluptatum quis non, corporis nihil? Lorem ipsum
+                dolor sit amet consectetur adipisicing elit. Odit, pariatur aut
+                laborum, fugiat accusamus laudantium et voluptates quaerat
+                incidunt, iste officia numquam mollitia exercitationem
+                consectetur omnis repudiandae libero facere veniam. Lorem ipsum
+                dolor sit amet consectetur, adipisicing elit. Exercitationem
+                expedita itaque cum inventore reprehenderit ad voluptatem
+                veritatis aperiam praesentium recusandae debitis ipsam aliquam
+                quia facilis voluptatum quis non, corporis nihil? Lorem ipsum
+                dolor sit amet consectetur adipisicing elit. Odit, pariatur aut
+                laborum, fugiat accusamus laudantium et voluptates quaerat
+                incidunt, iste officia numquam mollitia exercitationem
+                consectetur omnis repudiandae libero facere veniam. Lorem ipsum
+                dolor sit amet consectetur, adipisicing elit. Exercitationem
+                expedita itaque cum inventore reprehenderit ad voluptatem
+                veritatis aperiam praesentium recusandae debitis ipsam aliquam
+                quia facilis voluptatum quis non, corporis nihil? Lorem ipsum
+                dolor sit amet consectetur adipisicing elit. Odit, pariatur aut
+                laborum, fugiat accusamus laudantium et voluptates quaerat
+                incidunt, iste officia numquam mollitia exercitationem
+                consectetur omnis repudiandae libero facere veniam. Lorem ipsum
+                dolor sit amet consectetur, adipisicing elit. Exercitationem
+                expedita itaque cum inventore reprehenderit ad voluptatem
+                veritatis aperiam praesentium recusandae debitis ipsam aliquam
+                quia facilis voluptatum quis non, corporis nihil? Lorem ipsum
+                dolor sit amet consectetur adipisicing elit. Odit, pariatur aut
+                laborum, fugiat accusamus laudantium et voluptates quaerat
+                incidunt, iste officia numquam mollitia exercitationem
+                consectetur omnis repudiandae libero facere veniam. Lorem ipsum
+                dolor sit amet consectetur, adipisicing elit. Exercitationem
+                expedita itaque cum inventore reprehenderit ad voluptatem
+                veritatis aperiam praesentium recusandae debitis ipsam aliquam
+                quia facilis voluptatum quis non, corporis nihil? Lorem ipsum
+                dolor sit amet consectetur adipisicing elit. Odit, pariatur aut
+                laborum, fugiat accusamus laudantium et voluptates quaerat
+                incidunt, iste officia numquam mollitia exercitationem
+                consectetur omnis repudiandae libero facere veniam. Lorem ipsum
+                dolor sit amet consectetur, adipisicing elit. Exercitationem
+                expedita itaque cum inventore reprehenderit ad voluptatem
+                veritatis aperiam praesentium recusandae debitis ipsam aliquam
                 quia facilis voluptatum quis non, corporis nihil?
               </p>
             </ModalBody>
@@ -43,8 +83,8 @@ const Template: ComponentStory<typeof Modal> = args => {
               <Button
                 sx={{ marginLeft: 'auto' }}
                 uppercase
-                variant="outlined"
-                color="success"
+                variant="contained"
+                color="primary"
                 onClick={close}
               >
                 Close
@@ -53,7 +93,7 @@ const Template: ComponentStory<typeof Modal> = args => {
           </Modal>
         )}
       >
-        <Button size="medium" uppercase zoomable>
+        <Button variant="contained" size="medium" uppercase zoomable>
           Open modal
         </Button>
       </Dialog>

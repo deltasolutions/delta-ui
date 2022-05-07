@@ -9,7 +9,7 @@ export const LAYOUT_HEADER_HEX_COLOR = '#000000';
 export const SHALLOW_GRADIENT_COLOR = LAYOUT_HEADER_HEX_COLOR;
 
 //space
-export const MODAL_PADDING = 24;
+export const MODAL_PADDING = 16;
 
 //general
 export const DISABLED_OPACITY = 0.5;

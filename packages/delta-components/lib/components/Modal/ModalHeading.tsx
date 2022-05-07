@@ -10,9 +10,10 @@ export const ModalHeading = forwardRef<HTMLDivElement, ModalHeadingProps>(
       <Box
         ref={ref}
         sx={{
-          padding: `${MODAL_PADDING}px ${
-            MODAL_PADDING + ICON_MEDIUM_SIZE + space
-          }px 0 ${MODAL_PADDING}px`
+          paddingLeft: 8,
+          paddingRight: 8,
+          paddingTop: 8,
+          paddingBottom: 5
         }}
         {...rest}
       >

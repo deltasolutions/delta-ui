@@ -40,16 +40,16 @@ const Item = forwardRef<HTMLLIElement, ItemProps>(
         sx={{
           cursor: 'default',
           width: '100%',
-          paddingX: '8px',
-          height: '40px',
+          paddingX: 3,
+          height: 3,
           display: 'flex',
           alignItems: 'center',
-          borderRadius: 0,
+          overflow: 'hidden',
           '&:hover, &:active, &:focus, &:focus-visible': {
             backgroundColor: 'rgba(255,255,255,.1)'
           },
           ...(isActive && { backgroundColor: 'rgba(255,255,255,.1)' }),
-          color: 'text_base',
+          color: 'onTertiaryAccent',
           fontWeight: 400
         }}
       >
@@ -183,10 +183,8 @@ export const Autocomplete = ({
         >
           <List
             sx={{
-              backgroundColor: 'decorative_subdued',
-              borderRadius: 5,
-              boxShadow:
-                '0 16px 24px rgb(0 0 0 / 30%), 0 6px 8px rgb(0 0 0 / 20%)'
+              backgroundColor: 'tertiary',
+              borderRadius: 5
             }}
           >
             {items.map((item, index) => (

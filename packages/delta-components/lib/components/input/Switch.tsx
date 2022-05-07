@@ -14,27 +14,26 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
           verticalAlign: 'middle',
           userSelect: 'none',
           'input:checked + span': {
-            background: '#1db954'
+            backgroundColor: 'primary'
           },
 
           'input:checked + span:before': {
             transform: 'translateX(22px)'
           },
-          'input:focus-visible  + span': {
-            outlineColor: 'essential_outline',
+          'input:focus-visible + span': {
             outlineOffset: -1,
             outlineWidth: 3,
             outlineStyle: 'solid'
           },
           'input:not(:disabled) + span': {
             cursor: 'pointer',
-            opacity: 1
+            opacity: 2
           },
           'input:disabled + span:before': {
-            background: '#eee'
+            background: 'onTertiary'
           },
           'input:disabled + span': {
-            opacity: DISABLED_OPACITY
+            opacity: 1
           }
         }}
       >
@@ -61,7 +60,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
             height: '24px',
             borderRadius: '25%/50%',
             verticalAlign: 'top',
-            backgroundColor: '#535353',
+            backgroundColor: 'secondaryContainer',
             '&:before': {
               content: "''",
               position: 'absolute',
@@ -71,7 +70,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
               width: '20px',
               height: '20px',
               borderRadius: '50%',
-              background: 'white'
+              backgroundColor: 'onPrimary'
             }
           }}
         />

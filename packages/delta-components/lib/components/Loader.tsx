@@ -1,5 +1,6 @@
 import { jsx } from '@theme-ui/core';
-import { forwardRef, HtmlHTMLAttributes } from 'react';
+import { forwardRef, HtmlHTMLAttributes, useMemo } from 'react';
+import { useTheme } from '../hooks';
 import { Box } from './Box';
 export interface LoaderProps extends HtmlHTMLAttributes<HTMLDivElement> {
   size?: 'small' | 'medium' | 'large';
@@ -14,9 +15,15 @@ export const Loader = forwardRef<HTMLDivElement, LoaderProps>(
     }: LoaderProps,
     ref
   ) => {
-    const size = propSize === 'medium' ? 30 : propSize === 'small' ? 20 : 40;
-    const speed =
-      propSpeed === 'normal' ? 1200 : propSpeed === 'slow' ? 1800 : 500;
+    const { sizes, ticks } = useTheme();
+    const size = useMemo(
+      () => ({ small: sizes[1], medium: sizes[2], large: sizes[3] }[propSize]),
+      [propSize]
+    );
+    const speed = useMemo(
+      () => ({ slow: ticks[7], normal: ticks[6], fast: ticks[4] }[propSpeed]),
+      [propSpeed]
+    );
     return (
       <Box
         ref={ref}
@@ -38,10 +45,10 @@ export const Loader = forwardRef<HTMLDivElement, LoaderProps>(
             width: `${size / 13}px`,
             height: `${size / 4.2}px`,
             borderRadius: '20%',
-            backgroundColor: 'text_base'
+            backgroundColor: 'onBackgroundAccent'
           },
           '@keyframes lds-spinner': {
-            '0%': { opacity: 1 },
+            '0%': { opacity: 2 },
             '100%': { opacity: 0 }
           }
         }}

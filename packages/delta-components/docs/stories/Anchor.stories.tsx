@@ -13,5 +13,6 @@ export const Basic = Template.bind({});
 
 Basic.args = {
   href: '#',
+  variant: 'inherit',
   children: 'Aboba'
 };

@@ -18,8 +18,8 @@ export default {
 const Template: ComponentStory<typeof Card> = args => (
   <Card {...args}>
     <CardHeading>
-      <Heading>Card heading</Heading>
-      <Loader />
+      <Heading level={3}>Card heading</Heading>
+      <Loader size="small" />
     </CardHeading>
     <CardBody>
       <Box>
@@ -29,7 +29,6 @@ const Template: ComponentStory<typeof Card> = args => (
         amet.
       </Box>
     </CardBody>
-    <CardFooter></CardFooter>
   </Card>
 );
 

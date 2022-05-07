@@ -8,7 +8,7 @@ export const ConfirmBody = forwardRef<HTMLDivElement, ConfirmBodyProps>(
   ({ children, ...rest }: ConfirmBodyProps, ref) => {
     return (
       <Box ref={ref} {...rest}>
-        <Box sx={{ color: 'text_opposite_subdued' }}>{children}</Box>
+        <Box sx={{ color: 'inverseOnSurface' }}>{children}</Box>
       </Box>
     );
   }

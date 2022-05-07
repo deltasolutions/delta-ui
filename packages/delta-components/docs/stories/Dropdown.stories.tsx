@@ -7,7 +7,8 @@ import {
   Box,
   ICON_MEDIUM_SIZE,
   Button,
-  Anchor
+  Anchor,
+  Tooltip
 } from '../../lib';
 
 export default {

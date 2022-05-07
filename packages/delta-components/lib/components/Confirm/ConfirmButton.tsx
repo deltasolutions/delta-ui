@@ -9,7 +9,7 @@ export const ConfirmButton = forwardRef<HTMLButtonElement, ConfirmButtonProps>(
       zoomable
       uppercase
       variant="contained"
-      color="success"
+      color="primary"
       {...rest}
     >
       {children}

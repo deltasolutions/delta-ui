@@ -13,12 +13,11 @@ export const BreadCrumb = ({
   return (
     <span
       sx={{
-        // TODO: Figure out how to remove nested styling.
         '& > a, button': {
           whiteSpace: 'nowrap',
-          color: isActive ? 'text_base' : 'text_subdued',
+          color: isActive ? 'onBackgroundAccent' : 'inherit',
           '&:hover, &:focus-visible, &:active': {
-            color: 'text_base'
+            color: 'onBackgroundAccent'
           }
         }
       }}

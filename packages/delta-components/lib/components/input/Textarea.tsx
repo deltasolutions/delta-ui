@@ -3,9 +3,9 @@ import { forwardRef, TextareaHTMLAttributes } from 'react';
 import { DISABLED_OPACITY } from '../../variables';
 export interface TextAreaProps
   extends TextareaHTMLAttributes<HTMLTextAreaElement> {
-  size?: 'small' | 'medium' | 'large';
+  size?: 'small' | 'medium';
   variant?: 'contained' | 'outlined';
-  color?: 'primary';
+  color?: 'tertiary';
 }
 
 export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
@@ -14,7 +14,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
       disabled,
       size = 'medium',
       variant = 'contained',
-      color = 'primary',
+      color = 'tertiary',
       ...rest
     }: TextAreaProps,
     ref
@@ -25,18 +25,16 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
         disabled={disabled}
         style={{ opacity: disabled ? DISABLED_OPACITY : 1 }}
         sx={{
-          '&:focus': {
-            outlineColor: 'white'
-          },
           border: 'none',
           borderRadius: 5,
           lineHeight: '1rem',
           letterSpacing: 'normal',
           ...{
             contained: {
-              primary: {
-                backgroundColor: '#333333',
-                '&::placeholder': { color: 'cream' }
+              tertiary: {
+                backgroundColor: 'tertiary',
+                color: 'onTertiaryAccent',
+                '&::placeholder': { color: 'onTertiary' }
               },
               secondary: {
                 backgroundColor: 'white',
@@ -60,8 +58,8 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
             }
           }[variant][color],
           ...{
-            small: { fontSize: '12px', padding: '8px' },
-            medium: { fontFize: '14p', padding: '12px' }
+            small: { fontSize: 0, padding: 3 },
+            medium: { fontFize: 1, padding: 4 }
           }[size],
           color: 'text_base'
         }}

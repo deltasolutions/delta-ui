@@ -7,7 +7,7 @@ import {
   CardBody,
   CardHeading,
   CardFooter,
-  encoreDarkScheme,
+  darkTheme,
   Heading
 } from '../../lib';
 
@@ -41,5 +41,5 @@ const ContainerChild = () => {
 export const Basic = Template.bind({});
 
 Basic.args = {
-  theme: encoreDarkScheme
+  theme: darkTheme
 };

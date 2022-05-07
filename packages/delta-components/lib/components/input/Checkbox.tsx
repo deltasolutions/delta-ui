@@ -33,10 +33,10 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             borderRadius: 5,
             height: '26px',
             width: '26px',
-            backgroundColor: '#535353'
+            backgroundColor: 'secondaryContainer'
           },
           '.container input:checked ~ .checkmark': {
-            backgroundColor: '#1db954'
+            backgroundColor: 'primary'
           },
           '.checkmark:after': {
             content: '""',
@@ -44,7 +44,6 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             display: 'none'
           },
           'input:focus-visible ~ .checkmark': {
-            outlineColor: 'essential_outline',
             outlineOffset: -1,
             outlineWidth: 3,
             outlineStyle: 'solid'
@@ -55,7 +54,8 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             top: '5px',
             width: '5px',
             height: '10px',
-            border: 'solid white',
+            borderColor: 'onPrimary',
+            borderStyle: 'solid',
             borderWidth: '0 3px 3px 0',
             WebkitTransform: 'rotate(45deg)',
             msTransform: 'rotate(45deg)',
@@ -64,8 +64,8 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
         }}
       >
         <label
-          style={{
-            ...(disabled && { opacity: DISABLED_OPACITY, cursor: 'auto' })
+          sx={{
+            ...(disabled && { opacity: 1, cursor: 'auto' })
           }}
           className="container"
         >

@@ -10,7 +10,7 @@ export interface TextFieldProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
   size?: 'small' | 'medium';
   variant?: 'contained' | 'outlined';
-  color?: 'primary' | 'secondary';
+  color?: 'tertiary' | 'secondary';
 }
 
 export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
@@ -19,7 +19,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       disabled,
       size = 'medium',
       variant = 'contained',
-      color = 'primary',
+      color = 'tertiary',
       ...rest
     }: TextFieldProps,
     ref
@@ -27,18 +27,18 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
     return (
       <input
         disabled={disabled}
-        style={{ opacity: disabled ? DISABLED_OPACITY : 1 }}
         sx={{
-          '&:focus': { outlineColor: 'white' },
-          border: 'none',
+          opacity: disabled ? 1 : 2,
+          border: 0,
           borderRadius: 5,
           lineHeight: '1rem',
           letterSpacing: 'normal',
           ...{
             contained: {
-              primary: {
-                backgroundColor: '#333333',
-                '&::placeholder': { color: 'cream' }
+              tertiary: {
+                backgroundColor: 'tertiary',
+                color: 'onTertiaryAccent',
+                '&::placeholder': { color: 'onTertiary' }
               },
               secondary: {
                 backgroundColor: 'white',
@@ -54,16 +54,15 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
                 '&:focus': {
                   backgroundColor: 'transparent',
                   borderWidth: '1px',
-                  borderStyle: 'solid',
-                  borderColor: 'border'
+                  borderStyle: 'solid'
                 }
               },
               secondary: {}
             }
           }[variant][color],
           ...{
-            small: { fontSize: '12px', padding: '8px' },
-            medium: { fontFize: '14p', padding: '12px' }
+            small: { fontSize: 0, height: 2, paddingX: 3 },
+            medium: { fontFize: 1, height: 3, paddingX: 4 }
           }[size],
           color: 'text_base'
         }}

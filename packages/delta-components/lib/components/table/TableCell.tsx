@@ -12,7 +12,8 @@ export const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
             display: 'flex',
             paddingX: '8px',
             alignItems: 'center',
-            height: '100%'
+            height: '100%',
+            color: 'onBackground'
           }}
         >
           <EllipsisText>{children}</EllipsisText>

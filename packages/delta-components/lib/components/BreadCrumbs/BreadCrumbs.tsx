@@ -17,7 +17,10 @@ export const BreadCrumbs = ({ children, ...rest }: BreadCrumbsProps) => {
       sx={{
         display: 'flex',
         alignItems: 'center',
-        gap: 2
+        gap: 2,
+        '& > *': {
+          color: 'onBackground'
+        }
       }}
       {...rest}
     >

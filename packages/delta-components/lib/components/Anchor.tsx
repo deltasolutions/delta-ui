@@ -1,6 +1,5 @@
 import { jsx } from '@theme-ui/core';
 import { AnchorHTMLAttributes, FC, forwardRef } from 'react';
-import { headingStyles } from './Heading';
 export interface AnchorProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   underline?: 'none' | 'hover' | 'always';
   variant?: 'inherit';

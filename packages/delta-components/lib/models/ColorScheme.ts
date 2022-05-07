@@ -1,3 +1,3 @@
-import { encoreDarkScheme } from '../encoreDarkScheme';
+import { darkTheme } from '../encoreDarkScheme';
 
-export type ColorScheme = typeof encoreDarkScheme;
+export type ColorScheme = typeof darkTheme;

@@ -38,7 +38,6 @@ export const WestResize = ({ minWidth, width, maxWidth, setWidth }) => {
           height: '100%',
           width: '3px',
           ...(isFocus && {
-            outlineColor: 'essential_outline',
             outlineOffset: -3,
             outlineWidth: 1,
             outlineStyle: 'solid'

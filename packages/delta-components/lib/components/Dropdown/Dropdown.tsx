@@ -146,8 +146,10 @@ const MenuComponent = forwardRef<any, DropdownProps>(
     return (
       <FloatingNode id={nodeId}>
         {parentId === null && component ? (
-          <Box ref={mergedReferenceRef} role="menu-item">
+          <Box>
             {cloneElement(component, {
+              ref: mergedReferenceRef,
+              role: 'menu-item',
               ...getReferenceProps({
                 ...rest,
                 onClick: ({ currentTarget }) =>
@@ -161,11 +163,14 @@ const MenuComponent = forwardRef<any, DropdownProps>(
               sx={{
                 display: 'flex',
                 width: '100%',
-                padding: '12px 8px',
+                paddingX: 3,
+                paddingY: 4,
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 ...(divide && {
-                  borderBottom: '1px rgba(255,255,255,.1) solid'
+                  borderBottomWidth: 1,
+                  borderBottomStyle: 'solid',
+                  borderBottomColor: 'outline'
                 })
               }}
               {...getReferenceProps({
@@ -177,7 +182,7 @@ const MenuComponent = forwardRef<any, DropdownProps>(
             >
               {label}
               {nested && (
-                <RiArrowRightSFill sx={{ fill: 'text_base' }} size={22} />
+                <RiArrowRightSFill sx={{ fill: 'onSurfaceTint' }} size={22} />
               )}
             </Button>
           </DropdownItem>
@@ -186,13 +191,12 @@ const MenuComponent = forwardRef<any, DropdownProps>(
           {open && (
             <Box
               sx={{
-                backgroundColor: 'decorative_subdued',
+                backgroundColor: 'surfaceTint',
                 minWidth: '183px',
-                boxShadow:
-                  '0 16px 24px rgb(0 0 0 / 30%), 0 6px 8px rgb(0 0 0 / 20%)',
-                padding: '4px',
-                fontSize: '13px',
-                borderRadius: '4px'
+                boxShadow: 2,
+                padding: 1,
+                fontSize: 0,
+                borderRadius: 4
               }}
               {...getFloatingProps({
                 ref: floating,

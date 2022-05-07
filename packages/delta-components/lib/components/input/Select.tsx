@@ -10,12 +10,12 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
         disabled={disabled}
         style={{ opacity: disabled ? DISABLED_OPACITY : 1 }}
         sx={{
-          height: '32px',
+          height: 2,
           border: 'none',
           borderRadius: 4,
-          padding: '4px',
-          lineHeight: '32px',
-          textIndent: '4px'
+          padding: 1,
+          lineHeight: 2,
+          textIndent: 2
         }}
         ref={ref}
         {...rest}

@@ -1,12 +1,11 @@
 import { jsx } from '@theme-ui/core';
 import { ButtonHTMLAttributes, forwardRef } from 'react';
-import { DISABLED_OPACITY } from '../variables';
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   zoomable?: boolean;
   uppercase?: boolean;
   size?: 'small' | 'medium' | 'large';
   variant?: 'text' | 'contained' | 'outlined';
-  color?: 'primary' | 'secondary' | 'success' | 'danger';
+  color?: 'primary' | 'secondary' | 'error';
 }
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
@@ -25,10 +24,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         ref={ref}
         disabled={disabled}
-        style={{
-          opacity: disabled ? DISABLED_OPACITY : 1
-        }}
         sx={{
+          opacity: disabled ? 1 : 2,
           background: 'none',
           border: 'none',
           cursor: 'pointer',
@@ -53,42 +50,33 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             ...{
               contained: {
                 primary: {
-                  color: 'text_negative',
-                  backgroundColor: 'essenital_primary'
+                  color: 'onPrimary',
+                  backgroundColor: 'primary'
                 },
                 secondary: {
-                  color: 'text_base',
-                  backgroundColor: 'essential_secondary'
+                  color: 'onSecondary',
+                  backgroundColor: 'secondary'
                 },
-                success: {
-                  color: 'text_base',
-                  backgroundColor: 'essential_positive'
-                },
-                danger: {
-                  backgroundColor: 'essential_danger',
-                  color: 'text_negative'
+                error: {
+                  backgroundColor: 'error',
+                  color: 'onError'
                 }
               },
               outlined: {
                 primary: {
-                  color: 'text_base',
-                  borderColor: 'border_base',
-                  borderStyle: 'solid',
-                  '&:focus-visible, &:hover, &:active': {
-                    borderColor: 'text_base'
-                  }
-                },
-                secondary: {
-                  color: 'text_base',
-                  borderColor: 'essential_secondary',
+                  color: 'onPrimary',
+                  borderColor: 'primary',
                   borderStyle: 'solid'
                 },
-                success: {
-                  borderColor: 'essential_positive',
+                secondary: {
+                  color: 'secondary',
+                  borderColor: 'secondaryContainer',
                   borderStyle: 'solid',
-                  color: 'text_base'
+                  '&:focus-visible, &:hover, &:active': {
+                    borderColor: 'secondary'
+                  }
                 },
-                danger: {
+                error: {
                   borderColor: 'essential_danger',
                   borderStyle: 'solid',
                   color: 'text_base'
@@ -96,46 +84,46 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
               },
               text: {
                 primary: {
-                  color: 'text_base'
+                  color: 'primary'
                 },
                 secondary: {
-                  color: 'text_opposite_subdued'
+                  color: 'secondary'
                 },
-                success: {
-                  color: 'essential_positive'
-                },
-                danger: {
-                  color: 'essential_danger'
+                error: {
+                  color: 'error'
                 }
               }
             }[variant][color],
             ...{
               small: {
-                fontSize: '10px',
-                padding: '10px 26px',
+                fontSize: 0,
+                paddingY: 4,
+                paddingX: 6,
                 fontWeight: 600,
-                letterSpacing: '1.5px',
-                borderWidth: '1px'
+                letterSpacing: 2,
+                borderWidth: 1
               },
               medium: {
-                fontSize: '12px',
-                padding: '12px 34px',
+                fontSize: 1,
+                paddingY: 4,
+                paddingX: 7,
                 fontWeight: 600,
-                borderWidth: '1px',
-                letterSpacing: '1.5px'
+                borderWidth: 1,
+                letterSpacing: 2
               },
               large: {
-                fontSize: '16px',
-                padding: '15px 28px',
+                fontSize: 2,
+                paddingY: 4,
+                paddingX: 8,
                 fontWeight: 600,
-                borderWidth: '1px',
-                letterSpacing: '1px'
+                borderWidth: 1,
+                letterSpacing: 2
               }
             }[size],
             ...(disabled && {
               cursor: 'auto',
               transform: 'none !important',
-              opacity: '0.5'
+              opacity: 1
             })
           })
         }}

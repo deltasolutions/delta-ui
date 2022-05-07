@@ -9,15 +9,15 @@ export const TableHeadCell = forwardRef<
   TableHeadCellProps
 >(({ children, ...rest }: TableHeadCellProps, ref) => {
   return (
-    <td ref={ref} sx={{ height: '36px' }} {...rest}>
+    <td ref={ref} sx={{ height: 3 }} {...rest}>
       <Box
         sx={{
           display: 'flex',
-          paddingX: '8px',
+          paddingX: 3,
           alignItems: 'center',
           height: '100%',
-          textTransform: 'uppercase',
-          fontSize: '12px'
+          fontSize: 1,
+          color: 'onBackground'
         }}
       >
         <EllipsisText>{children}</EllipsisText>

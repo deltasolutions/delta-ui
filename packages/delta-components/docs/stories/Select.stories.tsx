@@ -7,11 +7,7 @@ export default {
   component: Select
 } as ComponentMeta<typeof Select>;
 
-const Template: ComponentStory<typeof Select> = args => (
-  <Tooltip label="Choose one">
-    <Select {...args} />
-  </Tooltip>
-);
+const Template: ComponentStory<typeof Select> = args => <Select {...args} />;
 
 export const Basic = Template.bind({});
 

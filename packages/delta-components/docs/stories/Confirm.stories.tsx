@@ -42,7 +42,13 @@ const Template: ComponentStory<typeof Confirm> = args => {
           </Confirm>
         )}
       >
-        <Button size="medium" uppercase zoomable>
+        <Button
+          size="medium"
+          variant="contained"
+          color="secondary"
+          uppercase
+          zoomable
+        >
           Open confirm
         </Button>
       </Dialog>

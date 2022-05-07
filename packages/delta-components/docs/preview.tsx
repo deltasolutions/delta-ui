@@ -3,7 +3,7 @@ import { jsx } from '@theme-ui/core';
 import {
   Box,
   Container,
-  encoreDarkScheme,
+  darkTheme,
   Layout,
   LayoutBody,
   LayoutBodyMain
@@ -30,16 +30,15 @@ export const decorators = [
         <Global
           styles={{
             'html, body': {
-              colorScheme: 'dark',
+              colorScheme: darkTheme.colorScheme,
               overscrollBehaviorY: 'none',
               margin: 0,
               padding: 0,
-              fontSize: '14px'
+              fontSize: darkTheme.fontSizes[1]
             },
             '*': {
               boxSizing: 'border-box',
-              fontFamily: 'Montserrat, sans-serif',
-              color: encoreDarkScheme.colors.text_subdued
+              fontFamily: darkTheme.fontFamily
             }
           }}
         />

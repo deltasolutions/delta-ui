@@ -11,7 +11,7 @@ import {
   useRole,
   useDismiss
 } from '@floating-ui/react-dom-interactions';
-import { jsx } from '@theme-ui/core';
+import { jsx, useThemeUI } from '@theme-ui/core';
 import {
   cloneElement,
   forwardRef,
@@ -20,28 +20,32 @@ import {
   useEffect,
   useState
 } from 'react';
+import { useTheme } from '../hooks';
 import { Box, BoxProps } from './Box';
 
 export interface TooltipProps extends BoxProps {
   label: ReactNode;
+  delay?: number;
   placement?: Placement;
   children: JSX.Element;
 }
 
 export const Tooltip = forwardRef(
-  ({ children, label, placement = 'top' }: TooltipProps, ref) => {
+  ({ children, label, delay, placement = 'top' }: TooltipProps, ref) => {
     const [open, setOpen] = useState(false);
+    const { space, ticks } = useTheme();
+    const padding = space[2];
     const { x, y, reference, floating, strategy, context, refs, update } =
       useFloating({
         placement,
         open,
         onOpenChange: setOpen,
-        middleware: [offset(6), flip(), shift({ padding: 6 })]
+        middleware: [offset(padding), flip(), shift({ padding })]
       });
 
     const { getReferenceProps, getFloatingProps } = useInteractions([
       useHover(context, {
-        restMs: 1000
+        restMs: delay ?? ticks[5]
       }),
       useFocus(context),
       useRole(context, { role: 'tooltip' }),
@@ -69,17 +73,14 @@ export const Tooltip = forwardRef(
         {open && (
           <Box
             sx={{
-              backgroundColor: 'decorative_subdued',
-              fontSize: '14px',
-              padding: '10px 6px',
-              color: 'text_base',
+              backgroundColor: 'surfaceTint',
+              color: 'onSurfaceTint',
+              fontSize: 1,
+              paddingY: 4,
+              paddingX: 2,
               fontWeight: 500,
-              borderRadius: '4px',
-              boxShadow:
-                '0 16px 24px rgb(0 0 0 / 30%), 0 6px 8px rgb(0 0 0 / 20%)',
-              borderWidth: '0.1px',
-              borderStyle: 'solid',
-              borderColor: 'border_base'
+              borderRadius: 3,
+              boxShadow: 1
             }}
             {...getFloatingProps({
               ref: floating,

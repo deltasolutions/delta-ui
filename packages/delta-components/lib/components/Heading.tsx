@@ -11,45 +11,13 @@ export const Heading = ({ level = 1, ...rest }: HeadingProps) => {
   return (
     <Tag
       sx={{
-        ...headingStyles[tag],
         margin: 0,
+        color: 'onSurfaceVariant',
+        fontSize: 6 - level,
+        fontWeight: 600,
         padding: 0
       }}
       {...rest}
     />
   );
-};
-
-export const headingStyles = {
-  h1: {
-    fontSize: '26px',
-    fontWeight: 600,
-    color: 'text_base'
-  },
-  h2: {
-    fontSize: '22px',
-    fontWeight: 600,
-    color: 'text_base'
-  },
-  h3: {
-    fontSize: '18px',
-    fontWeight: 600,
-    color: 'text_base'
-  },
-  h4: {
-    fontSize: '16px',
-    fontWeight: 600,
-    color: 'text_base'
-  },
-  h5: {
-    fontSize: '13px',
-    fontWeight: 600,
-    color: 'text_base',
-    lineHeight: '26px'
-  },
-  h6: {
-    fontSize: '12px',
-    fontWeight: 600,
-    color: 'text_base'
-  }
 };

@@ -11,6 +11,7 @@ export const ConfirmCancelButton = forwardRef<
     zoomable
     uppercase
     variant="text"
+    sx={{ color: 'tertiary' }}
     color="secondary"
     {...rest}
   >

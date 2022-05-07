@@ -12,7 +12,7 @@ export const Confirm = forwardRef<HTMLDivElement, ConfirmProps>(
         ref={ref}
         sx={{
           animation: `${animation} 0.3s ease-out`,
-          backgroundColor: 'text_base',
+          backgroundColor: 'inverseSurface',
           width: '350px',
           padding: '16px',
           display: 'flex',

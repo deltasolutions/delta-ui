@@ -9,8 +9,9 @@ export const ConfirmFooter = forwardRef<HTMLDivElement, ConfirmFooterProps>(
         ref={ref}
         sx={{
           display: 'flex',
-          marginTop: '30px',
-          justifyContent: 'end'
+          marginTop: 6,
+          justifyContent: 'end',
+          gap: 2
         }}
         {...rest}
       >

@@ -28,13 +28,12 @@ export const Radio = ({ disabled, name, id, ...rest }: RadioProps) => {
             width: '24px',
             height: '24px',
             borderRadius: '100%',
-            background: '#535353'
+            backgroundColor: 'secondaryContainer'
           },
         '[type="radio"]:checked + label:before': {
-          background: '#1db954'
+          backgroundColor: 'primary'
         },
         '[type="radio"]:focus-visible + label:before': {
-          outlineColor: 'essential_outline',
           outlineOffset: -1,
           outlineWidth: 3,
           outlineStyle: 'solid'
@@ -44,7 +43,7 @@ export const Radio = ({ disabled, name, id, ...rest }: RadioProps) => {
             content: "''",
             width: '8px',
             height: '8px',
-            background: 'white',
+            backgroundColor: 'onPrimary',
             position: 'absolute',
             top: '8px',
             left: '8px',
@@ -56,12 +55,12 @@ export const Radio = ({ disabled, name, id, ...rest }: RadioProps) => {
           transform: 'scale(0)'
         },
         '[type="radio"]:checked + label:after': {
-          opacity: 1,
+          opacity: 2,
           WebkitTransform: 'scale(1)',
           transform: 'scale(1)'
         },
         '[type="radio"]:disabled + label:before': {
-          opacity: DISABLED_OPACITY
+          opacity: 2
         }
       }}
     >

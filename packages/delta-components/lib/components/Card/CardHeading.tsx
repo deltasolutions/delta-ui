@@ -12,7 +12,10 @@ export const CardHeading = ({ children, ...rest }: CardHeadingProps) => {
         display: 'flex',
         gap: 2,
         justifyContent: 'space-between',
-        padding: '24px 24px 0 24px',
+        paddingLeft: 6,
+        paddingRight: 6,
+        paddingBottom: 0,
+        paddingTop: 6,
         alignItems: 'start'
       }}
       {...rest}

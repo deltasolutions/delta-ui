@@ -11,7 +11,7 @@ export const PairList = forwardRef<HTMLDivElement, PairListProps>(
     return (
       <Box
         ref={ref}
-        sx={{ gap: '16px', flexDirection: 'column', display: 'flex' }}
+        sx={{ gap: 5, flexDirection: 'column', display: 'flex' }}
         {...rest}
       >
         {pairs.map(([key, value], index) => {
@@ -20,14 +20,16 @@ export const PairList = forwardRef<HTMLDivElement, PairListProps>(
               sx={{
                 display: 'flex',
                 justifyContent: 'space-between',
-                minHeight: '40px',
+                minHeight: 2,
                 gap: 2,
                 flexDirection: 'column'
               }}
               key={index}
             >
-              <Box sx={{ color: 'text_base', fontWeight: 600 }}>{key}</Box>
-              <Box>{value}</Box>
+              <Box sx={{ color: 'onSurfaceVariant', fontWeight: 600 }}>
+                {key}
+              </Box>
+              <Box sx={{ color: 'onBackground' }}>{value}</Box>
             </Box>
           );
         })}

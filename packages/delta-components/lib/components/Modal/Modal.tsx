@@ -13,27 +13,12 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
     return (
       <Box
         sx={{
-          backgroundColor: 'decorative_subdued',
+          backgroundColor: 'surfaceVariant',
           display: 'flex',
-          ...{
-            small: { maxWidth: '550px' },
-            medium: { maxWidth: '650px' },
-            large: { maxWidth: '750px' },
-            page: {
-              maxWidth: '100%',
-              height: '100vh',
-              '& > div:last-child': { marginTop: 'auto' }
-            }
-          }[size],
           width: '100%',
-          maxHeight: '100%',
-          overflow: 'auto',
           position: 'relative',
-          // borderWidth: '0.1px',
-          // borderStyle: 'solid',
-          // borderColor: 'border_base',
           flexDirection: 'column',
-          borderRadius: 4
+          borderRadius: 3
         }}
         ref={ref}
         {...rest}
@@ -42,13 +27,33 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
           onClick={close}
           sx={{
             position: 'absolute',
-            right: `${MODAL_PADDING}px`,
-            top: `${MODAL_PADDING}px`
+            right: 5,
+            top: 5,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: '500px',
+            width: 2,
+            p: 1,
+            height: 2,
+            backgroundColor: 'tertiaryContainer'
           }}
         >
-          <IoCloseOutline size={ICON_MEDIUM_SIZE} />
+          <IoCloseOutline sx={{ width: '100%', height: '100%' }} />
         </Button>
-        {children}
+        <Box
+          sx={{
+            overflowY: 'scroll',
+            ...{
+              small: { width: '550px', height: '40vh' },
+              medium: { width: '650px', height: '65vh' },
+              large: { width: '750px', height: '80vh' }
+            }[size],
+            '& > div:last-child': { marginTop: 'auto' }
+          }}
+        >
+          {children}
+        </Box>
       </Box>
     );
   }

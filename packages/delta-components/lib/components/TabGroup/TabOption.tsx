@@ -24,12 +24,13 @@ export const TabOption = forwardRef<HTMLAnchorElement, TabOptionProps>(
         ref={ref}
         underline="none"
         sx={{
-          padding: '8px 16px',
+          paddingX: 6,
+          paddingY: 4,
           borderRadius: 5,
           textAlign: 'center',
           display: 'inline-block',
           ...(isActive && {
-            backgroundColor: 'essential_accent'
+            backgroundColor: 'surfaceTint'
           })
         }}
         href={href ?? '#'}

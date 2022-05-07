@@ -8,14 +8,16 @@ export const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(
         ref={ref}
         sx={{
           '& > td:first-child': {
-            borderTopLeftRadius: 5,
-            borderBottomLeftRadius: 5
+            borderTopLeftRadius: 4,
+            borderBottomLeftRadius: 4
           },
           '& > td:last-child': {
-            borderTopRightRadius: 5,
-            borderBottomRightRadius: 5
+            borderTopRightRadius: 4,
+            borderBottomRightRadius: 4
           },
-          '&:hover, &:active, &:focus-visible': { backgroundColor: '#2b2b2a' }
+          '&:hover, &:active, &:focus-visible': {
+            backgroundColor: 'surfaceTint'
+          }
         }}
         {...rest}
       />

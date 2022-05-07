@@ -12,50 +12,37 @@ export const Info = forwardRef<HTMLDivElement, InfoProps>(
         sx={{
           display: 'flex',
           gap: 2,
+          width: '100%',
           borderRadius: 5,
-          paddingX: '10px',
-          ...{
-            info: { backgroundColor: 'essential_announcement' },
-            error: {
-              backgroundColor: 'essential_danger',
-              span: { color: 'black' }
-            },
-            success: { backgroundColor: 'essential_positive' },
-            warning: {
-              backgroundColor: 'essential_warning',
-              span: { color: 'black' }
-            }
-          }[severity]
+          paddingX: 4,
+          backgroundColor: severity,
+          '& > *': {
+            color: {
+              info: 'onInfo',
+              warning: 'onWarning',
+              error: 'onError',
+              success: 'onSuccess'
+            }[severity]
+          }
         }}
         ref={ref}
         {...rest}
       >
         <Box
-          sx={{ paddingY: '8px', display: 'flex', alignItems: 'flex-start' }}
+          sx={{
+            paddingY: 3,
+            display: 'flex',
+            alignItems: 'flex-start',
+            minWidth: 1,
+            minHeight: 1
+          }}
         >
-          <AiOutlineInfoCircle
-            size={16}
-            sx={{
-              '& > *': {
-                ...{
-                  info: { color: 'text_base' },
-                  error: {
-                    color: 'black'
-                  },
-                  success: {},
-                  warning: {
-                    color: 'black'
-                  }
-                }[severity]
-              }
-            }}
-          />
+          <AiOutlineInfoCircle sx={{ width: '100%', height: '100%' }} />
         </Box>
         <span
           sx={{
-            color: 'text_base',
-            fontSize: '13px',
-            paddingY: '8px',
+            fontSize: 1,
+            paddingY: 3,
             lineHeight: 1,
             display: 'flex',
             alignItems: 'center',
