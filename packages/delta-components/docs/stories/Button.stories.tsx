@@ -10,11 +10,16 @@ export default {
 const Template: ComponentStory<typeof Button> = args => <Button {...args} />;
 
 export const Basic = Template.bind({});
-
 Basic.args = {
   color: 'primary',
   variant: 'contained',
   uppercase: true,
   zoomable: true,
   children: 'Primary button'
+};
+
+export const Clear = Template.bind({});
+Clear.args = {
+  children: '',
+  style: { width: '300px', height: '300px', background: 'grey' }
 };

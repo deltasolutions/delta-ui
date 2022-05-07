@@ -1,13 +1,13 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import {
+  Box,
   Card,
   CardBody,
   CardFooter,
   CardHeading,
   Heading,
   Loader,
-  Paragraph,
   ResizableBox
 } from '../../lib';
 
@@ -24,12 +24,12 @@ const Template: ComponentStory<typeof ResizableBox> = args => (
         <Loader />
       </CardHeading>
       <CardBody>
-        <Paragraph>
+        <Box>
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus vero
           dolore dolorum amet similique qui ipsa, tempora quisquam sit eveniet
           laudantium. Modi esse voluptas odit accusamus libero excepturi ullam
           amet.
-        </Paragraph>
+        </Box>
       </CardBody>
     </Card>
   </ResizableBox>

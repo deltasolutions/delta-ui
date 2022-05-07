@@ -2,8 +2,8 @@ import { jsx } from '@theme-ui/core';
 import { forwardRef } from 'react';
 import { MdAdd } from 'react-icons/md';
 import { TiDelete, TiPlus } from 'react-icons/ti';
-import { AsButton } from './AsButton';
 import { Box, BoxProps } from './Box';
+import { Button } from './Button';
 import { EllipsisText } from './EllipsisText';
 import { Icon } from './Icon';
 
@@ -72,20 +72,20 @@ export const Chip = forwardRef<HTMLDivElement, ChipProps>(
           {children}
         </EllipsisText>
         {onDelete && (
-          <AsButton onClick={onDelete}>
+          <Button onClick={onDelete}>
             <Icon
               size={size === 'small' ? 'very-small' : 'small'}
               icon={TiDelete}
             />
-          </AsButton>
+          </Button>
         )}
         {onAdd && (
-          <AsButton onClick={onAdd}>
+          <Button onClick={onAdd}>
             <Icon
               size={size === 'small' ? 'very-small' : 'small'}
               icon={MdAdd}
             />
-          </AsButton>
+          </Button>
         )}
       </Box>
     );

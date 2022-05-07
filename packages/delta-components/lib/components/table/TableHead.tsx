@@ -1,6 +1,5 @@
 import { jsx } from '@theme-ui/core';
 import { forwardRef, HTMLAttributes, useEffect, useRef, useState } from 'react';
-import { useDebounce } from '../../hooks';
 import { LAYOUT_HEADER_HEIGHT } from '../../variables';
 import { Box } from '../Box';
 export interface TableHeadProps

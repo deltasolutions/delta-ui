@@ -1,6 +1,6 @@
 import { jsx } from '@theme-ui/core';
 import { HTMLAttributes, useEffect, useRef } from 'react';
-import { useDebounce } from '../../../lib';
+import { useDebouncedCallback } from '../../../lib';
 import { hexToRgb } from '../../utils';
 
 export interface GradientTransitionProps
@@ -17,7 +17,7 @@ export const GradientTransition = ({
 }: GradientTransitionProps) => {
   let opacity = 0;
   const layoutHeaderRef = useRef<HTMLDivElement>(null);
-  const scrollListener = useDebounce((e = undefined) => {
+  const scrollListener = useDebouncedCallback((e = undefined) => {
     const scrollTop = window.scrollY;
     const candidate = +(
       (scrollTop - start) *
@@ -34,9 +34,9 @@ export const GradientTransition = ({
   }, 0);
   useEffect(() => {
     scrollListener();
-    document.addEventListener('scroll', scrollListener);
+    document.addEventListener('scroll', scrollListener as any);
     return () => {
-      document.removeEventListener('scroll', scrollListener);
+      document.removeEventListener('scroll', scrollListener as any);
     };
   }, []);
 

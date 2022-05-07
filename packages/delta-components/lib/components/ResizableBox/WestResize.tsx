@@ -1,6 +1,6 @@
 import { jsx } from '@theme-ui/core';
 import { useState, useCallback, Fragment } from 'react';
-import { useThrottle } from '../../hooks';
+import { useThrottledCallback } from '../../hooks';
 
 export const WestResize = ({ minWidth, width, maxWidth, setWidth }) => {
   const [isFocus, setIsFocus] = useState(false);
@@ -8,7 +8,7 @@ export const WestResize = ({ minWidth, width, maxWidth, setWidth }) => {
     window.removeEventListener('mousemove', onMouseMove);
     window.removeEventListener('mouseup', mouseUp);
   };
-  const onMouseMove = useThrottle(e => {
+  const onMouseMove = useThrottledCallback(e => {
     setWidth(window.innerWidth - e.clientX);
   }, 5);
   const onMouseDown = useCallback(e => {

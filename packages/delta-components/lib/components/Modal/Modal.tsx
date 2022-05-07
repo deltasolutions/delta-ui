@@ -2,8 +2,8 @@ import { jsx } from '@theme-ui/core';
 import { forwardRef } from 'react';
 import { IoCloseOutline } from 'react-icons/io5';
 import { MODAL_PADDING, ICON_MEDIUM_SIZE } from '../../variables';
-import { AsButton } from '../AsButton';
 import { Box, BoxProps } from '../Box';
+import { Button } from '../Button';
 export interface ModalProps extends BoxProps {
   size?: 'small' | 'medium' | 'large' | 'page';
   close: () => void;
@@ -38,7 +38,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
         ref={ref}
         {...rest}
       >
-        <AsButton
+        <Button
           onClick={close}
           sx={{
             position: 'absolute',
@@ -47,7 +47,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
           }}
         >
           <IoCloseOutline size={ICON_MEDIUM_SIZE} />
-        </AsButton>
+        </Button>
         {children}
       </Box>
     );

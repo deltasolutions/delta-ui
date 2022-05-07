@@ -42,9 +42,10 @@ export const headingStyles = {
     color: 'text_base'
   },
   h5: {
-    fontSize: '14px',
+    fontSize: '13px',
     fontWeight: 600,
-    color: 'text_base'
+    color: 'text_base',
+    lineHeight: '26px'
   },
   h6: {
     fontSize: '12px',

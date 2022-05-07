@@ -24,7 +24,7 @@ export const Radio = ({ disabled, name, id, ...rest }: RadioProps) => {
             content: "''",
             position: 'absolute',
             left: '0',
-            top: '02',
+            top: '0',
             width: '24px',
             height: '24px',
             borderRadius: '100%',
@@ -48,9 +48,7 @@ export const Radio = ({ disabled, name, id, ...rest }: RadioProps) => {
             position: 'absolute',
             top: '8px',
             left: '8px',
-            borderRadius: '100%',
-            WebkitTransition: 'all 0.2s ease',
-            transition: 'all 0.2s ease'
+            borderRadius: '100%'
           },
         '[type="radio"]:not(:checked) + label:after': {
           opacity: 0,

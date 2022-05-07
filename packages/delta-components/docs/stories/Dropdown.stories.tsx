@@ -4,10 +4,10 @@ import { BsThreeDots } from 'react-icons/bs';
 import {
   Dropdown,
   DropdownItem,
-  AsAnchor,
   Box,
   ICON_MEDIUM_SIZE,
-  AsButton
+  Button,
+  Anchor
 } from '../../lib';
 
 export default {
@@ -20,56 +20,65 @@ const Template: ComponentStory<typeof Dropdown> = args => {
     <Box sx={{ display: 'flex', justifyContent: 'start' }}>
       <Dropdown
         component={
-          <AsButton>
+          <Button>
             <BsThreeDots size={ICON_MEDIUM_SIZE} />
-          </AsButton>
+          </Button>
         }
       >
-        <DropdownItem>
-          <AsAnchor href="#">Profile</AsAnchor>
+        <DropdownItem divide>
+          <Anchor href="#">Add to stories</Anchor>
         </DropdownItem>
         <DropdownItem>
-          <AsAnchor href="#">New window</AsAnchor>
+          <Anchor href="#">Go to stories</Anchor>
+        </DropdownItem>
+        <DropdownItem>
+          <Anchor href="#">Go to settings</Anchor>
         </DropdownItem>
         <DropdownItem divide>
-          <AsAnchor href="#">Close Tab</AsAnchor>
+          <Anchor href="#">Save to bookmarks</Anchor>
         </DropdownItem>
-        <Dropdown label="Share">
+        <Dropdown divide label="Share">
           <DropdownItem divide>
-            <AsAnchor href="#">Mail</AsAnchor>
+            <Anchor href="#">Mail</Anchor>
           </DropdownItem>
           <Dropdown label="Preferences">
             <DropdownItem>
-              <AsAnchor href="#">Reddit</AsAnchor>
+              <Anchor href="#">Reddit</Anchor>
             </DropdownItem>
             <DropdownItem>
-              <AsAnchor href="#">LinkedIn</AsAnchor>
+              <Anchor href="#">LinkedIn</Anchor>
             </DropdownItem>
           </Dropdown>
           <Dropdown label="Other">
             <DropdownItem>
-              <AsAnchor href="#">Reddit</AsAnchor>
+              <Anchor href="#">Reddit</Anchor>
             </DropdownItem>
             <Dropdown label="Other">
               <DropdownItem>
-                <AsAnchor href="#">Reddit</AsAnchor>
+                <Anchor href="#">Reddit</Anchor>
               </DropdownItem>
               <Dropdown label="Other">
                 <DropdownItem>
-                  <AsAnchor href="#">Reddit</AsAnchor>
+                  <Anchor href="#">Reddit</Anchor>
                 </DropdownItem>
                 <Dropdown label="Other">
                   <DropdownItem>
-                    <AsAnchor href="#">Reddit</AsAnchor>
+                    <Anchor href="#">Reddit</Anchor>
                   </DropdownItem>
                   <DropdownItem>
-                    <AsAnchor href="#">LinkedIn</AsAnchor>
+                    <Anchor href="#">LinkedIn</Anchor>
                   </DropdownItem>
                 </Dropdown>
               </Dropdown>
             </Dropdown>
           </Dropdown>
         </Dropdown>
+        <DropdownItem divide>
+          <Anchor href="#">Open is new page</Anchor>
+        </DropdownItem>
+        <DropdownItem>
+          <Anchor href="#">Show advanced settings</Anchor>
+        </DropdownItem>
       </Dropdown>
     </Box>
   );

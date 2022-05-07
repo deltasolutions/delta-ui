@@ -1,29 +1,40 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { Anchor, Box, Button, TabGroup, TabOption } from '../../lib';
+import { useState } from 'react';
+import { TabGroup, TabOption } from '../../lib';
 
 export default {
   title: 'Navigation/TabGroup',
   component: TabGroup
 } as ComponentMeta<typeof TabGroup>;
-
-const Template: ComponentStory<typeof TabGroup> = args => {
+const options = ['first', 'second', 'third'];
+const WithAnchorsTemplate: ComponentStory<typeof TabGroup> = args => {
   return (
-    <TabGroup {...args}>
-      <TabOption href="#" id="first">
-        First
-      </TabOption>
-      <TabOption href="#" id="second">
-        Second
-      </TabOption>
-      <TabOption href="#" id="third">
-        Third
-      </TabOption>
+    <TabGroup activeId={options[0]} {...args}>
+      {options.map(option => (
+        <TabOption key={option} href="#" id={option}>
+          {option.charAt(0).toUpperCase() + option.slice(1)}
+        </TabOption>
+      ))}
     </TabGroup>
   );
 };
-export const Basic = Template.bind({});
+export const WithAnchors = WithAnchorsTemplate.bind({});
 
-Basic.args = {
+WithAnchors.args = {
   activeId: 'first'
 };
+
+const WithButtonsTemplate: ComponentStory<typeof TabGroup> = args => {
+  const [activeId, setActiveId] = useState(options[0]);
+  return (
+    <TabGroup activeId={activeId} {...args}>
+      {options.map(option => (
+        <TabOption onClick={() => setActiveId(option)} key={option} id={option}>
+          {option.charAt(0).toUpperCase() + option.slice(1)}
+        </TabOption>
+      ))}
+    </TabGroup>
+  );
+};
+export const WithButtons = WithButtonsTemplate.bind({});

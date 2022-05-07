@@ -1,6 +1,6 @@
 import { jsx } from '@theme-ui/core';
 import { useState, useContext, useCallback, Fragment } from 'react';
-import { useThrottle } from '../../hooks';
+import { useThrottledCallback } from '../../hooks';
 export const EastResize = ({
   setWidth,
   width,
@@ -14,7 +14,7 @@ export const EastResize = ({
     window.removeEventListener('mousemove', onRightSideMouseMove);
     window.removeEventListener('mouseup', mouseUp);
   };
-  const onRightSideMouseMove = useThrottle(e => {
+  const onRightSideMouseMove = useThrottledCallback(e => {
     setWidth(
       e.clientX - (resizableBoxRef?.current?.getBoundingClientRect().left ?? 0)
     );
