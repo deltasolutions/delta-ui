@@ -17,8 +17,8 @@ export const Basic = Template.bind({});
 
 Basic.args = {
   children: [
-    <option>First item</option>,
-    <option>Second item</option>,
-    <option>Third item</option>
+    <option key={0}>First item</option>,
+    <option key={1}>Second item</option>,
+    <option key={2}>Third item</option>
   ]
 };

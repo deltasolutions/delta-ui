@@ -1,14 +1,14 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { Textarea } from '../../lib';
+import { TextArea } from '../../lib';
 
 export default {
-  title: 'Inputs/Textarea',
-  component: Textarea
-} as ComponentMeta<typeof Textarea>;
+  title: 'Inputs/TextArea',
+  component: TextArea
+} as ComponentMeta<typeof TextArea>;
 
-const Template: ComponentStory<typeof Textarea> = args => (
-  <Textarea {...args} />
+const Template: ComponentStory<typeof TextArea> = args => (
+  <TextArea {...args} />
 );
 
 export const Basic = Template.bind({});

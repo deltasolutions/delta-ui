@@ -37,8 +37,8 @@ import {
 } from 'react';
 import { RiArrowRightSFill } from 'react-icons/ri';
 import { mergeRefs } from '../../utils';
-import { AsButton } from '../AsButton';
 import { Box, BoxProps } from '../Box';
+import { Button } from '../Button';
 import { DropdownItem } from './DropdownItem';
 
 export interface DropdownProps extends BoxProps {
@@ -46,10 +46,11 @@ export interface DropdownProps extends BoxProps {
   label?:
     | ((boolean | ReactChild | ReactFragment | ReactPortal | null) & string)
     | undefined;
+  divide?: boolean;
   nested?: boolean;
 }
 const MenuComponent = forwardRef<any, DropdownProps>(
-  ({ children, component, label, ...rest }: DropdownProps, ref) => {
+  ({ children, component, divide, label, ...rest }: DropdownProps, ref) => {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
     const [open, setOpen] = useState(false);
     const listItemsRef = useRef<(HTMLButtonElement | null)[]>([]);
@@ -156,12 +157,16 @@ const MenuComponent = forwardRef<any, DropdownProps>(
           </Box>
         ) : (
           <DropdownItem open={open}>
-            <AsButton
+            <Button
               sx={{
                 display: 'flex',
                 width: '100%',
+                padding: '12px 8px',
                 justifyContent: 'space-between',
-                alignItems: 'center'
+                alignItems: 'center',
+                ...(divide && {
+                  borderBottom: '1px rgba(255,255,255,.1) solid'
+                })
               }}
               {...getReferenceProps({
                 ...rest,
@@ -174,7 +179,7 @@ const MenuComponent = forwardRef<any, DropdownProps>(
               {nested && (
                 <RiArrowRightSFill sx={{ fill: 'text_base' }} size={22} />
               )}
-            </AsButton>
+            </Button>
           </DropdownItem>
         )}
         <FloatingPortal>
@@ -182,16 +187,11 @@ const MenuComponent = forwardRef<any, DropdownProps>(
             <Box
               sx={{
                 backgroundColor: 'decorative_subdued',
-                width: '185px',
-                borderWidth: '0.1px',
-                borderStyle: 'solid',
-                borderColor: 'border_base',
+                minWidth: '183px',
                 boxShadow:
                   '0 16px 24px rgb(0 0 0 / 30%), 0 6px 8px rgb(0 0 0 / 20%)',
                 padding: '4px',
-
-                fontWeight: 'bold',
-                fontSize: '14px',
+                fontSize: '13px',
                 borderRadius: '4px'
               }}
               {...getFloatingProps({

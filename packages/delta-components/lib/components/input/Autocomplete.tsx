@@ -38,6 +38,7 @@ const Item = forwardRef<HTMLLIElement, ItemProps>(
         aria-selected={isActive}
         {...rest}
         sx={{
+          cursor: 'default',
           width: '100%',
           paddingX: '8px',
           height: '40px',
@@ -184,10 +185,6 @@ export const Autocomplete = ({
             sx={{
               backgroundColor: 'decorative_subdued',
               borderRadius: 5,
-              borderWidth: '0.1px',
-              borderStyle: 'solid',
-              borderColor: 'border_base',
-
               boxShadow:
                 '0 16px 24px rgb(0 0 0 / 30%), 0 6px 8px rgb(0 0 0 / 20%)'
             }}
