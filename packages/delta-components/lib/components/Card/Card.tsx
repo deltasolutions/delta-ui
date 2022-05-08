@@ -7,18 +7,17 @@ export interface CardProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(
-  ({ children, size = 'medium', ...rest }: CardProps, ref) => {
+  ({ children, size = 'auto', ...rest }: CardProps, ref) => {
     return (
       <Box
         ref={ref}
         sx={{
           borderRadius: '4px',
-          width: 'min-content',
           ...{
-            small: { maxWidth: '400px' },
-            medium: { maxWidth: '600px' },
-            large: { maxWidth: '800px' },
-            auto: {}
+            small: { width: '400px' },
+            medium: { width: '600px' },
+            large: { width: '800px' },
+            auto: { width: '100%' }
           }[size],
           backgroundColor: 'surface'
         }}
