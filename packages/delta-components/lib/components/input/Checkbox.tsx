@@ -1,18 +1,25 @@
 import { jsx } from '@theme-ui/core';
 import { forwardRef, InputHTMLAttributes, useCallback } from 'react';
 
-export interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {}
+export interface CheckboxProps
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
+  rounded?: boolean;
+  size?: 'small' | 'medium';
+}
 
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
-  ({ disabled, value, ...rest }: CheckboxProps, ref) => {
+  (
+    { disabled, value, size = 'medium', rounded, ...rest }: CheckboxProps,
+    ref
+  ) => {
     return (
       <div
         sx={{
           '.container': {
             display: 'block',
             position: 'relative',
-            paddingLeft: '26px',
-            marginBottom: '26px',
+            paddingLeft: size === 'medium' ? '26px' : '20px',
+            marginBottom: size === 'medium' ? '26px' : '20px',
             cursor: 'pointer',
             fontSize: '22px',
             WebkitUserSelect: 'none',
@@ -31,9 +38,9 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             position: 'absolute',
             top: '0',
             left: '0',
-            borderRadius: 5,
-            height: '26px',
-            width: '26px',
+            borderRadius: rounded ? '500px' : size === 'medium' ? 5 : 4,
+            height: size === 'medium' ? '26px' : '20px',
+            width: size === 'medium' ? '26px' : '20px',
             backgroundColor: 'secondaryContainer'
           },
           '.container input:checked ~ .checkmark': {
@@ -51,13 +58,13 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           },
           '.container input:checked ~ .checkmark:after': { display: 'block' },
           '.container .checkmark:after': {
-            left: '9px',
-            top: '5px',
-            width: '5px',
-            height: '10px',
+            left: size === 'medium' ? '9px' : '6.5px',
+            top: size === 'medium' ? '5px' : '3px',
+            width: size === 'medium' ? '5px' : '5px',
+            height: size === 'medium' ? '10px' : '9px',
             borderColor: 'onPrimary',
             borderStyle: 'solid',
-            borderWidth: '0 3px 3px 0',
+            borderWidth: size === 'medium' ? ' 0 3px 3px 0' : '0 2px 2px 0',
             WebkitTransform: 'rotate(45deg)',
             msTransform: 'rotate(45deg)',
             transform: 'rotate(45deg)'

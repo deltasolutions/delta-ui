@@ -13,7 +13,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
         ref={ref}
         sx={{
           borderRadius: '4px',
-          width: '100%',
+          width: 'min-content',
           ...{
             small: { maxWidth: '400px' },
             medium: { maxWidth: '600px' },
