@@ -34,6 +34,7 @@ export const decorators = [
               overscrollBehaviorY: 'none',
               margin: 0,
               padding: 0,
+              color: darkTheme.colors.onBackground,
               fontSize: darkTheme.fontSizes[1]
             },
             '*': {

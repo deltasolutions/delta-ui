@@ -8,7 +8,8 @@ import {
   CardHeading,
   CardFooter,
   darkTheme,
-  Heading
+  Heading,
+  useTheme
 } from '../../lib';
 
 export default {
@@ -31,7 +32,7 @@ const Template: ComponentStory<typeof Container> = args => {
   );
 };
 const ContainerChild = () => {
-  const theme = useThemeUI();
+  const theme = useTheme();
   return (
     <Box>
       <pre>{JSON.stringify(theme, null, 4)}</pre>
