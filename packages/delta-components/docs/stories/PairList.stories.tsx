@@ -15,7 +15,7 @@ export default {
 } as ComponentMeta<typeof PairList>;
 
 const Template: ComponentStory<typeof PairList> = args => (
-  <Card>
+  <Card size="medium">
     <CardHeading>
       <Heading level={2}>Delta DCM main</Heading>
     </CardHeading>

@@ -9,21 +9,21 @@ export interface PairListProps extends BoxProps {
 
 export const PairList = forwardRef<HTMLDivElement, PairListProps>(
   ({ pairs, direction = 'row', ...rest }: PairListProps, ref) => {
-    return (
+    return direction === 'column' ? (
       <Box
         ref={ref}
         sx={{ gap: 5, flexDirection: 'column', width: '100%', display: 'flex' }}
         {...rest}
       >
-        {pairs.map(([key, value], index, array) => {
+        {pairs.map(([key, value], index) => {
           return (
             <Box
               sx={{
                 display: 'flex',
-                justifyContent: 'space-between',
                 minHeight: 2,
                 gap: 2,
-                flexDirection: direction
+                justifyContent: 'space-between',
+                flexDirection: 'column'
               }}
               key={index}
             >
@@ -34,6 +34,22 @@ export const PairList = forwardRef<HTMLDivElement, PairListProps>(
             </Box>
           );
         })}
+      </Box>
+    ) : (
+      <Box ref={ref} {...rest}>
+        <table>
+          <tbody>
+            {pairs.map(([key, value], index) => (
+              <tr key={index}>
+                <td sx={{ color: 'onSurfaceVariant', pb: 5, fontWeight: 600 }}>
+                  {key}
+                </td>
+                <td sx={{ width: '30px', pb: 5 }}></td>
+                <td sx={{ color: 'onSurface', pb: 5 }}>{value}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </Box>
     );
   }
