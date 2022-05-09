@@ -1,3 +1,4 @@
+import { keyframes } from '@emotion/react';
 import {
   autoUpdate,
   size,
@@ -16,7 +17,10 @@ import React, {
   useLayoutEffect,
   useEffect,
   useRef,
-  useState
+  useState,
+  KeyboardEvent,
+  FocusEvent,
+  ChangeEvent
 } from 'react';
 import { IoCloseCircleOutline } from 'react-icons/io5';
 import { Box } from '../Box';
@@ -49,10 +53,6 @@ const Item = forwardRef<HTMLLIElement, ItemProps>(
           alignItems: 'center',
           borderRadius: 4,
           overflow: 'hidden',
-          '&:hover, &:active, &:focus, &:focus-visible': {
-            backgroundColor: 'inversePrimary',
-            color: 'onInversePrimary'
-          },
           ...(isActive && {
             backgroundColor: 'inversePrimary',
             color: 'onInversePrimary'
@@ -68,20 +68,20 @@ const Item = forwardRef<HTMLLIElement, ItemProps>(
 export interface MultipleAutocompleteProps extends TextFieldProps {
   data: string[];
 }
-const activeListItemWidth = 90;
-const activeListItemsSpace = 3;
-
 export const MultipleAutocomplete = ({
   data,
   color,
   size: inputSize,
+  onFocus: propsOnFocus,
   variant,
   ...rest
 }: MultipleAutocompleteProps) => {
+  const [backspacePressed, setBackspacePressed] = useState(false);
   const [open, setOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const listRef = useRef<(HTMLElement | null)[]>([]);
+  const id = useId();
   const { x, y, reference, floating, strategy, context, refs, update } =
     useFloating<HTMLInputElement>({
       open,
@@ -119,13 +119,14 @@ export const MultipleAutocomplete = ({
         activeIndex,
         onNavigate: setActiveIndex,
         virtual: true,
-        loop: true
+        loop: false
       })
     ]
   );
-  function onChange(event: React.ChangeEvent<HTMLInputElement>) {
+  function onChange(event: ChangeEvent<HTMLInputElement>) {
     const value = event.target.value;
     setInputValue(value);
+    setBackspacePressed(false);
     if (value) {
       setOpen(true);
       setActiveIndex(0);
@@ -133,7 +134,13 @@ export const MultipleAutocomplete = ({
       setOpen(false);
     }
   }
-
+  function onFocus(event: FocusEvent<HTMLInputElement>) {
+    if (event.target.value) {
+      setOpen(true);
+      setActiveIndex(0);
+    }
+    propsOnFocus?.(event);
+  }
   useEffect(() => {
     if (open && refs.reference.current && refs.floating.current) {
       return autoUpdate(refs.reference.current, refs.floating.current, update);
@@ -144,72 +151,98 @@ export const MultipleAutocomplete = ({
 
   const items = data.filter(
     item =>
-      item.toLowerCase().startsWith(inputValue.toLowerCase()) &&
+      item.toLowerCase().includes(inputValue.toLowerCase()) &&
       !activeList.map(i => i.toLowerCase()).includes(item.toLowerCase())
   );
   if (open && items.length === 0 && activeIndex !== null) {
     setActiveIndex(null);
   }
+
   return (
-    <Box sx={{ position: 'relative', width: '500px' }}>
+    <label
+      sx={{
+        width: '100%',
+        position: 'relative',
+        backgroundColor: 'tertiary',
+        borderRadius: 4,
+        p: '5px',
+        gap: 1,
+        height: '100%',
+        lineHeight: '1rem',
+        letterSpacing: 'normal',
+        alignItems: 'center',
+        display: 'flex',
+        flexWrap: 'wrap',
+        '&:focus-within': {
+          outline: '5px auto -webkit-focus-ring-color'
+        }
+      }}
+      htmlFor={id}
+    >
       {activeList.length > 0 &&
-        activeList.map((item, index) => (
+        activeList.map((item, index, arr) => (
           <Box
             key={item}
             sx={{
-              position: 'absolute',
-              top: '50%',
               px: 2,
-              transform: 'translateY(-50%)',
               fontSize: 1,
               borderRadius: 4,
-              py: '2px',
+              gap: 2,
+              py: 1,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
+              opacity: backspacePressed && index === arr.length - 1 ? '70%' : 2,
               backgroundColor: 'surfaceTint',
               color: 'onInversePrimary'
             }}
-            style={{
-              width: activeListItemWidth,
-              left: `${
-                (activeListItemWidth + activeListItemsSpace) * index + 7
-              }px`
-            }}
           >
             <Tooltip label={item}>
-              <EllipsisText>{item}</EllipsisText>
+              <span>{item}</span>
             </Tooltip>
             <Button
-              onClick={() => {
+              onClick={e => {
                 setActiveList(prev =>
                   prev.filter(prevItem => prevItem !== item)
                 );
               }}
-              sx={{ display: 'flex', alignItems: 'center' }}
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                color: 'onTertiaryContainer'
+              }}
             >
               <IoCloseCircleOutline size={14} />
             </Button>
           </Box>
         ))}
       <TextField
+        id={id}
+        autoComplete="off"
         size={inputSize}
         color={color}
-        variant={variant}
-        sx={{ width: '100%' }}
         {...getReferenceProps({
           ref: reference,
           onChange,
+          onFocus,
           value: inputValue,
           ...rest,
           'aria-autocomplete': 'list',
           onKeyDown(event: any) {
-            if (event.key === 'Backspace' && !event.target.value) {
-              setActiveList(prev => {
-                const copy = [...prev];
-                copy.pop();
-                return copy;
-              });
+            if (
+              (event.key === 'Backspace' && !event.target.value) ||
+              (event.target.selectionStart === 0 && event.key === 'Backspace')
+            ) {
+              if (backspacePressed) {
+                setActiveList(prev => {
+                  const copy = [...prev];
+                  copy.pop();
+                  return copy;
+                });
+                setBackspacePressed(false);
+              } else {
+                setBackspacePressed(true);
+              }
             }
             if (
               event.key === 'Enter' &&
@@ -218,6 +251,7 @@ export const MultipleAutocomplete = ({
             ) {
               setActiveList(prev => [...prev, items[activeIndex]]);
               setInputValue('');
+              setBackspacePressed(false);
               setActiveIndex(null);
               setOpen(false);
             }
@@ -232,12 +266,11 @@ export const MultipleAutocomplete = ({
             }
           }
         })}
-        style={{
-          ...(activeList.length > 0 && {
-            paddingLeft:
-              activeList.length * (activeListItemWidth + activeListItemsSpace) +
-              7
-          })
+        sx={{
+          width: 'fit-content',
+          flexGrow: 1,
+          height: '22px',
+          px: activeList.length > 0 ? 0 : 2
         }}
       />
       {open && items.length > 0 && (
@@ -270,11 +303,14 @@ export const MultipleAutocomplete = ({
                   ref(node) {
                     listRef.current[index] = node;
                   },
-                  onClick() {
-                    setActiveList(prev => [...prev, item]);
+                  onClick(e) {
                     setInputValue('');
+                    setBackspacePressed(false);
+                    setActiveList(prev => [...prev, item]);
                     setOpen(false);
-                    refs.reference.current?.focus();
+                    //TODO if you remove the mactotask setTimeout, then after selecting an element from the list,
+                    // this menu will open again, since the focus will work first and then the field clearing hook will work
+                    setTimeout(() => refs.reference.current?.focus(), 0);
                   }
                 })}
                 isActive={activeIndex === index}
@@ -285,6 +321,6 @@ export const MultipleAutocomplete = ({
           </List>
         </Box>
       )}
-    </Box>
+    </label>
   );
 };

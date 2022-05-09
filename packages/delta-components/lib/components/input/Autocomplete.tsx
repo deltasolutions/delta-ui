@@ -11,13 +11,15 @@ import {
   offset
 } from '@floating-ui/react-dom-interactions';
 import { jsx } from '@theme-ui/core';
-import React, {
+import {
   forwardRef,
   useLayoutEffect,
   useEffect,
   useRef,
   useState,
-  Fragment
+  Fragment,
+  ChangeEvent,
+  FocusEvent
 } from 'react';
 import { Box } from '../Box';
 import { List, ListItem, ListItemProps } from '../List';
@@ -46,10 +48,6 @@ const Item = forwardRef<HTMLLIElement, ItemProps>(
           alignItems: 'center',
           borderRadius: 4,
           overflow: 'hidden',
-          '&:hover, &:active, &:focus, &:focus-visible': {
-            backgroundColor: 'inversePrimary',
-            color: 'onInversePrimary'
-          },
           ...(isActive && {
             backgroundColor: 'inversePrimary',
             color: 'onInversePrimary'
@@ -70,7 +68,9 @@ export const Autocomplete = ({
   color,
   multiple,
   size: inputSize,
-  variant,
+  onChange: propsOnChange,
+  onFocus: propsOnFocus,
+  variant = 'contained',
   ...rest
 }: AutocompleteProps) => {
   const [open, setOpen] = useState(false);
@@ -118,7 +118,7 @@ export const Autocomplete = ({
       })
     ]
   );
-  function onChange(event: React.ChangeEvent<HTMLInputElement>) {
+  function onChange(event: ChangeEvent<HTMLInputElement>) {
     const value = event.target.value;
     setInputValue(value);
     if (value) {
@@ -126,6 +126,14 @@ export const Autocomplete = ({
       setActiveIndex(0);
     } else {
       setOpen(false);
+    }
+    propsOnChange?.(event);
+  }
+  function onFocus(event: FocusEvent<HTMLInputElement>) {
+    propsOnFocus?.(event);
+    if (event.target.value) {
+      setOpen(true);
+      setActiveIndex(0);
     }
   }
   useEffect(() => {
@@ -135,7 +143,7 @@ export const Autocomplete = ({
     return () => {};
   }, [open, update, refs.reference, refs.floating]);
   const items = data.filter(item =>
-    item.toLowerCase().startsWith(inputValue.toLowerCase())
+    item.toLowerCase().includes(inputValue.toLowerCase())
   );
   if (open && items.length === 0 && activeIndex !== null) {
     setActiveIndex(null);
@@ -149,6 +157,7 @@ export const Autocomplete = ({
         {...getReferenceProps({
           ref: reference,
           onChange,
+          onFocus,
           value: inputValue,
           ...rest,
           'aria-autocomplete': 'list',

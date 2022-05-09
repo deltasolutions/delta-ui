@@ -12,6 +12,7 @@ import {
   useDismiss
 } from '@floating-ui/react-dom-interactions';
 import { jsx, useThemeUI } from '@theme-ui/core';
+import { ReactElement } from 'react';
 import {
   cloneElement,
   forwardRef,
@@ -27,7 +28,7 @@ export interface TooltipProps extends BoxProps {
   label: ReactNode;
   delay?: number;
   placement?: Placement;
-  children: JSX.Element;
+  children: ReactElement;
 }
 
 export const Tooltip = forwardRef(

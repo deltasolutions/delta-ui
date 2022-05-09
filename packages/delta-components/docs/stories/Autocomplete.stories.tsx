@@ -1,6 +1,7 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { Autocomplete } from '../../lib';
+import { useState } from 'react';
+import { Autocomplete, Box, Loader, useDebouncedCallback } from '../../lib';
 export default {
   title: 'Inputs/Autocomplete',
   component: Autocomplete
@@ -62,7 +63,41 @@ const data = [
 ];
 
 Basic.args = {
-  placeholder: '7383 Barrows Burg',
-  size: 'medium',
-  data: data
+  data: data,
+  placeholder: '68815 Rahul Plaza'
 };
+
+const TemplateWithLoading: ComponentStory<typeof Autocomplete> = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const debouncedCallback = useDebouncedCallback(() => {
+    setIsLoading(false);
+  }, 500);
+  return (
+    <Box sx={{ position: 'relative', width: '100%' }}>
+      {isLoading && (
+        <Loader
+          sx={{
+            position: 'absolute',
+            right: 4,
+            top: '50%',
+            transform: 'translateY(-50%)'
+          }}
+        />
+      )}
+      <Autocomplete
+        onChange={() => {
+          setIsLoading(true);
+          debouncedCallback();
+        }}
+        placeholder="7383 Barrows Burg"
+        size="medium"
+        sx={{ paddingRight: '30px', width: '100%' }}
+        data={isLoading ? [] : data}
+      />
+    </Box>
+  );
+};
+
+export const Loading = TemplateWithLoading.bind({});
+
+Loading.args = {};
