@@ -1,4 +1,3 @@
-import { keyframes } from '@emotion/react';
 import {
   autoUpdate,
   size,
@@ -12,20 +11,19 @@ import {
   offset
 } from '@floating-ui/react-dom-interactions';
 import { jsx } from '@theme-ui/core';
-import React, {
+import {
   forwardRef,
   useLayoutEffect,
   useEffect,
   useRef,
   useState,
-  KeyboardEvent,
   FocusEvent,
+  KeyboardEvent,
   ChangeEvent
 } from 'react';
 import { IoCloseCircleOutline } from 'react-icons/io5';
 import { Box } from '../Box';
 import { Button } from '../Button';
-import { EllipsisText } from '../EllipsisText';
 import { List, ListItem, ListItemProps } from '../List';
 import { Tooltip } from '../Tooltip';
 import { TextField, TextFieldProps } from './TextField';
@@ -73,6 +71,7 @@ export const MultipleAutocomplete = ({
   color,
   size: inputSize,
   onFocus: propsOnFocus,
+  onChange: propsOnChange,
   variant,
   ...rest
 }: MultipleAutocompleteProps) => {
@@ -133,6 +132,7 @@ export const MultipleAutocomplete = ({
     } else {
       setOpen(false);
     }
+    propsOnChange?.(event);
   }
   function onFocus(event: FocusEvent<HTMLInputElement>) {
     if (event.target.value) {
@@ -140,6 +140,42 @@ export const MultipleAutocomplete = ({
       setActiveIndex(0);
     }
     propsOnFocus?.(event);
+  }
+  function onKeyDown(event: any) {
+    if (event.key === 'ArrowDown' && !open) {
+      setBackspacePressed(false);
+      setOpen(true);
+      setActiveIndex(0);
+      return;
+    }
+    if (
+      (event.key === 'Backspace' && !event.target.value) ||
+      (event.target.selectionStart === 0 && event.key === 'Backspace')
+    ) {
+      if (backspacePressed) {
+        setActiveList(prev => {
+          const copy = [...prev];
+          copy.pop();
+          return copy;
+        });
+        setBackspacePressed(false);
+        return;
+      }
+      setBackspacePressed(true);
+      return;
+    }
+    if (event.key === 'Enter' && activeIndex != null && items[activeIndex]) {
+      setActiveList(prev => [...prev, items[activeIndex]]);
+      setInputValue('');
+      setBackspacePressed(false);
+      setActiveIndex(null);
+      setOpen(false);
+    }
+  }
+  function onDoubleClick() {
+    setBackspacePressed(false);
+    setOpen(true);
+    setActiveIndex(0);
   }
   useEffect(() => {
     if (open && refs.reference.current && refs.floating.current) {
@@ -177,6 +213,7 @@ export const MultipleAutocomplete = ({
           outline: '5px auto -webkit-focus-ring-color'
         }
       }}
+      onDoubleClick={onDoubleClick}
       htmlFor={id}
     >
       {activeList.length > 0 &&
@@ -228,35 +265,8 @@ export const MultipleAutocomplete = ({
           value: inputValue,
           ...rest,
           'aria-autocomplete': 'list',
-          onKeyDown(event: any) {
-            if (
-              (event.key === 'Backspace' && !event.target.value) ||
-              (event.target.selectionStart === 0 && event.key === 'Backspace')
-            ) {
-              if (backspacePressed) {
-                setActiveList(prev => {
-                  const copy = [...prev];
-                  copy.pop();
-                  return copy;
-                });
-                setBackspacePressed(false);
-              } else {
-                setBackspacePressed(true);
-              }
-            }
-            if (
-              event.key === 'Enter' &&
-              activeIndex != null &&
-              items[activeIndex]
-            ) {
-              setActiveList(prev => [...prev, items[activeIndex]]);
-              setInputValue('');
-              setBackspacePressed(false);
-              setActiveIndex(null);
-              setOpen(false);
-            }
-          },
-          onBlur(event) {
+          onKeyDown,
+          onBlur: event => {
             if (
               !refs.floating.current?.contains(
                 event.relatedTarget as HTMLElement | null
@@ -264,7 +274,8 @@ export const MultipleAutocomplete = ({
             ) {
               setOpen(false);
             }
-          }
+          },
+          onDoubleClick: onDoubleClick
         })}
         sx={{
           width: 'fit-content',

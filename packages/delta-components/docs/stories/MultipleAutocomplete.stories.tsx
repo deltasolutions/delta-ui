@@ -1,6 +1,13 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { MultipleAutocomplete } from '../../lib';
+import { useState } from 'react';
+import {
+  Autocomplete,
+  Box,
+  Loader,
+  MultipleAutocomplete,
+  useDebouncedCallback
+} from '../../lib';
 export default {
   title: 'Inputs/MultipleAutocomplete',
   component: MultipleAutocomplete
@@ -64,3 +71,38 @@ Basic.args = {
   size: 'medium',
   data: data
 };
+
+const TemplateWithLoading: ComponentStory<typeof Autocomplete> = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const debouncedCallback = useDebouncedCallback(() => {
+    setIsLoading(false);
+  }, 500);
+  return (
+    <Box sx={{ position: 'relative', width: '700px' }}>
+      {isLoading && (
+        <Loader
+          sx={{
+            position: 'absolute',
+            right: 4,
+            zIndex: 2,
+            bottom: 2
+          }}
+        />
+      )}
+      <MultipleAutocomplete
+        onChange={() => {
+          setIsLoading(true);
+          debouncedCallback();
+        }}
+        placeholder="7383 Barrows Burg"
+        size="medium"
+        sx={{ paddingRight: '30px', width: '100%' }}
+        data={isLoading ? [] : data}
+      />
+    </Box>
+  );
+};
+
+export const Loading = TemplateWithLoading.bind({});
+
+Loading.args = {};
