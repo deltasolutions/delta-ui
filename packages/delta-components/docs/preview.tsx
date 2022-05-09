@@ -50,7 +50,7 @@ export const decorators = [
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                m: 20
+                mt: 20
               }}
             >
               <Story />

@@ -68,7 +68,7 @@ const Item = forwardRef<HTMLLIElement, ItemProps>(
 export interface MultipleAutocompleteProps extends TextFieldProps {
   data: string[];
 }
-const activeListItemWidth = 80;
+const activeListItemWidth = 90;
 const activeListItemsSpace = 3;
 
 export const MultipleAutocomplete = ({
@@ -163,7 +163,6 @@ export const MultipleAutocomplete = ({
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              gap: 1,
               backgroundColor: 'surfaceTint',
               color: 'onInversePrimary'
             }}
