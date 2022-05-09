@@ -16,11 +16,14 @@ import React, {
   useLayoutEffect,
   useEffect,
   useRef,
-  useState,
-  Fragment
+  useState
 } from 'react';
+import { IoCloseCircleOutline } from 'react-icons/io5';
 import { Box } from '../Box';
+import { Button } from '../Button';
+import { EllipsisText } from '../EllipsisText';
 import { List, ListItem, ListItemProps } from '../List';
+import { Tooltip } from '../Tooltip';
 import { TextField, TextFieldProps } from './TextField';
 
 interface ItemProps extends ListItemProps {
@@ -62,17 +65,19 @@ const Item = forwardRef<HTMLLIElement, ItemProps>(
     );
   }
 );
-export interface AutocompleteProps extends TextFieldProps {
+export interface MultipleAutocompleteProps extends TextFieldProps {
   data: string[];
 }
-export const Autocomplete = ({
+const activeListItemWidth = 80;
+const activeListItemsSpace = 3;
+
+export const MultipleAutocomplete = ({
   data,
   color,
-  multiple,
   size: inputSize,
   variant,
   ...rest
-}: AutocompleteProps) => {
+}: MultipleAutocompleteProps) => {
   const [open, setOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -140,25 +145,76 @@ export const Autocomplete = ({
   if (open && items.length === 0 && activeIndex !== null) {
     setActiveIndex(null);
   }
+  const [activeList, setActiveList] = useState<string[]>([]);
   return (
-    <Fragment>
+    <Box sx={{ position: 'relative', width: '500px' }}>
+      {activeList.length > 0 &&
+        activeList.map((item, index) => (
+          <Box
+            key={item}
+            sx={{
+              position: 'absolute',
+              top: '50%',
+              px: 2,
+              transform: 'translateY(-50%)',
+              fontSize: 1,
+              borderRadius: 4,
+              py: '2px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: 1,
+              backgroundColor: 'surfaceTint',
+              color: 'onInversePrimary'
+            }}
+            style={{
+              width: activeListItemWidth,
+              left: `${
+                (activeListItemWidth + activeListItemsSpace) * index + 7
+              }px`
+            }}
+          >
+            <Tooltip label={item}>
+              <EllipsisText>{item}</EllipsisText>
+            </Tooltip>
+            <Button
+              onClick={() => {
+                setActiveList(prev =>
+                  prev.filter(prevItem => prevItem !== item)
+                );
+              }}
+              sx={{ display: 'flex', alignItems: 'center' }}
+            >
+              <IoCloseCircleOutline size={14} />
+            </Button>
+          </Box>
+        ))}
       <TextField
         size={inputSize}
         color={color}
         variant={variant}
+        sx={{ width: '100%' }}
         {...getReferenceProps({
           ref: reference,
           onChange,
           value: inputValue,
           ...rest,
           'aria-autocomplete': 'list',
-          onKeyDown(event) {
+          onKeyDown(event: any) {
+            if (event.key === 'Backspace' && !event.target.value) {
+              setActiveList(prev => {
+                const copy = [...prev];
+                copy.pop();
+                return copy;
+              });
+            }
             if (
               event.key === 'Enter' &&
               activeIndex != null &&
               items[activeIndex]
             ) {
-              setInputValue(items[activeIndex]);
+              setActiveList(prev => [...prev, items[activeIndex]]);
+              setInputValue('');
               setActiveIndex(null);
               setOpen(false);
             }
@@ -173,6 +229,13 @@ export const Autocomplete = ({
             }
           }
         })}
+        style={{
+          ...(activeList.length > 0 && {
+            paddingLeft:
+              activeList.length * (activeListItemWidth + activeListItemsSpace) +
+              7
+          })
+        }}
       />
       {open && items.length > 0 && (
         <Box
@@ -205,8 +268,10 @@ export const Autocomplete = ({
                     listRef.current[index] = node;
                   },
                   onClick() {
-                    setInputValue(item);
+                    setActiveList(prev => [...prev, item]);
+                    setInputValue('');
                     setOpen(false);
+                    refs.reference.current?.focus();
                   }
                 })}
                 isActive={activeIndex === index}
@@ -217,6 +282,6 @@ export const Autocomplete = ({
           </List>
         </Box>
       )}
-    </Fragment>
+    </Box>
   );
 };

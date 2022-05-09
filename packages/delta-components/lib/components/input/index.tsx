@@ -7,3 +7,4 @@ export * from './TextArea';
 export * from './Slider';
 export * from './Select';
 export * from './Autocomplete';
+export * from './MultipleAutocomplete';

@@ -1,20 +1,21 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { Autocomplete } from '../../lib';
+import { MultipleAutocomplete } from '../../lib';
 export default {
-  title: 'Inputs/Autocomplete',
-  component: Autocomplete
-} as ComponentMeta<typeof Autocomplete>;
+  title: 'Inputs/MultipleAutocomplete',
+  component: MultipleAutocomplete
+} as ComponentMeta<typeof MultipleAutocomplete>;
 
-const Template: ComponentStory<typeof Autocomplete> = args => (
-  <Autocomplete {...args} />
+const Template: ComponentStory<typeof MultipleAutocomplete> = args => (
+  <MultipleAutocomplete {...args} />
 );
 
-export const Basic = Template.bind({});
+export const Multiple = Template.bind({});
 
-Basic.args = {
+Multiple.args = {
   placeholder: 'Basic 2',
   size: 'medium',
+  multiple: true,
   data: [
     'Pl1221aceholder first value',
     'Ba213sic',

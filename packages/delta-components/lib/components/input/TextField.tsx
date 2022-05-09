@@ -1,14 +1,9 @@
 import { jsx } from '@theme-ui/core';
-import {
-  ChangeEvent,
-  forwardRef,
-  InputHTMLAttributes,
-  useCallback
-} from 'react';
+import { forwardRef, InputHTMLAttributes } from 'react';
 
 export interface TextFieldProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
-  size?: 'small' | 'medium';
+  size?: 'medium';
   variant?: 'contained' | 'outlined';
   color?: 'tertiary' | 'secondary';
 }
@@ -30,7 +25,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         sx={{
           opacity: disabled ? 1 : 2,
           border: 0,
-          borderRadius: 5,
+          borderRadius: 4,
           lineHeight: '1rem',
           letterSpacing: 'normal',
           ...{
@@ -61,10 +56,8 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
             }
           }[variant][color],
           ...{
-            small: { fontSize: 0, height: 2, paddingX: 3 },
-            medium: { fontFize: 1, height: 3, paddingX: 4 }
-          }[size],
-          color: 'text_base'
+            medium: { fontSize: 1, height: 2, paddingX: 4 }
+          }[size]
         }}
         ref={ref}
         type="text"

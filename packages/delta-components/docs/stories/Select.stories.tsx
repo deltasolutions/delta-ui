@@ -15,6 +15,7 @@ Basic.args = {
   children: [
     <option key={0}>First item</option>,
     <option key={1}>Second item</option>,
-    <option key={2}>Third item</option>
+    <option key={2}>Third item</option>,
+    <option key={2}>Thirdd item</option>
   ]
 };
