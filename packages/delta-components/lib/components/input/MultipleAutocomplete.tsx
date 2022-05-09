@@ -133,19 +133,23 @@ export const MultipleAutocomplete = ({
       setOpen(false);
     }
   }
+
   useEffect(() => {
     if (open && refs.reference.current && refs.floating.current) {
       return autoUpdate(refs.reference.current, refs.floating.current, update);
     }
     return () => {};
   }, [open, update, refs.reference, refs.floating]);
-  const items = data.filter(item =>
-    item.toLowerCase().startsWith(inputValue.toLowerCase())
+  const [activeList, setActiveList] = useState<string[]>([]);
+
+  const items = data.filter(
+    item =>
+      item.toLowerCase().startsWith(inputValue.toLowerCase()) &&
+      !activeList.map(i => i.toLowerCase()).includes(item.toLowerCase())
   );
   if (open && items.length === 0 && activeIndex !== null) {
     setActiveIndex(null);
   }
-  const [activeList, setActiveList] = useState<string[]>([]);
   return (
     <Box sx={{ position: 'relative', width: '500px' }}>
       {activeList.length > 0 &&
