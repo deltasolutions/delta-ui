@@ -21,45 +21,11 @@ import {
   ChangeEvent,
   FocusEvent
 } from 'react';
-import { Box } from '../Box';
-import { List, ListItem, ListItemProps } from '../List';
-import { TextField, TextFieldProps } from './TextField';
+import { Box } from '../../Box';
+import { List } from '../../List';
+import { TextField, TextFieldProps } from '../TextField';
+import { AutocompleteOption } from './AutocompleteOption';
 
-interface ItemProps extends ListItemProps {
-  isActive: boolean;
-}
-
-const Item = forwardRef<HTMLLIElement, ItemProps>(
-  ({ children, isActive, ...rest }, ref) => {
-    const id = useId();
-    return (
-      <ListItem
-        ref={ref}
-        role="option"
-        id={id}
-        aria-selected={isActive}
-        {...rest}
-        sx={{
-          cursor: 'default',
-          width: '100%',
-          paddingX: 4,
-          paddingY: 1,
-          display: 'flex',
-          alignItems: 'center',
-          borderRadius: 4,
-          overflow: 'hidden',
-          ...(isActive && {
-            backgroundColor: 'inversePrimary',
-            color: 'onInversePrimary'
-          }),
-          fontWeight: 400
-        }}
-      >
-        {children}
-      </ListItem>
-    );
-  }
-);
 export interface AutocompleteProps extends TextFieldProps {
   data: string[];
 }
@@ -207,7 +173,7 @@ export const Autocomplete = ({
             }}
           >
             {items.map((item, index) => (
-              <Item
+              <AutocompleteOption
                 {...getItemProps({
                   key: item,
                   ref(node) {
@@ -221,7 +187,7 @@ export const Autocomplete = ({
                 isActive={activeIndex === index}
               >
                 {item}
-              </Item>
+              </AutocompleteOption>
             ))}
           </List>
         </Box>
