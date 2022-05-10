@@ -96,7 +96,7 @@ const TemplateWithLoading: ComponentStory<typeof Autocomplete> = () => {
         }}
         placeholder="7383 Barrows Burg"
         size="medium"
-        sx={{ paddingRight: '30px', width: '100%' }}
+        sx={{ paddingRight: '30px' }}
         data={isLoading ? [] : data}
       />
     </Box>

@@ -108,7 +108,10 @@ export const MultipleAutocomplete = ({
       }
     });
     return () => cancelAnimationFrame(frame);
-  }, [activeIndex]);
+  }, [activeIndex, data]);
+  useEffect(() => {
+    setActiveIndex(0);
+  }, [data]);
   const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions(
     [
       useRole(context, { role: 'listbox' }),
@@ -126,9 +129,9 @@ export const MultipleAutocomplete = ({
     const value = event.target.value;
     setInputValue(value);
     setBackspacePressed(false);
+    setActiveIndex(0);
     if (value) {
       setOpen(true);
-      setActiveIndex(0);
     } else {
       setOpen(false);
     }
@@ -193,7 +196,6 @@ export const MultipleAutocomplete = ({
   if (open && items.length === 0 && activeIndex !== null) {
     setActiveIndex(null);
   }
-
   return (
     <label
       sx={{
@@ -307,28 +309,30 @@ export const MultipleAutocomplete = ({
               backgroundColor: 'surfaceTint'
             }}
           >
-            {items.map((item, index) => (
-              <Item
-                {...getItemProps({
-                  key: item,
-                  ref(node) {
-                    listRef.current[index] = node;
-                  },
-                  onClick(e) {
-                    setInputValue('');
-                    setBackspacePressed(false);
-                    setActiveList(prev => [...prev, item]);
-                    setOpen(false);
-                    //TODO if you remove the mactotask setTimeout, then after selecting an element from the list,
-                    // this menu will open again, since the focus will work first and then the field clearing hook will work
-                    setTimeout(() => refs.reference.current?.focus(), 0);
-                  }
-                })}
-                isActive={activeIndex === index}
-              >
-                {item}
-              </Item>
-            ))}
+            {items.map((item, index) => {
+              return (
+                <Item
+                  {...getItemProps({
+                    key: item,
+                    ref(node) {
+                      listRef.current[index] = node;
+                    },
+                    onClick(e) {
+                      setInputValue('');
+                      setBackspacePressed(false);
+                      setActiveList(prev => [...prev, item]);
+                      setOpen(false);
+                      //TODO if you remove the mactotask setTimeout, then after selecting an element from the list,
+                      // this menu will open again, since the focus will work first and then the field clearing hook will work
+                      setTimeout(() => refs.reference.current?.focus(), 0);
+                    }
+                  })}
+                  isActive={activeIndex === index}
+                >
+                  {item}
+                </Item>
+              );
+            })}
           </List>
         </Box>
       )}
