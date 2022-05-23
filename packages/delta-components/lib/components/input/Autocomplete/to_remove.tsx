@@ -20,7 +20,11 @@ import {
   FocusEvent,
   useCallback,
   ChangeEvent,
-  HTMLAttributes
+  HTMLAttributes,
+  ReactNode,
+  ReactElement,
+  createContext,
+  useContext
 } from 'react';
 import { IoCloseCircleOutline } from 'react-icons/io5';
 import { Box } from '../../Box';
@@ -30,6 +34,7 @@ import { Tooltip } from '../../Tooltip';
 import { TextField, TextFieldProps } from '../TextField';
 import { AutocompleteOption } from './AutocompleteOption';
 
+const Context = createContext({} as any);
 export interface MultipleAutocompleteProps
   extends HTMLAttributes<HTMLLabelElement> {
   data: string[];
@@ -138,6 +143,10 @@ export const MultipleAutocomplete = ({
           return;
         }
       }
+      if (e.key === 'ArrowLeft' && e.target.selectionStart === 0) {
+      }
+      if (e.key === 'ArrowRight' && e.target.selectionStart === 0) {
+      }
       if (
         (e.key === 'Backspace' && !e.target.value) ||
         (e.target.selectionStart === 0 && e.key === 'Backspace')
@@ -175,7 +184,7 @@ export const MultipleAutocomplete = ({
     },
     [open, isLastItemExposed, activeIndex, optionList]
   );
-  const onInputDoubleClick = useCallback(() => {
+  const onInputDoubleClick = useCallback(event => {
     setIsLastItemExposed(false);
     setOpen(true);
     setActiveIndex(0);
@@ -199,10 +208,15 @@ export const MultipleAutocomplete = ({
     // this menu will open again, since the focus will work first and then the field clearing hook will work
     setTimeout(() => refs.reference.current?.focus(), 0);
   }, []);
-  const onActiveListButtonClick = useCallback(item => {
+  const onSelectedListItemButtonClick = useCallback(item => {
     setSelectedList(prev => prev.filter(prevItem => prevItem !== item));
     setSelectedListCache(prev => [...prev, item]);
   }, []);
+  const onLabelDoubleClick = useCallback(event => {
+    propsOnLabelDoubleClick?.(event);
+    onInputDoubleClick(event);
+  }, []);
+
   useLayoutEffect(() => {
     const frame = requestAnimationFrame(() => {
       if (activeIndex != null) {
@@ -221,134 +235,193 @@ export const MultipleAutocomplete = ({
       autoUpdate(refs.reference.current, refs.floating.current, update);
     }
   }, [open, update, refs.reference, refs.floating]);
+  const [besides, setBesides] = useState({});
+  const contextValue = {
+    setBesides,
+    removeSelected: itemToRemove => {
+      if (itemToRemove) {
+        setSelectedListCache(prev => [...prev, itemToRemove]);
+        setSelectedList(prev => {
+          console.log(itemToRemove);
 
+          return prev.filter(i => i !== itemToRemove);
+        });
+      }
+      return;
+    }
+  };
   return (
-    <label
-      sx={{
-        width: '100%',
-        position: 'relative',
-        backgroundColor: 'tertiary',
-        borderRadius: 4,
-        p: '5px',
-        gap: 1,
-        height: '100%',
-        lineHeight: '1rem',
-        letterSpacing: 'normal',
-        alignItems: 'center',
-        display: 'flex',
-        flexWrap: 'wrap',
-        '&:focus-within': {
-          outline: '5px auto -webkit-focus-ring-color'
-        }
-      }}
-      onDoubleClick={propsOnLabelDoubleClick}
-      onFocus={propsOnLabelFocus}
-      htmlFor={id}
-      {...rest}
-    >
-      {selectedList.length > 0 &&
-        selectedList.map((item, index, arr) => {
-          const onClick = () => onActiveListButtonClick(item);
-          return (
+    <Context.Provider value={contextValue}>
+      <label
+        sx={{
+          width: '100%',
+          position: 'relative',
+          backgroundColor: 'tertiary',
+          borderRadius: 4,
+          p: '5px',
+          gap: '2px',
+          height: '100%',
+          lineHeight: '1rem',
+          letterSpacing: 'normal',
+          alignItems: 'center',
+          display: 'flex',
+          flexWrap: 'wrap',
+          '&:focus-within': {
+            outline: '5px auto -webkit-focus-ring-color'
+          }
+        }}
+        onDoubleClick={onLabelDoubleClick}
+        onFocus={propsOnLabelFocus}
+        htmlFor={id}
+        {...rest}
+      >
+        <SelectedList
+          items={selectedList}
+          onItemClick={onSelectedListItemButtonClick}
+          isLastItemExposed={isLastItemExposed}
+        />
+        <TextField
+          autoComplete="off"
+          id={id}
+          {...getReferenceProps({
+            ref: reference,
+            value: inputValue,
+            'aria-autocomplete': 'list',
+            onChange: onInputChange,
+            onFocus: onInputFocus,
+            onKeyDown: onInputKeyDown,
+            onBlur: onInputBlur,
+            onDoubleClick: onInputDoubleClick
+          })}
+          {...inputProps}
+          sx={{
+            width: 'fit-content',
+            flexGrow: 1,
+            height: '22px'
+          }}
+          {...inputProps}
+        />
+          {open && optionList.length > 0 && (
             <Box
-              key={item}
-              sx={{
-                px: 2,
-                fontSize: 1,
-                borderRadius: 4,
-                gap: 2,
-                py: 1,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                opacity:
-                  isLastItemExposed && index === arr.length - 1 ? '70%' : 2,
-                backgroundColor: 'surfaceTint',
-                color: 'onInversePrimary'
-              }}
+              {...getFloatingProps({
+                ref: floating,
+                style: {
+                  position: strategy,
+                  left: x ?? '',
+                  top: y ?? '',
+                  overflowY: 'auto'
+                }
+              })}
             >
-              <Tooltip label={item}>
-                <span>{item}</span>
-              </Tooltip>
-              <Button
-                onClick={onClick}
+              <List
                 sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  color: 'onTertiaryContainer'
+                  p: 1,
+                  borderColor: 'outline',
+                  borderStyle: 'solid',
+                  borderWidth: 1,
+                  borderRadius: 4,
+                  color: 'onSurfaceTint',
+                  backgroundColor: 'surfaceTint'
                 }}
               >
-                <IoCloseCircleOutline size={14} />
-              </Button>
+                {optionList.map((item, index) => {
+                  const onClick = () => onOptionClick(item);
+                  return (
+                    <AutocompleteOption
+                      {...getItemProps({
+                        key: item,
+                        ref(node) {
+                          listRef.current[index] = node;
+                        },
+                        onClick
+                      })}
+                      isActive={activeIndex === index}
+                      {...optionProps}
+                    >
+                      {item}
+                    </AutocompleteOption>
+                  );
+                })}
+              </List>
             </Box>
-          );
-        })}
-
-      <TextField
-        autoComplete="off"
-        id={id}
-        {...getReferenceProps({
-          ref: reference,
-          value: inputValue,
-          'aria-autocomplete': 'list',
-          onChange: onInputChange,
-          onFocus: onInputFocus,
-          onKeyDown: onInputKeyDown,
-          onBlur: onInputBlur,
-          onDoubleClick: onInputDoubleClick
-        })}
-        {...inputProps}
+          )}
+      </label>
+    </Context.Provider>
+  );
+};
+interface SelectedListProps {
+  items: string[];
+  isLastItemExposed: boolean;
+  onItemClick: any;
+}
+const SelectedList = ({
+  items,
+  onItemClick,
+  isLastItemExposed
+}: SelectedListProps) => {
+  if (items.length === 0) return null;
+  return items
+    .map((item, index, arr) => (
+      <Box
+        key={item}
         sx={{
-          width: 'fit-content',
-          flexGrow: 1,
-          height: '22px'
+          px: 2,
+          fontSize: 1,
+          borderRadius: 4,
+          gap: 2,
+          py: 1,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          opacity: isLastItemExposed && index === arr.length - 1 ? '70%' : 2,
+          backgroundColor: 'surfaceTint',
+          color: 'onInversePrimary'
         }}
-        {...inputProps}
-      />
-      {open && optionList.length > 0 && (
-        <Box
-          {...getFloatingProps({
-            ref: floating,
-            style: {
-              position: strategy,
-              left: x ?? '',
-              top: y ?? '',
-              overflowY: 'auto'
-            }
-          })}
+      >
+        <Tooltip label={item}>
+          <span>{item}</span>
+        </Tooltip>
+        <Button
+          onClick={() => onItemClick(item)}
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            color: 'onTertiaryContainer'
+          }}
+          tabIndex={-1}
         >
-          <List
-            sx={{
-              p: 1,
-              borderColor: 'outline',
-              borderStyle: 'solid',
-              borderWidth: 1,
-              borderRadius: 4,
-              color: 'onSurfaceTint',
-              backgroundColor: 'surfaceTint'
-            }}
-          >
-            {optionList.map((item, index) => {
-              const onClick = () => onOptionClick(item);
-              return (
-                <AutocompleteOption
-                  {...getItemProps({
-                    key: item,
-                    ref(node) {
-                      listRef.current[index] = node;
-                    },
-                    onClick
-                  })}
-                  isActive={activeIndex === index}
-                  {...optionProps}
-                >
-                  {item}
-                </AutocompleteOption>
-              );
-            })}
-          </List>
-        </Box>
-      )}
-    </label>
+          <IoCloseCircleOutline size={14} />
+        </Button>
+      </Box>
+    ))
+    .reduce((prev, curr, index) => {
+      return [
+        ...prev,
+        index > 0 ? <BesideInput item={prev[prev.length - 1].key} /> : null,
+        curr
+      ];
+    }, [] as any);
+};
+
+const BesideInput = ({ item }) => {
+  const ref = useRef<HTMLInputElement>(null);
+  const { setBesides, removeSelected } = useContext(Context);
+  useEffect(() => {
+    if (ref.current) {
+      setBesides(prev => ({ ...prev, [item]: ref }));
+    }
+  }, [ref]);
+  return (
+    <TextField
+      ref={ref}
+      value=""
+      onKeyDown={event => {
+        if (event.key === 'Backspace') {
+          removeSelected(item);
+        }
+      }}
+      onChange={() => null}
+      style={{ width: '1px', height: '22px' }}
+    />
   );
 };

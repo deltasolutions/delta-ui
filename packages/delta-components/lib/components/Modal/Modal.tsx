@@ -9,6 +9,7 @@ export interface ModalProps extends BoxProps {
 }
 export const Modal = forwardRef<HTMLDivElement, ModalProps>(
   ({ children, size = 'medium', close, ...rest }, ref) => {
+    console.log(size);
     return (
       <Box
         sx={{
@@ -46,7 +47,8 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
             ...{
               small: { width: '550px', height: '40vh' },
               medium: { width: '650px', height: '65vh' },
-              large: { width: '750px', height: '80vh' }
+              large: { width: '750px', height: '80vh' },
+              page: { height: '100vh' }
             }[size],
             '& > div:last-child': { marginTop: 'auto' }
           }}

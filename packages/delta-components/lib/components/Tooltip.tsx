@@ -11,8 +11,8 @@ import {
   useRole,
   useDismiss
 } from '@floating-ui/react-dom-interactions';
-import { jsx, useThemeUI } from '@theme-ui/core';
-import { ReactElement } from 'react';
+import { jsx } from '@theme-ui/core';
+import { ReactElement, useMemo } from 'react';
 import {
   cloneElement,
   forwardRef,
@@ -22,17 +22,20 @@ import {
   useState
 } from 'react';
 import { useTheme } from '../hooks';
+import { mergeRefs } from '../utils';
 import { Box, BoxProps } from './Box';
 
 export interface TooltipProps extends BoxProps {
   label: ReactNode;
   delay?: number;
   placement?: Placement;
-  children: ReactElement;
 }
 
 export const Tooltip = forwardRef(
-  ({ children, label, delay, placement = 'top' }: TooltipProps, ref) => {
+  (
+    { children, label, delay, placement = 'top', ...rest }: TooltipProps,
+    ref
+  ) => {
     const [open, setOpen] = useState(false);
     const { space, ticks } = useTheme();
     const padding = space[2];
@@ -43,6 +46,10 @@ export const Tooltip = forwardRef(
         onOpenChange: setOpen,
         middleware: [offset(padding), flip(), shift({ padding })]
       });
+    const stableRef = useMemo(
+      () => mergeRefs([ref, reference]),
+      [ref, reference]
+    );
 
     const { getReferenceProps, getFloatingProps } = useInteractions([
       useHover(context, {
@@ -63,12 +70,15 @@ export const Tooltip = forwardRef(
       }
       return () => {};
     }, [refs.reference, refs.floating, update, open]);
+    if (!children) {
+      return null;
+    }
     return (
       <Fragment>
-        {cloneElement(children, {
+        {cloneElement(children as ReactElement<any, any>, {
           ...getReferenceProps({
-            ref: reference,
-            ...children.props
+            ref: stableRef,
+            ...rest
           })
         })}
         {open && (

@@ -20,9 +20,11 @@ const Template: ComponentStory<typeof Dropdown> = args => {
     <Box sx={{ display: 'flex', justifyContent: 'start' }}>
       <Dropdown
         component={
-          <Button>
-            <BsThreeDots size={22} />
-          </Button>
+          <Tooltip label="Open settings">
+            <Button>
+              <BsThreeDots size={22} />
+            </Button>
+          </Tooltip>
         }
       >
         <DropdownItem divide>

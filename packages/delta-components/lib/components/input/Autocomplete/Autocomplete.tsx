@@ -1,197 +1,55 @@
-import {
-  autoUpdate,
-  size,
-  useId,
-  useDismiss,
-  useFloating,
-  useInteractions,
-  useListNavigation,
-  useRole,
-  flip,
-  offset
-} from '@floating-ui/react-dom-interactions';
 import { jsx } from '@theme-ui/core';
 import {
   forwardRef,
-  useLayoutEffect,
-  useEffect,
-  useRef,
-  useState,
-  Fragment,
-  ChangeEvent,
-  FocusEvent
+  HTMLAttributes,
+  InputHTMLAttributes,
+  Ref,
+  ReactElement,
+  ReactNode
 } from 'react';
-import { Box } from '../../Box';
-import { List } from '../../List';
-import { TextField, TextFieldProps } from '../TextField';
-import { AutocompleteOption } from './AutocompleteOption';
+import { Basic } from './Basic';
+import { Multiple } from './Multiple';
 
-export interface AutocompleteProps extends TextFieldProps {
-  data: string[];
+export type Suggestion = string;
+export type Query = string;
+export type Value = string;
+
+export interface AutocompleteProps<TMultiple>
+  extends Omit<HTMLAttributes<HTMLLabelElement>, 'onChange'> {
+  suggestions: Suggestion[];
+  isMultiple?: TMultiple;
+  value?: TMultiple extends true ? Value[] : Value;
+  size?: 'medium';
+  variant?: 'contained';
+  inputProps?: InputHTMLAttributes<HTMLInputElement>;
+  onChange?: (value: TMultiple extends true ? Value[] : Value) => void;
+  onSearch?: (query: Query) => void;
+  onOpen?: (query: Query) => void;
 }
-export const Autocomplete = ({
-  data,
-  color,
-  multiple,
-  size: inputSize,
-  onChange: propsOnChange,
-  onFocus: propsOnFocus,
-  variant = 'contained',
-  ...rest
-}: AutocompleteProps) => {
-  const [open, setOpen] = useState(false);
-  const [inputValue, setInputValue] = useState('');
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const listRef = useRef<(HTMLElement | null)[]>([]);
-  const { x, y, reference, floating, strategy, context, refs, update } =
-    useFloating<HTMLInputElement>({
-      open,
-      onOpenChange: setOpen,
-      middleware: [
-        offset(3),
-        flip(),
-        size({
-          apply({ reference, height }) {
-            Object.assign(refs.floating.current?.style ?? {}, {
-              width: `${reference.width}px`,
-              maxHeight: `${height}px`
-            });
-          },
-          padding: 10
-        })
-      ]
-    });
-  useLayoutEffect(() => {
-    const frame = requestAnimationFrame(() => {
-      if (activeIndex != null) {
-        listRef.current[activeIndex]?.scrollIntoView({
-          block: 'nearest'
-        });
-      }
-    });
-    return () => cancelAnimationFrame(frame);
-  }, [activeIndex]);
-  const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions(
-    [
-      useRole(context, { role: 'listbox' }),
-      useDismiss(context),
-      useListNavigation(context, {
-        listRef,
-        activeIndex,
-        onNavigate: setActiveIndex,
-        virtual: true,
-        loop: true
-      })
-    ]
-  );
-  function onChange(event: ChangeEvent<HTMLInputElement>) {
-    const value = event.target.value;
-    setInputValue(value);
-    if (value) {
-      setOpen(true);
-      setActiveIndex(0);
-    } else {
-      setOpen(false);
-    }
-    propsOnChange?.(event);
-  }
-  function onFocus(event: FocusEvent<HTMLInputElement>) {
-    propsOnFocus?.(event);
-    if (event.target.value) {
-      setOpen(true);
-      setActiveIndex(0);
-    }
-  }
-  useEffect(() => {
-    if (open && refs.reference.current && refs.floating.current) {
-      return autoUpdate(refs.reference.current, refs.floating.current, update);
-    }
-    return () => {};
-  }, [open, update, refs.reference, refs.floating]);
-  const items = data.filter(item =>
-    item.toLowerCase().includes(inputValue.toLowerCase())
-  );
-  if (open && items.length === 0 && activeIndex !== null) {
-    setActiveIndex(null);
-  }
-  return (
-    <Fragment>
-      <TextField
-        size={inputSize}
-        color={color}
-        variant={variant}
-        {...getReferenceProps({
-          ref: reference,
-          onChange,
-          onFocus,
-          value: inputValue,
-          ...rest,
-          'aria-autocomplete': 'list',
-          onKeyDown(event) {
-            if (
-              event.key === 'Enter' &&
-              activeIndex != null &&
-              items[activeIndex]
-            ) {
-              setInputValue(items[activeIndex]);
-              setActiveIndex(null);
-              setOpen(false);
-            }
-          },
-          onBlur(event) {
-            if (
-              !refs.floating.current?.contains(
-                event.relatedTarget as HTMLElement | null
-              )
-            ) {
-              setOpen(false);
-            }
-          }
-        })}
-      />
-      {open && items.length > 0 && (
-        <Box
-          {...getFloatingProps({
-            ref: floating,
-            style: {
-              position: strategy,
-              left: x ?? '',
-              top: y ?? '',
-              overflowY: 'auto'
-            }
-          })}
-        >
-          <List
-            sx={{
-              p: 1,
-              borderColor: 'outline',
-              borderStyle: 'solid',
-              borderWidth: 1,
-              borderRadius: 4,
-              color: 'onSurfaceTint',
-              backgroundColor: 'surfaceTint'
-            }}
-          >
-            {items.map((item, index) => (
-              <AutocompleteOption
-                {...getItemProps({
-                  key: item,
-                  ref(node) {
-                    listRef.current[index] = node;
-                  },
-                  onClick() {
-                    setInputValue(item);
-                    setOpen(false);
-                  }
-                })}
-                isActive={activeIndex === index}
-              >
-                {item}
-              </AutocompleteOption>
-            ))}
-          </List>
-        </Box>
-      )}
-    </Fragment>
-  );
-};
+
+export interface AutocompleteProps2
+  extends Omit<HTMLAttributes<HTMLLabelElement>, 'onChange'> {
+  suggestions: {
+    value: unknown;
+    render: () => ReactNode;
+  }[];
+  value?: unknown[];
+  size?: 'medium';
+  variant?: 'contained';
+  inputProps?: InputHTMLAttributes<HTMLInputElement>;
+  onChange?: (value: unknown) => void;
+  onSearch?: (query: Query) => void;
+  onOpen?: (query: Query) => void;
+}
+
+const InnerAutocomplete = <T extends unknown>(
+  { isMultiple, ...rest }: AutocompleteProps<T>,
+  ref: Ref<HTMLLabelElement>
+) =>
+  isMultiple ? <Multiple ref={ref} {...rest} /> : <Basic ref={ref} {...rest} />;
+
+export const Autocomplete = forwardRef(InnerAutocomplete) as <
+  T extends boolean
+>(
+  p: AutocompleteProps<T> & { ref?: Ref<HTMLLabelElement> }
+) => ReactElement;

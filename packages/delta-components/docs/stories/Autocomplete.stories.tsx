@@ -1,18 +1,97 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { useState } from 'react';
-import { Autocomplete, Box, Loader, useDebouncedCallback } from '../../lib';
+import { useEffect, useState, useRef, ReactNode } from 'react';
+import { Autocomplete, Box, Button, TextField } from '../../lib';
 export default {
-  title: 'Inputs/Autocomplete',
+  title: 'Autocomplete',
   component: Autocomplete
 } as ComponentMeta<typeof Autocomplete>;
 
-const Template: ComponentStory<typeof Autocomplete> = args => (
-  <Autocomplete {...args} />
-);
-
-export const Basic = Template.bind({});
-
+const Template: ComponentStory<typeof Autocomplete> = args => {
+  const [inputValue, setInputValue] = useState('');
+  const [values, setValues] = useState<unknown[]>([]);
+  const ref = useRef<HTMLLabelElement>(null);
+  useEffect(() => {}, [ref.current]);
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <Box>
+      <Autocomplete
+        onChange={values => {
+          setValues(values);
+          setIsOpen(false);
+        }}
+        setIsOpen={setIsOpen}
+        isOpen={isOpen}
+        inputProps={{
+          value: inputValue,
+          onChange: e => {
+            setInputValue(e.target.value);
+            if (
+              data.some(datum =>
+                datum
+                  .toLocaleLowerCase()
+                  .includes(e.target.value.toLocaleLowerCase())
+              )
+            ) {
+              setIsOpen(true);
+              return;
+            }
+            setIsOpen(false);
+          },
+          variant: 'contained',
+          placeholder: 'Find something'
+        }}
+        values={values.map(i => ({
+          value: i,
+          id: i as string,
+          render: ({ value, onRemove }) => (
+            <Box>
+              <Button onClick={onRemove} variant="contained" color="secondary">
+                Delete: {value}
+              </Button>
+            </Box>
+          )
+        }))}
+        suggestions={data
+          .filter(
+            datum =>
+              datum.includes(inputValue.toLocaleLowerCase()) &&
+              !Object.keys(values ?? {}).includes(datum)
+          )
+          .map((i, index) => ({
+            value: i,
+            id: i,
+            ...(index === 5 && {
+              render: ({ value, isActive }) => {
+                return (
+                  <Box
+                    sx={{
+                      cursor: 'default',
+                      width: '100%',
+                      paddingX: 4,
+                      paddingY: 1,
+                      display: 'flex',
+                      alignItems: 'center',
+                      borderRadius: 4,
+                      overflow: 'hidden',
+                      ...(isActive && {
+                        backgroundColor: 'white',
+                        color: 'black'
+                      }),
+                      fontWeight: 900
+                    }}
+                  >
+                    {value}
+                  </Box>
+                );
+              }
+            })
+          }))}
+        ref={ref}
+      />
+    </Box>
+  );
+};
 const data = [
   '7383 Barrows Burg',
   '258 Quitzon Turnpike',
@@ -26,78 +105,8 @@ const data = [
   '40460 Bogan Mews',
   '175 Brakus Roads',
   '984 Ashlynn Flats',
-  '04845 Layne Forks',
-  '8632 Tremblay Valley',
-  '7364 Julio Fords',
-  '84406 Bosco Pike',
-  '3006 Bette Viaduct',
-  '2592 Weldon Extensions',
-  '79029 Runolfsson Island',
-  '8708 Batz Village',
-  '95625 Ellis Key',
-  '8995 Lonie Tunnel',
-  '72243 Gleichner Gateway',
-  '5482 Ortiz Isle',
-  '71442 Leuschke Center',
-  '32828 Tromp Via',
-  '954 Vidal Cove',
-  '07357 Ted Ville',
-  '8311 Abraham Ramp',
-  '754 Bridgette Views',
-  '822 Austin Grove',
-  '789 Margarette Radial',
-  '2320 Ziemann Branch',
-  '297 Chance View',
-  '7443 Audra Mills',
-  '877 Melvin Spurs',
-  '30336 Bradtke Forges',
-  '1358 Christiansen Villages',
-  '5436 Germaine Parkway',
-  '8289 Carolina Plaza',
-  '3716 Norma Mews',
-  '70703 Cummings Canyon',
-  '8276 Raynor Prairie',
-  '170 Ayana Drives',
-  '55171 Wilber Port',
-  '68815 Rahul Plaza'
+  '04845 Layne Forks'
 ];
+export const Basic = Template.bind({});
 
-Basic.args = {
-  data: data,
-  placeholder: '68815 Rahul Plaza'
-};
-
-const TemplateWithLoading: ComponentStory<typeof Autocomplete> = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const debouncedCallback = useDebouncedCallback(() => {
-    setIsLoading(false);
-  }, 500);
-  return (
-    <Box sx={{ position: 'relative', width: '100%' }}>
-      {isLoading && (
-        <Loader
-          sx={{
-            position: 'absolute',
-            right: 4,
-            top: '50%',
-            transform: 'translateY(-50%)'
-          }}
-        />
-      )}
-      <Autocomplete
-        onChange={() => {
-          setIsLoading(true);
-          debouncedCallback();
-        }}
-        placeholder="7383 Barrows Burg"
-        size="medium"
-        sx={{ paddingRight: '30px', width: '100%' }}
-        data={isLoading ? [] : data}
-      />
-    </Box>
-  );
-};
-
-export const Loading = TemplateWithLoading.bind({});
-
-Loading.args = {};
+Basic.args = {};
