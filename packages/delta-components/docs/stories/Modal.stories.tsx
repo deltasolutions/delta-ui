@@ -1,10 +1,10 @@
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { Anchor, Modal, ModalBody, ModalFooter, ModalHeader } from '../../lib';
+import { Modal, ModalBody, ModalFooter, ModalHeader } from '../../lib';
 
 export default {
   title: 'Containers/Modal',
-} as ComponentMeta<typeof Anchor>;
+} as Meta;
 
 export const Basics = () => {
   return (

@@ -24,6 +24,8 @@ export const SystemContainer = ({
         <Box
           ref={setElement}
           sx={{
+            width: '100vw',
+            minHeight: '100vh',
             fontFamily: theme.fontFamily,
             color: theme.colors.onBackground,
             fontSize: theme.fontSizes[3],

@@ -11,10 +11,8 @@ export const ModalFooter = forwardRef<HTMLDivElement, ModalFooterProps>(
         sx={{
           display: 'flex',
           gap: 2,
-          paddingTop: 5,
-          paddingBottom: 8,
-          paddingLeft: 8,
-          paddingRight: 8,
+          paddingX: 6,
+          paddingBottom: 5,
         }}
         ref={ref}
         {...rest}

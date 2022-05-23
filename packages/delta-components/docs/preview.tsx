@@ -15,6 +15,8 @@ export const decorators = [
             'html, body': {
               margin: 0,
               padding: 0,
+              width: '100vw',
+              minHeight: '100vh',
               colorScheme: theme.colorScheme,
               overscrollBehaviorY: 'none',
             },
@@ -22,7 +24,8 @@ export const decorators = [
         />
         <Box
           sx={{
-            height: '100%',
+            width: '100vw',
+            minHeight: '100vh',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',

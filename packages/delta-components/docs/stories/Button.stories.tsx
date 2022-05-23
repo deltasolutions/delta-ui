@@ -1,11 +1,11 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { ComponentStory, Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { Button } from '../../lib';
 
 export default {
   title: 'Interactive/Button',
   component: Button,
-} as ComponentMeta<typeof Button>;
+} as Meta;
 
 const Template: ComponentStory<typeof Button> = args => <Button {...args} />;
 

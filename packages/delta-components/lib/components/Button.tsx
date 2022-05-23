@@ -22,6 +22,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           cursor: disabled ? 'not-allowed' : 'pointer',
           border: 'none',
           background: 'none',
+          fontWeight: 600,
+          borderWidth: 1,
+          letterSpacing: 2,
           ...(zoomable && {
             '&:hover, &:focus-visible': { transform: 'scale(1.05)' },
             '&:active': { transform: 'scale(1)' },
@@ -31,6 +34,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             transform: 'none',
             opacity: 1,
           }),
+          ...getSizeStyle(props),
           ...getVariantStyle(props),
         }}
         {...rest}
@@ -39,11 +43,27 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   }
 );
 
-const getVariantStyle = ({
-  variant,
-  color = 'primary',
-  size = 'medium',
-}: ButtonProps) => {
+const getSizeStyle = ({ size = 'medium' }: ButtonProps) => {
+  return {
+    small: {
+      fontSize: 1,
+      paddingX: 3,
+      paddingY: 2,
+    },
+    medium: {
+      fontSize: 2,
+      paddingX: 4,
+      paddingY: 3,
+    },
+    large: {
+      fontSize: 3,
+      paddingX: 5,
+      paddingY: 4,
+    },
+  }[size];
+};
+
+const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps) => {
   if (!variant) {
     return {};
   }
@@ -78,36 +98,10 @@ const getVariantStyle = ({
         },
       },
       text: {
-        primary: { color: 'primary' },
-        secondary: { color: 'secondary' },
-        error: { color: 'error' },
+        primary: { color: 'primary', paddingX: 0 },
+        secondary: { color: 'secondary', paddingX: 0 },
+        error: { color: 'error', paddingX: 0 },
       },
     }[variant][color],
-    ...{
-      small: {
-        fontSize: 0,
-        paddingY: 4,
-        paddingX: 6,
-        fontWeight: 600,
-        letterSpacing: 2,
-        borderWidth: 1,
-      },
-      medium: {
-        fontSize: 1,
-        paddingY: 4,
-        paddingX: 7,
-        fontWeight: 600,
-        borderWidth: 1,
-        letterSpacing: 2,
-      },
-      large: {
-        fontSize: 2,
-        paddingY: 4,
-        paddingX: 8,
-        fontWeight: 600,
-        borderWidth: 1,
-        letterSpacing: 2,
-      },
-    }[size],
   };
 };

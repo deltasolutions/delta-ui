@@ -9,10 +9,8 @@ export const ModalBody = forwardRef<HTMLDivElement, ModalBodyProps>(
     return (
       <Box
         sx={{
-          paddingTop: 6,
-          paddingBottom: 6,
-          paddingLeft: 8,
-          paddingRight: 8,
+          paddingX: 6,
+          paddingY: 5,
         }}
         ref={ref}
         {...rest}

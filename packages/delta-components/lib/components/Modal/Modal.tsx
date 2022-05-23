@@ -14,10 +14,8 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
   ({ variant, size = 'medium', isVisible, isEntering, ...rest }, ref) => {
     return (
       <Box
+        ref={ref}
         sx={{
-          position: 'relative',
-          display: 'flex',
-          flexDirection: 'column',
           borderRadius: 3,
           backgroundColor: 'surface',
           color: 'onSurface',
@@ -34,7 +32,6 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
             large: { width: '750px' },
           }[size],
         }}
-        ref={ref}
         {...rest}
       />
     );
