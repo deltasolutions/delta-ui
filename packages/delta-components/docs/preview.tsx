@@ -1,6 +1,6 @@
 import { Global } from '@emotion/react';
 import { jsx } from '@theme-ui/core';
-import { Box, Container, theme } from '../lib';
+import { Box, SystemContainer, theme } from '../lib';
 
 export const parameters = {
   layout: 'fullscreen',
@@ -9,7 +9,7 @@ export const parameters = {
 export const decorators = [
   Story => {
     return (
-      <Container>
+      <SystemContainer>
         <Global
           styles={{
             'html, body': {
@@ -30,7 +30,7 @@ export const decorators = [
         >
           <Story />
         </Box>
-      </Container>
+      </SystemContainer>
     );
   },
 ];

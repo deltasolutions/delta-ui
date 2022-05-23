@@ -1,3 +1,3 @@
 export * from './components';
-export * from './theme';
+export * from './defaults/theme';
 export * from './hooks';
