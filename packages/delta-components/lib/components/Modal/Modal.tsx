@@ -1,61 +1,35 @@
 import { jsx } from '@theme-ui/core';
 import { forwardRef } from 'react';
-import { IoCloseOutline } from 'react-icons/io5';
 import { Box, BoxProps } from '../Box';
-import { Button } from '../Button';
+
 export interface ModalProps extends BoxProps {
-  size?: 'small' | 'medium' | 'large' | 'page';
-  close: () => void;
+  variant?: 'page';
+  size?: 'small' | 'medium' | 'large';
 }
+
 export const Modal = forwardRef<HTMLDivElement, ModalProps>(
-  ({ children, size = 'medium', close, ...rest }, ref) => {
-    console.log(size);
+  ({ variant, size = 'medium', ...rest }, ref) => {
     return (
       <Box
         sx={{
-          backgroundColor: 'surfaceVariant',
-          display: 'flex',
-          width: '100%',
           position: 'relative',
+          display: 'flex',
           flexDirection: 'column',
-          borderRadius: 3
+          borderRadius: 3,
+          backgroundColor: 'surface',
+          color: 'onSurface',
+          ...{
+            page: { width: '100vw', height: '100vh' },
+          }[variant ?? ''],
+          ...{
+            small: { width: '550px' },
+            medium: { width: '650px' },
+            large: { width: '750px' },
+          }[size],
         }}
         ref={ref}
         {...rest}
-      >
-        <Button
-          onClick={close}
-          sx={{
-            position: 'absolute',
-            right: 5,
-            top: 5,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            borderRadius: '500px',
-            width: 2,
-            p: 1,
-            height: 2,
-            backgroundColor: 'tertiaryContainer'
-          }}
-        >
-          <IoCloseOutline sx={{ width: '100%', height: '100%' }} />
-        </Button>
-        <Box
-          sx={{
-            overflowY: 'scroll',
-            ...{
-              small: { width: '550px', height: '40vh' },
-              medium: { width: '650px', height: '65vh' },
-              large: { width: '750px', height: '80vh' },
-              page: { height: '100vh' }
-            }[size],
-            '& > div:last-child': { marginTop: 'auto' }
-          }}
-        >
-          {children}
-        </Box>
-      </Box>
+      />
     );
   }
 );

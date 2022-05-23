@@ -2,21 +2,19 @@ import { jsx } from '@theme-ui/core';
 import { forwardRef, HTMLAttributes } from 'react';
 import { Box } from '../Box';
 
-export interface ModalFooterProps extends HTMLAttributes<HTMLDivElement> {}
+export interface ModalHeaderProps extends HTMLAttributes<HTMLDivElement> {}
 
-export const ModalFooter = forwardRef<HTMLDivElement, ModalFooterProps>(
+export const ModalHeader = forwardRef<HTMLDivElement, ModalHeaderProps>(
   ({ children, ...rest }, ref) => {
     return (
       <Box
+        ref={ref}
         sx={{
-          display: 'flex',
-          gap: 2,
-          paddingTop: 5,
-          paddingBottom: 8,
+          paddingTop: 8,
+          paddingBottom: 5,
           paddingLeft: 8,
           paddingRight: 8,
         }}
-        ref={ref}
         {...rest}
       >
         {children}

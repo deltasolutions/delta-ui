@@ -2,6 +2,7 @@ import { jsx } from '@theme-ui/core';
 import { forwardRef } from 'react';
 import { Box } from '../../Box';
 import { Checkbox, CheckboxProps } from '../Checkbox';
+
 export interface CheckboxListItemProps extends CheckboxProps {
   isLast?: boolean;
 }

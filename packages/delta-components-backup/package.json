@@ -1,0 +1,41 @@
+{
+  "name": "delta-components-backup",
+  "version": "0.1.0",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "start-storybook -c docs -p 6006 --ci",
+    "doc": "build-storybook -c docs -o dist/docs",
+    "lint": "npm run lint:static && npm run lint:format",
+    "lint:format": "prettier ./{lib,docs}/**/*.{ts,tsx} --write",
+    "lint:static": "eslint ./{lib,docs}/**/*.{ts,tsx} --fix",
+    "release": "delta-release"
+  },
+  "peerDependencies": {
+    "@emotion/react": "^11.5.0",
+    "@theme-ui/core": "^0.11.3",
+    "react": ">=16.13.1",
+    "react-dnd": "^14.0.4",
+    "react-i18next": "^11.13.0"
+  },
+  "tsup": {
+    "clean": true,
+    "dts": true,
+    "splitting": false,
+    "sourcemap": true,
+    "platform": "browser",
+    "format": [
+      "cjs",
+      "esm"
+    ],
+    "entryPoints": [
+      "lib/index.tsx"
+    ]
+  }
+}

@@ -8,12 +8,12 @@ import {
   TableHead,
   TableHeadCell,
   TableRow,
-  TableHeadRow
+  TableHeadRow,
 } from '../../lib';
 
 export default {
-  title: 'Data display/Table',
-  component: Table
+  title: 'Data Display/Table',
+  component: Table,
 } as ComponentMeta<typeof Table>;
 
 const Template: ComponentStory<typeof Table> = args => (

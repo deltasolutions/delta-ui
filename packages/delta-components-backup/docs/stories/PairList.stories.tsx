@@ -6,12 +6,12 @@ import {
   CardHeading,
   Heading,
   Loader,
-  PairList
+  PairList,
 } from '../../lib';
 
 export default {
-  title: 'Data display/PairList',
-  component: PairList
+  title: 'Data Display/PairList',
+  component: PairList,
 } as ComponentMeta<typeof PairList>;
 
 const Template: ComponentStory<typeof PairList> = args => (
@@ -35,6 +35,6 @@ Basic.args = {
     ['Active', <Loader />],
     ['Running', 'False'],
     ['Next execution', '15.04.2022'],
-    ['Last status', 'SUCCESS']
-  ]
+    ['Last status', 'SUCCESS'],
+  ],
 };

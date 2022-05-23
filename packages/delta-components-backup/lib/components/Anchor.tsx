@@ -2,7 +2,7 @@ import { jsx } from '@theme-ui/core';
 import { AnchorHTMLAttributes, forwardRef } from 'react';
 
 export interface AnchorProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
-  variant?: 'pure';
+  variant?: 'inherit';
 }
 
 export const Anchor = forwardRef<HTMLAnchorElement, AnchorProps>(
@@ -18,9 +18,11 @@ export const Anchor = forwardRef<HTMLAnchorElement, AnchorProps>(
             color: 'inherit',
             fontSize: 'inherit',
             fontWeight: 'inherit',
-            whiteSpace: 'inherit',
+            whiteSpace: 'inherit'
           },
-          textDecoration: variant === 'pure' ? 'none' : 'underline',
+          ...(variant
+            ? { textDecoration: 'underline' }
+            : { textDecoration: 'none' })
         }}
         {...rest}
       >

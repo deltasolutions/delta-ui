@@ -1,5 +1,3 @@
 export * from './components';
-export * from './utils';
+export * from './theme';
 export * from './hooks';
-export * from './models';
-export * from './encoreDarkScheme';

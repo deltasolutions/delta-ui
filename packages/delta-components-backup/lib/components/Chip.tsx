@@ -1,7 +1,7 @@
 import { jsx } from '@theme-ui/core';
 import { forwardRef } from 'react';
 import { MdAdd } from 'react-icons/md';
-import { TiDelete, TiPlus } from 'react-icons/ti';
+import { TiDelete } from 'react-icons/ti';
 import { Box, BoxProps } from './Box';
 import { Button } from './Button';
 import { EllipsisText } from './EllipsisText';
@@ -14,6 +14,8 @@ export interface ChipProps extends BoxProps {
   onDelete?: () => {};
   onAdd?: () => {};
 }
+
+// TODO: Finish component.
 export const Chip = forwardRef<HTMLDivElement, ChipProps>(
   (
     {
@@ -40,31 +42,28 @@ export const Chip = forwardRef<HTMLDivElement, ChipProps>(
           alignItems: 'center',
           ...{
             filled: {
-              default: { backgroundColor: 'background_elevated_highlight' },
               primary: { backgroundColor: '' },
               secondary: { backgroundColor: '' },
-              errror: { backgroundColor: '' },
-              success: { backgroundColor: '' }
+              error: { backgroundColor: '' },
+              success: { backgroundColor: '' },
             },
             outlined: {
-              default: { backgroundColor: '' },
               primary: { backgroundColor: '' },
               secondary: { backgroundColor: '' },
-              errror: { backgroundColor: '' },
-              success: { backgroundColor: '' }
+              error: { backgroundColor: '' },
+              success: { backgroundColor: '' },
             },
             dashed: {
-              default: { backgroundColor: '' },
               primary: { backgroundColor: '' },
               secondary: { backgroundColor: '' },
-              errror: { backgroundColor: '' },
-              success: { backgroundColor: '' }
-            }
+              error: { backgroundColor: '' },
+              success: { backgroundColor: '' },
+            },
           }[variant][color],
           ...{
             small: { padding: '8px 10px', fontSize: '12px' },
-            medium: { padding: '10px 10px', fontSize: '14px' }
-          }[size]
+            medium: { padding: '10px 10px', fontSize: '14px' },
+          }[size],
         }}
         {...rest}
       >

@@ -1,24 +1,28 @@
-import { Global } from '@emotion/react';
 import { jsx, ThemeProvider } from '@theme-ui/core';
-import { FC, Fragment, HTMLAttributes, useContext } from 'react';
-import { darkTheme } from '../encoreDarkScheme';
-import { ColorScheme } from '../models';
+import { FC, HTMLAttributes } from 'react';
+import { theme as defaultTheme, Theme } from '../theme';
 import { Box } from './Box';
+
 export interface ContainerProps extends HTMLAttributes<HTMLDivElement> {
-  theme?: ColorScheme;
+  theme?: Theme;
 }
+
 export const Container: FC<ContainerProps> = ({
   children,
-  theme: propsTheme,
+  theme = defaultTheme,
   ...rest
 }) => {
-  const theme = propsTheme || darkTheme;
   return (
-    <Fragment>
+    <Box
+      sx={{
+        fontFamily: theme.fontFamily,
+        color: theme.colors.onBackground,
+        fontSize: theme.fontSizes[3],
+      }}
+    >
       <ThemeProvider theme={theme} {...rest}>
-        <Box sx={{ position: 'relative', zIndex: 999 }} id="modal-root" />
         {children}
       </ThemeProvider>
-    </Fragment>
+    </Box>
   );
 };
