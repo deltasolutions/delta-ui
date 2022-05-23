@@ -1,92 +1,28 @@
-import { FloatingOverlay } from '@floating-ui/react-dom-interactions';
 import { jsx } from '@theme-ui/core';
-import {
-  DependencyList,
-  ReactNode,
-  useCallback,
-  useContext,
-  useMemo,
-  useRef,
-} from 'react';
-import { Modal, ModalProps, SystemContext } from '../components';
-import { ImperativePortal } from './useImperativePortal';
-import {
-  PortalledTransitionerProps,
-  usePortalledTransition,
-} from './usePortalledTransition';
-import { useSharedRef } from './useSharedRef';
-import { useTransition } from './useTransition';
-
-export interface ModalRendererProps<C = never>
-  extends PortalledTransitionerProps<C> {}
-
-export interface ModalOptions extends Omit<ModalProps, 'children'> {
-  deps: DependencyList;
-  portal?: ImperativePortal;
-  onClose?: () => void;
-}
+import { Modal, ModalProps } from '../components';
+import { DialogOptions, DialogRenderer, useDialog } from './useDialog';
 
 export const useModal = <C extends unknown = never>(
-  render: (props: ModalRendererProps<C>) => ReactNode,
-  options: ModalOptions
+  render: DialogRenderer<C>,
+  { deps, portal, onClose, ...modalProps }: DialogOptions & Partial<ModalProps>
 ) => {
-  const { floatingPortal } = useContext(SystemContext);
-  const { deps, portal = floatingPortal, onClose, ...modalProps } = options;
-  const openModal = usePortalledTransition<HTMLDivElement, C>(
-    (
-      { context, handleClose: handleImplicitClose, ...overlayTransitionProps },
-      overlayTransitionRef
-    ) => {
-      const overlayRef = useRef<HTMLDivElement>(null);
-      const sharedRef = useSharedRef(null, [overlayTransitionRef, overlayRef]);
-      const modalRef = useRef<HTMLDivElement>(null);
-      const handleClose = useCallback(() => {
-        handleImplicitClose();
-        onClose?.();
-      }, []);
-      const modalTransition = useTransition<HTMLDivElement>(
-        (modalTransitionProps, modalTransitionRef) => {
-          const sharedRef = useSharedRef(null, [modalTransitionRef, modalRef]);
-          const content = useMemo(
-            () =>
-              render?.({ context, handleClose, ...modalTransitionProps }) ??
-              null,
-            []
-          );
-          return (
-            <Modal ref={sharedRef} {...modalProps} {...modalTransitionProps}>
-              {content}
-            </Modal>
-          );
-        },
-        {
-          deps: [],
-          isMounted: overlayTransitionProps.isVisible,
-        }
-      );
+  return useDialog<Partial<ModalProps>>(
+    ({ context, handleClose, ...transitionProps }) => {
+      const content = render?.({
+        context: context as C,
+        handleClose,
+        ...transitionProps,
+      });
       return (
-        <FloatingOverlay
-          lockScroll
-          ref={sharedRef}
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'rgba(0, 0, 0, 0.65)',
-            opacity: overlayTransitionProps.isVisible ? 1 : 0,
-            transition: 'opacity 0.2s',
-          }}
-          onClick={e => {
-            if (overlayRef.current === e.target) {
-              handleClose();
-            }
-          }}
-        >
-          {modalTransition}
-        </FloatingOverlay>
+        <Modal {...modalProps} {...transitionProps}>
+          {content}
+        </Modal>
       );
     },
-    { deps: [onClose, ...deps], portal }
+    {
+      deps,
+      portal,
+      onClose,
+    }
   );
-  return openModal;
 };

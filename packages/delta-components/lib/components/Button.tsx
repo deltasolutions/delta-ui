@@ -75,10 +75,26 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps) => {
     textTransform: 'uppercase',
     ...{
       contained: {
-        primary: { backgroundColor: 'primary', color: 'onPrimary' },
-        secondary: { backgroundColor: 'secondary', color: 'onSecondary' },
-        success: { backgroundColor: 'success', color: 'onSuccess' },
-        error: { backgroundColor: 'error', color: 'onError' },
+        primary: {
+          backgroundColor: 'primary',
+          color: 'onPrimary',
+          '&:hover': { backgroundColor: 'accentPrimary' },
+        },
+        secondary: {
+          backgroundColor: 'secondary',
+          color: 'onSecondary',
+          '&:hover': { backgroundColor: 'accentSecondary' },
+        },
+        success: {
+          backgroundColor: 'success',
+          color: 'onSuccess',
+          '&:hover': { backgroundColor: 'accentSuccess' },
+        },
+        error: {
+          backgroundColor: 'error',
+          color: 'onError',
+          '&:hover': { backgroundColor: 'accentError' },
+        },
       },
       outlined: {
         primary: {
