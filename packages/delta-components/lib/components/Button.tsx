@@ -18,21 +18,22 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         sx={{
           padding: 0,
           margin: 0,
-          opacity: disabled ? 0.5 : 1,
-          cursor: disabled ? 'not-allowed' : 'pointer',
+          opacity: 1,
+          cursor: 'pointer',
           border: 'none',
           background: 'none',
           fontWeight: 600,
           borderWidth: 1,
           letterSpacing: 2,
+          '&:disabled': {
+            opacity: 0.5,
+            cursor: 'not-allowed',
+          },
           ...(zoomable && {
-            '&:hover, &:focus-visible': { transform: 'scale(1.05)' },
-            '&:active': { transform: 'scale(1)' },
-          }),
-          ...(disabled && {
-            cursor: 'auto',
-            transform: 'none',
-            opacity: 1,
+            '&:not(:disabled)': {
+              '&:hover, &:focus-visible': { transform: 'scale(1.05)' },
+              '&:active': { transform: 'scale(1)' },
+            },
           }),
           ...getSizeStyle(props),
           ...getVariantStyle(props),
@@ -78,22 +79,22 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps) => {
         primary: {
           backgroundColor: 'primary',
           color: 'onPrimary',
-          '&:hover': { backgroundColor: 'accentPrimary' },
+          '&:not(:disabled):hover': { backgroundColor: 'accentPrimary' },
         },
         secondary: {
           backgroundColor: 'secondary',
           color: 'onSecondary',
-          '&:hover': { backgroundColor: 'accentSecondary' },
+          '&:not(:disabled):hover': { backgroundColor: 'accentSecondary' },
         },
         success: {
           backgroundColor: 'success',
           color: 'onSuccess',
-          '&:hover': { backgroundColor: 'accentSuccess' },
+          '&:not(:disabled):hover': { backgroundColor: 'accentSuccess' },
         },
         error: {
           backgroundColor: 'error',
           color: 'onError',
-          '&:hover': { backgroundColor: 'accentError' },
+          '&:not(:disabled):hover': { backgroundColor: 'accentError' },
         },
       },
       outlined: {
