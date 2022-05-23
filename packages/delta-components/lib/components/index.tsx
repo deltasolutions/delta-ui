@@ -4,3 +4,4 @@ export * from './Button';
 export * from './SystemContainer';
 export * from './Modal';
 export * from './Confirm';
+export * from './Tooltip';
