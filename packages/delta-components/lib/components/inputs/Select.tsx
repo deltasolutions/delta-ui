@@ -4,10 +4,12 @@ import {
   cloneElement,
   forwardRef,
   ReactElement,
+  useEffect,
   useMemo,
   useState,
 } from 'react';
 import { IoChevronDown } from 'react-icons/io5';
+import { useUpdateEffect } from '../../hooks';
 import { useDrop } from '../../hooks/useDrop';
 import { mergeRefs } from '../../utils';
 import { Box, BoxProps } from '../Box';
@@ -28,7 +30,8 @@ export interface SelectProps extends Omit<BoxProps, 'children'> {
 }
 
 export const Select = forwardRef<HTMLDivElement, SelectProps>(
-  ({ children, value, disabled, placeholder, ...rest }: SelectProps, ref) => {
+  ({ children, value, disabled, placeholder, onChange, ...rest }, ref) => {
+    const mergedRef = useMemo(() => mergeRefs([ref, anchorRef]), []);
     const [innerValue, setInnerValue] = useState<unknown>(value);
     const title = useMemo(() => {
       const childrenArray = Children.toArray(
@@ -37,6 +40,12 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       return childrenArray.find(v => v.props.value === innerValue)?.props
         .children;
     }, [children, innerValue]);
+    useUpdateEffect(() => {
+      innerValue !== value && onChange?.(innerValue);
+    }, [innerValue]);
+    useUpdateEffect(() => {
+      innerValue !== value && setInnerValue(value);
+    }, [value]);
     const [openDrop, anchorRef] = useDrop<HTMLDivElement>(
       ({ handleClose }) => {
         return (
@@ -64,7 +73,6 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
         tailored: true,
       }
     );
-    const mergedRef = useMemo(() => mergeRefs([ref, anchorRef]), []);
     return (
       <Box
         ref={mergedRef}

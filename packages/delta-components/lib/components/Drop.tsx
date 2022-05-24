@@ -18,7 +18,7 @@ export const Drop = forwardRef<HTMLDivElement, DropProps>(
           color: 'onSurface',
           boxShadow: 1,
           opacity: isVisible ? 1 : 0,
-          transform: `translateY(${isVisible ? '0' : '1rem'})`,
+          transform: `translateY(${isVisible ? '0' : '-1rem'})`,
           transition: 'opacity 0.2s, transform 0.2s',
         }}
         {...rest}
