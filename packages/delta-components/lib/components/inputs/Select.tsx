@@ -8,8 +8,7 @@ import {
   useState,
 } from 'react';
 import { IoChevronDown } from 'react-icons/io5';
-import { useUpdateEffect } from '../../hooks';
-import { useDrop } from '../../hooks/useDrop';
+import { useDrop, useUpdateEffect } from '../../hooks';
 import { mergeRefs } from '../../utils';
 import { Button, ButtonProps } from '../Button';
 import { Box, BoxProps } from '../containers';
@@ -30,7 +29,6 @@ export interface SelectProps extends Omit<BoxProps, 'children'> {
 
 export const Select = forwardRef<HTMLDivElement, SelectProps>(
   ({ children, value, disabled, placeholder, onChange, ...rest }, ref) => {
-    const mergedRef = useMemo(() => mergeRefs([ref, anchorRef]), []);
     const [innerValue, setInnerValue] = useState<unknown>(value);
     const title = useMemo(() => {
       const childrenArray = Children.toArray(
@@ -72,6 +70,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
         tailored: true,
       }
     );
+    const mergedRef = useMemo(() => mergeRefs([ref, anchorRef]), []);
     return (
       <Box
         ref={mergedRef}

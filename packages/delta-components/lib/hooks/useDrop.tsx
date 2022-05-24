@@ -85,8 +85,8 @@ export const useDrop = <T extends HTMLElement, C extends unknown = never>(
           ref={mergedRef}
           style={{
             position: strategy,
-            left: x ?? '',
-            top: y ?? '',
+            left: x ?? '0',
+            top: y ?? '0',
             width: tailored ? width : undefined,
           }}
           {...dropProps}
