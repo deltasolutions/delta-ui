@@ -73,7 +73,12 @@ export const RadioOption = ({
 }: RadioOptionProps) => {
   return (
     <Box
-      sx={{ display: 'flex', gap: 2, alignItems: 'center', cursor: 'pointer' }}
+      sx={{
+        display: 'flex',
+        gap: 2,
+        alignItems: 'center',
+        cursor: disabled ? 'not-allowed' : 'pointer',
+      }}
       {...rest}
     >
       <Button
