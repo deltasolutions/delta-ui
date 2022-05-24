@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { Anchor } from '../../lib';
+import { Anchor } from '..';
 
 export default {
   title: 'Interactive/Anchor',

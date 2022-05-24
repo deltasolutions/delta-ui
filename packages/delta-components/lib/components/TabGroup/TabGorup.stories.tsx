@@ -1,7 +1,7 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { useState } from 'react';
-import { TabGroup, TabOption } from '../../lib';
+import { TabGroup, TabOption } from '../..';
 
 export default {
   title: 'Navigation/TabGroup',

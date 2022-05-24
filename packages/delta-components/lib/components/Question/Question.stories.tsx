@@ -6,7 +6,7 @@ import {
   QuestionBody,
   QuestionFooter,
   QuestionHeader,
-} from '../../lib';
+} from '../..';
 
 export default {
   title: 'Containers/Question',

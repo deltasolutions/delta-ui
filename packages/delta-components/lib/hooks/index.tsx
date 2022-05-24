@@ -6,6 +6,5 @@ export * from './useImperativePortal';
 export * from './useIsomorphicLayoutEffect';
 export * from './useModal';
 export * from './usePortalledTransition';
-export * from './useSharedRef';
 export * from './useTransition';
 export * from './useUpdateEffect';

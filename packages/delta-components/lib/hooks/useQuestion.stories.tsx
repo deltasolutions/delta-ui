@@ -1,7 +1,7 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { useState } from 'react';
-import { Button, useQuestion } from '../../lib';
+import { Button, useQuestion } from '..';
 
 export default {
   title: 'hooks/useQuestion',

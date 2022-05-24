@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { Modal, ModalBody, ModalFooter, ModalHeader } from '../../lib';
+import { Modal, ModalBody, ModalFooter, ModalHeader } from '../..';
 
 export default {
   title: 'Containers/Modal',

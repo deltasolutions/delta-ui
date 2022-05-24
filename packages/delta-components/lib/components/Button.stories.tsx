@@ -1,6 +1,6 @@
 import { ComponentStory, Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { Button } from '../../lib';
+import { Button } from '..';
 
 export default {
   title: 'Interactive/Button',

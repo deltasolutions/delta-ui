@@ -9,12 +9,12 @@ import {
   useRef,
 } from 'react';
 import { SystemContext } from '../components';
+import { mergeRefs } from '../utils';
 import { ImperativePortal } from './useImperativePortal';
 import {
   PortalledTransitionerProps,
   usePortalledTransition,
 } from './usePortalledTransition';
-import { useSharedRef } from './useSharedRef';
 import { useTransition } from './useTransition';
 
 export interface DialogRendererProps<C extends unknown = never>
@@ -41,13 +41,16 @@ export const useDialog = <C extends unknown = never>(
       {
         context,
         handleClose: handleImplicitClose,
-        children: _,
+        children,
         ...overlayTransitionProps
       },
       overlayTransitionRef
     ) => {
       const overlayRef = useRef<HTMLDivElement>(null);
-      const sharedRef = useSharedRef(null, [overlayTransitionRef, overlayRef]);
+      const mergedRef = useMemo(
+        () => mergeRefs([overlayTransitionRef, overlayRef]),
+        []
+      );
       const dialogRef = useRef<HTMLDivElement>(null);
       const handleClose = useCallback(() => {
         handleImplicitClose();
@@ -55,10 +58,10 @@ export const useDialog = <C extends unknown = never>(
       }, []);
       const dialogTransition = useTransition<HTMLDivElement>(
         (dialogTransitionProps, dialogTransitionRef) => {
-          const sharedRef = useSharedRef(null, [
-            dialogTransitionRef,
-            dialogRef,
-          ]);
+          const mergedRef = useMemo(
+            () => mergeRefs([dialogTransitionRef, dialogRef]),
+            []
+          );
           const content = useMemo(
             () =>
               render?.({ context, handleClose, ...dialogTransitionProps }) ??
@@ -67,7 +70,7 @@ export const useDialog = <C extends unknown = never>(
           );
           return content
             ? cloneElement(content, {
-                ref: sharedRef,
+                ref: mergedRef,
                 ...dialogProps,
                 ...dialogTransitionProps,
               })
@@ -81,7 +84,7 @@ export const useDialog = <C extends unknown = never>(
       return (
         <FloatingOverlay
           lockScroll
-          ref={sharedRef}
+          ref={mergedRef}
           style={{
             display: 'flex',
             justifyContent: 'center',

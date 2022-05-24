@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { Box, Tooltip } from '../../lib';
+import { Box, Tooltip } from '..';
 
 export default {
   title: 'Data/Tooltip',

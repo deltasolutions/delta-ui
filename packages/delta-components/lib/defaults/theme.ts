@@ -9,7 +9,7 @@ export const theme = {
     success: '#1cb454',
     error: '#dc2020',
     background: '#121212',
-    surface: '#1d1d1d',
+    surface: '#202020',
     exterior: '#333333',
     contrast: '#fafafa',
     outline: '#313030',
