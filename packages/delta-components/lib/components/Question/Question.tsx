@@ -3,12 +3,12 @@ import { forwardRef } from 'react';
 import { PortalledTransitionerProps } from '../../hooks';
 import { Box, BoxProps } from '../Box';
 
-export interface ConfirmProps
+export interface QuestionProps
   extends BoxProps,
     Partial<PortalledTransitionerProps> {}
 
-export const Confirm = forwardRef<HTMLDivElement, ConfirmProps>(
-  ({ children, isVisible, isEntering, ...rest }: ConfirmProps, ref) => {
+export const Question = forwardRef<HTMLDivElement, QuestionProps>(
+  ({ children, isVisible, isEntering, ...rest }: QuestionProps, ref) => {
     return (
       <Box
         ref={ref}

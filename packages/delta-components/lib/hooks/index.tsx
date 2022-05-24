@@ -1,6 +1,6 @@
 export * from './useCleanableRef';
 export * from './useClickOutside';
-export * from './useConfirm';
+export * from './useQuestion';
 export * from './useForwardRef';
 export * from './useImperativePortal';
 export * from './useIsomorphicLayoutEffect';

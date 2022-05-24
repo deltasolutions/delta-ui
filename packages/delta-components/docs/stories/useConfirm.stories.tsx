@@ -1,15 +1,15 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { useState } from 'react';
-import { Button, useConfirm } from '../../lib';
+import { Button, useQuestion } from '../../lib';
 
 export default {
-  title: 'hooks/useConfirm',
+  title: 'hooks/useQuestion',
 } as Meta;
 
 export const Basics = () => {
   const [answer, setAnswer] = useState<string>('');
-  const confirm = useConfirm(
+  const openQuestion = useQuestion(
     {
       heading: 'Important question',
       content: 'Are you sure you want to continue?',
@@ -22,7 +22,7 @@ export const Basics = () => {
     <Button
       variant="contained"
       onClick={async () => {
-        const isOk = await confirm();
+        const isOk = await openQuestion();
         setAnswer(isOk ? '(yes)' : '(no)');
       }}
     >

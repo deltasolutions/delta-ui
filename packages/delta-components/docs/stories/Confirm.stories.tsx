@@ -2,25 +2,25 @@ import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import {
   Button,
-  Confirm,
-  ConfirmBody,
-  ConfirmFooter,
-  ConfirmHeader,
+  Question,
+  QuestionBody,
+  QuestionFooter,
+  QuestionHeader,
 } from '../../lib';
 
 export default {
-  title: 'Containers/Confirm',
+  title: 'Containers/Question',
 } as Meta;
 
 export const Basics = () => {
   return (
-    <Confirm>
-      <ConfirmHeader>Header</ConfirmHeader>
-      <ConfirmBody>Body</ConfirmBody>
-      <ConfirmFooter>
+    <Question>
+      <QuestionHeader>Header</QuestionHeader>
+      <QuestionBody>Body</QuestionBody>
+      <QuestionFooter>
         <Button variant="text">Cancel</Button>
-        <Button variant="contained">Confirm</Button>
-      </ConfirmFooter>
-    </Confirm>
+        <Button variant="contained">OK</Button>
+      </QuestionFooter>
+    </Question>
   );
 };

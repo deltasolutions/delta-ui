@@ -2,10 +2,10 @@ import { jsx } from '@theme-ui/core';
 import { forwardRef } from 'react';
 import { Box, BoxProps } from '../Box';
 
-export interface ConfirmFooterProps extends BoxProps {}
+export interface QuestionFooterProps extends BoxProps {}
 
-export const ConfirmFooter = forwardRef<HTMLDivElement, ConfirmFooterProps>(
-  ({ children, ...rest }: ConfirmFooterProps, ref) => {
+export const QuestionFooter = forwardRef<HTMLDivElement, QuestionFooterProps>(
+  ({ children, ...rest }: QuestionFooterProps, ref) => {
     return (
       <Box
         ref={ref}
