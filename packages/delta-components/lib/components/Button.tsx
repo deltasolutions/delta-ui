@@ -69,45 +69,60 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps) => {
   if (!variant) {
     return {};
   }
+  const containedFocusVisible = {};
   return {
     borderRadius: '500px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     textTransform: 'uppercase',
+    '&:focus-visible': {
+      outline: '2px solid',
+      outlineColor: 'primary',
+      outlineOffset: 2,
+    },
     ...{
       contained: {
         primary: {
           backgroundColor: 'primary',
           color: 'onPrimary',
           '&:not(:disabled):hover': { backgroundColor: 'accentPrimary' },
+          ...containedFocusVisible,
         },
         secondary: {
           backgroundColor: 'secondary',
           color: 'onSecondary',
           '&:not(:disabled):hover': { backgroundColor: 'accentSecondary' },
+          ...containedFocusVisible,
         },
         success: {
           backgroundColor: 'success',
           color: 'onSuccess',
           '&:not(:disabled):hover': { backgroundColor: 'accentSuccess' },
+          ...containedFocusVisible,
         },
         error: {
           backgroundColor: 'error',
           color: 'onError',
           '&:not(:disabled):hover': { backgroundColor: 'accentError' },
+          ...containedFocusVisible,
         },
       },
       outlined: {
         primary: {
           border: '1px solid',
           borderColor: 'primary',
-          color: 'onPrimary',
+          color: 'primary',
         },
         secondary: {
           border: '1px solid',
-          borderColor: 'secondaryContainer',
+          borderColor: 'secondary',
           color: 'secondary',
+        },
+        success: {
+          border: '1px solid',
+          borderColor: 'success',
+          color: 'success',
         },
         error: {
           border: '1px solid',
@@ -116,9 +131,10 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps) => {
         },
       },
       text: {
-        primary: { color: 'primary', paddingX: 0 },
-        secondary: { color: 'secondary', paddingX: 0 },
-        error: { color: 'error', paddingX: 0 },
+        primary: { paddingX: 1, borderRadius: 2, color: 'primary' },
+        secondary: { paddingX: 1, borderRadius: 2, color: 'secondary' },
+        success: { paddingX: 1, borderRadius: 2, color: 'success' },
+        error: { paddingX: 1, borderRadius: 2, color: 'error' },
       },
     }[variant][color],
   };
