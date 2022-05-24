@@ -48,18 +48,18 @@ const getSizeStyle = ({ size = 'medium' }: ButtonProps) => {
   return {
     small: {
       fontSize: 1,
-      paddingX: 3,
-      paddingY: 2,
+      paddingX: '1.55em',
+      paddingY: '0.65em',
     },
     medium: {
       fontSize: 2,
-      paddingX: 4,
-      paddingY: 3,
+      paddingX: '1.85em',
+      paddingY: '0.85em',
     },
     large: {
       fontSize: 3,
-      paddingX: 5,
-      paddingY: 4,
+      paddingX: '2em',
+      paddingY: '1em',
     },
   }[size];
 };
