@@ -75,8 +75,8 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
             sx={{
               padding: 3,
               borderRadius: 3,
-              backgroundColor: 'rgba(0, 0, 0, 0.75)',
-              color: 'rgba(255, 255, 255, 0.75)',
+              backgroundColor: 'rgba(255, 255, 255, 0.085)',
+              color: 'rgba(255, 255, 255, 0.85)',
               fontSize: 2,
               fontWeight: 400,
             }}
