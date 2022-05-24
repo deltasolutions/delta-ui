@@ -1,10 +1,17 @@
 import { jsx } from '@theme-ui/core';
-import { forwardRef, useMemo, useState } from 'react';
+import {
+  Children,
+  cloneElement,
+  forwardRef,
+  ReactElement,
+  useMemo,
+  useState,
+} from 'react';
 import { IoChevronDown } from 'react-icons/io5';
 import { useDrop } from '../../hooks/useDrop';
 import { mergeRefs } from '../../utils';
 import { Box, BoxProps } from '../Box';
-import { Button } from '../Button';
+import { Button, ButtonProps } from '../Button';
 import { TextField } from './TextField';
 
 export interface SelectOption {
@@ -13,7 +20,7 @@ export interface SelectOption {
 }
 
 export interface SelectProps extends Omit<BoxProps, 'children'> {
-  options: SelectOption[];
+  children: ReactElement<SelectOptionProps>[];
   value?: unknown;
   disabled?: boolean;
   placeholder?: string;
@@ -21,12 +28,15 @@ export interface SelectProps extends Omit<BoxProps, 'children'> {
 }
 
 export const Select = forwardRef<HTMLDivElement, SelectProps>(
-  ({ options, value, disabled, placeholder, ...rest }: SelectProps, ref) => {
+  ({ children, value, disabled, placeholder, ...rest }: SelectProps, ref) => {
     const [innerValue, setInnerValue] = useState<unknown>(value);
-    const title = useMemo(
-      () => options.find(v => v.value === innerValue)?.title,
-      [options, innerValue]
-    );
+    const title = useMemo(() => {
+      const childrenArray = Children.toArray(
+        children
+      ) as ReactElement<SelectOptionProps>[];
+      return childrenArray.find(v => v.props.value === innerValue)?.props
+        .children;
+    }, [children, innerValue]);
     const [openDrop, anchorRef] = useDrop<HTMLDivElement>(
       ({ handleClose }) => {
         return (
@@ -38,26 +48,14 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
               borderRadius: 3,
             }}
           >
-            {options.map(v => (
-              <Button
-                key={v.title}
-                onClick={() => {
-                  setInnerValue(v.value);
+            {Children.map(children, v =>
+              cloneElement(v, {
+                onClick: () => {
+                  setInnerValue(v.props.value);
                   handleClose();
-                }}
-                sx={{
-                  cursor: 'pointer',
-                  paddingX: 2,
-                  paddingY: 3,
-                  textAlign: 'left',
-                  '&:hover': {
-                    backgroundColor: 'accentSurface',
-                  },
-                }}
-              >
-                {v.title}
-              </Button>
-            ))}
+                },
+              })
+            )}
           </Box>
         );
       },
@@ -79,7 +77,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       >
         <TextField
           readOnly
-          value={title}
+          value={title ?? ''}
           disabled={disabled}
           placeholder={placeholder}
           sx={{
@@ -102,3 +100,26 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
     );
   }
 );
+
+export interface SelectOptionProps
+  extends Omit<ButtonProps, 'value' | 'children'> {
+  value: unknown;
+  children: string;
+}
+
+export const SelectOption = ({ value, ...rest }: SelectOptionProps) => {
+  return (
+    <Button
+      sx={{
+        cursor: 'pointer',
+        paddingX: 2,
+        paddingY: 3,
+        textAlign: 'left',
+        '&:hover': {
+          backgroundColor: 'accentSurface',
+        },
+      }}
+      {...rest}
+    />
+  );
+};

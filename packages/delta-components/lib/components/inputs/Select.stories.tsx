@@ -1,7 +1,7 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { compact } from '../../../docs/decorators';
-import { Select } from './Select';
+import { Select, SelectOption } from './Select';
 
 export default {
   title: 'Inputs/Select',
@@ -9,15 +9,25 @@ export default {
 } as Meta;
 
 const options = [
-  { title: 'A', value: 1 },
-  { title: 'B', value: 2 },
-  { title: 'C', value: 3 },
+  <SelectOption key={1} value={1}>
+    A
+  </SelectOption>,
+  <SelectOption key={2} value={2}>
+    B
+  </SelectOption>,
+  <SelectOption key={3} value={3}>
+    C
+  </SelectOption>,
 ];
 
 export const Basics = () => {
-  return <Select placeholder="Placeholder" options={options} />;
+  return <Select placeholder="Placeholder">{options}</Select>;
 };
 
 export const Disabled = () => {
-  return <Select disabled placeholder="Disabled" options={options} />;
+  return (
+    <Select disabled placeholder="Disabled">
+      {options}
+    </Select>
+  );
 };
