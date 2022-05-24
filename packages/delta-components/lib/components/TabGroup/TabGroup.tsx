@@ -7,7 +7,7 @@ import {
   HTMLAttributes,
   ReactElement,
 } from 'react';
-import { Box } from '../Box';
+import { Box } from '../containers';
 import { TabOptionProps } from './TabOption';
 
 export interface TabGroupProps
