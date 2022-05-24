@@ -1,6 +1,5 @@
 import { jsx } from '@theme-ui/core';
 import { forwardRef, InputHTMLAttributes } from 'react';
-import { Box } from '../Box';
 
 export interface CheckboxProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {

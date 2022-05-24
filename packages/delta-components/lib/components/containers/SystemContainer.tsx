@@ -1,7 +1,7 @@
 import { jsx, ThemeProvider } from '@theme-ui/core';
 import { createContext, HTMLAttributes, useMemo, useState } from 'react';
-import { system, theme as defaultTheme, Theme } from '../defaults';
-import { useImperativePortal } from '../hooks';
+import { system, theme as defaultTheme, Theme } from '../../defaults';
+import { useImperativePortal } from '../../hooks';
 import { Box } from './Box';
 
 export const SystemContext = createContext(system);

@@ -4,7 +4,6 @@ import {
   cloneElement,
   forwardRef,
   ReactElement,
-  useEffect,
   useMemo,
   useState,
 } from 'react';
@@ -12,8 +11,8 @@ import { IoChevronDown } from 'react-icons/io5';
 import { useUpdateEffect } from '../../hooks';
 import { useDrop } from '../../hooks/useDrop';
 import { mergeRefs } from '../../utils';
-import { Box, BoxProps } from '../Box';
 import { Button, ButtonProps } from '../Button';
+import { Box, BoxProps } from '../containers';
 import { TextField } from './TextField';
 
 export interface SelectOption {

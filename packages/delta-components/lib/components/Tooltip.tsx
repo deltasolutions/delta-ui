@@ -15,7 +15,7 @@ import {
 import { jsx } from '@theme-ui/core';
 import { cloneElement, Fragment, ReactNode, useEffect, useState } from 'react';
 import { Theme } from '../defaults';
-import { Box, BoxProps } from './Box';
+import { Box, BoxProps } from './containers';
 
 export interface TooltipProps extends Omit<BoxProps, 'children'> {
   content: ReactNode;

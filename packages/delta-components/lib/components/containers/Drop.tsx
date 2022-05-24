@@ -1,6 +1,6 @@
 import { jsx } from '@theme-ui/core';
 import { forwardRef } from 'react';
-import { PortalledTransitionerProps } from '../hooks';
+import { PortalledTransitionerProps } from '../../hooks';
 import { Box, BoxProps } from './Box';
 
 export interface DropProps

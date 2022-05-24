@@ -8,8 +8,8 @@ import {
   useState,
 } from 'react';
 import { useUpdateEffect } from '../../hooks';
-import { Box, BoxProps } from '../Box';
 import { Button } from '../Button';
+import { Box, BoxProps } from '../containers';
 
 export interface SelectOption {
   title: string;
