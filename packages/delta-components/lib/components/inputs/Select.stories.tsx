@@ -1,19 +1,23 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { Select } from '../..';
+import { compact } from '../../../docs/decorators';
+import { Select } from './Select';
 
 export default {
   title: 'Inputs/Select',
-  component: Select,
+  decorators: [compact('250px')],
 } as Meta;
 
+const options = [
+  { title: 'A', value: 1 },
+  { title: 'B', value: 2 },
+  { title: 'C', value: 3 },
+];
+
 export const Basics = () => {
-  return (
-    <Select>
-      <option key={0}>First item</option>
-      <option key={1}>Second item</option>
-      <option key={2}>Third item</option>
-      <option key={3}>Third item</option>
-    </Select>
-  );
+  return <Select placeholder="Placeholder" options={options} />;
+};
+
+export const Disabled = () => {
+  return <Select disabled placeholder="Disabled" options={options} />;
 };

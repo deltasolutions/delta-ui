@@ -7,6 +7,7 @@ import {
   useEffect,
   useState,
   useMemo,
+  useRef,
 } from 'react';
 import { Drop, DropProps, SystemContext } from '../components';
 import { mergeRefs } from '../utils';
@@ -27,6 +28,7 @@ export interface DropRenderer<C extends unknown = never> {
 export interface DropOptions extends Omit<DropProps, 'children'> {
   deps: DependencyList;
   portal?: ImperativePortal;
+  multiple?: boolean;
   tailored?: boolean;
   blurResistant?: boolean;
   onClose?: () => void;
@@ -36,11 +38,19 @@ export const useDrop = <T extends HTMLElement, C extends unknown = never>(
   render: DropRenderer<C>,
   options: DropOptions
 ) => {
-  const { deps, tailored, portal, onClose, blurResistant, ...dropProps } =
-    options;
+  const {
+    deps,
+    multiple,
+    tailored,
+    portal,
+    onClose,
+    blurResistant,
+    ...dropProps
+  } = options;
   const { floatingPortal } = useContext(SystemContext);
   const [anchor, setAnchor] = useState<T | null>(null);
-  const openDrop = usePortalledTransition<HTMLDivElement>(
+  const closeDropInstance = useRef<undefined | (() => void)>();
+  const openDropInstance = usePortalledTransition<HTMLDivElement>(
     ({ handleClose: handleImplicitClose, ...transitionProps }, ref) => {
       const { x, y, reference, floating, strategy, refs, update } =
         useFloating<T>();
@@ -54,6 +64,7 @@ export const useDrop = <T extends HTMLElement, C extends unknown = never>(
       const handleClose = useCallback(() => {
         handleImplicitClose();
         onClose?.();
+        closeDropInstance.current = undefined;
       }, []);
       useEffect(() => {
         reference(anchor);
@@ -95,5 +106,17 @@ export const useDrop = <T extends HTMLElement, C extends unknown = never>(
       portal: floatingPortal,
     }
   );
+  const openDrop = useCallback(() => {
+    if (closeDropInstance.current && !multiple) {
+      return closeDropInstance.current;
+    }
+    const fn = openDropInstance();
+    const fnWrap = () => {
+      fn();
+      onClose?.();
+      closeDropInstance.current = undefined;
+    };
+    return (closeDropInstance.current = fnWrap);
+  }, [openDropInstance]);
   return [openDrop, setAnchor] as const;
 };

@@ -16,6 +16,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         disabled={disabled}
         sx={{
+          boxSizing: 'border-box',
           padding: 0,
           margin: 0,
           opacity: 1,
