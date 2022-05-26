@@ -5,7 +5,7 @@ import { TabGroup } from './TabGroup';
 import { TabOption } from './TabOption';
 
 export default {
-  title: 'Navigation/TabGroup',
+  title: 'Navs/TabGroup',
 } as Meta;
 
 const options = ['First', 'Second', 'Third'];

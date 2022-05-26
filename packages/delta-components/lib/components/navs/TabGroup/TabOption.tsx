@@ -1,6 +1,6 @@
 import { jsx } from '@theme-ui/core';
 import { forwardRef, useCallback } from 'react';
-import { Anchor, AnchorProps } from '../Anchor';
+import { Anchor, AnchorProps } from '../../Anchor';
 
 export interface TabOptionProps extends AnchorProps {
   id: string;
