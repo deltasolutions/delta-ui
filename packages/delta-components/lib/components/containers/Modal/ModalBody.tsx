@@ -5,18 +5,16 @@ import { Box, BoxProps } from '../Box';
 export interface ModalBodyProps extends BoxProps {}
 
 export const ModalBody = forwardRef<HTMLDivElement, ModalBodyProps>(
-  ({ children, ...rest }, ref) => {
+  (props, ref) => {
     return (
       <Box
+        ref={ref}
         sx={{
           paddingX: 6,
           paddingY: 5,
         }}
-        ref={ref}
-        {...rest}
-      >
-        {children}
-      </Box>
+        {...props}
+      />
     );
   }
 );

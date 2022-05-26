@@ -5,18 +5,17 @@ import { Box } from '../Box';
 export interface ModalHeaderProps extends HTMLAttributes<HTMLDivElement> {}
 
 export const ModalHeader = forwardRef<HTMLDivElement, ModalHeaderProps>(
-  ({ children, ...rest }, ref) => {
+  (props, ref) => {
     return (
       <Box
         ref={ref}
         sx={{
           paddingX: 6,
           paddingTop: 5,
+          color: 'accentOnSurface',
         }}
-        {...rest}
-      >
-        {children}
-      </Box>
+        {...props}
+      />
     );
   }
 );

@@ -8,6 +8,7 @@ import {
   QuestionHeader,
   QuestionProps,
 } from '../components';
+import { Heading } from '../components/containers/Heading';
 import { DialogOptions, DialogProps, useDialog } from './useDialog';
 
 export interface QuestionRendererProps<C>
@@ -53,7 +54,9 @@ export const useQuestion = <C extends unknown = never>(
           })
         ) : (
           <Fragment>
-            <QuestionHeader>{description.heading}</QuestionHeader>
+            <QuestionHeader>
+              <Heading level={4}>{description.heading}</Heading>
+            </QuestionHeader>
             <QuestionBody>{description.content}</QuestionBody>
             <QuestionFooter>
               {/* TODO: Translate default text. */}

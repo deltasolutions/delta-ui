@@ -6,6 +6,16 @@ export interface QuestionHeaderProps extends BoxProps {}
 
 export const QuestionHeader = forwardRef<HTMLDivElement, QuestionHeaderProps>(
   (props: QuestionHeaderProps, ref) => {
-    return <Box ref={ref} sx={{ paddingX: 5, paddingTop: 4 }} {...props} />;
+    return (
+      <Box
+        ref={ref}
+        sx={{
+          paddingX: 5,
+          paddingTop: 4,
+          color: 'accentOnContrast',
+        }}
+        {...props}
+      />
+    );
   }
 );

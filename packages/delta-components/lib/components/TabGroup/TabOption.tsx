@@ -31,6 +31,7 @@ export const TabOption = forwardRef<HTMLAnchorElement, TabOptionProps>(
           textAlign: 'center',
           display: 'block',
           cursor: 'default',
+          filter: 'contrast(100%)',
           '&, &:hover, &:active, &:focus-visible': {
             fontWeight: 600,
           },
