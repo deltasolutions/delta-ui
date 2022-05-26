@@ -1,9 +1,9 @@
 import { jsx } from '@theme-ui/core';
 import { Modal, ModalProps } from '../components';
-import { DialogOptions, DialogRenderer, useDialog } from './useDialog';
+import { DialogOptions, DialogRenderFn, useDialog } from './useDialog';
 
 export const useModal = <C extends unknown = never>(
-  render: DialogRenderer<C>,
+  render: DialogRenderFn<C>,
   { deps, portal, onClose, ...modalProps }: DialogOptions & Partial<ModalProps>
 ) => {
   return useDialog<Partial<ModalProps>>(

@@ -13,13 +13,10 @@ import { Drop, DropProps, SystemContext } from '../components';
 import { mergeRefs } from '../utils';
 import { useClickOutside } from './useClickOutside';
 import { ImperativePortal } from './useImperativePortal';
-import {
-  PortalledTransitionerProps,
-  usePortalledTransition,
-} from './usePortalledTransition';
+import { PortalledProps, usePortalled } from './usePortalled';
 
 export interface DropRendererProps<C extends unknown = never>
-  extends PortalledTransitionerProps<C> {}
+  extends PortalledProps<C> {}
 
 export interface DropRenderer<C extends unknown = never> {
   (props: DropRendererProps<C>): JSX.Element;
@@ -50,8 +47,8 @@ export const useDrop = <T extends HTMLElement, C extends unknown = never>(
   const { floatingPortal } = useContext(SystemContext);
   const [anchor, setAnchor] = useState<T | null>(null);
   const closeDropInstance = useRef<undefined | (() => void)>();
-  const openDropInstance = usePortalledTransition<HTMLDivElement>(
-    ({ handleClose: handleImplicitClose, ...transitionProps }, ref) => {
+  const openDropInstance = usePortalled<HTMLDivElement>(
+    ({ handleClose: handleImplicitClose }, ref) => {
       const { x, y, reference, floating, strategy, refs, update } =
         useFloating<T>();
       const clickOusideRef = useClickOutside<HTMLDivElement>(
@@ -85,17 +82,15 @@ export const useDrop = <T extends HTMLElement, C extends unknown = never>(
           ref={mergedRef}
           style={{
             position: strategy,
-            left: x ?? '0',
-            top: y ?? '0',
+            left: x ?? '',
+            top: y ?? '',
             width: tailored ? width : undefined,
           }}
           {...dropProps}
-          {...transitionProps}
           handleClose={handleClose}
         >
           {render?.({
             ...dropProps,
-            ...transitionProps,
             handleClose,
           })}
         </Drop>

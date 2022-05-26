@@ -25,7 +25,15 @@ export const Basics = () => {
 export const Disabled = () => {
   return (
     <Radio disabled placeholder="Disabled" value={1}>
-      {options}
+      <RadioOption key={1} value={1}>
+        A
+      </RadioOption>
+      <RadioOption key={2} value={2}>
+        B
+      </RadioOption>
+      <RadioOption key={3} value={3}>
+        C
+      </RadioOption>
     </Radio>
   );
 };

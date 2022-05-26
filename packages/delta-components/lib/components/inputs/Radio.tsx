@@ -77,7 +77,7 @@ export const RadioOption = ({
         display: 'flex',
         gap: 2,
         alignItems: 'center',
-        cursor: disabled ? 'not-allowed' : 'pointer',
+        cursor: disabled ? 'not-allowed' : 'default',
       }}
       {...rest}
     >
@@ -104,8 +104,8 @@ export const RadioOption = ({
         {active && (
           <Box
             sx={{
-              width: '0.65rem',
-              height: '0.65rem',
+              width: '0.5rem',
+              height: '0.5rem',
               borderRadius: '50%',
               backgroundColor: 'onPrimary',
             }}

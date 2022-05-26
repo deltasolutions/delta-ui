@@ -5,22 +5,24 @@ import {
   ForwardRefRenderFunction,
   PropsWithoutRef,
   RefAttributes,
-  useMemo
+  useMemo,
 } from 'react';
 
+export type ForwardRefCRF<T, P> =
+  | ForwardRefRenderFunction<T, P>
+  | ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<T>>;
+
 export const useForwardRef = <T, P>(
-  componentOrFunction:
-    | ForwardRefRenderFunction<T, P>
-    | ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<T>>,
+  componentOrRenderFunction: ForwardRefCRF<T, P>,
   deps: DependencyList
 ) => {
   return useMemo(
     () =>
-      typeof componentOrFunction === 'function'
+      typeof componentOrRenderFunction === 'function'
         ? // Actually, forwardRef result is an object,
           // so it's safe to perform casting here.
-          forwardRef<T, P>(componentOrFunction as any)
-        : componentOrFunction,
+          forwardRef<T, P>(componentOrRenderFunction as any)
+        : componentOrRenderFunction,
     deps
   );
 };

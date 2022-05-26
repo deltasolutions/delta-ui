@@ -20,7 +20,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           padding: 0,
           margin: 0,
           opacity: 1,
-          cursor: 'pointer',
           border: 'none',
           background: 'none',
           fontWeight: 600,

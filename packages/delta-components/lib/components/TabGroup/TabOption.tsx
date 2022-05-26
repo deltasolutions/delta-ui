@@ -30,6 +30,7 @@ export const TabOption = forwardRef<HTMLAnchorElement, TabOptionProps>(
           borderRadius: 5,
           textAlign: 'center',
           display: 'block',
+          cursor: 'default',
           '&, &:hover, &:active, &:focus-visible': {
             fontWeight: 600,
           },

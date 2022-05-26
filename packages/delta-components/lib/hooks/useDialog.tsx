@@ -1,7 +1,6 @@
 import { FloatingOverlay } from '@floating-ui/react-dom-interactions';
 import { jsx } from '@theme-ui/core';
 import {
-  cloneElement,
   DependencyList,
   useCallback,
   useContext,
@@ -11,17 +10,13 @@ import {
 import { SystemContext } from '../components';
 import { mergeRefs } from '../utils';
 import { ImperativePortal } from './useImperativePortal';
-import {
-  PortalledTransitionerProps,
-  usePortalledTransition,
-} from './usePortalledTransition';
-import { useTransition } from './useTransition';
+import { PortalledProps, usePortalled } from './usePortalled';
 
-export interface DialogRendererProps<C extends unknown = never>
-  extends PortalledTransitionerProps<C> {}
+export interface DialogProps<C extends unknown = never>
+  extends PortalledProps<C> {}
 
-export interface DialogRenderer<C extends unknown = never> {
-  (props: DialogRendererProps<C>): JSX.Element;
+export interface DialogRenderFn<C extends unknown = never> {
+  (props: DialogProps<C>): JSX.Element;
 }
 
 export interface DialogOptions {
@@ -31,56 +26,22 @@ export interface DialogOptions {
 }
 
 export const useDialog = <C extends unknown = never>(
-  render: DialogRenderer<C>,
+  render: DialogRenderFn<C>,
   options: DialogOptions
 ) => {
   const { floatingPortal } = useContext(SystemContext);
   const { deps, portal = floatingPortal, onClose, ...dialogProps } = options;
-  const openDialog = usePortalledTransition<HTMLDivElement, C>(
-    (
-      {
-        context,
-        handleClose: handleImplicitClose,
-        children,
-        ...overlayTransitionProps
-      },
-      overlayTransitionRef
-    ) => {
+  const openDialog = usePortalled<HTMLDivElement, C>(
+    ({ context, handleClose: handleImplicitClose }, overlayTransitionRef) => {
       const overlayRef = useRef<HTMLDivElement>(null);
       const mergedRef = useMemo(
         () => mergeRefs([overlayTransitionRef, overlayRef]),
         []
       );
-      const dialogRef = useRef<HTMLDivElement>(null);
       const handleClose = useCallback(() => {
         handleImplicitClose();
         onClose?.();
       }, []);
-      const dialogTransition = useTransition<HTMLDivElement>(
-        (dialogTransitionProps, dialogTransitionRef) => {
-          const mergedRef = useMemo(
-            () => mergeRefs([dialogTransitionRef, dialogRef]),
-            []
-          );
-          const content = useMemo(
-            () =>
-              render?.({ context, handleClose, ...dialogTransitionProps }) ??
-              null,
-            []
-          );
-          return content
-            ? cloneElement(content, {
-                ref: mergedRef,
-                ...dialogProps,
-                ...dialogTransitionProps,
-              })
-            : null;
-        },
-        {
-          deps: [],
-          isMounted: overlayTransitionProps.isVisible,
-        }
-      );
       return (
         <FloatingOverlay
           lockScroll
@@ -90,7 +51,6 @@ export const useDialog = <C extends unknown = never>(
             justifyContent: 'center',
             alignItems: 'center',
             backgroundColor: 'rgba(0, 0, 0, 0.65)',
-            opacity: overlayTransitionProps.isVisible ? 1 : 0,
             transition: 'opacity 0.2s',
           }}
           onClick={e => {
@@ -99,7 +59,7 @@ export const useDialog = <C extends unknown = never>(
             }
           }}
         >
-          {dialogTransition}
+          {render?.({ context, handleClose })}
         </FloatingOverlay>
       );
     },

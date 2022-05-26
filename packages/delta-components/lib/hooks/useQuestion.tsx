@@ -8,10 +8,10 @@ import {
   QuestionHeader,
   QuestionProps,
 } from '../components';
-import { DialogOptions, DialogRendererProps, useDialog } from './useDialog';
+import { DialogOptions, DialogProps, useDialog } from './useDialog';
 
 export interface QuestionRendererProps<C>
-  extends Omit<DialogRendererProps<C>, 'handleClose'> {
+  extends Omit<DialogProps<C>, 'handleClose'> {
   handleClose: (v: boolean) => void;
 }
 

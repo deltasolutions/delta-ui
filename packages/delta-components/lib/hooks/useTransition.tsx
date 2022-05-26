@@ -5,26 +5,20 @@ import {
   useEffect,
   TransitionEvent,
   useCallback,
-  ForwardRefExoticComponent,
-  PropsWithoutRef,
-  RefAttributes,
-  ForwardRefRenderFunction,
   useRef,
   DependencyList,
 } from 'react';
 import { requestAnimationDelay } from '../utils';
 import { useCleanableRef } from './useCleanableRef';
-import { useForwardRef } from './useForwardRef';
+import { ForwardRefCRF, useForwardRef } from './useForwardRef';
 import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 
-export interface TransitionerProps {
+export interface TransitionProps {
   isVisible: boolean;
   isEntering: boolean;
 }
 
-export type Transitioner<T, P = TransitionerProps> =
-  | ForwardRefRenderFunction<T, P>
-  | ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<T>>;
+export type TransitionCRF<T, P = TransitionProps> = ForwardRefCRF<T, P>;
 
 export interface TransitionOptions {
   deps: DependencyList;
@@ -32,10 +26,10 @@ export interface TransitionOptions {
 }
 
 export const useTransition = <T extends HTMLElement>(
-  transitioner: Transitioner<T>,
+  crf: TransitionCRF<T>,
   { deps, isMounted }: TransitionOptions
 ) => {
-  const Component = useForwardRef(transitioner, deps);
+  const Component = useForwardRef(crf, deps);
   const [isVisible, setIsVisible] = useState(!!isMounted);
   const [isEntering, setIsEntering] = useState(false);
   const [isReallyMounted, setIsReallyMounted] = useState(!!isMounted);

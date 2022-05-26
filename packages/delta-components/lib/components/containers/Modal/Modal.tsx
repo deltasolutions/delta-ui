@@ -1,17 +1,15 @@
 import { jsx } from '@theme-ui/core';
 import { forwardRef } from 'react';
-import { PortalledTransitionerProps } from '../../../hooks';
+import { PortalledProps } from '../../../hooks';
 import { Box, BoxProps } from '../Box';
 
-export interface ModalProps
-  extends BoxProps,
-    Partial<PortalledTransitionerProps> {
+export interface ModalProps extends BoxProps, Partial<PortalledProps> {
   variant?: 'page';
   size?: 'small' | 'medium' | 'large';
 }
 
 export const Modal = forwardRef<HTMLDivElement, ModalProps>(
-  ({ variant, size = 'medium', isVisible, isEntering, ...rest }, ref) => {
+  ({ variant, size = 'medium', ...rest }, ref) => {
     return (
       <Box
         ref={ref}
@@ -19,10 +17,6 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
           borderRadius: 3,
           backgroundColor: 'surface',
           color: 'onSurface',
-          transform: `translateY(${
-            isVisible ? '0' : isEntering ? '1rem' : '-1rem'
-          })`,
-          transition: 'transform 0.2s',
           ...{
             page: { width: '100vw', height: '100vh' },
           }[variant ?? ''],

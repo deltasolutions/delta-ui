@@ -30,8 +30,8 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
                 border: 0,
                 borderRadius: 4,
                 letterSpacing: 'normal',
-                paddingX: '0.50em',
-                paddingY: '0.75em',
+                paddingX: '0.55em',
+                paddingY: '0.60em',
                 backgroundColor: 'accentSurface',
                 color: 'onSurface',
                 '&:focus': {

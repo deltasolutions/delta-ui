@@ -5,6 +5,7 @@ export * from './useForwardRef';
 export * from './useImperativePortal';
 export * from './useIsomorphicLayoutEffect';
 export * from './useModal';
+export * from './usePortalled';
 export * from './usePortalledTransition';
 export * from './useQuestion';
 export * from './useTransition';
