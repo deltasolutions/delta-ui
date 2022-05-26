@@ -14,11 +14,6 @@ import { Button, ButtonProps } from '../Button';
 import { Box, BoxProps } from '../containers';
 import { TextField } from './TextField';
 
-export interface SelectOption {
-  title: string;
-  value: unknown;
-}
-
 export interface SelectProps extends Omit<BoxProps, 'children'> {
   children: ReactElement<SelectOptionProps>[];
   value?: unknown;
@@ -118,8 +113,7 @@ export const SelectOption = ({ value, ...rest }: SelectOptionProps) => {
     <Button
       sx={{
         cursor: 'pointer',
-        paddingX: 2,
-        paddingY: 3,
+        padding: 2,
         textAlign: 'left',
         '&:hover': {
           backgroundColor: 'accentSurface',
