@@ -27,7 +27,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
             outlineOffset: 2,
           },
           'input:not(:disabled) + span': {
-            cursor: 'pointer',
+            cursor: 'default',
             opacity: 2,
           },
           'input:disabled + span:before': {
@@ -44,7 +44,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
           sx={{
             position: 'absolute',
             opacity: 0,
-            cursor: 'pointer',
+            cursor: 'default',
             height: '0',
             width: '0',
           }}
