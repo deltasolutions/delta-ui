@@ -27,6 +27,7 @@ export const SystemContainer = ({
             width: '100vw',
             minHeight: '100vh',
             fontFamily: theme.fontFamily,
+            backgroundColor: theme.colors.background,
             color: theme.colors.onBackground,
             fontSize: theme.fontSizes[3],
           }}

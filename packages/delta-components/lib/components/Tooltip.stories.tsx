@@ -1,10 +1,10 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { Box, Tooltip } from '..';
+import { Box } from './containers';
+import { Tooltip } from './Tooltip';
 
 export default {
-  title: 'Data/Tooltip',
-  component: Tooltip,
+  title: 'Interactive/Tooltip',
 } as Meta;
 
 export const Basics = () => (
