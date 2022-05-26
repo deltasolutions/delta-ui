@@ -82,7 +82,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
           disabled={disabled}
           placeholder={placeholder}
           sx={{
-            cursor: disabled ? 'not-allowed' : 'pointer',
+            cursor: disabled ? 'not-allowed' : 'default',
             paddingRight: '2em',
           }}
           onFocus={() => openDrop()}
@@ -112,7 +112,6 @@ export const SelectOption = ({ value, ...rest }: SelectOptionProps) => {
   return (
     <Button
       sx={{
-        cursor: 'pointer',
         padding: 2,
         textAlign: 'left',
         '&:hover': {
