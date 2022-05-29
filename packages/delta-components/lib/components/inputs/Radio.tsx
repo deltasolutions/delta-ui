@@ -36,9 +36,10 @@ export const Radio = forwardRef<HTMLDivElement, RadioProps>(
     ref
   ) => {
     const [innerValue, setInnerValue] = useState<unknown>(value);
-    useUpdateEffect(() => {
-      innerValue !== value && onChange?.(innerValue);
-    }, [innerValue]);
+    const handleChange = (nextValue: unknown) => {
+      nextValue !== innerValue && setInnerValue(nextValue);
+      nextValue !== value && onChange?.(nextValue);
+    };
     useUpdateEffect(() => {
       innerValue !== value && setInnerValue(value);
     }, [value]);
@@ -59,7 +60,7 @@ export const Radio = forwardRef<HTMLDivElement, RadioProps>(
             active: v.props?.value === innerValue,
             disabled: Boolean(disabled),
             onClick: () => {
-              setInnerValue(v.props.value);
+              handleChange(v.props.value);
             },
           })
         )}

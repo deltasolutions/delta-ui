@@ -53,13 +53,10 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       return childrenArray.find(v => v.props.value === innerValue)?.props
         .children;
     }, [children, innerValue]);
-    const handleChange = useCallback(
-      (nextValue: unknown) => {
-        nextValue !== innerValue && setInnerValue(nextValue);
-        nextValue !== value && onChange?.(nextValue);
-      },
-      [onChange]
-    );
+    const handleChange = (nextValue: unknown) => {
+      nextValue !== innerValue && setInnerValue(nextValue);
+      nextValue !== value && onChange?.(nextValue);
+    };
     useUpdateEffect(() => {
       innerValue !== value && setInnerValue(value);
     }, [value]);

@@ -1,5 +1,6 @@
 import { jsx } from '@theme-ui/core';
-import { forwardRef, InputHTMLAttributes } from 'react';
+import { forwardRef, InputHTMLAttributes, useCallback, useState } from 'react';
+import { useUpdateEffect } from '../../hooks';
 import { FormWidgetProps } from '../../types';
 import { Box } from '../containers';
 
@@ -22,6 +23,15 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
     }: SwitchProps,
     ref
   ) => {
+    const [innerValue, setInnerValue] = useState<boolean>(value ?? false);
+    const handleChange = (nextValue: boolean) => {
+      nextValue !== innerValue && setInnerValue(nextValue);
+      nextValue !== value && onChange?.(nextValue);
+    };
+    useUpdateEffect(() => {
+      innerValue !== value && setInnerValue(value ?? false);
+    }, [value]);
+
     return (
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
         <label
@@ -65,15 +75,15 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
               height: '0',
               width: '0',
             }}
-            checked={Boolean(value)}
+            checked={innerValue}
             disabled={disabled}
-            onChange={ev => onChange?.(ev.target.checked)}
+            onChange={ev => handleChange(ev.target.checked)}
             onFocus={onFocus}
             onBlur={onBlur}
             onKeyDown={ev => {
               if (ev.key === 'Enter') {
                 ev.preventDefault();
-                onChange?.(!value);
+                handleChange(!innerValue);
               }
               onKeyDown?.(ev);
             }}

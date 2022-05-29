@@ -29,13 +29,10 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
     ref
   ) => {
     const [innerValue, setInnerValue] = useState<string>(value ?? '');
-    const handleChange = useCallback(
-      (nextValue: string) => {
-        nextValue !== innerValue && setInnerValue(nextValue);
-        nextValue !== value && onChange?.(nextValue);
-      },
-      [onChange]
-    );
+    const handleChange = (nextValue: string) => {
+      nextValue !== innerValue && setInnerValue(nextValue);
+      nextValue !== value && onChange?.(nextValue);
+    };
     useUpdateEffect(() => {
       innerValue !== value && setInnerValue(value ?? '');
     }, [value]);
