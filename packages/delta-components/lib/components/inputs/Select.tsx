@@ -122,7 +122,7 @@ export const SelectDrop = ({
   handleClose,
 }: SelectDropProps) => {
   return (
-    <FocusTrap>
+    <FocusTrap focusTrapOptions={{ escapeDeactivates: false }}>
       <Box
         sx={{
           display: 'flex',
