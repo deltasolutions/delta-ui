@@ -11,6 +11,7 @@ import {
   ChangeEvent,
 } from 'react';
 import { FormWidgetProps } from '../../types';
+import { Button } from '../Button';
 import { Box } from '../containers';
 
 export interface FileInputLabelRenderer {
@@ -69,22 +70,14 @@ export const FileInput = forwardRef<HTMLDivElement, FileInputProps>(
           sx={{ display: 'none' }}
           {...inputProps}
         />
-        <label
+        <Button
+          variant="contained"
+          color="secondary"
           sx={{
-            paddingX: '1.85em',
-            paddingY: '0.85em',
             borderRadius: 3,
             display: 'block',
-            textAlign: 'center',
-            overflow: 'hidden',
-            whiteSpace: 'nowrap',
-            textOverflow: 'ellipsis',
-            textTransform: 'uppercase',
-            fontWeight: 600,
-            fontSize: 2,
-            backgroundColor: 'secondary',
-            color: 'onSecondary',
-            '&:not(:disabled):hover': { backgroundColor: 'accentSecondary' },
+            width: '100%',
+            minWidth: '100px',
           }}
           onClick={handleLabelClick}
         >
@@ -99,7 +92,7 @@ export const FileInput = forwardRef<HTMLDivElement, FileInputProps>(
               )
             : children}
           {!children && getLabel(innerValue)}
-        </label>
+        </Button>
       </Box>
     );
   }

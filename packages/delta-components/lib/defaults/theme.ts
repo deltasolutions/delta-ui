@@ -27,7 +27,7 @@ export const theme = {
     accentOutline: '#282727',
 
     onPrimary: '#ffffff',
-    onSecondary: '#000000',
+    onSecondary: '#2c2c2c',
     onInfo: '#ffffff',
     onSuccess: '#ffffff',
     onWarning: '#ffffff',

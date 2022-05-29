@@ -23,8 +23,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           opacity: 1,
           border: 'none',
           background: 'none',
-          borderWidth: 1,
-          letterSpacing: 2,
           '&:disabled': {
             opacity: 0.5,
             cursor: 'not-allowed',
@@ -70,10 +68,13 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps) => {
   }
   return {
     borderRadius: '500px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: 'inline-block',
+    textAlign: 'center',
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
     textTransform: 'uppercase',
+    letterSpacing: 2,
     fontWeight: 600,
     '&:focus-visible': {
       outline: '2px solid',
