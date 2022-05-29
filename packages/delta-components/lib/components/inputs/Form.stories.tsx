@@ -56,9 +56,6 @@ export const Basics = () => {
         <FormField name="textArea" label="TextArea">
           <TextArea />
         </FormField>
-        <FormField name="fileInput" label="FileInput">
-          <FileInput />
-        </FormField>
       </FormGrid>
       <Button variant="contained" type="submit" sx={{ mt: 4 }}>
         Submit
