@@ -1,3 +1,4 @@
+export * from './FileInput';
 export * from './Form';
 export * from './Radio';
 export * from './Select';

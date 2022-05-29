@@ -1,11 +1,11 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { Fragment } from 'react';
 import { useForm } from 'react-hook-form';
 import { compact } from '../../../docs/decorators';
 import { useModal } from '../../hooks';
 import { Button } from '../Button';
 import { ModalBody } from '../containers';
+import { FileInput } from './FileInput';
 import { Form, FormField, FormGrid } from './Form';
 import { Radio, RadioOption } from './Radio';
 import { Select, SelectOption } from './Select';
@@ -55,6 +55,9 @@ export const Basics = () => {
         </FormField>
         <FormField name="textArea" label="TextArea">
           <TextArea />
+        </FormField>
+        <FormField name="fileInput" label="FileInput">
+          <FileInput />
         </FormField>
       </FormGrid>
       <Button variant="contained" type="submit" sx={{ mt: 4 }}>
