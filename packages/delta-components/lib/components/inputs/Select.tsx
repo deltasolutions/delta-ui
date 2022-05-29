@@ -5,30 +5,48 @@ import {
   forwardRef,
   ReactElement,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 import { IoChevronDown } from 'react-icons/io5';
 import { useDrop, useUpdateEffect } from '../../hooks';
+import { FormWidgetProps } from '../../types';
 import { mergeRefs } from '../../utils';
 import { Button, ButtonProps } from '../Button';
 import { Box, BoxProps } from '../containers';
-import { TextField } from './TextField';
+import { TextInput } from './TextInput';
 
-export interface SelectProps extends Omit<BoxProps, 'children'> {
-  children: ReactElement<SelectOptionProps>[];
-  value?: unknown;
-  disabled?: boolean;
+export interface SelectProps
+  extends Omit<BoxProps, 'children' | keyof FormWidgetProps>,
+    FormWidgetProps {
+  children: (ReactElement<SelectOptionProps> | null | undefined | false)[];
   placeholder?: string;
-  onChange?: (v: unknown) => void;
 }
 
 export const Select = forwardRef<HTMLDivElement, SelectProps>(
-  ({ children, value, disabled, placeholder, onChange, ...rest }, ref) => {
+  (
+    {
+      children,
+      placeholder,
+      value,
+      invalid,
+      disabled,
+      onChange,
+      onFocus,
+      onBlur,
+      ...rest
+    },
+    ref
+  ) => {
     const [innerValue, setInnerValue] = useState<unknown>(value);
+    const childrenArray = useMemo(
+      () =>
+        Children.toArray(children).filter(
+          Boolean
+        ) as ReactElement<SelectOptionProps>[],
+      [Children.map(children, v => v && String(v.props.value))?.join()]
+    );
     const title = useMemo(() => {
-      const childrenArray = Children.toArray(
-        children
-      ) as ReactElement<SelectOptionProps>[];
       return childrenArray.find(v => v.props.value === innerValue)?.props
         .children;
     }, [children, innerValue]);
@@ -38,6 +56,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
     useUpdateEffect(() => {
       innerValue !== value && setInnerValue(value);
     }, [value]);
+    const closeDropRef = useRef<undefined | (() => void)>();
     const [openDrop, anchorRef] = useDrop<HTMLDivElement>(
       ({ handleClose }) => {
         return (
@@ -49,7 +68,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
               borderRadius: 3,
             }}
           >
-            {Children.map(children, v =>
+            {childrenArray.map(v =>
               cloneElement(v, {
                 onClick: () => {
                   setInnerValue(v.props.value);
@@ -61,8 +80,11 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
         );
       },
       {
-        deps: [],
+        deps: [childrenArray],
         tailored: true,
+        onClose: () => {
+          closeDropRef.current = undefined;
+        },
       }
     );
     const mergedRef = useMemo(() => mergeRefs([ref, anchorRef]), []);
@@ -76,7 +98,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
         }}
         {...rest}
       >
-        <TextField
+        <TextInput
           readOnly
           value={title ?? ''}
           disabled={disabled}
@@ -85,7 +107,15 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
             cursor: disabled ? 'not-allowed' : 'default',
             paddingRight: '2em',
           }}
-          onFocus={() => openDrop()}
+          onFocus={() => {
+            closeDropRef.current = openDrop();
+            onFocus?.();
+          }}
+          onBlur={() => {
+            // TODO: Handle close here.
+            // closeDropRef.current?.();
+            onBlur?.();
+          }}
         />
         <IoChevronDown
           sx={{

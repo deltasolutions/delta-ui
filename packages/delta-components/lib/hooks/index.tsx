@@ -2,6 +2,7 @@ export * from './useCleanableRef';
 export * from './useClickOutside';
 export * from './useDrop';
 export * from './useForwardRef';
+export * from './useGrid';
 export * from './useImperativePortal';
 export * from './useIsomorphicLayoutEffect';
 export * from './useModal';

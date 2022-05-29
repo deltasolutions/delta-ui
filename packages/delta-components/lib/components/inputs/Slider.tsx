@@ -1,23 +1,33 @@
 import { jsx } from '@theme-ui/core';
-import {
-  ChangeEvent,
-  forwardRef,
-  InputHTMLAttributes,
-  useCallback,
-} from 'react';
+import { forwardRef, InputHTMLAttributes } from 'react';
+import { FormWidgetProps } from '../../types';
 
 export interface SliderProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
-  onChange?: (value: ChangeEvent<HTMLInputElement>['target']['value']) => void;
-}
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, keyof FormWidgetProps>,
+    FormWidgetProps<number> {}
 
 export const Slider = forwardRef<HTMLInputElement, SliderProps>(
-  ({ disabled, onChange, ...rest }: SliderProps, ref) => {
-    const handleOnChange = useCallback(e => onChange?.(e.target.value), []);
+  (
+    {
+      value,
+      disabled,
+      invalid, // TODO
+      onChange,
+      onFocus,
+      onBlur,
+      ...rest
+    }: SliderProps,
+    ref
+  ) => {
     return (
       <input
+        ref={ref}
+        type="range"
+        value={value ?? 0}
         disabled={disabled}
-        onChange={handleOnChange}
+        onChange={ev => onChange?.(+ev.target.value)}
+        onFocus={onFocus}
+        onBlur={onBlur}
         sx={{
           appearance: 'none',
           width: '100%',
@@ -50,8 +60,6 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(
           },
         }}
         style={{ cursor: disabled ? 'auto' : 'pointer' }}
-        type="range"
-        ref={ref}
         {...rest}
       />
     );

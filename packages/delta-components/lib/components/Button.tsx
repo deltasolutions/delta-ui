@@ -22,7 +22,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           opacity: 1,
           border: 'none',
           background: 'none',
-          fontWeight: 600,
           borderWidth: 1,
           letterSpacing: 2,
           '&:disabled': {
@@ -75,6 +74,7 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps) => {
     alignItems: 'center',
     justifyContent: 'center',
     textTransform: 'uppercase',
+    fontWeight: 600,
     '&:focus-visible': {
       outline: '2px solid',
       outlineColor: 'primary',

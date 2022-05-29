@@ -8,24 +8,33 @@ import {
   useState,
 } from 'react';
 import { useUpdateEffect } from '../../hooks';
+import { FormWidgetProps } from '../../types';
 import { Button } from '../Button';
 import { Box, BoxProps } from '../containers';
 
-export interface SelectOption {
-  title: string;
-  value: unknown;
-}
-
-export interface RadioProps extends Omit<BoxProps, 'children'> {
+export interface RadioProps
+  extends Omit<BoxProps, 'children' | keyof FormWidgetProps>,
+    FormWidgetProps {
   children: ReactElement<RadioOptionProps>[];
-  value?: unknown;
-  disabled?: boolean;
   placeholder?: string;
   onChange?: (v: unknown) => void;
 }
 
 export const Radio = forwardRef<HTMLDivElement, RadioProps>(
-  ({ children, value, disabled, placeholder, onChange, ...rest }, ref) => {
+  (
+    {
+      children,
+      placeholder,
+      value,
+      invalid,
+      disabled,
+      onChange,
+      onFocus,
+      onBlur,
+      ...rest
+    },
+    ref
+  ) => {
     const [innerValue, setInnerValue] = useState<unknown>(value);
     useUpdateEffect(() => {
       innerValue !== value && onChange?.(innerValue);
@@ -39,8 +48,10 @@ export const Radio = forwardRef<HTMLDivElement, RadioProps>(
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          gap: 3,
+          gap: 2,
         }}
+        onFocus={onFocus}
+        onBlur={onBlur}
         {...rest}
       >
         {Children.map(children, v =>

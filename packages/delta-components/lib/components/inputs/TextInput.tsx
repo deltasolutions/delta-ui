@@ -1,15 +1,27 @@
 import { jsx } from '@theme-ui/core';
 import { forwardRef, InputHTMLAttributes } from 'react';
+import { FormWidgetProps } from '../../types';
 
-export interface TextFieldProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
+export interface TextInputProps
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, keyof FormWidgetProps>,
+    FormWidgetProps<string> {
   variant?: 'pure';
-  size?: 'medium';
 }
 
-export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
-  (props: TextFieldProps, ref) => {
-    const { variant, size = 'medium', disabled, ...rest } = props;
+export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
+  (
+    {
+      variant,
+      value,
+      disabled,
+      invalid, // TODO
+      onChange,
+      onFocus,
+      onBlur,
+      ...rest
+    }: TextInputProps,
+    ref
+  ) => {
     return (
       <input
         sx={{
@@ -42,7 +54,11 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         }}
         ref={ref}
         type="text"
+        value={value ?? ''}
         disabled={disabled}
+        onChange={e => onChange?.(e.target.value)}
+        onFocus={onFocus}
+        onBlur={onBlur}
         {...rest}
       />
     );
