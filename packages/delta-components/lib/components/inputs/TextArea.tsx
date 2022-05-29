@@ -48,6 +48,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
         onFocus={onFocus}
         onBlur={onBlur}
         sx={{
+          boxSizing: 'border-box',
           width: '100%',
           minWidth: '100px',
           opacity: disabled ? 0.5 : 1,
