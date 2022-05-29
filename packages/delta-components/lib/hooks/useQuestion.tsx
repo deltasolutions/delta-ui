@@ -39,40 +39,48 @@ export const useQuestion = <C extends unknown = never>(
   }: DialogOptions & Partial<QuestionProps>
 ) => {
   const handleQuestionClose = useRef<undefined | ((v: boolean) => void)>();
+  const hasCustomDescription = description instanceof Function;
+  const okButtonRef = useRef<HTMLButtonElement | null>(null);
   const openQuestion = useDialog<C>(
     ({ context, handleClose: handleSilentClose }) => {
       const handleClose = (v: boolean) => {
         handleQuestionClose.current?.(v);
         handleSilentClose();
       };
-      const content =
-        description instanceof Function ? (
-          description({
-            context: context as C,
-            handleClose,
-          })
-        ) : (
-          <Fragment>
-            <QuestionHeader>
-              <Heading level={4}>{description.heading}</Heading>
-            </QuestionHeader>
-            <QuestionBody>{description.content}</QuestionBody>
-            <QuestionFooter>
-              {/* TODO: Translate default text. */}
-              <Button variant="text" onClick={() => handleClose(false)}>
-                {description.cancelText ?? 'Cancel'}
-              </Button>
-              <Button variant="contained" onClick={() => handleClose(true)}>
-                {description.okText ?? 'OK'}
-              </Button>
-            </QuestionFooter>
-          </Fragment>
-        );
+      const content = hasCustomDescription ? (
+        description({
+          context: context as C,
+          handleClose,
+        })
+      ) : (
+        <Fragment>
+          <QuestionHeader>
+            <Heading level={4}>{description.heading}</Heading>
+          </QuestionHeader>
+          <QuestionBody>{description.content}</QuestionBody>
+          <QuestionFooter>
+            {/* TODO: Translate default text. */}
+            <Button variant="text" onClick={() => handleClose(false)}>
+              {description.cancelText ?? 'Cancel'}
+            </Button>
+            <Button
+              ref={okButtonRef}
+              variant="contained"
+              onClick={() => handleClose(true)}
+            >
+              {description.okText ?? 'OK'}
+            </Button>
+          </QuestionFooter>
+        </Fragment>
+      );
       return <Question {...questionProps}>{content}</Question>;
     },
     {
       deps,
       portal,
+      focusTrap: hasCustomDescription
+        ? undefined
+        : { initialFocus: () => okButtonRef.current ?? false },
       onClose: () => {
         handleQuestionClose.current?.(false);
         onClose?.();

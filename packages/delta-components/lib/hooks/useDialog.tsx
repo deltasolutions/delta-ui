@@ -1,4 +1,5 @@
 import { jsx } from '@theme-ui/core';
+import FocusTrap from 'focus-trap-react';
 import {
   DependencyList,
   useCallback,
@@ -21,7 +22,7 @@ export interface DialogRenderFn<C extends unknown = never> {
 export interface DialogOptions {
   deps: DependencyList;
   portal?: ImperativePortal;
-  blurable?: boolean;
+  focusTrap?: boolean | FocusTrap.Props['focusTrapOptions'];
   onClose?: () => void;
 }
 
@@ -30,7 +31,7 @@ export const useDialog = <C extends unknown = never>(
   options: DialogOptions
 ) => {
   const { floatingPortal } = useContext(SystemContext);
-  const { deps, portal = floatingPortal, onClose, blurable } = options;
+  const { deps, portal = floatingPortal, onClose, focusTrap } = options;
   const openDialog = usePortalled<HTMLDivElement, C>(
     ({ context, handleClose: handleImplicitClose }, overlayTransitionRef) => {
       const overlayRef = useRef<HTMLDivElement>(null);
@@ -43,27 +44,37 @@ export const useDialog = <C extends unknown = never>(
         onClose?.();
       }, []);
       return (
-        <Box
-          ref={mergedRef}
-          sx={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100vw',
-            height: '100vh',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'rgba(0, 0, 0, 0.65)',
-          }}
-          onClick={e => {
-            if (overlayRef.current === e.target) {
-              handleClose();
-            }
+        <FocusTrap
+          active={focusTrap !== false}
+          focusTrapOptions={{
+            fallbackFocus: () => overlayRef.current ?? document.body,
+            ...(typeof focusTrap === 'object' ? focusTrap : {}),
           }}
         >
-          {render?.({ context, handleClose })}
-        </Box>
+          <Box
+            ref={mergedRef}
+            tabIndex={-1}
+            sx={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '100vw',
+              height: '100vh',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.65)',
+              outline: 'none',
+            }}
+            onClick={e => {
+              if (overlayRef.current === e.target) {
+                handleClose();
+              }
+            }}
+          >
+            {render?.({ context, handleClose })}
+          </Box>
+        </FocusTrap>
       );
     },
     { deps: [onClose, ...deps], portal }
