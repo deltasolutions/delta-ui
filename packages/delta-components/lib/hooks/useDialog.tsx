@@ -1,4 +1,3 @@
-import { FloatingOverlay } from '@floating-ui/react-dom-interactions';
 import { jsx } from '@theme-ui/core';
 import {
   DependencyList,
@@ -7,7 +6,7 @@ import {
   useMemo,
   useRef,
 } from 'react';
-import { SystemContext } from '../components';
+import { Box, SystemContext } from '../components';
 import { mergeRefs } from '../utils';
 import { ImperativePortal } from './useImperativePortal';
 import { PortalledProps, usePortalled } from './usePortalled';
@@ -22,6 +21,7 @@ export interface DialogRenderFn<C extends unknown = never> {
 export interface DialogOptions {
   deps: DependencyList;
   portal?: ImperativePortal;
+  blurable?: boolean;
   onClose?: () => void;
 }
 
@@ -30,7 +30,7 @@ export const useDialog = <C extends unknown = never>(
   options: DialogOptions
 ) => {
   const { floatingPortal } = useContext(SystemContext);
-  const { deps, portal = floatingPortal, onClose, ...dialogProps } = options;
+  const { deps, portal = floatingPortal, onClose, blurable } = options;
   const openDialog = usePortalled<HTMLDivElement, C>(
     ({ context, handleClose: handleImplicitClose }, overlayTransitionRef) => {
       const overlayRef = useRef<HTMLDivElement>(null);
@@ -43,15 +43,18 @@ export const useDialog = <C extends unknown = never>(
         onClose?.();
       }, []);
       return (
-        <FloatingOverlay
-          lockScroll
+        <Box
           ref={mergedRef}
-          style={{
+          sx={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
             backgroundColor: 'rgba(0, 0, 0, 0.65)',
-            transition: 'opacity 0.2s',
           }}
           onClick={e => {
             if (overlayRef.current === e.target) {
@@ -60,7 +63,7 @@ export const useDialog = <C extends unknown = never>(
           }}
         >
           {render?.({ context, handleClose })}
-        </FloatingOverlay>
+        </Box>
       );
     },
     { deps: [onClose, ...deps], portal }

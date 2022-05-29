@@ -68,7 +68,6 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps) => {
   if (!variant) {
     return {};
   }
-  const containedFocusVisible = {};
   return {
     borderRadius: '500px',
     display: 'flex',
@@ -87,25 +86,21 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps) => {
           backgroundColor: 'primary',
           color: 'onPrimary',
           '&:not(:disabled):hover': { backgroundColor: 'accentPrimary' },
-          ...containedFocusVisible,
         },
         secondary: {
           backgroundColor: 'secondary',
           color: 'onSecondary',
           '&:not(:disabled):hover': { backgroundColor: 'accentSecondary' },
-          ...containedFocusVisible,
         },
         success: {
           backgroundColor: 'success',
           color: 'onSuccess',
           '&:not(:disabled):hover': { backgroundColor: 'accentSuccess' },
-          ...containedFocusVisible,
         },
         error: {
           backgroundColor: 'error',
           color: 'onError',
           '&:not(:disabled):hover': { backgroundColor: 'accentError' },
-          ...containedFocusVisible,
         },
       },
       outlined: {
@@ -131,10 +126,30 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps) => {
         },
       },
       text: {
-        primary: { paddingX: 1, borderRadius: 2, color: 'primary' },
-        secondary: { paddingX: 1, borderRadius: 2, color: 'secondary' },
-        success: { paddingX: 1, borderRadius: 2, color: 'success' },
-        error: { paddingX: 1, borderRadius: 2, color: 'error' },
+        primary: {
+          paddingX: 1,
+          borderRadius: 2,
+          color: 'primary',
+          '&:not(:disabled):hover': { color: 'accentPrimary' },
+        },
+        secondary: {
+          paddingX: 1,
+          borderRadius: 2,
+          color: 'secondary',
+          '&:not(:disabled):hover': { color: 'accentSecondary' },
+        },
+        success: {
+          paddingX: 1,
+          borderRadius: 2,
+          color: 'success',
+          '&:not(:disabled):hover': { color: 'accentSuccess' },
+        },
+        error: {
+          paddingX: 1,
+          borderRadius: 2,
+          color: 'error',
+          '&:not(:disabled):hover': { color: 'accentError' },
+        },
       },
     }[variant][color],
   };
