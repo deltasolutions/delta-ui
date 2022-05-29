@@ -25,6 +25,7 @@ export const TabOption = forwardRef<HTMLAnchorElement, TabOptionProps>(
         ref={ref}
         variant="pure"
         sx={{
+          position: 'relative',
           paddingX: 5,
           paddingY: 3,
           borderRadius: 5,
@@ -34,6 +35,11 @@ export const TabOption = forwardRef<HTMLAnchorElement, TabOptionProps>(
           filter: 'contrast(100%)',
           '&, &:hover, &:active, &:focus-visible': {
             fontWeight: 600,
+          },
+          '&:focus-visible': {
+            zIndex: 1,
+            outline: '2px solid',
+            outlineColor: 'primary',
           },
           ...(isActive && {
             backgroundColor: 'accentSurface',
