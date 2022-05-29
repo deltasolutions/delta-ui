@@ -40,7 +40,7 @@ export const useQuestion = <C extends unknown = never>(
 ) => {
   const handleQuestionClose = useRef<undefined | ((v: boolean) => void)>();
   const openQuestion = useDialog<C>(
-    ({ context, handleClose: handleSilentClose, ...transitionProps }) => {
+    ({ context, handleClose: handleSilentClose }) => {
       const handleClose = (v: boolean) => {
         handleQuestionClose.current?.(v);
         handleSilentClose();
@@ -50,7 +50,6 @@ export const useQuestion = <C extends unknown = never>(
           description({
             context: context as C,
             handleClose,
-            ...transitionProps,
           })
         ) : (
           <Fragment>
@@ -69,11 +68,7 @@ export const useQuestion = <C extends unknown = never>(
             </QuestionFooter>
           </Fragment>
         );
-      return (
-        <Question {...questionProps} {...transitionProps}>
-          {content}
-        </Question>
-      );
+      return <Question {...questionProps}>{content}</Question>;
     },
     {
       deps,

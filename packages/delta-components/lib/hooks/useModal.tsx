@@ -7,17 +7,12 @@ export const useModal = <C extends unknown = never>(
   { deps, portal, onClose, ...modalProps }: DialogOptions & Partial<ModalProps>
 ) => {
   return useDialog<Partial<ModalProps>>(
-    ({ context, handleClose, ...transitionProps }) => {
+    ({ context, handleClose }) => {
       const content = render?.({
         context: context as C,
         handleClose,
-        ...transitionProps,
       });
-      return (
-        <Modal {...modalProps} {...transitionProps}>
-          {content}
-        </Modal>
-      );
+      return <Modal {...modalProps}>{content}</Modal>;
     },
     {
       deps,
