@@ -1,5 +1,5 @@
 import { jsx } from '@theme-ui/core';
-import { Children, cloneElement, ReactElement, ReactNode } from 'react';
+import { Children, ReactElement, ReactNode } from 'react';
 import { FaAngleRight } from 'react-icons/fa';
 import { Box, BoxProps } from '../containers';
 
@@ -18,11 +18,7 @@ export const Breadcrumbs = ({ children, ...rest }: BreadcrumbsProps) => {
       }}
       {...rest}
     >
-      {Children.map(children, (child: ReactElement<any, any>, index) =>
-        cloneElement(child, {
-          active: index === Children.count(children) - 1,
-        })
-      )
+      {(Children.toArray(children) as ReactElement[])
         ?.reduce(
           (p, v, i) => [
             ...p,
@@ -45,26 +41,3 @@ export const Breadcrumbs = ({ children, ...rest }: BreadcrumbsProps) => {
     </Box>
   );
 };
-
-// export const Segment = ({
-//   active,
-//   children,
-//   ...rest
-// }: BoxProps & { active?: boolean }) => {
-//   return (
-//     <span
-//       sx={{
-//         '& > a, button': {
-//           whiteSpace: 'nowrap',
-//           color: active ? 'onBackgroundAccent' : 'inherit',
-//           '&:hover, &:focus-visible, &:active': {
-//             color: 'onBackgroundAccent',
-//           },
-//         },
-//       }}
-//       {...rest}
-//     >
-//       {children}
-//     </span>
-//   );
-// };
