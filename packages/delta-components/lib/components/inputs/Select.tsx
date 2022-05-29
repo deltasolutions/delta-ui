@@ -124,12 +124,8 @@ export const SelectDrop = ({
   handleChange,
   handleClose,
 }: SelectDropProps) => {
-  const [trapped, setTrapped] = useState(true);
-  useEffect(() => {
-    !trapped && handleClose();
-  }, [trapped]);
   return (
-    <FocusTrap active={trapped}>
+    <FocusTrap>
       <Box
         sx={{
           display: 'flex',
@@ -141,8 +137,8 @@ export const SelectDrop = ({
         {children.map(v =>
           cloneElement(v, {
             onClick: () => {
-              setTrapped(false);
               handleChange(v.props.value);
+              handleClose();
             },
           })
         )}
