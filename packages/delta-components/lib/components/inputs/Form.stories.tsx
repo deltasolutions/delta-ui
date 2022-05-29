@@ -1,13 +1,17 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
+import { Fragment } from 'react';
 import { useForm } from 'react-hook-form';
 import { compact } from '../../../docs/decorators';
+import { useModal } from '../../hooks';
 import { Button } from '../Button';
+import { ModalBody } from '../containers';
 import { Form, FormField, FormGrid } from './Form';
 import { Radio, RadioOption } from './Radio';
 import { Select, SelectOption } from './Select';
 import { Slider } from './Slider';
 import { Switch } from './Switch';
+import { TextArea } from './TextArea';
 
 export default {
   title: 'Inputs/Form',
@@ -15,8 +19,18 @@ export default {
 } as Meta;
 
 export const Basics = () => {
+  const openModal = useModal<unknown>(
+    ({ context }) => {
+      return (
+        <ModalBody>
+          <pre>{JSON.stringify(context, null, 2)}</pre>
+        </ModalBody>
+      );
+    },
+    { deps: [] }
+  );
   return (
-    <Form onSubmit={v => console.log('submit', v)}>
+    <Form onSubmit={v => openModal(v)}>
       <FormGrid>
         <FormField name="defaultWidget" label="Default Widget" />
         <FormField name="switch">
@@ -38,6 +52,9 @@ export const Basics = () => {
         </FormField>
         <FormField name="slider" label="Slider">
           <Slider />
+        </FormField>
+        <FormField name="textArea" label="TextArea">
+          <TextArea />
         </FormField>
       </FormGrid>
       <Button variant="contained" type="submit" sx={{ mt: 4 }}>

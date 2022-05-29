@@ -10,11 +10,12 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (props: ButtonProps, ref) => {
-    const { variant, color, size, zoomable, disabled, ...rest } = props;
+    const { variant, color, size, zoomable, disabled, type, ...rest } = props;
     return (
       <button
         ref={ref}
         disabled={disabled}
+        type={type ?? 'button'}
         sx={{
           boxSizing: 'border-box',
           padding: 0,

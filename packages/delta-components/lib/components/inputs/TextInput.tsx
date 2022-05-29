@@ -1,5 +1,6 @@
 import { jsx } from '@theme-ui/core';
-import { forwardRef, InputHTMLAttributes } from 'react';
+import { forwardRef, InputHTMLAttributes, useCallback, useState } from 'react';
+import { useUpdateEffect } from '../../hooks';
 import { FormWidgetProps } from '../../types';
 
 export interface TextInputProps
@@ -22,6 +23,17 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     }: TextInputProps,
     ref
   ) => {
+    const [innerValue, setInnerValue] = useState<string>(value ?? '');
+    const handleChange = useCallback(
+      (nextValue: string) => {
+        nextValue !== innerValue && setInnerValue(nextValue);
+        nextValue !== value && onChange?.(nextValue);
+      },
+      [onChange]
+    );
+    useUpdateEffect(() => {
+      innerValue !== value && setInnerValue(value ?? '');
+    }, [value]);
     return (
       <input
         sx={{
@@ -54,9 +66,9 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
         }}
         ref={ref}
         type="text"
-        value={value ?? ''}
+        value={innerValue}
         disabled={disabled}
-        onChange={e => onChange?.(e.target.value)}
+        onChange={e => handleChange(e.target.value)}
         onFocus={onFocus}
         onBlur={onBlur}
         {...rest}
