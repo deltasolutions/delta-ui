@@ -1,10 +1,12 @@
 import { jsx } from '@theme-ui/core';
+import FocusTrap from 'focus-trap-react';
 import {
   Children,
   cloneElement,
   forwardRef,
   ReactElement,
   useCallback,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -61,7 +63,6 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
     useUpdateEffect(() => {
       innerValue !== value && setInnerValue(value);
     }, [value]);
-    const closeDropRef = useRef<undefined | (() => void)>();
     const [openDrop, anchorRef] = useDrop<HTMLDivElement>(
       props => (
         <SelectDrop handleChange={handleChange} {...props}>
@@ -71,9 +72,6 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       {
         deps: [childrenArray, handleChange],
         tailored: true,
-        onClose: () => {
-          closeDropRef.current = undefined;
-        },
       }
     );
     const mergedRef = useMemo(() => mergeRefs([ref, anchorRef]), []);
@@ -96,15 +94,10 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
             cursor: disabled ? 'not-allowed' : 'default',
             paddingRight: '2em',
           }}
-          onFocus={() => {
-            closeDropRef.current = openDrop();
-            onFocus?.();
-          }}
-          onBlur={() => {
-            // TODO: Handle close here.
-            // closeDropRef.current?.();
-            onBlur?.();
-          }}
+          onClick={() => openDrop()}
+          onKeyDown={ev => ev.key === 'Enter' && openDrop()}
+          onFocus={onFocus}
+          onBlur={onBlur}
         />
         <IoChevronDown
           sx={{
@@ -131,24 +124,30 @@ export const SelectDrop = ({
   handleChange,
   handleClose,
 }: SelectDropProps) => {
+  const [trapped, setTrapped] = useState(true);
+  useEffect(() => {
+    !trapped && handleClose();
+  }, [trapped]);
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        overflow: 'hidden',
-        borderRadius: 3,
-      }}
-    >
-      {children.map(v =>
-        cloneElement(v, {
-          onClick: () => {
-            handleChange(v.props.value);
-            handleClose();
-          },
-        })
-      )}
-    </Box>
+    <FocusTrap active={trapped}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'hidden',
+          borderRadius: 3,
+        }}
+      >
+        {children.map(v =>
+          cloneElement(v, {
+            onClick: () => {
+              setTrapped(false);
+              handleChange(v.props.value);
+            },
+          })
+        )}
+      </Box>
+    </FocusTrap>
   );
 };
 
@@ -158,17 +157,21 @@ export interface SelectOptionProps
   children: string;
 }
 
-export const SelectOption = ({ value, ...rest }: SelectOptionProps) => {
-  return (
-    <Button
-      sx={{
-        padding: 2,
-        textAlign: 'left',
-        '&:hover': {
-          backgroundColor: 'accentSurface',
-        },
-      }}
-      {...rest}
-    />
-  );
-};
+export const SelectOption = forwardRef<HTMLButtonElement, SelectOptionProps>(
+  ({ value, ...rest }, ref) => {
+    return (
+      <Button
+        ref={ref}
+        sx={{
+          padding: 2,
+          textAlign: 'left',
+          outline: 'none',
+          '&:hover, &:focus-visible': {
+            backgroundColor: 'accentSurface',
+          },
+        }}
+        {...rest}
+      />
+    );
+  }
+);

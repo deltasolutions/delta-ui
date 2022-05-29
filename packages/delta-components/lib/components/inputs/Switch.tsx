@@ -72,6 +72,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
             onBlur={onBlur}
             onKeyDown={ev => {
               if (ev.key === 'Enter') {
+                ev.preventDefault();
                 onChange?.(!value);
               }
               onKeyDown?.(ev);
