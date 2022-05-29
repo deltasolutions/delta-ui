@@ -1,3 +1,4 @@
+export * from './getChildrenKey';
 export * from './hash';
 export * from './isHtmlElement';
 export * from './mergeRefs';

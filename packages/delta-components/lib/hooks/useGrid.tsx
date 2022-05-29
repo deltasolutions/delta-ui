@@ -39,7 +39,6 @@ export const useGrid = <
         : undefined,
     []
   );
-
   const style = useMemo(
     () => ({
       display: 'grid',
@@ -48,7 +47,6 @@ export const useGrid = <
     }),
     [hash(columns), hash(rows)]
   );
-
   const [measurements, measureElement] = useReducer(
     (prev: GridMeasurements & Extras, element: Element) => {
       const style = getComputedStyle(element);
@@ -66,7 +64,6 @@ export const useGrid = <
     },
     { ...getExtras?.() } as any
   );
-
   const handleElement = useCleanableRef<Element>(element => {
     measureElement(element);
     const observer = new ResizeObserver(entries => {
@@ -77,6 +74,5 @@ export const useGrid = <
     observer.observe(element);
     return () => observer.disconnect();
   }, []);
-
   return { style, measureElement, handleElement, ...measurements };
 };
