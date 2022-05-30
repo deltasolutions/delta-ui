@@ -26,7 +26,9 @@ export const decorators = [
           sx={{
             width: '100%',
             minHeight: '100vh',
-            display: 'block',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
           <Story />

@@ -9,6 +9,7 @@ export const Layout = ({ ...rest }: LayoutProps) => {
       sx={{
         backgroundColor: 'background',
         display: 'flex',
+        width: '100%',
         minHeight: '100vh',
       }}
       {...rest}

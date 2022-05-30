@@ -12,7 +12,7 @@ export const Question = forwardRef<HTMLDivElement, QuestionProps>(
       <Box
         ref={ref}
         sx={{
-          width: '400px',
+          width: '350px',
           borderRadius: 3,
           backgroundColor: 'contrast',
           color: 'onContrast',
