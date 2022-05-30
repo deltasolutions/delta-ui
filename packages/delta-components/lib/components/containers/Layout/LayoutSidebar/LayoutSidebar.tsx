@@ -20,7 +20,7 @@ export const LayoutSidebar = forwardRef<HTMLDivElement, LayoutSidebarProps>(
     ref
   ) => {
     return (
-      <nav
+      <Box
         ref={ref}
         sx={{
           position: 'sticky',
@@ -45,7 +45,7 @@ export const LayoutSidebar = forwardRef<HTMLDivElement, LayoutSidebarProps>(
           >
           </SimpleBar> */}
         </ResizableBox>
-      </nav>
+      </Box>
     );
   }
 );

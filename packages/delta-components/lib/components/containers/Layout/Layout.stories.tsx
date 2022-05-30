@@ -2,11 +2,12 @@ import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { Anchor } from '../../Anchor';
 import { Breadcrumbs } from '../../navs';
+import { Box } from '../Box';
 import { Heading } from '../Heading';
 import { Layout } from './Layout';
-import { LayoutBody } from './LayoutBody';
-import { LayoutBodyHeader } from './LayoutBodyHeader';
-import { LayoutBodyMain } from './LayoutBodyMain';
+import { LayoutMain } from './LayoutMain';
+import { LayoutMainBody } from './LayoutMainBody';
+import { LayoutMainHeader } from './LayoutMainHeader';
 import {
   LayoutSidebar,
   LayoutSidebarBody,
@@ -23,8 +24,8 @@ export const Basics = () => (
       <LayoutSidebarHeader>LayoutSidebarHeader</LayoutSidebarHeader>
       <LayoutSidebarBody>LayoutSidebarBody</LayoutSidebarBody>
     </LayoutSidebar>
-    <LayoutBody>
-      <LayoutBodyHeader>
+    <LayoutMain>
+      <LayoutMainHeader>
         <Heading level={4}>
           <Breadcrumbs>
             <Anchor variant="pure">Home</Anchor>
@@ -34,8 +35,12 @@ export const Basics = () => (
             </Anchor>
           </Breadcrumbs>
         </Heading>
-      </LayoutBodyHeader>
-      <LayoutBodyMain>Layout body main</LayoutBodyMain>
-    </LayoutBody>
+      </LayoutMainHeader>
+      <LayoutMainBody>
+        Top Text
+        <Box sx={{ height: '200vh', width: '1px' }} />
+        Bottom Text
+      </LayoutMainBody>
+    </LayoutMain>
   </Layout>
 );

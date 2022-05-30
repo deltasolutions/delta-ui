@@ -5,7 +5,16 @@ export const compact =
   (maxWidth = '500px') =>
   Story =>
     (
-      <Box sx={{ width: '100%', maxWidth }}>
-        <Story />
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: '100vh',
+        }}
+      >
+        <Box sx={{ width: '100%', maxWidth }}>
+          <Story />
+        </Box>
       </Box>
     );
