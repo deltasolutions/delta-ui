@@ -9,5 +9,6 @@ export * from './useModal';
 export * from './usePortalled';
 export * from './usePortalledTransition';
 export * from './useQuestion';
+export * from './useThrottledCallback';
 export * from './useTransition';
 export * from './useUpdateEffect';

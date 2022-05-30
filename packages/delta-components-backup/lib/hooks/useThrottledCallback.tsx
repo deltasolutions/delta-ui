@@ -1,5 +1,6 @@
 import { useCallback, useRef } from 'react';
 import { ArgumentTypes } from '../models';
+
 export const useThrottledCallback = <T extends Function>(
   callback: T,
   delay: number

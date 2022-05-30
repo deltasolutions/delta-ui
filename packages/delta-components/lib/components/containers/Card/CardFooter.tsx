@@ -12,8 +12,8 @@ export const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
         sx={{
           display: 'flex',
           gap: 2,
-          paddingX: 5,
-          paddingBottom: 5,
+          paddingX: 4,
+          paddingBottom: 4,
         }}
         {...props}
       />

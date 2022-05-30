@@ -10,8 +10,8 @@ export const QuestionHeader = forwardRef<HTMLDivElement, QuestionHeaderProps>(
       <Box
         ref={ref}
         sx={{
-          paddingX: 5,
-          paddingTop: 4,
+          paddingX: 4,
+          paddingTop: 3,
           color: 'accentOnContrast',
         }}
         {...props}

@@ -10,8 +10,8 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
       <Box
         ref={ref}
         sx={{
-          paddingX: 5,
-          paddingTop: 5,
+          paddingX: 4,
+          paddingTop: 4,
           color: 'accentOnSurface',
         }}
         {...props}

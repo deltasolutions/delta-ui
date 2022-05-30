@@ -16,7 +16,7 @@ export const Heading = forwardRef<HTMLHeadElement, HeadingProps>(
           color: 'onSurfaceVariant',
           fontSize: 6 - level,
           fontWeight: 600,
-          padding: 0
+          padding: 0,
         }}
         ref={ref}
         {...rest}

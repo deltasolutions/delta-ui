@@ -5,10 +5,7 @@ import {
   cloneElement,
   forwardRef,
   ReactElement,
-  useCallback,
-  useEffect,
   useMemo,
-  useRef,
   useState,
 } from 'react';
 import { IoChevronDown } from 'react-icons/io5';
@@ -69,6 +66,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       {
         deps: [childrenArray, handleChange],
         tailored: true,
+        placement: 'bottom-start',
       }
     );
     const mergedRef = useMemo(() => mergeRefs([ref, anchorRef]), []);
@@ -125,6 +123,7 @@ export const SelectDrop = ({
     <FocusTrap focusTrapOptions={{ escapeDeactivates: false }}>
       <Box
         sx={{
+          padding: 1,
           display: 'flex',
           flexDirection: 'column',
           overflow: 'hidden',
@@ -136,6 +135,9 @@ export const SelectDrop = ({
             onClick: () => {
               handleChange(v.props.value);
               handleClose();
+            },
+            onMouseEnter: e => {
+              e.target.focus();
             },
           })
         )}
@@ -156,11 +158,15 @@ export const SelectOption = forwardRef<HTMLButtonElement, SelectOptionProps>(
       <Button
         ref={ref}
         sx={{
-          padding: 2,
+          paddingX: 2,
+          paddingY: 1,
           textAlign: 'left',
+          fontSize: 1,
           outline: 'none',
-          '&:hover, &:focus-visible': {
-            backgroundColor: 'accentSurface',
+          borderRadius: 2,
+          '&:focus': {
+            backgroundColor: 'primary',
+            color: 'onPrimary',
           },
         }}
         {...rest}

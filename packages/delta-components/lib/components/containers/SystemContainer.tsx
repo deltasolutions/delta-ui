@@ -29,7 +29,7 @@ export const SystemContainer = ({
             fontFamily: theme.fontFamily,
             backgroundColor: theme.colors.background,
             color: theme.colors.onBackground,
-            fontSize: theme.fontSizes[3],
+            fontSize: theme.fontSizes[2],
           }}
         >
           {children}

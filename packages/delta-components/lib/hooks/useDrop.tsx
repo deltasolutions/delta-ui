@@ -1,4 +1,4 @@
-import { autoUpdate, useFloating } from '@floating-ui/react-dom';
+import { autoUpdate, Placement, useFloating } from '@floating-ui/react-dom';
 import { jsx } from '@theme-ui/core';
 import {
   useCallback,
@@ -24,6 +24,7 @@ export interface DropRenderer<C extends unknown = never> {
 
 export interface DropOptions extends Omit<DropProps, 'children'> {
   deps: DependencyList;
+  placement?: Placement;
   portal?: ImperativePortal;
   multiple?: boolean;
   tailored?: boolean;
@@ -37,6 +38,7 @@ export const useDrop = <T extends HTMLElement, C extends unknown = never>(
 ) => {
   const {
     deps,
+    placement,
     multiple,
     tailored,
     portal,
@@ -50,7 +52,7 @@ export const useDrop = <T extends HTMLElement, C extends unknown = never>(
   const openDropInstance = usePortalled<HTMLDivElement>(
     ({ handleClose: handleImplicitClose }, ref) => {
       const { x, y, reference, floating, strategy, refs, update } =
-        useFloating<T>();
+        useFloating<T>({ placement });
       const clickOusideRef = useClickOutside<HTMLDivElement>(
         () => !blurResistant && handleClose()
       );
@@ -86,12 +88,12 @@ export const useDrop = <T extends HTMLElement, C extends unknown = never>(
             top: y ?? '-100vh',
             width: tailored ? width : undefined,
           }}
-          {...dropProps}
           handleClose={handleClose}
+          {...dropProps}
         >
           {render?.({
-            ...dropProps,
             handleClose,
+            ...dropProps,
           })}
         </Drop>
       );

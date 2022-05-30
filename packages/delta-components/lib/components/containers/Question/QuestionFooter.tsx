@@ -12,9 +12,9 @@ export const QuestionFooter = forwardRef<HTMLDivElement, QuestionFooterProps>(
         sx={{
           display: 'flex',
           justifyContent: 'end',
-          gap: 4,
-          paddingX: 5,
-          paddingBottom: 4,
+          gap: 3,
+          paddingX: 4,
+          paddingBottom: 3,
         }}
         {...rest}
       >

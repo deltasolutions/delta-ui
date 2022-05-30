@@ -14,7 +14,7 @@ export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(
         sx={{
           margin: 0,
           color: 'inherit',
-          fontSize: 8 - level,
+          fontSize: 7 - level,
           fontWeight: 600,
           padding: 0,
         }}

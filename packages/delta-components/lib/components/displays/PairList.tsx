@@ -27,7 +27,9 @@ export const PairList = forwardRef<HTMLDivElement, PairListProps>(
               }}
               key={index}
             >
-              <Box sx={{ fontWeight: 600 }}>{key}</Box>
+              <Box sx={{ color: 'accentOnSurface', fontWeight: 600 }}>
+                {key}
+              </Box>
               <Box>{value}</Box>
             </Box>
           );
@@ -44,7 +46,9 @@ export const PairList = forwardRef<HTMLDivElement, PairListProps>(
           <tbody>
             {pairs.map(([key, value], index) => (
               <tr key={index}>
-                <td sx={{ fontWeight: 600 }}>{key}</td>
+                <td sx={{ color: 'accentOnSurface', fontWeight: 600 }}>
+                  {key}
+                </td>
                 <td sx={{ width: '30px' }}></td>
                 <td>{value}</td>
               </tr>

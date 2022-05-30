@@ -23,6 +23,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           opacity: 1,
           border: 'none',
           background: 'none',
+          fontSize: 'inherit',
           '&:disabled': {
             opacity: 0.5,
             cursor: 'not-allowed',
@@ -42,20 +43,23 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   }
 );
 
-const getSizeStyle = ({ size = 'medium' }: ButtonProps) => {
+const getSizeStyle = ({ variant, size = 'medium' }: ButtonProps) => {
+  if (!variant) {
+    return {};
+  }
   return {
     small: {
-      fontSize: 1,
+      fontSize: 0,
       paddingX: '1.55em',
       paddingY: '0.65em',
     },
     medium: {
-      fontSize: 2,
+      fontSize: 1,
       paddingX: '1.85em',
       paddingY: '0.85em',
     },
     large: {
-      fontSize: 3,
+      fontSize: 2,
       paddingX: '2em',
       paddingY: '1em',
     },

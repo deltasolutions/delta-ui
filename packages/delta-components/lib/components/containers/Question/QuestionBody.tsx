@@ -8,7 +8,7 @@ export const QuestionBody = forwardRef<HTMLDivElement, QuestionBodyProps>(
   ({ children, ...rest }: QuestionBodyProps, ref) => {
     return (
       <Box ref={ref} {...rest}>
-        <Box sx={{ paddingX: 5, paddingY: 4 }}>{children}</Box>
+        <Box sx={{ paddingX: 4, paddingY: 3 }}>{children}</Box>
       </Box>
     );
   }

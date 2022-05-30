@@ -10,7 +10,7 @@ export const theme = {
     error: '#dc2020',
     background: '#121212',
     surface: '#202020',
-    exterior: '#333333',
+    exterior: '#0a0a0a',
     contrast: '#fafafa',
     outline: '#313030',
 
@@ -22,7 +22,7 @@ export const theme = {
     accentError: '#c71b1b',
     accentBackground: '#202020',
     accentSurface: '#2a2a2a',
-    accentExterior: '#3e3e3e',
+    accentExterior: '#171717',
     accentContrast: '#e1e0e0',
     accentOutline: '#282727',
 

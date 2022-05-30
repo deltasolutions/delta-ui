@@ -43,7 +43,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
           border: 'none',
           outline: 'none',
           backgroundColor: 'transparent',
-          fontSize: 3,
+          fontSize: 2,
           ...(variant === 'pure'
             ? {}
             : {

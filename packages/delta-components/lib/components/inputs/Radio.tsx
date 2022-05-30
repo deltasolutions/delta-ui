@@ -98,8 +98,8 @@ export const RadioOption = ({
         sx={{
           p: 0,
           minWidth: 0,
-          width: '1.5rem',
-          height: '1.5rem',
+          width: '1.35rem',
+          height: '1.35rem',
           borderRadius: '50%',
           display: 'flex',
           justifyContent: 'center',
@@ -116,8 +116,8 @@ export const RadioOption = ({
         {active && (
           <Box
             sx={{
-              width: '0.5rem',
-              height: '0.5rem',
+              width: '0.45rem',
+              height: '0.45rem',
               borderRadius: '50%',
               backgroundColor: 'onPrimary',
             }}
