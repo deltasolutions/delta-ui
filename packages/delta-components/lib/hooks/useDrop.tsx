@@ -100,7 +100,7 @@ export const useDrop = <T extends HTMLElement, C extends unknown = never>(
     },
     {
       deps: [anchor, render, tailored, onClose, ...deps],
-      portal: floatingPortal,
+      portal: portal ?? floatingPortal,
     }
   );
   const openDrop = useCallback(() => {

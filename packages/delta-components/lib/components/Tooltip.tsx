@@ -64,10 +64,11 @@ export const Tooltip = ({
       {open && (
         <Box
           sx={{
-            padding: 3,
+            padding: 2,
             borderRadius: 3,
-            backgroundColor: 'rgba(255, 255, 255, 0.085)',
-            color: 'rgba(255, 255, 255, 0.85)',
+            backgroundColor: '#282828',
+            boxShadow: 1,
+            color: '#fff',
             fontSize: 2,
             fontWeight: 400,
           }}

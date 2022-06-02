@@ -1,23 +1,72 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { useEffect, useState, useRef, ReactNode } from 'react';
+import {
+  useEffect,
+  useState,
+  useRef,
+  ReactNode,
+  InputHTMLAttributes,
+} from 'react';
 import { Autocomplete, Box, Button, TextField } from '../../lib';
+import { AutocompleteOption } from '../../lib/components/Autocomplete/AutocompleteOption';
 export default {
   title: 'Autocomplete',
-  component: Autocomplete
+  component: Autocomplete,
 } as ComponentMeta<typeof Autocomplete>;
-
 const Template: ComponentStory<typeof Autocomplete> = args => {
-  const [inputValue, setInputValue] = useState('');
-  const [values, setValues] = useState<unknown[]>([]);
-  const ref = useRef<HTMLLabelElement>(null);
-  useEffect(() => {}, [ref.current]);
+  const [query, setQuery] = useState('');
+  const [value, setValue] = useState<(string | number)[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const ref = useRef<HTMLLabelElement>(null);
+  const options = [
+    { key: '1', value: 'First' },
+    { key: '2', value: 'Second' },
+    { key: '3', value: 'Third' },
+  ];
+  useEffect(() => {}, [ref.current]);
+  console.log('hook.value', value);
+
   return (
-    <Box>
+    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       <Autocomplete
-        onChange={values => {
-          setValues(values);
+        inputProps={{
+          variant: 'contained',
+          placeholder: 'Find something',
+          style: { width: '300px' },
+        }}
+        query={query}
+        onQuery={query => {
+          setQuery(query);
+          setIsOpen(true);
+        }}
+        setIsOpen={setIsOpen}
+        isOpen={isOpen}
+        onChange={value => {
+          console.log('value', value);
+
+          setValue(value);
+          setIsOpen(false);
+        }}
+        value={value}
+      >
+        {options
+          .filter(({ key }) => {
+            console.log(key, value);
+
+            return (
+              key.toLocaleLowerCase().includes(query.toLocaleLowerCase()) &&
+              !Object.keys(value).includes(key)
+            );
+          })
+          .map(({ key, value }) => (
+            <AutocompleteOption key={key} value={key}>
+              {value}
+            </AutocompleteOption>
+          ))}
+      </Autocomplete>
+      {/* <Autocomplete
+        onChange={value => {
+          setValue(value);
           setIsOpen(false);
         }}
         setIsOpen={setIsOpen}
@@ -39,28 +88,17 @@ const Template: ComponentStory<typeof Autocomplete> = args => {
             setIsOpen(false);
           },
           variant: 'contained',
-          placeholder: 'Find something'
+          placeholder: 'Find something',
         }}
-        values={values.map(i => ({
-          value: i,
-          id: i as string,
-          render: ({ value, onRemove }) => (
-            <Box>
-              <Button onClick={onRemove} variant="contained" color="secondary">
-                Delete: {value}
-              </Button>
-            </Box>
-          )
-        }))}
-        suggestions={data
+        value={value}
+        options={data
           .filter(
             datum =>
               datum.includes(inputValue.toLocaleLowerCase()) &&
-              !Object.keys(values ?? {}).includes(datum)
+              !Object.keys(value ?? {}).includes(datum)
           )
           .map((i, index) => ({
             value: i,
-            id: i,
             ...(index === 5 && {
               render: ({ value, isActive }) => {
                 return (
@@ -76,19 +114,19 @@ const Template: ComponentStory<typeof Autocomplete> = args => {
                       overflow: 'hidden',
                       ...(isActive && {
                         backgroundColor: 'white',
-                        color: 'black'
+                        color: 'black',
                       }),
-                      fontWeight: 900
+                      fontWeight: 900,
                     }}
                   >
                     {value}
                   </Box>
                 );
-              }
-            })
+              },
+            }),
           }))}
         ref={ref}
-      />
+      /> */}
     </Box>
   );
 };
@@ -105,7 +143,7 @@ const data = [
   '40460 Bogan Mews',
   '175 Brakus Roads',
   '984 Ashlynn Flats',
-  '04845 Layne Forks'
+  '04845 Layne Forks',
 ];
 export const Basic = Template.bind({});
 

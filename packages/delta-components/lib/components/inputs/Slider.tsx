@@ -1,6 +1,17 @@
+import { useTheme } from '@emotion/react';
 import { jsx } from '@theme-ui/core';
-import { forwardRef, InputHTMLAttributes } from 'react';
+import {
+  forwardRef,
+  useEffect,
+  InputHTMLAttributes,
+  useCallback,
+  useMemo,
+  useRef,
+  useLayoutEffect,
+} from 'react';
+import { Theme } from '../../defaults';
 import { FormWidgetProps } from '../../types';
+import { mergeRefs } from '../../utils';
 
 export interface SliderProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, keyof FormWidgetProps>,
@@ -9,26 +20,55 @@ export interface SliderProps
 export const Slider = forwardRef<HTMLInputElement, SliderProps>(
   (
     {
-      value,
       disabled,
       invalid, // TODO
       onChange,
       onFocus,
       onBlur,
+      onInput,
       ...rest
     }: SliderProps,
-    ref
+    propsRef
   ) => {
+    const {
+      colors: { accentPrimary, accentSurface },
+    } = useTheme() as Theme;
+    const ref = useRef<HTMLInputElement>(null);
+    const mergedRef = useMemo(
+      () => mergeRefs([ref, propsRef]),
+      [ref, propsRef]
+    );
+    const setBackground = useCallback(
+      (ref, value) => {
+        if (ref.current) {
+          ref.current.style.background = `linear-gradient(to right, ${accentPrimary} 0%, ${accentPrimary} ${value}%,${accentSurface} ${value}%, ${accentSurface} 100%)`;
+        }
+      },
+      [accentPrimary, accentSurface]
+    );
+    const onInputHandler = useCallback(
+      ev => {
+        setBackground(ref, ev.target.value);
+        onInput?.(ev);
+      },
+      [onInput]
+    );
+    useLayoutEffect(() => {
+      setBackground(ref, ref.current?.value);
+    }, []);
     return (
       <input
-        ref={ref}
+        ref={mergedRef}
         type="range"
-        value={value ?? 0}
         disabled={disabled}
-        onChange={ev => onChange?.(+ev.target.value)}
+        {...{
+          ...(onChange && { onChange: ev => onChange(+ev.target.value) }),
+        }}
+        onInput={onInputHandler}
         onFocus={onFocus}
         onBlur={onBlur}
         sx={{
+          accentColor: 'red',
           appearance: 'none',
           width: '100%',
           minWidth: '100px',

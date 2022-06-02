@@ -16,7 +16,7 @@ export const Question = forwardRef<HTMLDivElement, QuestionProps>(
           borderRadius: 3,
           backgroundColor: 'contrast',
           color: 'onContrast',
-          animation: `${appear} 0.2s`,
+          animation: `${appear} 0.3s`,
         }}
         {...rest}
       >
@@ -28,7 +28,7 @@ export const Question = forwardRef<HTMLDivElement, QuestionProps>(
 
 const appear = keyframes({
   from: {
-    transform: 'scale(0.9) translateY(1rem)',
+    transform: 'translateY(-4rem)',
     opacity: 0,
   },
 });

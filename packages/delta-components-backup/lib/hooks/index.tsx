@@ -5,3 +5,4 @@ export * from './useThrottledValue';
 export * from './useClickAwayListener';
 export * from './useMenuManager';
 export * from './useTheme';
+export * from './useDataStack';
