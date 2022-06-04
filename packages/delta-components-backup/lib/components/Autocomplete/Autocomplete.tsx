@@ -29,7 +29,7 @@ import {
   ChangeEvent,
 } from 'react';
 import { IoCloseCircleOutline } from 'react-icons/io5';
-import { useDataStack, useStack } from '../../hooks';
+import { useDataStack } from '../../hooks';
 import { mergeRefs } from '../../utils';
 import { Box } from '../Box';
 import { Button } from '../Button';
@@ -88,8 +88,10 @@ const InnerAutocomplete = <T extends unknown>(
   const setIsOpen = propsSetIsOpen ?? _setIsOpen;
   const value = propsValues ?? _values;
   const onChange = propsOnChange ?? _setValues;
-  const [__, cacheStack, cacheStackReducer] =
-    useDataStack<{ value: string; index: number }>();
+  const [__, cacheStack, cacheStackReducer] = useDataStack<{
+    value: string;
+    index: number;
+  }>();
   const options: ReactElement<AutocompleteOptionProps>[] =
     Children.toArray(children);
   const listRef = useRef<(HTMLElement | null)[]>([]);

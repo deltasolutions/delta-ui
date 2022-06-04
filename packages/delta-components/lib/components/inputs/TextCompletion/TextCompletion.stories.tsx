@@ -1,10 +1,10 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { Fragment, useState } from 'react';
-import { compact } from '../../../docs/decorators';
-import { Button } from '../Button';
-import { TextCompletion, TextCompletionOption } from './TextCompletion';
-
+import { compact } from '../../../../docs/decorators';
+import { Button } from '../../Button';
+import { TextCompletion } from './TextCompletion';
+import { TextCompletionOption } from './TextCompletionOption';
 export default {
   title: 'Inputs/TextCompletion',
   decorators: [compact('250px')],

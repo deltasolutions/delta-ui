@@ -8,7 +8,7 @@ export default {
 } as Meta;
 
 export const Basics = () => (
-  <Tooltip content="Tooltip content here">
+  <Tooltip delay={2000} content="Tooltip content here">
     <Box>Lorem ipsum dolor sit amet consectetur adipisicing elit.</Box>
   </Tooltip>
 );

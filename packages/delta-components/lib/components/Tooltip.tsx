@@ -1,4 +1,4 @@
-import { useTheme } from '@emotion/react';
+import { keyframes, useTheme } from '@emotion/react';
 import {
   Placement,
   offset,
@@ -87,3 +87,10 @@ export const Tooltip = ({
     </Fragment>
   );
 };
+
+const appear = keyframes({
+  from: {
+    transform: 'translateY(-4rem)',
+    opacity: 0,
+  },
+});

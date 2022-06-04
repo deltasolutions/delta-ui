@@ -8,5 +8,5 @@ export default {
 } as Meta;
 
 export const Basics = () => {
-  return <Anchor>Anchor</Anchor>;
+  return <Anchor href="#">Anchor</Anchor>;
 };

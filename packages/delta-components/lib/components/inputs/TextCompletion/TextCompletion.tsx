@@ -37,19 +37,19 @@ import {
   KeyboardEvent,
   ReactNode,
 } from 'react';
-import { Theme } from '../../defaults';
+import { Theme } from '../../../defaults';
 import {
   DropRendererProps,
   useDrop,
   useImperativePortal,
   useUpdateEffect,
-} from '../../hooks';
-import { FormWidgetProps } from '../../types';
-import { getChildrenKey, mergeRefs } from '../../utils';
-import { Button, ButtonProps } from '../Button';
-import { Box, BoxProps, SystemContext } from '../containers';
-import { SelectDrop, SelectOption, SelectOptionProps } from './Select';
-import { TextInput, TextInputProps } from './TextInput';
+} from '../../../hooks';
+import { FormWidgetProps } from '../../../types';
+import { getChildrenKey, mergeRefs } from '../../../utils';
+import { Button, ButtonProps } from '../../Button';
+import { Box, BoxProps, SystemContext } from '../../containers';
+import { SelectDrop, SelectOption, SelectOptionProps } from '../Select';
+import { TextInput, TextInputProps } from '../TextInput';
 
 // export interface TextCompletionProps extends Omit<TextInputProps, 'onChange'> {
 //   suggestions: {
