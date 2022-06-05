@@ -40,10 +40,6 @@ export const LayoutSidebar = forwardRef<HTMLDivElement, LayoutSidebarProps>(
           maxWidth={maxWidth}
         >
           {children}
-          {/* <SimpleBar
-            sx={{ overflowY: 'auto', paddingRight: '11px', height: '100%' }}
-          >
-          </SimpleBar> */}
         </ResizableBox>
       </Box>
     );

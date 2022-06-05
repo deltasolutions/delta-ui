@@ -45,7 +45,7 @@ export const theme = {
     accentOnWarning: '#ffffff',
     accentOnError: '#ffffff',
     accentOnBackground: '#e6e6e6',
-    accentOnSurface: '#ececec',
+    accentOnSurface: '#f5f3f3',
     accentOnExterior: '#efefef',
     accentOnContrast: '#282828',
     accentOnOutline: '#ffffff',

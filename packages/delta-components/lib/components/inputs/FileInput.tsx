@@ -9,9 +9,10 @@ import {
   ReactNode,
   useCallback,
   ChangeEvent,
+  ButtonHTMLAttributes,
 } from 'react';
 import { FormWidgetProps } from '../../types';
-import { Button } from '../Button';
+import { Button, ButtonProps } from '../Button';
 import { Box } from '../containers';
 
 export interface FileInputLabelRenderer {
@@ -19,17 +20,17 @@ export interface FileInputLabelRenderer {
 }
 
 export interface FileInputProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, keyof FormWidgetProps>,
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, keyof FormWidgetProps>,
     FormWidgetProps<FileList | undefined> {
   children?: ReactNode | FileInputLabelRenderer;
-  inputProps?: InputHTMLAttributes<HTMLInputElement>;
+  buttonProps?: ButtonProps;
 }
 
-export const FileInput = forwardRef<HTMLDivElement, FileInputProps>(
+export const FileInput = forwardRef<HTMLInputElement, FileInputProps>(
   (
     {
       children,
-      inputProps,
+      buttonProps,
       value,
       disabled,
       invalid, // TODO
@@ -41,14 +42,11 @@ export const FileInput = forwardRef<HTMLDivElement, FileInputProps>(
     ref
   ) => {
     const inputRef = useRef<HTMLInputElement>(null);
-    const [innerValue, setInnerValue] = useState(value);
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
       const { files } = event.target;
       if (!files || files.length === 0) {
-        setInnerValue(undefined);
         onChange?.(undefined);
       } else {
-        setInnerValue(files);
         onChange?.(files);
       }
     };
@@ -58,40 +56,33 @@ export const FileInput = forwardRef<HTMLDivElement, FileInputProps>(
       }
       inputRef.current?.click();
     }, [disabled]);
-    useEffect(() => {
-      setInnerValue(value);
-    }, [value]);
+
     return (
       <Box ref={ref} {...rest}>
         <input
           ref={inputRef}
           type="file"
+          disabled={disabled}
           onChange={handleInputChange}
           sx={{ display: 'none' }}
-          {...inputProps}
+          {...rest}
         />
         <Button
-          variant="contained"
+          variant="outlined"
           color="secondary"
+          zoomable
           sx={{
+            textTransform: 'none',
+            borderStyle: 'dashed',
             borderRadius: 3,
             display: 'block',
-            width: '100%',
-            minWidth: '100px',
           }}
+          size="small"
+          disabled={disabled}
           onClick={handleLabelClick}
+          {...buttonProps}
         >
-          {children && typeof children === 'function'
-            ? (children as FileInputLabelRenderer)(
-                Array(innerValue?.length ?? 0)
-                  .fill(null)
-                  .reduce(
-                    (acc, _, i) => [...acc, innerValue?.item(i)?.name],
-                    []
-                  )
-              )
-            : children}
-          {!children && getLabel(innerValue)}
+          {children ?? 'Choose file'}
         </Button>
       </Box>
     );

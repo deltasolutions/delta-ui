@@ -1,5 +1,6 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
+import { useState } from 'react';
 import { compact } from '../../../docs/decorators';
 import { FileInput } from './FileInput';
 
@@ -9,9 +10,18 @@ export default {
 } as Meta;
 
 export const Basics = () => {
+  const [files, setFiles] = useState<any>([]);
   return (
-    <FileInput>
-      {names => (names.length > 0 ? names.join(', ') : 'Select File')}
+    <FileInput
+      sx={{ ml: 'auto' }}
+      onChange={files => {
+        if (!files) {
+          return;
+        }
+        setFiles(files);
+      }}
+    >
+      Select file
     </FileInput>
   );
 };

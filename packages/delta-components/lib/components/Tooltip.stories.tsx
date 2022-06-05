@@ -1,5 +1,6 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
+import { Button } from './Button';
 import { Box } from './containers';
 import { Tooltip } from './Tooltip';
 
@@ -8,7 +9,9 @@ export default {
 } as Meta;
 
 export const Basics = () => (
-  <Tooltip delay={2000} content="Tooltip content here">
-    <Box>Lorem ipsum dolor sit amet consectetur adipisicing elit.</Box>
+  <Tooltip delay={1000} content="Tooltip content here">
+    <Button variant="outlined" color="secondary">
+      Hover me 1 seconds
+    </Button>
   </Tooltip>
 );

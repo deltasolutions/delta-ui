@@ -55,16 +55,16 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
     ) as ReactElement<AutocompleteOptionProps>[];
     const addValue = useCallback(
       v => {
+        setIsBackspacePressed(false);
         const query = '';
         onQuery?.(query);
-        console.log('v inside', value);
-
         onChange?.([...(value ? value : []), v], query);
       },
       [onChange, query, value]
     );
     const removeValue = useCallback(
       vToRemove => {
+        setIsBackspacePressed(false);
         const newValue = value?.filter(v => v !== vToRemove);
         onChange?.(newValue ?? [], query);
       },
@@ -92,6 +92,14 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
     const handleClose = useCallback(() => {
       closeDropRef.current?.();
     }, []);
+    const handleInputChange = useCallback(
+      value => {
+        setIsBackspacePressed(false);
+        onQuery?.(value);
+        handleOpen();
+      },
+      [onQuery, handleOpen]
+    );
     const mergedRef = useMemo(
       () => mergeRefs([propsRef, anchorRef]),
       [propsRef, anchorRef]
@@ -136,6 +144,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
         inputRef.current?.removeEventListener('keydown', handleKeydown);
       };
     }, [handleOpen, isBackspacePressed, value]);
+
     return (
       <AutocompleteContext.Provider value={contextValue}>
         {portal}
@@ -162,7 +171,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
             },
           }}
         >
-          {value?.map(v => {
+          {value?.map((v, index) => {
             const item = data.find(datum => datum.value === v);
             return (
               <Box
@@ -176,6 +185,10 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
                   alignItems: 'start',
                   justifyContent: 'space-between',
                   backgroundColor: 'surface',
+                }}
+                style={{
+                  opacity:
+                    isBackspacePressed && index === value.length - 1 ? 0.5 : 1,
                 }}
               >
                 <Box sx={{ color: 'onSurface' }}>
@@ -210,10 +223,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
               onClick={handleOpen}
               value={query}
               onFocus={handleOpen}
-              onChange={value => {
-                onQuery?.(value);
-                handleOpen();
-              }}
+              onChange={handleInputChange}
               sx={{
                 '&:focus': {
                   outline: 'none',

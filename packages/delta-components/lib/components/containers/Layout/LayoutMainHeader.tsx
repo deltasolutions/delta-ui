@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Theme } from '../../../defaults';
 import { Box, BoxProps } from '../Box';
 
-const height = 56;
+const height = 64;
 
 export interface LayoutMainHeaderProps extends BoxProps {}
 

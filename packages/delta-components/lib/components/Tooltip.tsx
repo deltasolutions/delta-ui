@@ -71,6 +71,7 @@ export const Tooltip = ({
             color: '#fff',
             fontSize: 2,
             fontWeight: 400,
+            animation: `${appear} 0.15s`,
           }}
           {...getFloatingProps({
             ref: floating,
@@ -90,7 +91,7 @@ export const Tooltip = ({
 
 const appear = keyframes({
   from: {
-    transform: 'translateY(-4rem)',
+    transform: 'scale(0.8)',
     opacity: 0,
   },
 });

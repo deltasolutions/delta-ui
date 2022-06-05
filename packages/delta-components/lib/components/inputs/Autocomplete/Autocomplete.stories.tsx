@@ -19,19 +19,7 @@ const data = [
     value: 'Second item',
   },
   {
-    render: value => {
-      return (
-        <img
-          sx={{ width: '100%', height: 'auto' }}
-          src="https://picsum.photos/1000/800"
-        />
-      );
-    },
     value: 'Third item',
-  },
-  {
-    value:
-      'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available. Wikipedia.',
   },
 ];
 export const Basics = () => {
@@ -42,7 +30,6 @@ export const Basics = () => {
   );
   return (
     <Box>
-      <Button>dkspdka</Button>
       <Autocomplete
         value={value}
         onChange={(value, query) => {
@@ -75,11 +62,10 @@ export const Basics = () => {
       >
         {options.map(option => (
           <AutocompleteOption key={option.value} value={option.value}>
-            {option.render?.(option.value) ?? option.value}
+            {option.value}
           </AutocompleteOption>
         ))}
       </Autocomplete>
-      {/* <Button>dkspdka</Button> */}
     </Box>
   );
 };
