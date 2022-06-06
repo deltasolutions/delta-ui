@@ -259,6 +259,7 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
               variant="pure"
               ref={inputRef}
               value={innerQuery}
+              placeholder={placeholder}
               onClick={handleOpen}
               onChange={handleQueryChange}
               onFocus={() => {
