@@ -5,7 +5,7 @@ import { compact } from '../../../docs/decorators';
 import { useModal } from '../../hooks';
 import { Button } from '../Button';
 import { ModalBody } from '../containers';
-import { FileInput } from './FileInput';
+import { FilePicker } from './FilePicker';
 import { Form, FormField, FormGrid } from './Form';
 import { Radio, RadioOption } from './Radio';
 import { Select, SelectOption } from './Select';
@@ -52,6 +52,9 @@ export const Basics = () => {
         </FormField>
         <FormField name="slider" label="Slider">
           <Slider />
+        </FormField>
+        <FormField name="filePicker" label="FilePicker">
+          <FilePicker>Pick Files</FilePicker>
         </FormField>
         <FormField name="textArea" label="TextArea">
           <TextArea />
