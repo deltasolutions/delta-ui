@@ -72,8 +72,8 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
         value={innerValue}
         disabled={disabled}
         onChange={e => handleChange(e.target.value)}
-        onFocus={onFocus}
-        onBlur={onBlur}
+        onFocus={() => onFocus?.()}
+        onBlur={() => onBlur?.()}
         {...rest}
       />
     );

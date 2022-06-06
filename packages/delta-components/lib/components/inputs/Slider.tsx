@@ -65,8 +65,8 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(
           ...(onChange && { onChange: ev => onChange(+ev.target.value) }),
         }}
         onInput={onInputHandler}
-        onFocus={onFocus}
-        onBlur={onBlur}
+        onFocus={() => onFocus?.()}
+        onBlur={() => onBlur?.()}
         sx={{
           accentColor: 'red',
           appearance: 'none',

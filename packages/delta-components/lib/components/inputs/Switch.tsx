@@ -78,8 +78,8 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
             checked={innerValue}
             disabled={disabled}
             onChange={ev => handleChange(ev.target.checked)}
-            onFocus={onFocus}
-            onBlur={onBlur}
+            onFocus={() => onFocus?.()}
+            onBlur={() => onBlur?.()}
             onKeyDown={ev => {
               if (ev.key === 'Enter') {
                 ev.preventDefault();

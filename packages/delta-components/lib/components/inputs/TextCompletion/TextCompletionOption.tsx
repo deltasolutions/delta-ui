@@ -10,12 +10,13 @@ export interface TextCompletionOptionProps
   value: unknown;
   children: string;
 }
+
 export const TextCompletionOption = forwardRef<
   HTMLButtonElement,
   TextCompletionOptionProps
->(({ value, ...rest }, propsRef) => {
-  const ref = useRef<HTMLButtonElement>(null);
-  const mergedRef = useMemo(() => mergeRefs([ref, propsRef]), [ref, propsRef]);
+>(({ value, ...rest }, ref) => {
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const mergedRef = useMemo(() => mergeRefs([ref, buttonRef]), []);
   const {
     colors: { primary, onPrimary },
   } = useTheme() as Theme;
@@ -23,15 +24,15 @@ export const TextCompletionOption = forwardRef<
     <Button
       ref={mergedRef}
       onMouseEnter={() => {
-        if (ref.current) {
-          ref.current.style.backgroundColor = primary;
-          ref.current.style.color = onPrimary;
+        if (buttonRef.current) {
+          buttonRef.current.style.backgroundColor = primary;
+          buttonRef.current.style.color = onPrimary;
         }
       }}
       onMouseLeave={() => {
-        if (ref.current) {
-          ref.current.style.backgroundColor = 'inherit';
-          ref.current.style.color = 'inherit';
+        if (buttonRef.current) {
+          buttonRef.current.style.backgroundColor = 'inherit';
+          buttonRef.current.style.color = 'inherit';
         }
       }}
       sx={{

@@ -42,8 +42,8 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
         value={innerValue}
         disabled={disabled}
         onChange={e => handleChange(e.target.value)}
-        onFocus={onFocus}
-        onBlur={onBlur}
+        onFocus={() => onFocus?.()}
+        onBlur={() => onBlur?.()}
         sx={{
           boxSizing: 'border-box',
           width: '100%',

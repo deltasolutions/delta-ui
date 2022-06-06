@@ -1,8 +1,7 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 import { compact } from '../../../../docs/decorators';
-import { Button } from '../../Button';
 import { TextCompletion } from './TextCompletion';
 import { TextCompletionOption } from './TextCompletionOption';
 export default {
@@ -11,6 +10,7 @@ export default {
 } as Meta;
 
 const data = ['First item', 'Second item', 'Third item'];
+
 export const Basics = () => {
   const [options, setOptions] = useState(data);
   return (

@@ -1,68 +1,77 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { Fragment, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { compact } from '../../../../docs/decorators';
 import { Button } from '../../Button';
 import { Box } from '../../containers';
+``;
 import { Autocomplete } from './Autocomplete';
 import { AutocompleteOption } from './AutocompleteOption';
+
 export default {
   title: 'Inputs/Autocomplete',
-  decorators: [compact('500px')],
+  decorators: [compact('300px')],
 } as Meta;
 
-const data = [
-  {
-    value: 'First item',
-  },
-  {
-    value: 'Second item',
-  },
-  {
-    value: 'Third item',
-  },
-];
+const options = ['First Option', 'Second Option', 'Third Option'];
+
+const isAlike = (query: string, option: string) =>
+  !query || option.toLocaleLowerCase().includes(query.toLocaleLowerCase());
+
 export const Basics = () => {
-  const [value, setValue] = useState<any>([data[0].value]);
-  const [query, setQuery] = useState('hueta');
-  const [options, setOptions] = useState(
-    data.filter(datum => !value.includes(datum.value))
-  );
   return (
-    <Box>
+    <Autocomplete placeholder="Placeholder">
+      <AutocompleteOption value={1}>A</AutocompleteOption>
+      <AutocompleteOption value={2}>B</AutocompleteOption>
+      <AutocompleteOption value={3}>C</AutocompleteOption>
+    </Autocomplete>
+  );
+};
+
+export const FilteringOptions = () => {
+  return (
+    <Autocomplete placeholder="Placeholder">
+      {query =>
+        options
+          .filter(v => isAlike(query, v))
+          .map(v => (
+            <AutocompleteOption key={v} value={v}>
+              {v}
+            </AutocompleteOption>
+          ))
+      }
+    </Autocomplete>
+  );
+};
+
+export const Controlled = () => {
+  const [value, setValue] = useState<any>([]);
+  const [query, setQuery] = useState('');
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'start',
+        gap: 3,
+      }}
+    >
+      <Button variant="contained" onClick={() => setValue([options[0]])}>
+        Set Value
+      </Button>
+      <Button variant="contained" onClick={() => setQuery('ABC')}>
+        Set Query
+      </Button>
       <Autocomplete
         value={value}
-        onChange={(value, query) => {
-          setValue(value);
-          setOptions(
-            data
-              .filter(option =>
-                option.value
-                  .toLocaleLowerCase()
-                  .includes(query.toLocaleLowerCase())
-              )
-              .filter(option => !value.includes(option.value))
-          );
-        }}
+        onChange={setValue}
         query={query}
-        data={data}
-        onQuery={query => {
-          setQuery(query);
-          setOptions(
-            data
-              .filter(option =>
-                option.value
-                  .toLocaleLowerCase()
-                  .includes(query.toLocaleLowerCase())
-              )
-              .filter(option => !value.includes(option.value))
-          );
-        }}
-        placeholder={data[0].value}
+        onQuery={setQuery}
+        placeholder="Placeholder"
       >
-        {options.map(option => (
-          <AutocompleteOption key={option.value} value={option.value}>
-            {option.value}
+        {options.map(v => (
+          <AutocompleteOption key={v} value={v}>
+            {v}
           </AutocompleteOption>
         ))}
       </Autocomplete>

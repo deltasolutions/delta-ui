@@ -51,8 +51,8 @@ export const Radio = forwardRef<HTMLDivElement, RadioProps>(
           flexDirection: 'column',
           gap: 2,
         }}
-        onFocus={onFocus}
-        onBlur={onBlur}
+        onFocus={() => onFocus?.()}
+        onBlur={() => onBlur?.()}
         {...rest}
       >
         {Children.map(children, v =>

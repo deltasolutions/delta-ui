@@ -4,20 +4,22 @@ import { forwardRef, useContext, useMemo, useRef } from 'react';
 import { Theme } from '../../../defaults';
 import { mergeRefs } from '../../../utils';
 import { Button, ButtonProps } from '../../Button';
-import { AutocompleteDropContext } from './Autocomplete';
+import { AutocompleteDropContext } from './AutocompleteDrop';
 
-export interface AutocompleteOptionProps extends Omit<ButtonProps, 'value'> {
-  value: string;
-  isActive?: boolean;
+export interface AutocompleteOptionProps
+  extends Omit<ButtonProps, 'value' | 'title' | 'index' | 'active'> {
+  value: unknown;
+  title?: string;
   index?: number;
+  active?: boolean;
 }
 
 export const AutocompleteOption = forwardRef<
   HTMLButtonElement,
   AutocompleteOptionProps
->(({ value, isActive, index, ...rest }, propsRef) => {
-  const ref = useRef<HTMLButtonElement>(null);
-  const mergedRef = useMemo(() => mergeRefs([ref, propsRef]), [ref, propsRef]);
+>(({ value, title, index, active, ...rest }, ref) => {
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const mergedRef = useMemo(() => mergeRefs([ref, buttonRef]), []);
   const {
     colors: { primary, onPrimary },
   } = useTheme() as Theme;
@@ -32,13 +34,11 @@ export const AutocompleteOption = forwardRef<
         paddingX: 1,
         paddingY: 1,
         textAlign: 'left',
-        fontSize: 2,
-        outline: 'none',
         borderRadius: 2,
-        transition: 'background-color 30ms ease-out, color 30ms ease-out',
+        fontSize: 2,
       }}
       style={{
-        ...(isActive && { backgroundColor: primary, color: onPrimary }),
+        ...(active && { backgroundColor: primary, color: onPrimary }),
       }}
       {...rest}
     />

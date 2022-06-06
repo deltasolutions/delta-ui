@@ -1,8 +1,7 @@
 import { jsx } from '@theme-ui/core';
-import { Dispatch, useState } from 'react';
+import { HTMLAttributes, useState } from 'react';
 import {
   Children,
-  cloneElement,
   createContext,
   forwardRef,
   ReactElement,
@@ -12,127 +11,194 @@ import {
   useEffect,
   useRef,
 } from 'react';
-import { IoCloseCircleOutline } from 'react-icons/io5';
-import {
-  DropRendererProps,
-  useDrop,
-  useImperativePortal,
-} from '../../../hooks';
+import { useDrop, useImperativePortal, useUpdateEffect } from '../../../hooks';
 import { FormWidgetProps } from '../../../types';
-import { getChildrenKey, mergeRefs } from '../../../utils';
-import { Button } from '../../Button';
-import { Box, BoxProps, SystemContext } from '../../containers';
-import { AutocompleteOptionProps } from '../Autocomplete';
+import { getChildrenKey, hash, mergeRefs } from '../../../utils';
+import { Box, SystemContext } from '../../containers';
 import { TextInput } from '../TextInput';
+import { AutocompleteDrop } from './AutocompleteDrop';
+import { AutocompleteOptionProps } from './AutocompleteOption';
+import { AutocompleteSelection } from './AutocompleteSelection';
+import { getInitialInnerValue, getTitleByValue } from './utils';
+
+export interface AutocompleteSelection {
+  value: unknown;
+  title: string;
+}
+
+export interface AutocompleteContextValue {
+  childrenArray: ReactElement<AutocompleteOptionProps>[];
+  availables: ReactElement<AutocompleteOptionProps>[];
+  selections: AutocompleteSelection[];
+  handleAddition: (value: unknown, title: string) => void;
+}
+
+export const AutocompleteContext = createContext<AutocompleteContextValue>({
+  childrenArray: [],
+  availables: [],
+  selections: [],
+  handleAddition: () => {},
+});
+
+export type AutocompleteChild =
+  | ReactElement<AutocompleteOptionProps>
+  | null
+  | undefined
+  | false;
 
 export interface AutocompleteProps
-  extends Omit<BoxProps, 'children' | keyof FormWidgetProps>,
-    Omit<FormWidgetProps, 'onChange'> {
-  value?: unknown[];
-  onChange?: (value: unknown[], query: string) => void;
-  children: (
-    | ReactElement<AutocompleteOptionProps>
-    | null
-    | undefined
-    | false
-  )[];
+  extends Omit<
+      HTMLAttributes<HTMLLabelElement>,
+      'children' | keyof FormWidgetProps
+    >,
+    FormWidgetProps<unknown[]> {
+  children: AutocompleteChild[] | ((query: string) => AutocompleteChild[]);
   placeholder?: string;
   query?: string;
-  onQuery?: (value: string) => void;
-  data: { render?: (value: string) => ReactElement; value: string }[];
+  onQuery?: (query: string) => void;
 }
-export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
+
+export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
   (
-    { value, children, data, onChange, query = '', onQuery, ...rest },
-    propsRef
+    {
+      children,
+      placeholder,
+      query,
+      onQuery,
+      value,
+      disabled,
+      invalid, // TODO
+      onChange,
+      onFocus,
+      onBlur,
+      ...rest
+    },
+    ref
   ) => {
-    const [isBackspacePressed, setIsBackspacePressed] = useState(false);
+    const inputId = useMemo(() => crypto.randomUUID(), []);
     const inputRef = useRef<HTMLInputElement>(null);
     const { floatingPortal } = useContext(SystemContext);
     const portal = useImperativePortal(floatingPortal);
-    const childrenArray = Children.toArray(children).filter(
-      Boolean
-    ) as ReactElement<AutocompleteOptionProps>[];
-    const addValue = useCallback(
-      v => {
-        setIsBackspacePressed(false);
-        const query = '';
-        onQuery?.(query);
-        onChange?.([...(value ? value : []), v], query);
-      },
-      [onChange, query, value]
+    const [innerQuery, setInnerQuery] = useState(query ?? '');
+    const childrenArray = useMemo(
+      () =>
+        (children instanceof Function
+          ? children(innerQuery)
+          : Children.toArray(children).filter(
+              Boolean
+            )) as ReactElement<AutocompleteOptionProps>[],
+      [
+        children instanceof Function
+          ? hash(children) + hash(innerQuery)
+          : getChildrenKey(children, { pivots: ['value'] }),
+      ]
     );
-    const removeValue = useCallback(
-      vToRemove => {
-        setIsBackspacePressed(false);
-        const newValue = value?.filter(v => v !== vToRemove);
-        onChange?.(newValue ?? [], query);
+    const [backspacePressed, setBackspacePressed] = useState(false);
+    const [selections, setSelections] = useState<AutocompleteSelection[]>(() =>
+      getInitialInnerValue(childrenArray, value)
+    );
+    const availables = useMemo(
+      () =>
+        childrenArray.filter(
+          child => !selections.some(v => v.value === child.props.value)
+        ),
+      [childrenArray, selections]
+    );
+    const handleAddition = useCallback(
+      (value: unknown, title: string) => {
+        setBackspacePressed(false);
+        const nextSelections = selections
+          .filter(v => v.value !== value)
+          .concat([{ value, title }]);
+        setSelections(nextSelections);
+        setInnerQuery('');
+        onChange?.(nextSelections.map(v => v.value));
+        onQuery?.('');
+        inputRef.current?.focus();
       },
-      [value, query, onChange]
+      [selections, onChange, onQuery]
+    );
+    const handleRemoval = useCallback(
+      (value: unknown) => {
+        setBackspacePressed(false);
+        const nextSelections = selections.filter(v => v.value !== value);
+        setSelections(nextSelections);
+        onChange?.(nextSelections.map(v => v.value));
+      },
+      [selections, onChange]
     );
     const dropRef = useRef<HTMLDivElement>(null);
     const closeDropRef = useRef<undefined | (() => void)>();
-    const [openDrop, anchorRef] = useDrop<HTMLDivElement>(
-      props => (
-        <AutocompleteDrop ref={dropRef} addValue={addValue} {...props} />
-      ),
+    const [openDrop, anchorRef] = useDrop<HTMLLabelElement>(
+      props => <AutocompleteDrop ref={dropRef} {...props} />,
       {
         deps: [],
-        tailored: true,
         portal,
+        tailored: true,
         placement: 'bottom-start',
       }
     );
+    const mergedRef = useMemo(() => mergeRefs([ref, anchorRef]), []);
     const handleOpen = useCallback(() => {
-      if (children.length > 0) {
-        closeDropRef.current = openDrop();
-      }
-    }, [openDrop, getChildrenKey(children, { pivots: ['value'] })]);
-
+      closeDropRef.current = openDrop();
+    }, [openDrop, availables]);
     const handleClose = useCallback(() => {
       closeDropRef.current?.();
     }, []);
-    const handleInputChange = useCallback(
-      value => {
-        setIsBackspacePressed(false);
-        onQuery?.(value);
+    const handleQueryChange = useCallback(
+      query => {
         handleOpen();
+        setBackspacePressed(false);
+        setInnerQuery(query);
+        onQuery?.(query);
       },
       [onQuery, handleOpen]
     );
-    const mergedRef = useMemo(
-      () => mergeRefs([propsRef, anchorRef]),
-      [propsRef, anchorRef]
+    const contextValue = useMemo<AutocompleteContextValue>(
+      () => ({ childrenArray, availables, selections, handleAddition }),
+      [childrenArray, availables, selections, handleAddition]
     );
-    const contextValue = useMemo(
-      () => ({ children: childrenArray, inputRef }),
-      [inputRef, getChildrenKey(children, { pivots: ['value'] })]
-    );
-
+    useUpdateEffect(() => {
+      const items = value ?? [];
+      if (
+        items.length !== selections.length ||
+        items.some(item => selections.every(v => v.value !== item))
+      ) {
+        setSelections(
+          items.map(v => ({
+            value: v,
+            title: getTitleByValue(childrenArray, v),
+          }))
+        );
+      }
+    }, [value]);
+    useUpdateEffect(() => {
+      query !== innerQuery && setInnerQuery(query ?? '');
+    }, [query]);
     useEffect(() => {
-      const handleNativeBlur = e => {
+      const handleNativeBlur = ev => {
         if (
-          !e.relatedTarget ||
+          !ev.relatedTarget ||
           !dropRef.current ||
-          !dropRef.current.contains(e.relatedTarget)
+          !dropRef.current.contains(ev.relatedTarget)
         ) {
+          setBackspacePressed(false);
           handleClose();
         }
       };
-      const handleKeydown = e => {
-        if (e.key === 'ArrowDown') {
+      const handleKeydown = ev => {
+        if (ev.key === 'ArrowDown') {
           handleOpen();
           return;
         }
-        if (e.key === 'Backspace') {
-          if (e.target.selectionStart === 0) {
-            if (isBackspacePressed) {
-              removeValue(value?.[value?.length - 1]);
-              setIsBackspacePressed(false);
-              return;
+        if (ev.key === 'Backspace') {
+          if (ev.target.selectionStart === 0) {
+            if (backspacePressed) {
+              handleRemoval(selections[selections.length - 1].value);
+              setBackspacePressed(false);
+            } else {
+              setBackspacePressed(true);
             }
-            setIsBackspacePressed(true);
-            return;
           }
           return;
         }
@@ -143,13 +209,13 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
         inputRef.current?.removeEventListener('blur', handleNativeBlur);
         inputRef.current?.removeEventListener('keydown', handleKeydown);
       };
-    }, [handleOpen, isBackspacePressed, value]);
-
+    }, [handleOpen, backspacePressed, selections]);
     return (
       <AutocompleteContext.Provider value={contextValue}>
         {portal}
         <label
-          htmlFor="1"
+          ref={mergedRef}
+          htmlFor={inputId}
           sx={{
             width: '100%',
             position: 'relative',
@@ -164,166 +230,46 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
             alignItems: 'center',
             display: 'flex',
             flexWrap: 'wrap',
+            cursor: disabled ? 'not-allowed' : 'text',
             '&:focus-within': {
               outlineColor: 'primary',
               outlineStyle: 'solid',
               outlineWidth: '2px',
             },
           }}
+          {...rest}
         >
-          {value?.map((v, index) => {
-            const item = data.find(datum => datum.value === v);
+          {selections.map(({ value, title }, index) => {
+            const removing =
+              backspacePressed && index === selections.length - 1;
             return (
-              <Box
-                key={item?.value}
-                sx={{
-                  px: 1,
-                  borderRadius: 4,
-                  gap: 2,
-                  py: 1,
-                  display: 'flex',
-                  alignItems: 'start',
-                  justifyContent: 'space-between',
-                  backgroundColor: 'surface',
-                }}
-                style={{
-                  opacity:
-                    isBackspacePressed && index === value.length - 1 ? 0.5 : 1,
-                }}
+              <AutocompleteSelection
+                key={hash(value)}
+                style={{ opacity: removing ? 0.5 : 1 }}
+                onClick={() => handleRemoval(value)}
               >
-                <Box sx={{ color: 'onSurface' }}>
-                  {item?.render?.(item.value) ?? item?.value}
-                </Box>
-                <Button
-                  sx={{
-                    display: 'flex',
-                    marginLeft: 'auto',
-                    alignItems: 'center',
-                    color: 'onSurface',
-                  }}
-                  onClick={() => removeValue(item?.value)}
-                  tabIndex={-1}
-                >
-                  <IoCloseCircleOutline size={14} />
-                </Button>
-              </Box>
+                {title}
+              </AutocompleteSelection>
             );
           })}
-          <Box
-            ref={mergedRef}
-            sx={{
-              width: 'fit-content',
-              flexGrow: 1,
-            }}
-          >
+          <Box sx={{ width: 'fit-content', flexGrow: 1 }}>
             <TextInput
               autoComplete="off"
-              id="1"
+              id={inputId}
               variant="pure"
-              onClick={handleOpen}
-              value={query}
-              onFocus={handleOpen}
-              onChange={handleInputChange}
-              sx={{
-                '&:focus': {
-                  outline: 'none',
-                },
-              }}
               ref={inputRef}
-              {...rest}
+              value={innerQuery}
+              onClick={handleOpen}
+              onChange={handleQueryChange}
+              onFocus={() => {
+                handleOpen();
+                onFocus?.();
+              }}
+              onBlur={onBlur}
             />
           </Box>
         </label>
       </AutocompleteContext.Provider>
-    );
-  }
-);
-
-const AutocompleteContext = createContext({} as { children: ReactElement[] });
-
-export interface AutocompleteDropProps extends DropRendererProps {
-  addValue: (v: unknown) => void;
-}
-export const AutocompleteDropContext = createContext(
-  {} as {
-    activeIndex: number | null;
-    setActiveIndex: Dispatch<React.SetStateAction<number | null>>;
-  }
-);
-const AutocompleteDrop = forwardRef<HTMLDivElement, AutocompleteDropProps>(
-  ({ addValue, handleClose }, ref) => {
-    const { children } = useContext(AutocompleteContext);
-    const [activeIndex, setActiveIndex] = useState(0);
-    const contextValue = useMemo(
-      () => ({ activeIndex, setActiveIndex }),
-      [activeIndex]
-    );
-    const hueref = useRef(children);
-    useEffect(() => {
-      hueref.current = children;
-    }, [children]);
-    const keydownEvent = e => {
-      if (e.key === 'Enter') {
-        setActiveIndex(prev => {
-          addValue(hueref.current?.[prev]?.props?.value);
-          handleClose();
-          return 0;
-        });
-        return;
-      }
-      if (e.key === 'ArrowDown') {
-        setActiveIndex(prev => {
-          if (children.length - 1 === prev) {
-            return prev;
-          }
-          return prev + 1;
-        });
-        return;
-      }
-      if (e.key === 'ArrowUp') {
-        setActiveIndex(prev => {
-          if (prev === 0) {
-            return prev;
-          }
-          return prev - 1;
-        });
-        return;
-      }
-    };
-
-    useEffect(() => {
-      addEventListener('keydown', keydownEvent);
-      return () => {
-        removeEventListener('keydown', keydownEvent);
-      };
-    }, []);
-    if (children.length === 0) {
-      return null;
-    }
-    return (
-      <AutocompleteDropContext.Provider value={contextValue}>
-        <Box
-          ref={ref}
-          sx={{
-            padding: 1,
-            display: 'flex',
-            flexDirection: 'column',
-            overflow: 'hidden',
-            borderRadius: 3,
-          }}
-        >
-          {children?.map((v, index) =>
-            cloneElement(v, {
-              isActive: activeIndex === index,
-              index: index,
-              onClick: () => {
-                addValue(v?.props?.value);
-                handleClose();
-              },
-            })
-          )}
-        </Box>
-      </AutocompleteDropContext.Provider>
     );
   }
 );
