@@ -23,6 +23,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           opacity: 1,
           border: 'none',
           background: 'none',
+          color: 'inherit',
           fontSize: 'inherit',
           '&:disabled': {
             opacity: 0.5,

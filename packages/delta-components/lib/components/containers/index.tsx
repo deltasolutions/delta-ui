@@ -7,3 +7,4 @@ export * from './Notification';
 export * from './Question';
 export * from './Scroll';
 export * from './SystemContainer';
+export * from './Alert';

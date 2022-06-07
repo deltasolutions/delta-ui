@@ -2,7 +2,7 @@ export const theme = {
   colorScheme: 'dark',
   fontFamily: 'Montserrat, sans-serif',
   colors: {
-    primary: '#1bbf60',
+    primary: '#1db954',
     secondary: '#ffffff',
     info: '#1d75e0',
     warning: '#ffa42b',
@@ -14,7 +14,7 @@ export const theme = {
     contrast: '#fafafa',
     outline: '#313030',
 
-    accentPrimary: '#1ca856',
+    accentPrimary: '#1daa4e',
     accentSecondary: '#e5e5e5',
     accentInfo: '#1c6ac9',
     accentWarning: '#e39022',

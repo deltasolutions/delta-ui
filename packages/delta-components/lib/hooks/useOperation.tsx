@@ -1,6 +1,13 @@
 import { jsx } from '@theme-ui/core';
-import { isValidElement, useCallback, Fragment, ReactNode } from 'react';
-import { BasicQuestion } from '../components';
+import {
+  isValidElement,
+  useCallback,
+  Fragment,
+  ReactNode,
+  ReactElement,
+  useState,
+} from 'react';
+import { Alert, AlertProps, BasicQuestion } from '../components';
 import { useLoader } from './useLoader';
 import { NotificationOptions, useNotification } from './useNotification';
 import { QuestionDescription, useQuestion } from './useQuestion';
@@ -8,22 +15,28 @@ import { QuestionDescription, useQuestion } from './useQuestion';
 export interface OperationOptions<OperationInput, OperationOutput> {
   deps: any[];
   loaderIds?: any[];
+  getQuestion?: (input?: OperationInput) => QuestionDescription;
   getNotification?: <T extends boolean>(
     isOk: T,
     output: T extends true ? OperationOutput : Error
   ) => ReactNode | NotificationOptions;
-  getQuestion?: (input?: OperationInput) => QuestionDescription;
+  getAlert?: <T extends boolean>(
+    isOk: T,
+    output: T extends true ? OperationOutput : Error
+  ) => ReactNode | AlertProps;
 }
 
 export const useOperation = <OperationInput, OperationOutput>(
   fn: (input?: OperationInput) => Promise<OperationOutput>,
   {
     deps,
-    getNotification,
-    getQuestion,
     loaderIds,
+    getQuestion,
+    getNotification,
+    getAlert,
   }: OperationOptions<OperationInput, OperationOutput>
 ) => {
+  const [alerts, setAlerts] = useState<ReactElement<AlertProps>[]>([]);
   const [_, load] = useLoader(loaderIds);
   const openQuestion = useQuestion<QuestionDescription>(
     ({ context: description, ...rest }) =>
@@ -55,21 +68,45 @@ export const useOperation = <OperationInput, OperationOutput>(
       }
       const notification = getNotification?.(isOk, (error ?? output)!);
       if (notification) {
-        const notificationOptions: NotificationOptions =
-          typeof notification === 'object' &&
-          !isValidElement(notification) &&
-          !Array.isArray(notification) &&
-          (notification as any).type !== Fragment
+        openNotification(
+          isPlainObject(notification)
             ? (notification as NotificationOptions)
             : {
                 color: isOk ? 'success' : 'error',
                 render: () => notification,
-              };
-        openNotification(notificationOptions);
+              }
+        );
+      }
+      const alert = getAlert?.(isOk, (error ?? output)!);
+      if (alert) {
+        const props = isPlainObject(alert)
+          ? alert
+          : {
+              color: isOk ? 'success' : 'error',
+              children: alert,
+            };
+        const reactElement = (
+          <Alert
+            onClose={() => {
+              setAlerts(prior => prior.filter(v => v !== reactElement));
+            }}
+            {...props}
+          />
+        );
+        setAlerts(prior => [...prior, reactElement]);
       }
       return undefined;
     },
     [openQuestion, openNotification, ...deps]
   );
-  return operation;
+  return [operation, alerts] as const;
+};
+
+const isPlainObject = (maybePlain: any) => {
+  return (
+    typeof maybePlain === 'object' &&
+    !isValidElement(maybePlain) &&
+    !Array.isArray(maybePlain) &&
+    (maybePlain as any).type !== Fragment
+  );
 };
