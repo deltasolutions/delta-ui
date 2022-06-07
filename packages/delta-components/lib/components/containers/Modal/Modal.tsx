@@ -14,7 +14,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
       <Box
         ref={ref}
         sx={{
-          borderRadius: 3,
+          borderRadius: 4,
           backgroundColor: 'surface',
           color: 'onSurface',
           ...{

@@ -9,7 +9,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>((props, ref) => {
     <Box
       ref={ref}
       sx={{
-        borderRadius: 3,
+        borderRadius: 4,
         backgroundColor: 'surface',
         color: 'onSurface',
       }}

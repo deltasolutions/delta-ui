@@ -8,3 +8,4 @@ export * from './Question';
 export * from './Scroll';
 export * from './SystemContainer';
 export * from './Alert';
+export * from './AlertHolder';

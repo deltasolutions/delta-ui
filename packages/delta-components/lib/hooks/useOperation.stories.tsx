@@ -1,11 +1,14 @@
 /** @jsx jsx */
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { Box, Button } from '../components';
+import { Fragment } from 'react';
+import { compact } from '../../docs/decorators';
+import { AlertHolder, Box, Button } from '../components';
 import { useOperation } from './useOperation';
 
 export default {
   title: 'hooks/useOperation',
+  decorators: [compact('350px')],
 } as Meta;
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -29,16 +32,9 @@ export const Basics = () => {
     }
   );
   return (
-    <Box
-      sx={{
-        width: '400px',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 3,
-      }}
-    >
-      {alerts}
-      <Box sx={{ display: 'flex', gap: 2 }}>
+    <Fragment>
+      <AlertHolder>{alerts}</AlertHolder>
+      <Box sx={{ mt: 4, display: 'flex', gap: 2 }}>
         <Button variant="contained" onClick={() => handleClick()}>
           Success
         </Button>
@@ -50,6 +46,6 @@ export const Basics = () => {
           Failure
         </Button>
       </Box>
-    </Box>
+    </Fragment>
   );
 };

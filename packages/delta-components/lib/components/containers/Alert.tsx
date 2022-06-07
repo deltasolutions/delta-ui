@@ -16,16 +16,12 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
       <Box
         ref={ref}
         sx={{
-          p: 2,
+          px: '0.625rem',
+          py: 2,
           alignItems: 'center',
-          boxSizing: 'border-box',
-          minWidth: '0px',
           display: 'flex',
-          gap: '6px',
           width: '100%',
-          borderRadius: '8px',
-          paddingLeft: '10px',
-          paddingRight: '10px',
+          borderRadius: 4,
           ...{
             primary: {
               backgroundColor: 'primary',
@@ -47,7 +43,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
         }}
         {...rest}
       >
-        <AiOutlineInfoCircle size={20} sx={{ my: '-0.25em', mr: 1 }} />
+        <AiOutlineInfoCircle size={20} sx={{ my: '-0.25em', mr: 2 }} />
         <Box>{children}</Box>
         <Button
           sx={{

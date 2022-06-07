@@ -13,7 +13,7 @@ export const Question = forwardRef<HTMLDivElement, QuestionProps>(
         ref={ref}
         sx={{
           width: '350px',
-          borderRadius: 3,
+          borderRadius: 4,
           backgroundColor: 'contrast',
           color: 'onContrast',
           animation: `${appear} 0.3s`,
