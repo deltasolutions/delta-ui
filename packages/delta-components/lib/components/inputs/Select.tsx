@@ -69,7 +69,10 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
         placement: 'bottom-start',
       }
     );
-    const mergedRef = useMemo(() => mergeRefs([ref, anchorRef]), []);
+    const mergedRef = useMemo(
+      () => mergeRefs([ref, anchorRef]),
+      [ref, anchorRef]
+    );
     return (
       <Box
         ref={mergedRef}

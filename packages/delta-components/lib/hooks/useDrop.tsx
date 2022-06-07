@@ -58,7 +58,7 @@ export const useDrop = <T extends HTMLElement, C extends unknown = never>(
       );
       const mergedRef = useMemo(
         () => mergeRefs([ref, floating, clickOusideRef]),
-        []
+        [ref, floating, clickOusideRef]
       );
       const handleClose = useCallback(() => {
         handleImplicitClose();

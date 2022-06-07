@@ -7,6 +7,7 @@ import {
   useMemo,
   useState,
 } from 'react';
+import { mergeRefs } from '../utils';
 import { useForwardRef } from './useForwardRef';
 import { ImperativePortal } from './useImperativePortal';
 import { PortalledProps, usePortalled } from './usePortalled';
@@ -30,29 +31,41 @@ export const usePortalledTransition = <T extends HTMLElement, C = never>(
   crf: PortalledTransitionCRF<T, C>,
   { deps, portal }: PortalledTransitionOptions
 ) => {
-  const handleUnmountFns = useMemo(() => new WeakMap<() => void>(), []);
+  const handleUnmountFns = useMemo(() => new Map<() => void, () => void>(), []);
   const Component = useForwardRef(crf, deps);
   const open = usePortalled<T, C>(
-    forwardRef(({ context, handleClose }) => {
+    forwardRef(({ context, handleClose }, portalledRef) => {
       const [isMounted, setIsMounted] = useState(false);
-      const handleUnmount = useCallback(() => setIsMounted(false), []);
+      const handleUnmount = useCallback(() => {
+        setIsMounted(false);
+      }, []);
       handleUnmountFns.set(handleClose, handleUnmount);
       const transition = useTransition<T>(
-        (props, ref) => (
-          <Component
-            ref={ref}
-            context={context}
-            handleClose={handleUnmount}
-            {...props}
-          />
-        ),
-        { deps: [], isMounted }
+        (props, ref) => {
+          const mergedRef = useMemo(
+            () => mergeRefs([ref, portalledRef]),
+            [ref, portalledRef]
+          );
+          return (
+            <Component
+              ref={mergedRef}
+              context={context}
+              handleClose={handleUnmount}
+              {...props}
+            />
+          );
+        },
+        {
+          deps: [...deps],
+          isMounted,
+        }
       );
       useEffect(() => {
         setIsMounted(true);
       }, []);
       useUpdateEffect(() => {
         if (!transition) {
+          handleUnmountFns.delete(handleClose);
           handleClose();
         }
       }, [transition]);

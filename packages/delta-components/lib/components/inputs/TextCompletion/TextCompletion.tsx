@@ -22,8 +22,7 @@ import { TextInput } from '../TextInput';
 
 export interface TextCompletionProps
   extends Omit<BoxProps, 'children' | keyof FormWidgetProps>,
-    FormWidgetProps {
-  value?: string;
+    FormWidgetProps<string> {
   placeholder?: string;
   children: (
     | ReactElement<TextCompletionOptionProps>
@@ -31,7 +30,6 @@ export interface TextCompletionProps
     | undefined
     | false
   )[];
-  onChange?: (value: string) => void;
 }
 
 export const TextCompletionContext = createContext({} as any);
@@ -54,7 +52,10 @@ export const TextCompletion = forwardRef<HTMLInputElement, TextCompletionProps>(
     ref
   ) => {
     const inputRef = useRef<HTMLInputElement>(null);
-    const mergedRef = useMemo(() => mergeRefs([ref, anchorRef]), []);
+    const mergedRef = useMemo(
+      () => mergeRefs([ref, anchorRef]),
+      [ref, anchorRef]
+    );
     const { floatingPortal } = useContext(SystemContext);
     const portal = useImperativePortal(floatingPortal);
     const [innerValue, setInnerValue] = useState<string>(value);
@@ -75,7 +76,7 @@ export const TextCompletion = forwardRef<HTMLInputElement, TextCompletionProps>(
         />
       ),
       {
-        deps: [handleChange],
+        deps: [],
         tailored: true,
         portal,
         placement: 'bottom-start',

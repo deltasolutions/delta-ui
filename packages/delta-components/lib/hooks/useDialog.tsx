@@ -37,7 +37,7 @@ export const useDialog = <C extends unknown = never>(
       const overlayRef = useRef<HTMLDivElement>(null);
       const mergedRef = useMemo(
         () => mergeRefs([overlayTransitionRef, overlayRef]),
-        []
+        [overlayTransitionRef, overlayRef]
       );
       const handleClose = useCallback(() => {
         handleImplicitClose();

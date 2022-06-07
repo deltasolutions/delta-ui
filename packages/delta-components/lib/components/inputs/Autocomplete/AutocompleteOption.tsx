@@ -19,7 +19,10 @@ export const AutocompleteOption = forwardRef<
   AutocompleteOptionProps
 >(({ value, title, index, active, ...rest }, ref) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const mergedRef = useMemo(() => mergeRefs([ref, buttonRef]), []);
+  const mergedRef = useMemo(
+    () => mergeRefs([ref, buttonRef]),
+    [ref, buttonRef]
+  );
   const {
     colors: { primary, onPrimary },
   } = useTheme() as Theme;

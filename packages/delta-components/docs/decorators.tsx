@@ -3,9 +3,10 @@ import { Box } from '../lib';
 
 export const compact =
   (maxWidth = '500px') =>
-  Story =>
-    (
+  Story => {
+    return (
       <Box sx={{ width: '100%', maxWidth }}>
         <Story />
       </Box>
     );
+  };

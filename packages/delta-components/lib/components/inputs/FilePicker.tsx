@@ -91,6 +91,7 @@ export const FilePicker = forwardRef<HTMLDivElement, FilePickerProps>(
           disabled={disabled}
           variant="contained"
           color="secondary"
+          size="small"
           onClick={handleButtonClick}
           sx={{ ml: 'auto' }}
           {...buttonProps}

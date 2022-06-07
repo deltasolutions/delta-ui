@@ -20,10 +20,14 @@ export interface FormFieldProps extends Omit<BoxProps, 'children'> {
 }
 
 export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
-  ({ name, label, children, ...rest }) => {
+  ({ name, label, children, ...rest }, ref) => {
     const { control } = useFormContext();
     return (
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }} {...rest}>
+      <Box
+        ref={ref}
+        sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
+        {...rest}
+      >
         {label && <Box sx={{ fontWeight: 600 }}>{label}</Box>}
         <Controller
           control={control}

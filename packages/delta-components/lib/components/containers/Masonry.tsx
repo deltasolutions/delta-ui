@@ -24,7 +24,7 @@ export const Masonry = forwardRef<HTMLDivElement, MasonryProps>(
     });
     const mergedRef = useMemo(
       () => mergeRefs([ref, handleElement]),
-      [handleElement]
+      [ref, handleElement]
     );
     const entries = useMemo(
       () =>

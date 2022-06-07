@@ -16,7 +16,10 @@ export const TextCompletionOption = forwardRef<
   TextCompletionOptionProps
 >(({ value, ...rest }, ref) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const mergedRef = useMemo(() => mergeRefs([ref, buttonRef]), []);
+  const mergedRef = useMemo(
+    () => mergeRefs([ref, buttonRef]),
+    [ref, buttonRef]
+  );
   const {
     colors: { primary, onPrimary },
   } = useTheme() as Theme;

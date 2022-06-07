@@ -138,7 +138,10 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
         placement: 'bottom-start',
       }
     );
-    const mergedRef = useMemo(() => mergeRefs([ref, anchorRef]), []);
+    const mergedRef = useMemo(
+      () => mergeRefs([ref, anchorRef]),
+      [ref, anchorRef]
+    );
     const handleOpen = useCallback(() => {
       closeDropRef.current = openDrop();
     }, [openDrop, availables]);

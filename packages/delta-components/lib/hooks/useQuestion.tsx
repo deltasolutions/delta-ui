@@ -1,6 +1,7 @@
 import { jsx } from '@theme-ui/core';
 import { Fragment, ReactNode, useCallback, useRef } from 'react';
 import {
+  BasicQuestion,
   Button,
   Question,
   QuestionBody,
@@ -40,12 +41,12 @@ export const useQuestion = <C extends unknown = never>(
 ) => {
   const handleQuestionClose = useRef<undefined | ((v: boolean) => void)>();
   const hasCustomDescription = description instanceof Function;
-  const okButtonRef = useRef<HTMLButtonElement | null>(null);
+  const questionRef = useRef<HTMLDivElement>(null);
   const openQuestion = useDialog<C>(
-    ({ context, handleClose: handleSilentClose }) => {
+    ({ context, handleClose: handleImplicitClose }) => {
       const handleClose = (v: boolean) => {
         handleQuestionClose.current?.(v);
-        handleSilentClose();
+        handleImplicitClose();
       };
       const content = hasCustomDescription ? (
         description({
@@ -53,34 +54,25 @@ export const useQuestion = <C extends unknown = never>(
           handleClose,
         })
       ) : (
-        <Fragment>
-          <QuestionHeader>
-            <Heading level={4}>{description.heading}</Heading>
-          </QuestionHeader>
-          <QuestionBody>{description.content}</QuestionBody>
-          <QuestionFooter>
-            {/* TODO: Translate default text. */}
-            <Button variant="text" onClick={() => handleClose(false)}>
-              {description.cancelText ?? 'Cancel'}
-            </Button>
-            <Button
-              ref={okButtonRef}
-              variant="contained"
-              onClick={() => handleClose(true)}
-            >
-              {description.okText ?? 'OK'}
-            </Button>
-          </QuestionFooter>
-        </Fragment>
+        <BasicQuestion onClose={handleClose} {...description} />
       );
-      return <Question {...questionProps}>{content}</Question>;
+      return (
+        <Question ref={questionRef} {...questionProps}>
+          {content}
+        </Question>
+      );
     },
     {
       deps,
       portal,
-      focusTrap: hasCustomDescription
-        ? undefined
-        : { initialFocus: () => okButtonRef.current ?? false },
+      focusTrap: {
+        initialFocus: () => {
+          const buttons = Array.from(
+            questionRef.current?.querySelectorAll('button') ?? []
+          );
+          return buttons[buttons.length - 1];
+        },
+      },
       onClose: () => {
         handleQuestionClose.current?.(false);
         onClose?.();

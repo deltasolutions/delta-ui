@@ -8,7 +8,7 @@ export interface PairListProps extends BoxProps {
 }
 
 export const PairList = forwardRef<HTMLDivElement, PairListProps>(
-  ({ pairs, variant = 'row', ...rest }: PairListProps, ref) => {
+  ({ pairs, variant = 'row', ...rest }, ref) => {
     return variant === 'column' ? (
       <Box
         ref={ref}

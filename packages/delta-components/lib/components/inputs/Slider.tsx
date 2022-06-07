@@ -41,7 +41,14 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(
     const setBackground = useCallback(
       (ref, value) => {
         if (ref.current) {
-          ref.current.style.background = `linear-gradient(to right, ${accentPrimary} 0%, ${accentPrimary} ${value}%,${accentSurface} ${value}%, ${accentSurface} 100%)`;
+          ref.current.style.background =
+            `linear-gradient(` +
+            `to right,` +
+            `${accentPrimary} 0%,` +
+            `${accentPrimary} ${value}%,` +
+            `${accentSurface} ${value}%,` +
+            `${accentSurface} 100%` +
+            `)`;
         }
       },
       [accentPrimary, accentSurface]
