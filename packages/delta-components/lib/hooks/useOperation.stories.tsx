@@ -27,20 +27,24 @@ export const Basics = () => {
         heading: 'Important Heading',
         content: 'Are you sure you want to continue?',
       }),
-      getNotification: isOk => (isOk ? 'Success' : 'Failure'),
-      getAlert: isOk => (isOk ? undefined : 'Failure'),
+      getNotification: isOk => (isOk ? 'yyugiuygiguyg' : 'Info'),
+      getAlert: isOk => (isOk ? undefined : 'Info'),
     }
   );
   return (
     <Fragment>
       <AlertHolder>{alerts}</AlertHolder>
       <Box sx={{ mt: 4, display: 'flex', gap: 2 }}>
-        <Button variant="contained" onClick={() => handleClick()}>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => handleClick()}
+        >
           Success
         </Button>
         <Button
-          variant="contained"
-          color="error"
+          variant="outlined"
+          color="secondary"
           onClick={() => handleClick(true)}
         >
           Failure
