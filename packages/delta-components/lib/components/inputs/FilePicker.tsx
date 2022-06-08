@@ -142,7 +142,7 @@ export interface DndBoxProps extends Omit<BoxProps, 'onDrop'> {
   onClick: () => void;
 }
 const DndBox = ({ onDrop, onClick, children, ...rest }: DndBoxProps) => {
-  const [tCommon] = useTranslation('common');
+  const [t] = useTranslation('common');
   const [{ canDrop, isOver }, drop] = useDrop(
     () => ({
       accept: [NativeTypes.FILE],
@@ -224,7 +224,7 @@ const DndBox = ({ onDrop, onClick, children, ...rest }: DndBoxProps) => {
               onClick={onClick}
             >
               <RiUploadCloudLine size={12} />
-              <span>{tCommon('actions.browseFiles')}</span>
+              <span>{t('actions.browseFiles')}</span>
             </Button>
           </Box>
         </Fragment>
@@ -240,7 +240,7 @@ const DndBox = ({ onDrop, onClick, children, ...rest }: DndBoxProps) => {
             }}
           >
             <RiUploadCloudLine size={18} />
-            <Box>{tCommon('actions.dndToUpload')}</Box>
+            <Box>{t('descriptions.dndFiles')}</Box>
           </Box>
           <Button
             sx={{
@@ -249,7 +249,7 @@ const DndBox = ({ onDrop, onClick, children, ...rest }: DndBoxProps) => {
               textDecoration: 'underline',
             }}
           >
-            {tCommon('actions.browseFiles')}
+            {t('actions.browseFiles')}
           </Button>
         </Fragment>
       )}

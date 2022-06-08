@@ -1,5 +1,6 @@
 import { jsx } from '@theme-ui/core';
 import { forwardRef, Fragment, ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../../Button';
 import { Box, BoxProps } from '../Box';
 import { Heading } from '../Heading';
@@ -17,6 +18,7 @@ export interface BasicQuestionProps extends Omit<BoxProps, 'children'> {
 
 export const BasicQuestion = forwardRef<HTMLDivElement, BasicQuestionProps>(
   ({ heading, content, okText, cancelText, onClose, ...rest }, ref) => {
+    const [t] = useTranslation('common');
     return (
       <Box ref={ref} {...rest}>
         <QuestionHeader>
@@ -24,12 +26,11 @@ export const BasicQuestion = forwardRef<HTMLDivElement, BasicQuestionProps>(
         </QuestionHeader>
         <QuestionBody>{content}</QuestionBody>
         <QuestionFooter>
-          {/* TODO: Translate default text. */}
           <Button variant="text" onClick={() => onClose?.(false)}>
-            {cancelText ?? 'Cancel'}
+            {cancelText ?? t('actions.cancel')}
           </Button>
           <Button variant="contained" onClick={() => onClose?.(true)}>
-            {okText ?? 'OK'}
+            {okText ?? t('actions.ok')}
           </Button>
         </QuestionFooter>
       </Box>
