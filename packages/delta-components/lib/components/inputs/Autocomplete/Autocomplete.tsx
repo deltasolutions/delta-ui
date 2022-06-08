@@ -226,7 +226,7 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
             borderRadius: 4,
             paddingX: '0.55em',
             paddingY: '0.60em',
-            gap: 2,
+            gap: '10px 8px',
             height: '100%',
             lineHeight: '1rem',
             letterSpacing: 'normal',

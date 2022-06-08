@@ -65,12 +65,18 @@ export const AutocompleteDrop = forwardRef<
   }, [activeIndex, handleAddition]);
   if (availables.length === 0) {
     return (
-      <Box sx={{ p: 2, textAlign: 'center' }}>
+      <Box
+        sx={{
+          p: 1,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
         <IoBanOutline
-          size={24}
+          size={18}
           sx={{
             verticalAlign: 'middle',
-            transform: 'scaleX(-1)',
           }}
         />
       </Box>

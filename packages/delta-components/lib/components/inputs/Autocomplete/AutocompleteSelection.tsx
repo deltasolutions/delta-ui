@@ -7,6 +7,7 @@ export interface AutocompleteSelectionProps extends ButtonProps {}
 
 export const AutocompleteSelection = ({
   children,
+  onClick,
   ...rest
 }: AutocompleteSelectionProps) => {
   return (
@@ -40,7 +41,8 @@ export const AutocompleteSelection = ({
         }}
       />
       <Box sx={{ position: 'relative', zIndex: 1 }}>{children}</Box>
-      <Box
+      <Button
+        onClick={onClick}
         sx={{
           position: 'relative',
           zIndex: 1,
@@ -50,7 +52,7 @@ export const AutocompleteSelection = ({
         }}
       >
         <IoCloseCircleOutline size={14} />
-      </Box>
+      </Button>
     </Button>
   );
 };
