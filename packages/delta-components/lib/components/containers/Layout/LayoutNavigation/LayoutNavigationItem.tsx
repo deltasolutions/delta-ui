@@ -57,16 +57,16 @@ export const LayoutNavigationItem = forwardRef<
         px: 4,
         minHeight: '40px',
         fontWeight: 500,
-        color: '#b3b3b3',
+        color: 'onExterior',
         alignItems: 'center',
         '&:hover, &:focus, &:focus-visible': {
           color: 'onPrimary',
-          backgroundColor: 'rgba(255,255,255,0.04)',
+          backgroundColor: 'accentExterior',
         },
-        '&:active': { backgroundColor: 'rgba(255,255,255,0.1)' },
+        // '&:active': { backgroundColor: 'rgba(255,255,255,0.1)' },
         ...(isActive && {
           color: 'onPrimary',
-          backgroundColor: 'rgba(255,255,255,0.04)',
+          backgroundColor: 'accentExterior',
         }),
       }}
       {...rest}

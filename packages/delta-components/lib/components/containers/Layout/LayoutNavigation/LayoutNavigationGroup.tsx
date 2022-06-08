@@ -14,7 +14,13 @@ export const LayoutNavigationGroup = forwardRef<
   return (
     <Box
       ref={ref}
-      sx={{ borderBottom: '1px rgba(255,255,255,0.1) solid', py: 2 }}
+      sx={{
+        '& + &': {
+          borderTop: '1px rgba(255,255,255,0.1) solid',
+          pt: 3,
+          mt: 3,
+        },
+      }}
       {...rest}
     >
       <Heading
@@ -22,7 +28,7 @@ export const LayoutNavigationGroup = forwardRef<
         sx={{
           textTransform: 'uppercase',
           px: 4,
-          py: 2,
+          pb: 2,
           color: '#b3b3b3',
           fontSize: 1,
           fontWeight: 600,

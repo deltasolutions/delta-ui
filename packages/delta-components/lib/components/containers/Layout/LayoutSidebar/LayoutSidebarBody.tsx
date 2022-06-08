@@ -12,11 +12,11 @@ export const LayoutSidebarBody = forwardRef<
     <Box
       ref={ref}
       sx={{
-        paddingTop: 5,
+        flex: '1 1 auto',
+        minHeight: 0,
+        overflowY: 'auto',
         paddingBottom: 5,
         width: '100%',
-        height: '100%',
-        overflow: 'scroll',
       }}
       {...props}
     />

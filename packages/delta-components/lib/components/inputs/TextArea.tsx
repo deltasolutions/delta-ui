@@ -51,7 +51,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
           opacity: disabled ? 0.5 : 1,
           border: 0,
           borderRadius: 4,
-          fontSize: 3,
+          fontSize: 2,
           fontFamily: 'inherit',
           letterSpacing: 'normal',
           paddingX: '0.55em',

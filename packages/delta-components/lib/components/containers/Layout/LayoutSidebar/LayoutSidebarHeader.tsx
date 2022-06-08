@@ -12,9 +12,12 @@ export const LayoutSidebarHeader = forwardRef<
     <Box
       ref={ref}
       sx={{
+        flex: '0 0 auto',
         paddingX: 4,
-        paddingTop: 5,
         width: '100%',
+        height: '64px',
+        display: 'flex',
+        alignItems: 'center',
       }}
       {...props}
     />

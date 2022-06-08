@@ -26,20 +26,27 @@ export const LayoutSidebar = forwardRef<HTMLDivElement, LayoutSidebarProps>(
           position: 'sticky',
           top: 0,
           height: '100vh',
-          display: 'flex',
           backgroundColor: 'exterior',
           color: 'onExterior',
         }}
         {...rest}
       >
         <ResizableBox
-          minWidth={minWidth}
-          onResize={onResize}
           axis={axis}
           width={width}
+          minWidth={minWidth}
           maxWidth={maxWidth}
+          onResize={onResize}
         >
-          {children}
+          <Box
+            sx={{
+              height: '100vh',
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            {children}
+          </Box>
         </ResizableBox>
       </Box>
     );

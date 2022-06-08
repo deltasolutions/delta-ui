@@ -10,7 +10,7 @@ export const LayoutNavigation = forwardRef<
   LayoutNavigationProps
 >(({ activeId, children, ...rest }, ref) => {
   return (
-    <Box ref={ref} sx={{ pr: 2, overflow: 'scroll' }} {...rest}>
+    <Box ref={ref} {...rest}>
       <NavigationContext.Provider value={{ activeId }}>
         {children}
       </NavigationContext.Provider>
@@ -19,6 +19,7 @@ export const LayoutNavigation = forwardRef<
 });
 
 export const NavigationContext = createContext({} as NavigationContextProps);
+
 export interface NavigationContextProps {
   activeId?: string;
 }
