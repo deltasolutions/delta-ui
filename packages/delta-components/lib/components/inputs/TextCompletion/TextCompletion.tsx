@@ -52,10 +52,7 @@ export const TextCompletion = forwardRef<HTMLInputElement, TextCompletionProps>(
     ref
   ) => {
     const inputRef = useRef<HTMLInputElement>(null);
-    const mergedRef = useMemo(
-      () => mergeRefs([ref, anchorRef]),
-      [ref, anchorRef]
-    );
+
     const { floatingPortal } = useContext(SystemContext);
     const portal = useImperativePortal(floatingPortal);
     const [innerValue, setInnerValue] = useState<string>(value);
@@ -81,6 +78,10 @@ export const TextCompletion = forwardRef<HTMLInputElement, TextCompletionProps>(
         portal,
         placement: 'bottom-start',
       }
+    );
+    const mergedRef = useMemo(
+      () => mergeRefs([ref, anchorRef]),
+      [ref, anchorRef]
     );
     const contextValue = useMemo(
       () => ({
