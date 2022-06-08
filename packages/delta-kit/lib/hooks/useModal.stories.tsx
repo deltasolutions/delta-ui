@@ -1,6 +1,7 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { Button, ModalBody, useModal } from '../../lib';
+import { Button, ModalBody } from '../components';
+import { useModal } from './useModal';
 
 export default {
   title: 'hooks/useModal',

@@ -1,11 +1,10 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { Box, Button, Select } from '../../lib';
+import { Box, Button } from '../components';
 import { useDrop } from './useDrop';
 
 export default {
   title: 'hooks/useDrop',
-  component: Select,
 } as Meta;
 
 export const Basics = () => {
