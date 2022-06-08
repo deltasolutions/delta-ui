@@ -2,10 +2,20 @@ import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { Fragment, useState } from 'react';
 import { BiPhone, BiPhotoAlbum, BiPlanet } from 'react-icons/bi';
+import { BsFillInfoCircleFill } from 'react-icons/bs';
+import { FaSortDown, FaSortUp } from 'react-icons/fa';
 import { useModal, useOperation } from '../../../hooks';
 import { Anchor } from '../../Anchor';
 import { Button } from '../../Button';
-import { PairList } from '../../displays';
+import {
+  PairList,
+  DataGrid,
+  DataGridBody,
+  DataGridHead,
+  DataGridHeadCell,
+  DataGridRow,
+  DataGridBodyCell,
+} from '../../displays';
 import {
   Form,
   FormGrid,
@@ -21,9 +31,10 @@ import {
 } from '../../inputs';
 import { Checkbox } from '../../inputs';
 import { Breadcrumbs } from '../../navs';
+import { Tooltip } from '../../Tooltip';
 import { AlertHolder } from '../AlertHolder';
 import { Box } from '../Box';
-import { Card, CardBody } from '../Card';
+import { Card, CardBody, CardHeader } from '../Card';
 import { Heading } from '../Heading';
 import { Masonry } from '../Masonry';
 import { ModalBody } from '../Modal';
@@ -79,45 +90,161 @@ export const Basics = () => {
           </Heading>
         </LayoutMainHeader>
         <LayoutMainBody>
-          <Masonry columns={{ count: 2 }} sx={{ '&, & > *': { gap: '5px' } }}>
-            <Card>
-              <CardBody>
-                <PairList
-                  pairs={[
-                    ['Key', 'Value'],
-                    ['Key fjdsifj sadijfodsfgjoidsjg ', 'Value'],
-                    ['Key', 'Value'],
-                    ['Key', 'Value'],
-                    ['Key', 'Value'],
-                  ]}
-                />
-              </CardBody>
-            </Card>
-            <Card sx={{ width: '450px' }}>
-              <CardBody>
-                <ExampleForm />
-              </CardBody>
-            </Card>
-            <Card>
-              <CardBody>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae
-                quos, tenetur minima itaque quidem adipisci reprehenderit
-                maiores hic, neque, numquam dolorem voluptatum quae magnam ea
-                distinctio. Aut consectetur soluta rerum.
-              </CardBody>
-            </Card>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 4,
+              maxWidth: '1200px',
+            }}
+          >
+            <Heading level={1} sx={{ color: 'accentOnSurface' }}>
+              Users
+            </Heading>
+            <Box>
+              <DataGrid>
+                <DataGridHead>
+                  <DataGridHeadCell sx={{ width: '250px' }}>
+                    <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+                      <Heading level={6}>Id</Heading>
+                      <Tooltip content="Sort Ascending">
+                        <Button sx={{ display: 'flex', mt: '4px' }}>
+                          <FaSortUp />
+                        </Button>
+                      </Tooltip>
+                    </Box>
+                  </DataGridHeadCell>
+                  <DataGridHeadCell sx={{ width: '250px' }}>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        gap: 1,
+                        alignItems: 'center',
+                      }}
+                    >
+                      <Heading level={6}>Name</Heading>
+                      <Tooltip content="Descending sort">
+                        <Button
+                          sx={{
+                            display: 'flex',
+                            mt: '-3px',
+                            alignItems: 'center',
+                          }}
+                        >
+                          <FaSortDown />
+                        </Button>
+                      </Tooltip>
+                    </Box>
+                  </DataGridHeadCell>
+                  <DataGridHeadCell sx={{ width: '250px' }}>
+                    <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+                      <Heading level={6}>Surname</Heading>
+                      <Tooltip content="Lorem Ipsum is Ipsum.">
+                        <Button sx={{ display: 'flex', alignItems: 'center' }}>
+                          <BsFillInfoCircleFill sx={{ color: 'outline' }} />
+                        </Button>
+                      </Tooltip>
+                    </Box>
+                  </DataGridHeadCell>
+                  <DataGridHeadCell sx={{ width: '250px' }}>
+                    <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+                      <Heading level={6}>Birth Date</Heading>
+                      <Tooltip content="Lorem Ipsum is simply dummy text 's Ipsum.">
+                        <Button sx={{ display: 'flex', alignItems: 'center' }}>
+                          <BsFillInfoCircleFill sx={{ color: 'outline' }} />
+                        </Button>
+                      </Tooltip>
+                    </Box>
+                  </DataGridHeadCell>
+                </DataGridHead>
+                <DataGridBody>
+                  <DataGridRow>
+                    <DataGridBodyCell sx={{ width: '250px' }}>
+                      1
+                    </DataGridBodyCell>
+                    <DataGridBodyCell sx={{ width: '250px' }}>
+                      Alexander
+                    </DataGridBodyCell>
+                    <DataGridBodyCell sx={{ width: '250px' }}>
+                      Zosimus
+                    </DataGridBodyCell>
+                    <DataGridBodyCell sx={{ width: '250px' }}>
+                      4.05.2002
+                    </DataGridBodyCell>
+                  </DataGridRow>
+                  <DataGridRow>
+                    <DataGridBodyCell sx={{ width: '250px' }}>
+                      2
+                    </DataGridBodyCell>
+                    <DataGridBodyCell sx={{ width: '250px' }}>
+                      Alexey
+                    </DataGridBodyCell>
+                    <DataGridBodyCell sx={{ width: '250px' }}>
+                      Corinna
+                    </DataGridBodyCell>
+                    <DataGridBodyCell sx={{ width: '250px' }}>
+                      31.04.1931
+                    </DataGridBodyCell>
+                  </DataGridRow>
+                  <DataGridRow>
+                    <DataGridBodyCell sx={{ width: '250px' }}>
+                      3
+                    </DataGridBodyCell>
+                    <DataGridBodyCell sx={{ width: '250px' }}>
+                      Jack
+                    </DataGridBodyCell>
+                    <DataGridBodyCell sx={{ width: '250px' }}>
+                      Menelaos
+                    </DataGridBodyCell>
+                    <DataGridBodyCell sx={{ width: '250px' }}>
+                      18.01.2000
+                    </DataGridBodyCell>
+                  </DataGridRow>
+                </DataGridBody>
+              </DataGrid>
+            </Box>
+            <Masonry columns={{ count: 2 }} sx={{ '&, & > *': { gap: 1 } }}>
+              <Card>
+                <CardHeader>
+                  <Heading level={2}>Information</Heading>
+                </CardHeader>
+                <CardBody>
+                  <PairList
+                    pairs={[
+                      ['Name', 'Carly'],
+                      ['Surname', 'Townsend'],
+                      ['IP address', '192.168.l.254'],
+                      ['Birth Date', '19.10.1996'],
+                    ]}
+                  />
+                </CardBody>
+              </Card>
+              <Card>
+                <CardBody>
+                  <ExampleForm />
+                </CardBody>
+              </Card>
+              <Card>
+                <CardBody>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Beatae quos, tenetur minima itaque quidem adipisci
+                  reprehenderit maiores hic, neque, numquam dolorem voluptatum
+                  quae magnam ea distinctio. Aut consectetur soluta rerum.
+                </CardBody>
+              </Card>
 
-            <Card>
-              <CardBody>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae
-                quos, tenetur minima itaque quidem adipisci reprehenderit
-                maiores hic, neque, numquam dolorem voluptatum quae magnam ea
-                distinctio. Aut consectetur soluta rerum.
-              </CardBody>
-            </Card>
-          </Masonry>
-          <Box sx={{ height: '200vh', width: '1px' }} />
-          Bottom Text
+              <Card>
+                <CardBody>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Beatae quos, tenetur minima itaque quidem adipisci
+                  reprehenderit maiores hic, neque, numquam dolorem voluptatum
+                  quae magnam ea distinctio. Aut consectetur soluta rerum.
+                </CardBody>
+              </Card>
+            </Masonry>
+            <Box sx={{ height: '200vh', width: '1px' }} />
+            Bottom Text
+          </Box>
         </LayoutMainBody>
       </LayoutMain>
     </Layout>

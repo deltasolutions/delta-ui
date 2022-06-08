@@ -40,7 +40,7 @@ export const PairList = forwardRef<HTMLDivElement, PairListProps>(
         <table
           sx={{
             borderCollapse: 'separate',
-            borderSpacing: '1rem',
+            borderSpacing: '0 1rem',
           }}
         >
           <tbody>

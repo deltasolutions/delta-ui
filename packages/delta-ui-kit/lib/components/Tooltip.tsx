@@ -27,7 +27,7 @@ export interface TooltipProps extends Omit<BoxProps, 'children'> {
 export const Tooltip = ({
   children,
   content,
-  delay,
+  delay = 1000,
   placement = 'top',
   ...rest
 }: TooltipProps) => {
@@ -71,7 +71,7 @@ export const Tooltip = ({
             color: '#fff',
             fontSize: 2,
             fontWeight: 400,
-            animation: `${appear} 0.15s`,
+            animation: `${appear} 0.1s cubic-bezier(0.250, 0.460, 0.450, 0.940)`,
           }}
           {...getFloatingProps({
             ref: floating,
@@ -93,5 +93,9 @@ const appear = keyframes({
   from: {
     transform: 'scale(0.8)',
     opacity: 0,
+  },
+  to: {
+    transform: 'scale(1)',
+    opacity: 1,
   },
 });

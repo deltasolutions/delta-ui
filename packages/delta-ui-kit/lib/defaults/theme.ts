@@ -13,7 +13,8 @@ export const theme = {
     exterior: '#0a0a0a',
     contrast: '#fafafa',
     outline: '#313030',
-
+    fileSeparator: '#4a4545',
+    rowSeparator: '#252222',
     accentPrimary: '#1daa4e',
     accentSecondary: '#e5e5e5',
     accentInfo: '#1c6ac9',
@@ -51,7 +52,7 @@ export const theme = {
     accentOnOutline: '#ffffff',
   },
   letterSpacings: [0, 1, 1.5],
-  sizes: [0, 20, 32, 40, 80],
+  sizes: [0, 20, 32, 40, 64, 80],
   ticks: [0, 100, 200, 300, 500, 1000, 1200, 1800],
   space: [0, 4, 8, 16, 24, 32, 42, 64, 128, 256, 512],
   fontSizes: [10, 12, 14, 16, 20, 26, 42, 48, 56],
