@@ -14,7 +14,7 @@ export const LayoutSidebarBody = forwardRef<
       sx={{
         flex: '1 1 auto',
         minHeight: 0,
-        overflowY: 'auto',
+        // overflowY: 'auto',
         paddingBottom: 5,
         width: '100%',
       }}

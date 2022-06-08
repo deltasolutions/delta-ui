@@ -3,7 +3,11 @@ import { jsx } from '@theme-ui/core';
 import { Fragment, useState } from 'react';
 import { BiPhone, BiPhotoAlbum, BiPlanet } from 'react-icons/bi';
 import { BsFillInfoCircleFill } from 'react-icons/bs';
-import { FaSortDown, FaSortUp } from 'react-icons/fa';
+import { CgSearch } from 'react-icons/cg';
+import { FaSortDown, FaSortUp, FaSearch } from 'react-icons/fa';
+import { MdOutlineSearch } from 'react-icons/md';
+import { RiSettings5Line } from 'react-icons/ri';
+import { TbHome2 } from 'react-icons/tb';
 import { useModal, useOperation } from '../../../hooks';
 import { Anchor } from '../../Anchor';
 import { Button } from '../../Button';
@@ -28,6 +32,7 @@ import {
   Slider,
   FilePicker,
   TextArea,
+  TextInput,
 } from '../../inputs';
 import { Checkbox } from '../../inputs';
 import { Breadcrumbs } from '../../navs';
@@ -102,108 +107,9 @@ export const Basics = () => {
               Users
             </Heading>
             <Box>
-              <DataGrid>
-                <DataGridHead>
-                  <DataGridHeadCell sx={{ width: '250px' }}>
-                    <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-                      <Heading level={6}>Id</Heading>
-                      <Tooltip content="Sort Ascending">
-                        <Button sx={{ display: 'flex', mt: '4px' }}>
-                          <FaSortUp />
-                        </Button>
-                      </Tooltip>
-                    </Box>
-                  </DataGridHeadCell>
-                  <DataGridHeadCell sx={{ width: '250px' }}>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        gap: 1,
-                        alignItems: 'center',
-                      }}
-                    >
-                      <Heading level={6}>Name</Heading>
-                      <Tooltip content="Descending sort">
-                        <Button
-                          sx={{
-                            display: 'flex',
-                            mt: '-3px',
-                            alignItems: 'center',
-                          }}
-                        >
-                          <FaSortDown />
-                        </Button>
-                      </Tooltip>
-                    </Box>
-                  </DataGridHeadCell>
-                  <DataGridHeadCell sx={{ width: '250px' }}>
-                    <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-                      <Heading level={6}>Surname</Heading>
-                      <Tooltip content="Lorem Ipsum is Ipsum.">
-                        <Button sx={{ display: 'flex', alignItems: 'center' }}>
-                          <BsFillInfoCircleFill sx={{ color: 'outline' }} />
-                        </Button>
-                      </Tooltip>
-                    </Box>
-                  </DataGridHeadCell>
-                  <DataGridHeadCell sx={{ width: '250px' }}>
-                    <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-                      <Heading level={6}>Birth Date</Heading>
-                      <Tooltip content="Lorem Ipsum is simply dummy text 's Ipsum.">
-                        <Button sx={{ display: 'flex', alignItems: 'center' }}>
-                          <BsFillInfoCircleFill sx={{ color: 'outline' }} />
-                        </Button>
-                      </Tooltip>
-                    </Box>
-                  </DataGridHeadCell>
-                </DataGridHead>
-                <DataGridBody>
-                  <DataGridRow>
-                    <DataGridBodyCell sx={{ width: '250px' }}>
-                      1
-                    </DataGridBodyCell>
-                    <DataGridBodyCell sx={{ width: '250px' }}>
-                      Alexander
-                    </DataGridBodyCell>
-                    <DataGridBodyCell sx={{ width: '250px' }}>
-                      Zosimus
-                    </DataGridBodyCell>
-                    <DataGridBodyCell sx={{ width: '250px' }}>
-                      4.05.2002
-                    </DataGridBodyCell>
-                  </DataGridRow>
-                  <DataGridRow>
-                    <DataGridBodyCell sx={{ width: '250px' }}>
-                      2
-                    </DataGridBodyCell>
-                    <DataGridBodyCell sx={{ width: '250px' }}>
-                      Alexey
-                    </DataGridBodyCell>
-                    <DataGridBodyCell sx={{ width: '250px' }}>
-                      Corinna
-                    </DataGridBodyCell>
-                    <DataGridBodyCell sx={{ width: '250px' }}>
-                      31.04.1931
-                    </DataGridBodyCell>
-                  </DataGridRow>
-                  <DataGridRow>
-                    <DataGridBodyCell sx={{ width: '250px' }}>
-                      3
-                    </DataGridBodyCell>
-                    <DataGridBodyCell sx={{ width: '250px' }}>
-                      Jack
-                    </DataGridBodyCell>
-                    <DataGridBodyCell sx={{ width: '250px' }}>
-                      Menelaos
-                    </DataGridBodyCell>
-                    <DataGridBodyCell sx={{ width: '250px' }}>
-                      18.01.2000
-                    </DataGridBodyCell>
-                  </DataGridRow>
-                </DataGridBody>
-              </DataGrid>
+              <ExampleDataGrid />
             </Box>
-            <Masonry columns={{ count: 2 }} sx={{ '&, & > *': { gap: 1 } }}>
+            <Masonry columns={{ count: 2 }} sx={{ '&, & > *': { gap: 2 } }}>
               <Card>
                 <CardHeader>
                   <Heading level={2}>Information</Heading>
@@ -250,227 +156,362 @@ export const Basics = () => {
     </Layout>
   );
 };
+
 const ExampleMenu = () => {
-  const [activeId, setActiveId] = useState('1');
+  const items = new Array(10).fill(null);
+  const [activeId, setActiveId] = useState('0');
+
   return (
-    <LayoutNavigation activeId={activeId}>
-      <LayoutNavigationGroup title="Group title">
-        <LayoutNavigationItem
-          icon={BiPhone}
-          id="1"
-          onClick={() => setActiveId('1')}
-        >
-          First
-        </LayoutNavigationItem>
-        <LayoutNavigationItem
-          icon={BiPhotoAlbum}
-          id="2"
-          onClick={() => setActiveId('2')}
-        >
-          Second
-        </LayoutNavigationItem>
-        <LayoutNavigationItem
-          icon={BiPlanet}
-          id="3"
-          onClick={() => setActiveId('3')}
-        >
-          Third
-        </LayoutNavigationItem>
-      </LayoutNavigationGroup>
-      <LayoutNavigationGroup title="Configuration">
-        <LayoutNavigationItem
-          icon={BiPhone}
-          id="4"
-          onClick={() => setActiveId('4')}
-        >
-          Display
-        </LayoutNavigationItem>
-        <LayoutNavigationItem
-          icon={BiPhone}
-          id="10"
-          onClick={() => setActiveId('10')}
-        >
-          My bookmarks
-        </LayoutNavigationItem>
-        <LayoutNavigationItem
-          icon={BiPhotoAlbum}
-          id="5"
-          onClick={() => setActiveId('5')}
-        >
-          Second
-        </LayoutNavigationItem>
-        <LayoutNavigationItem
-          icon={BiPlanet}
-          id="6"
-          onClick={() => setActiveId('6')}
-        >
-          Third
-        </LayoutNavigationItem>
-      </LayoutNavigationGroup>
-      <LayoutNavigationGroup title="Subscriptions">
-        <LayoutNavigationItem
-          icon={BiPhone}
-          id="7"
-          onClick={() => setActiveId('7')}
-        >
-          First
-        </LayoutNavigationItem>
-        <LayoutNavigationItem
-          icon={BiPhotoAlbum}
-          id="8"
-          onClick={() => setActiveId('8')}
-        >
-          Second
-        </LayoutNavigationItem>
-        <LayoutNavigationItem
-          icon={BiPlanet}
-          id="9"
-          onClick={() => setActiveId('9')}
-        >
-          Third
-        </LayoutNavigationItem>
-        <LayoutNavigationItem
-          icon={BiPlanet}
-          id="9"
-          onClick={() => setActiveId('9')}
-        >
-          Third
-        </LayoutNavigationItem>{' '}
-        <LayoutNavigationItem
-          icon={BiPlanet}
-          id="9"
-          onClick={() => setActiveId('9')}
-        >
-          Third
-        </LayoutNavigationItem>{' '}
-        <LayoutNavigationItem
-          icon={BiPlanet}
-          id="9"
-          onClick={() => setActiveId('9')}
-        >
-          Third
-        </LayoutNavigationItem>{' '}
-        <LayoutNavigationItem
-          icon={BiPlanet}
-          id="9"
-          onClick={() => setActiveId('9')}
-        >
-          Third
-        </LayoutNavigationItem>{' '}
-        <LayoutNavigationItem
-          icon={BiPlanet}
-          id="9"
-          onClick={() => setActiveId('9')}
-        >
-          Third
-        </LayoutNavigationItem>{' '}
-        <LayoutNavigationItem
-          icon={BiPlanet}
-          id="9"
-          onClick={() => setActiveId('9')}
-        >
-          Third
-        </LayoutNavigationItem>{' '}
-        <LayoutNavigationItem
-          icon={BiPlanet}
-          id="9"
-          onClick={() => setActiveId('9')}
-        >
-          Third
-        </LayoutNavigationItem>{' '}
-        <LayoutNavigationItem
-          icon={BiPlanet}
-          id="9"
-          onClick={() => setActiveId('9')}
-        >
-          Third
-        </LayoutNavigationItem>{' '}
-        <LayoutNavigationItem
-          icon={BiPlanet}
-          id="9"
-          onClick={() => setActiveId('9')}
-        >
-          Third
-        </LayoutNavigationItem>{' '}
-        <LayoutNavigationItem
-          icon={BiPlanet}
-          id="9"
-          onClick={() => setActiveId('9')}
-        >
-          Third
-        </LayoutNavigationItem>{' '}
-        <LayoutNavigationItem
-          icon={BiPlanet}
-          id="9"
-          onClick={() => setActiveId('9')}
-        >
-          Third
-        </LayoutNavigationItem>{' '}
-        <LayoutNavigationItem
-          icon={BiPlanet}
-          id="9"
-          onClick={() => setActiveId('9')}
-        >
-          Third
-        </LayoutNavigationItem>{' '}
-        <LayoutNavigationItem
-          icon={BiPlanet}
-          id="9"
-          onClick={() => setActiveId('9')}
-        >
-          Third
-        </LayoutNavigationItem>{' '}
-        <LayoutNavigationItem
-          icon={BiPlanet}
-          id="9"
-          onClick={() => setActiveId('9')}
-        >
-          Third
-        </LayoutNavigationItem>{' '}
-        <LayoutNavigationItem
-          icon={BiPlanet}
-          id="9"
-          onClick={() => setActiveId('9')}
-        >
-          Third
-        </LayoutNavigationItem>{' '}
-        <LayoutNavigationItem
-          icon={BiPlanet}
-          id="9"
-          onClick={() => setActiveId('9')}
-        >
-          Third
-        </LayoutNavigationItem>{' '}
-        <LayoutNavigationItem
-          icon={BiPlanet}
-          id="9"
-          onClick={() => setActiveId('9')}
-        >
-          Third
-        </LayoutNavigationItem>
-        <LayoutNavigationItem
-          icon={BiPlanet}
-          id="9"
-          onClick={() => setActiveId('9')}
-        >
-          Third
-        </LayoutNavigationItem>{' '}
-        <LayoutNavigationItem
-          icon={BiPlanet}
-          id="9"
-          onClick={() => setActiveId('9')}
-        >
-          Third
-        </LayoutNavigationItem>{' '}
-        <LayoutNavigationItem
-          icon={BiPlanet}
-          id="9"
-          onClick={() => setActiveId('9')}
-        >
-          Third
-        </LayoutNavigationItem>
-      </LayoutNavigationGroup>
+    <LayoutNavigation activeId={activeId} sx={{ height: '100%' }}>
+      <LayoutNavigationItem
+        icon={TbHome2}
+        id="1"
+        onClick={() => setActiveId('1')}
+      >
+        Dashboard
+      </LayoutNavigationItem>
+      <LayoutNavigationItem
+        icon={MdOutlineSearch}
+        id="2"
+        onClick={() => setActiveId('2')}
+      >
+        Search
+      </LayoutNavigationItem>
+      <LayoutNavigationItem
+        icon={RiSettings5Line}
+        id="3"
+        onClick={() => setActiveId('3')}
+      >
+        Settings
+      </LayoutNavigationItem>
+      <Box
+        sx={{
+          px: 3,
+          color: 'rowSeparator',
+          mt: 3,
+          mb: 2,
+          position: 'relative',
+        }}
+      >
+        <TextInput
+          placeholder="Search"
+          sx={{
+            backgroundColor: 'transparent',
+            borderBottomWidth: '0.3px',
+            borderBottomStyle: 'solid',
+            pr: 3,
+            pl: 2,
+            py: 1,
+            borderBottomColor: 'rowSeparator',
+          }}
+          variant="pure"
+        />
+        <CgSearch sx={{ position: 'absolute', top: 1, right: 3 }} />
+      </Box>
+      <Box
+        sx={{
+          overflow: 'scroll',
+          height: '100%',
+          pt: 2,
+        }}
+      >
+        <LayoutNavigationGroup title="Configuration">
+          <LayoutNavigationItem
+            icon={BiPhone}
+            id="4"
+            onClick={() => setActiveId('4')}
+          >
+            Display
+          </LayoutNavigationItem>
+          <LayoutNavigationItem
+            icon={BiPhone}
+            id="10"
+            onClick={() => setActiveId('10')}
+          >
+            My bookmarks
+          </LayoutNavigationItem>
+          <LayoutNavigationItem
+            icon={BiPhotoAlbum}
+            id="5"
+            onClick={() => setActiveId('5')}
+          >
+            Second
+          </LayoutNavigationItem>
+          <LayoutNavigationItem
+            icon={BiPlanet}
+            id="6"
+            onClick={() => setActiveId('6')}
+          >
+            Third
+          </LayoutNavigationItem>
+        </LayoutNavigationGroup>
+        <LayoutNavigationGroup title="Subscriptions">
+          <LayoutNavigationItem
+            icon={BiPhone}
+            id="7"
+            onClick={() => setActiveId('7')}
+          >
+            First
+          </LayoutNavigationItem>
+          <LayoutNavigationItem
+            icon={BiPhotoAlbum}
+            id="8"
+            onClick={() => setActiveId('8')}
+          >
+            Second
+          </LayoutNavigationItem>
+          <LayoutNavigationItem
+            icon={BiPlanet}
+            id="9"
+            onClick={() => setActiveId('9')}
+          >
+            Third
+          </LayoutNavigationItem>
+          <LayoutNavigationItem
+            icon={BiPlanet}
+            id="1332"
+            onClick={() => setActiveId('1332')}
+          >
+            Foff
+          </LayoutNavigationItem>
+        </LayoutNavigationGroup>
+        <LayoutNavigationGroup title="Configuration">
+          <LayoutNavigationItem
+            icon={BiPhone}
+            id="4"
+            onClick={() => setActiveId('4')}
+          >
+            Display
+          </LayoutNavigationItem>
+          <LayoutNavigationItem
+            icon={BiPhone}
+            id="4"
+            onClick={() => setActiveId('4')}
+          >
+            Display
+          </LayoutNavigationItem>
+          <LayoutNavigationItem
+            icon={BiPhone}
+            id="4"
+            onClick={() => setActiveId('4')}
+          >
+            Display
+          </LayoutNavigationItem>
+          <LayoutNavigationItem
+            icon={BiPhone}
+            id="4"
+            onClick={() => setActiveId('4')}
+          >
+            Display
+          </LayoutNavigationItem>
+          <LayoutNavigationItem
+            icon={BiPhone}
+            id="4"
+            onClick={() => setActiveId('4')}
+          >
+            Display
+          </LayoutNavigationItem>
+          <LayoutNavigationItem
+            icon={BiPhone}
+            id="4"
+            onClick={() => setActiveId('4')}
+          >
+            Display
+          </LayoutNavigationItem>
+          <LayoutNavigationItem
+            icon={BiPhone}
+            id="4"
+            onClick={() => setActiveId('4')}
+          >
+            Display
+          </LayoutNavigationItem>
+          <LayoutNavigationItem
+            icon={BiPhone}
+            id="4"
+            onClick={() => setActiveId('4')}
+          >
+            Display
+          </LayoutNavigationItem>
+          <LayoutNavigationItem
+            icon={BiPhone}
+            id="4"
+            onClick={() => setActiveId('4')}
+          >
+            Display
+          </LayoutNavigationItem>
+          <LayoutNavigationItem
+            icon={BiPhone}
+            id="4"
+            onClick={() => setActiveId('4')}
+          >
+            Display
+          </LayoutNavigationItem>
+          <LayoutNavigationItem
+            icon={BiPhone}
+            id="4"
+            onClick={() => setActiveId('4')}
+          >
+            Display
+          </LayoutNavigationItem>
+          <LayoutNavigationItem
+            icon={BiPhone}
+            id="4"
+            onClick={() => setActiveId('4')}
+          >
+            Display
+          </LayoutNavigationItem>
+          <LayoutNavigationItem
+            icon={BiPhone}
+            id="4"
+            onClick={() => setActiveId('4')}
+          >
+            Display
+          </LayoutNavigationItem>
+          <LayoutNavigationItem
+            icon={BiPhone}
+            id="4"
+            onClick={() => setActiveId('4')}
+          >
+            Display
+          </LayoutNavigationItem>
+          <LayoutNavigationItem
+            icon={BiPhone}
+            id="231231"
+            onClick={() => setActiveId('10')}
+          >
+            My bookmarks
+          </LayoutNavigationItem>
+          <LayoutNavigationItem
+            icon={BiPhotoAlbum}
+            id="1235"
+            onClick={() => setActiveId('5')}
+          >
+            Second
+          </LayoutNavigationItem>
+          <LayoutNavigationItem
+            icon={BiPlanet}
+            id="63213123"
+            onClick={() => setActiveId('6')}
+          >
+            Third
+          </LayoutNavigationItem>
+        </LayoutNavigationGroup>
+        <LayoutNavigationGroup title="Configuration">
+          <LayoutNavigationItem
+            icon={BiPhone}
+            id="4"
+            onClick={() => setActiveId('4')}
+          >
+            Display
+          </LayoutNavigationItem>
+          <LayoutNavigationItem
+            icon={BiPhone}
+            id="10"
+            onClick={() => setActiveId('10')}
+          >
+            My bookmarks
+          </LayoutNavigationItem>
+          <LayoutNavigationItem
+            icon={BiPhotoAlbum}
+            id="5"
+            onClick={() => setActiveId('5')}
+          >
+            Second
+          </LayoutNavigationItem>
+          <LayoutNavigationItem
+            icon={BiPlanet}
+            id="6"
+            onClick={() => setActiveId('6')}
+          >
+            Third
+          </LayoutNavigationItem>
+        </LayoutNavigationGroup>
+      </Box>
     </LayoutNavigation>
+  );
+};
+const ExampleDataGrid = () => {
+  return (
+    <DataGrid>
+      <DataGridHead>
+        <DataGridHeadCell sx={{ width: '250px' }}>
+          <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+            <Heading level={6}>Id</Heading>
+            <Tooltip content="Sort Ascending">
+              <Button sx={{ display: 'flex', mt: '4px' }}>
+                <FaSortUp />
+              </Button>
+            </Tooltip>
+          </Box>
+        </DataGridHeadCell>
+        <DataGridHeadCell sx={{ width: '250px' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              gap: 1,
+              alignItems: 'center',
+            }}
+          >
+            <Heading level={6}>Name</Heading>
+            <Tooltip content="Descending sort">
+              <Button
+                sx={{
+                  display: 'flex',
+                  mt: '-3px',
+                  alignItems: 'center',
+                }}
+              >
+                <FaSortDown />
+              </Button>
+            </Tooltip>
+          </Box>
+        </DataGridHeadCell>
+        <DataGridHeadCell sx={{ width: '250px' }}>
+          <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+            <Heading level={6}>Surname</Heading>
+            <Tooltip content="Lorem Ipsum is Ipsum.">
+              <Button sx={{ display: 'flex', alignItems: 'center' }}>
+                <BsFillInfoCircleFill sx={{ color: 'outline' }} />
+              </Button>
+            </Tooltip>
+          </Box>
+        </DataGridHeadCell>
+        <DataGridHeadCell sx={{ width: '250px' }}>
+          <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+            <Heading level={6}>Birth Date</Heading>
+            <Tooltip content="Lorem Ipsum is simply dummy text 's Ipsum.">
+              <Button sx={{ display: 'flex', alignItems: 'center' }}>
+                <BsFillInfoCircleFill sx={{ color: 'outline' }} />
+              </Button>
+            </Tooltip>
+          </Box>
+        </DataGridHeadCell>
+      </DataGridHead>
+      <DataGridBody>
+        <DataGridRow>
+          <DataGridBodyCell sx={{ width: '250px' }}>1</DataGridBodyCell>
+          <DataGridBodyCell sx={{ width: '250px' }}>Alexander</DataGridBodyCell>
+          <DataGridBodyCell sx={{ width: '250px' }}>Zosimus</DataGridBodyCell>
+          <DataGridBodyCell sx={{ width: '250px' }}>4.05.2002</DataGridBodyCell>
+        </DataGridRow>
+        <DataGridRow>
+          <DataGridBodyCell sx={{ width: '250px' }}>2</DataGridBodyCell>
+          <DataGridBodyCell sx={{ width: '250px' }}>Alexey</DataGridBodyCell>
+          <DataGridBodyCell sx={{ width: '250px' }}>Corinna</DataGridBodyCell>
+          <DataGridBodyCell sx={{ width: '250px' }}>
+            31.04.1931
+          </DataGridBodyCell>
+        </DataGridRow>
+        <DataGridRow>
+          <DataGridBodyCell sx={{ width: '250px' }}>3</DataGridBodyCell>
+          <DataGridBodyCell sx={{ width: '250px' }}>Jack</DataGridBodyCell>
+          <DataGridBodyCell sx={{ width: '250px' }}>Menelaos</DataGridBodyCell>
+          <DataGridBodyCell sx={{ width: '250px' }}>
+            18.01.2000
+          </DataGridBodyCell>
+        </DataGridRow>
+      </DataGridBody>
+    </DataGrid>
   );
 };
 const ExampleForm = () => {

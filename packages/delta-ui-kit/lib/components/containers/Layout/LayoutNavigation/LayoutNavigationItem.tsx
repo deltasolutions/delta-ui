@@ -46,25 +46,18 @@ export const LayoutNavigationItem = forwardRef<
     <Anchor
       ref={ref}
       href="#"
-      style={{
-        ...(isActive ? {} : {}),
-      }}
       sx={{
         display: 'flex',
-        gap: 3,
         px: 4,
         minHeight: '40px',
-        fontWeight: 500,
-        color: 'onExterior',
+        fontWeight: 400,
+        color: 'onBackground',
         alignItems: 'center',
         '&:hover, &:focus, &:focus-visible': {
-          color: 'onPrimary',
-          backgroundColor: 'accentExterior',
+          color: 'primary',
         },
-        // '&:active': { backgroundColor: 'rgba(255,255,255,0.1)' },
         ...(isActive && {
-          color: 'onPrimary',
-          backgroundColor: 'accentExterior',
+          color: 'primary',
         }),
       }}
       variant="pure"
@@ -72,14 +65,22 @@ export const LayoutNavigationItem = forwardRef<
       {...rest}
     >
       {icon && (
-        <Box>
+        <Box sx={{ minWidth: '22px', mr: 3 }}>
           {(() => {
             const Icon = icon;
-            return <Icon size={22} sx={{}} />;
+            return <Icon size={22} />;
           })()}
         </Box>
       )}
-      <Box>{children}</Box>
+      <Box
+        sx={{
+          textOverflow: 'ellipsis',
+          overflow: 'hidden',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        {children}
+      </Box>
     </Anchor>
   );
 });
