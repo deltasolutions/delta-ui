@@ -26,18 +26,17 @@ export const EastResize = ({
   return (
     <Fragment>
       <input
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
+        max={maxWidth}
+        min={minWidth}
+        step={10}
         sx={{ opacity: 0, width: 0, position: 'absolute', top: 0 }}
         type="range"
         value={width}
+        onBlur={() => setFocused(false)}
         onChange={e => setWidth(e.target.valueAsNumber)}
-        min={minWidth}
-        max={maxWidth}
-        step={10}
+        onFocus={() => setFocused(true)}
       />
       <div
-        onMouseDown={onMouseDown}
         sx={{
           zIndex: 1,
           position: 'absolute',
@@ -60,6 +59,7 @@ export const EastResize = ({
             borderStyle: 'solid',
           },
         }}
+        onMouseDown={onMouseDown}
       />
     </Fragment>
   );

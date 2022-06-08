@@ -1,6 +1,5 @@
 import { jsx } from '@theme-ui/core';
 import { forwardRef } from 'react';
-import SimpleBar from 'simplebar-react';
 import { Box } from '../../Box';
 import { ResizableBox, ResizableBoxProps } from '../../ResizableBox';
 
@@ -33,9 +32,9 @@ export const LayoutSidebar = forwardRef<HTMLDivElement, LayoutSidebarProps>(
       >
         <ResizableBox
           axis={axis}
-          width={width}
-          minWidth={minWidth}
           maxWidth={maxWidth}
+          minWidth={minWidth}
+          width={width}
           onResize={onResize}
         >
           <Box

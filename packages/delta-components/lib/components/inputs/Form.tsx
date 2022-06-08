@@ -44,7 +44,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
                 onBlur,
               })
             ) : (
-              <TextInput value={value} onChange={onChange} onBlur={onBlur} />
+              <TextInput value={value} onBlur={onBlur} onChange={onChange} />
             )
           }
         />

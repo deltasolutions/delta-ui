@@ -39,6 +39,8 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     }, [value]);
     return (
       <input
+        ref={ref}
+        disabled={disabled}
         sx={{
           boxSizing: 'border-box',
           margin: 0,
@@ -67,13 +69,11 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
                 },
               }),
         }}
-        ref={ref}
         type="text"
         value={innerValue}
-        disabled={disabled}
+        onBlur={() => onBlur?.()}
         onChange={e => handleChange(e.target.value)}
         onFocus={() => onFocus?.()}
-        onBlur={() => onBlur?.()}
         {...rest}
       />
     );

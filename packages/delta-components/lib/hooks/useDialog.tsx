@@ -54,7 +54,6 @@ export const useDialog = <C extends unknown = never>(
         >
           <Box
             ref={mergedRef}
-            tabIndex={-1}
             sx={{
               position: 'fixed',
               zIndex: 2000,
@@ -68,6 +67,7 @@ export const useDialog = <C extends unknown = never>(
               backgroundColor: 'rgba(0, 0, 0, 0.65)',
               outline: 'none',
             }}
+            tabIndex={-1}
             onClick={e => {
               if (overlayRef.current === e.target) {
                 handleClose();

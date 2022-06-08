@@ -63,14 +63,13 @@ export const Scroll = ({ children, ...rest }: ScrollProps) => {
           onClick={() => slide(-50)}
         >
           <MdKeyboardArrowLeft
-            sx={{ marginLeft: 'auto', '& > *': { color: 'text_base' } }}
             size={32}
+            sx={{ marginLeft: 'auto', '& > *': { color: 'text_base' } }}
           />
         </button>
       )}
       <Box
         ref={scrl}
-        onScroll={scrollCheck}
         sx={{
           overflow: 'scroll',
           maxWidth: '100%',
@@ -82,6 +81,7 @@ export const Scroll = ({ children, ...rest }: ScrollProps) => {
             display: 'none',
           },
         }}
+        onScroll={scrollCheck}
         {...rest}
       >
         {children}
@@ -107,8 +107,8 @@ export const Scroll = ({ children, ...rest }: ScrollProps) => {
           onClick={() => slide(+50)}
         >
           <MdKeyboardArrowRight
-            sx={{ '& > *': { color: 'text_base' } }}
             size={32}
+            sx={{ '& > *': { color: 'text_base' } }}
           />
         </button>
       )}

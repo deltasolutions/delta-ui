@@ -66,18 +66,18 @@ export const FilePicker = forwardRef<HTMLDivElement, FilePickerProps>(
         <Box ref={ref} {...rest}>
           <input
             ref={inputRef}
-            type="file"
-            multiple={multiple}
             disabled={disabled}
-            onChange={handleInputChange}
+            multiple={multiple}
             sx={{ display: 'none' }}
+            type="file"
+            onChange={handleInputChange}
             {...rest}
           />
           <DndBox
+            onClick={handleButtonClick}
             onDrop={({ files }) => {
               files.length && handleChange(files);
             }}
-            onClick={handleButtonClick}
           >
             {innerValue?.length &&
               Array.from(innerValue).map((file, i) => {
@@ -85,7 +85,7 @@ export const FilePicker = forwardRef<HTMLDivElement, FilePickerProps>(
                   return null;
                 }
                 return (
-                  <FilePickerItem key={i} isEven={i % 2 === 0} file={file} />
+                  <FilePickerItem key={i} file={file} isEven={i % 2 === 0} />
                 );
               })}
           </DndBox>
@@ -116,9 +116,8 @@ export const FilePickerItem = forwardRef<
     <Anchor
       ref={ref}
       {...rest}
-      variant="pure"
-      href={link}
       download={file.name}
+      href={link}
       sx={{
         py: 2,
         px: 3,
@@ -130,6 +129,7 @@ export const FilePickerItem = forwardRef<
           textDecoration: 'underline',
         },
       }}
+      variant="pure"
     >
       {file.name}{' '}
       <span sx={{ color: 'onSurface' }}>({formatBytes(file.size)})</span>

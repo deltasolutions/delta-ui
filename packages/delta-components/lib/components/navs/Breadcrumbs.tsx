@@ -24,13 +24,13 @@ export const Breadcrumbs = ({ children, ...rest }: BreadcrumbsProps) => {
             ...p,
             i > 0 ? (
               <FaAngleRight
+                key={i}
+                size={24}
                 sx={{
                   whiteSpace: 'nowrap',
                   width: '1.1em',
                   height: '1.1em',
                 }}
-                key={i}
-                size={24}
               />
             ) : null,
             v,

@@ -46,8 +46,6 @@ export const LayoutNavigationItem = forwardRef<
     <Anchor
       ref={ref}
       href="#"
-      variant="pure"
-      onClick={handleClick}
       style={{
         ...(isActive ? {} : {}),
       }}
@@ -69,6 +67,8 @@ export const LayoutNavigationItem = forwardRef<
           backgroundColor: 'accentExterior',
         }),
       }}
+      variant="pure"
+      onClick={handleClick}
       {...rest}
     >
       {icon && (

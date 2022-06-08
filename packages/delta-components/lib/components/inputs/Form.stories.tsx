@@ -32,35 +32,35 @@ export const Basics = () => {
   return (
     <Form onSubmit={v => openModal(v)}>
       <FormGrid>
-        <FormField name="defaultWidget" label="Default Widget" />
+        <FormField label="Default Widget" name="defaultWidget" />
         <FormField name="switch">
           <Switch>Switch</Switch>
         </FormField>
-        <FormField name="select" label="Select">
+        <FormField label="Select" name="select">
           <Select>
             <SelectOption value={1}>A</SelectOption>
             <SelectOption value={2}>B</SelectOption>
             <SelectOption value={3}>C</SelectOption>
           </Select>
         </FormField>
-        <FormField name="radio" label="Radio">
+        <FormField label="Radio" name="radio">
           <Radio>
             <RadioOption value={1}>A</RadioOption>
             <RadioOption value={2}>B</RadioOption>
             <RadioOption value={3}>C</RadioOption>
           </Radio>
         </FormField>
-        <FormField name="slider" label="Slider">
+        <FormField label="Slider" name="slider">
           <Slider />
         </FormField>
-        <FormField name="filePicker" label="FilePicker">
+        <FormField label="FilePicker" name="filePicker">
           <FilePicker>Pick Files</FilePicker>
         </FormField>
-        <FormField name="textArea" label="TextArea">
+        <FormField label="TextArea" name="textArea">
           <TextArea />
         </FormField>
       </FormGrid>
-      <Button variant="contained" type="submit" sx={{ mt: 4 }}>
+      <Button sx={{ mt: 4 }} type="submit" variant="contained">
         Submit
       </Button>
     </Form>
@@ -75,9 +75,9 @@ export const Controlled = () => {
         <Switch>Show input</Switch>
       </FormField>
       {form.watch('showInput') && (
-        <FormField name="textInput" label="Text Input" sx={{ mt: 4 }} />
+        <FormField label="Text Input" name="textInput" sx={{ mt: 4 }} />
       )}
-      <Button variant="contained" type="submit" sx={{ mt: 4 }}>
+      <Button sx={{ mt: 4 }} type="submit" variant="contained">
         Submit
       </Button>
     </Form>

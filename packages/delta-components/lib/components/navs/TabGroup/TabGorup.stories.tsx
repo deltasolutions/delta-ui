@@ -15,7 +15,7 @@ export const Basics = () => {
   return (
     <TabGroup activeId={activeId}>
       {options.map(v => (
-        <TabOption onClick={() => setActiveId(v)} key={v} id={v}>
+        <TabOption key={v} id={v} onClick={() => setActiveId(v)}>
           {v}
         </TabOption>
       ))}

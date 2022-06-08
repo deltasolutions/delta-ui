@@ -15,6 +15,7 @@ export const Basics = () => {
   const [options, setOptions] = useState(data);
   return (
     <TextCompletion
+      placeholder="Placeholder"
       onChange={value =>
         setOptions(
           data.filter(item =>
@@ -22,7 +23,6 @@ export const Basics = () => {
           )
         )
       }
-      placeholder="Placeholder"
     >
       {options.map(option => (
         <TextCompletionOption key={option} value={option}>

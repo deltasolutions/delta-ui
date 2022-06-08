@@ -13,16 +13,19 @@
     "dev": "start-storybook -c docs -p 6006 --ci",
     "doc": "build-storybook -c docs -o dist/docs",
     "lint": "npm run lint:static && npm run lint:format",
-    "lint:format": "prettier ./{lib,docs}/**/*.{ts,tsx} --write",
-    "lint:static": "eslint ./{lib,docs}/**/*.{ts,tsx} --fix",
+    "lint:format": "prettier './{lib,docs}/**/*.{ts,tsx}' --write",
+    "lint:static": "eslint './{lib,docs}/**/*.{ts,tsx}' --fix",
     "release": "delta-release"
   },
   "peerDependencies": {
     "@emotion/react": "^11.5.0",
     "@theme-ui/core": "^0.11.3",
     "react": ">=16.13.1",
+    "react-dom": "^16.13.1",
     "react-dnd": "^14.0.4",
-    "react-i18next": "^11.13.0"
+    "react-i18next": "^11.13.0",
+    "react-hook-form": "^7.31.2",
+    "react-dnd-html5-backend": "^14.0.2"
   },
   "tsup": {
     "clean": true,

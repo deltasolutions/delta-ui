@@ -63,11 +63,11 @@ export const Controlled = () => {
         Set Query
       </Button>
       <Autocomplete
+        placeholder="Placeholder"
+        query={query}
         value={value}
         onChange={setValue}
-        query={query}
         onQuery={setQuery}
-        placeholder="Placeholder"
       >
         {options.map(v => (
           <AutocompleteOption key={v} value={v}>

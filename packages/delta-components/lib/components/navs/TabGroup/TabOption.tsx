@@ -23,7 +23,7 @@ export const TabOption = forwardRef<HTMLAnchorElement, TabOptionProps>(
     return (
       <Anchor
         ref={ref}
-        variant="pure"
+        href={href ?? '#'}
         sx={{
           position: 'relative',
           paddingX: 4,
@@ -45,7 +45,7 @@ export const TabOption = forwardRef<HTMLAnchorElement, TabOptionProps>(
             backgroundColor: 'accentSurface',
           }),
         }}
-        href={href ?? '#'}
+        variant="pure"
         onClick={handleClick}
         {...rest}
       >

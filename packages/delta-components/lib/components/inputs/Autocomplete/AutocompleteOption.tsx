@@ -29,10 +29,10 @@ export const AutocompleteOption = forwardRef<
   const { setActiveIndex } = useContext(AutocompleteDropContext);
   return (
     <Button
-      tabIndex={-1}
       ref={mergedRef}
-      onMouseEnter={() => setActiveIndex(index as number)}
-      onMouseLeave={() => setActiveIndex(null)}
+      style={{
+        ...(active && { backgroundColor: primary, color: onPrimary }),
+      }}
       sx={{
         paddingX: 1,
         paddingY: 1,
@@ -40,9 +40,9 @@ export const AutocompleteOption = forwardRef<
         borderRadius: 2,
         fontSize: 2,
       }}
-      style={{
-        ...(active && { backgroundColor: primary, color: onPrimary }),
-      }}
+      tabIndex={-1}
+      onMouseEnter={() => setActiveIndex(index as number)}
+      onMouseLeave={() => setActiveIndex(null)}
       {...rest}
     />
   );

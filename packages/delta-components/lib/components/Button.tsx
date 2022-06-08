@@ -15,7 +15,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         ref={ref}
         disabled={disabled}
-        type={type ?? 'button'}
         sx={{
           boxSizing: 'border-box',
           padding: 0,
@@ -38,6 +37,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           ...getSizeStyle(props),
           ...getVariantStyle(props),
         }}
+        type={type ?? 'button'}
         {...rest}
       />
     );

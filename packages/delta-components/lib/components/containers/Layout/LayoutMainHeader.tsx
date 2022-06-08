@@ -27,6 +27,7 @@ export const LayoutMainHeader = (props: LayoutMainHeaderProps) => {
   }, []);
   return (
     <Box
+      style={style}
       sx={{
         position: 'sticky',
         top: 0,
@@ -38,7 +39,6 @@ export const LayoutMainHeader = (props: LayoutMainHeaderProps) => {
         paddingX: 5,
         color: 'onExterior',
       }}
-      style={style}
       {...props}
     />
   );

@@ -36,15 +36,15 @@ export const Basics = () => {
       <AlertHolder>{alerts}</AlertHolder>
       <Box sx={{ mt: 4, display: 'flex', gap: 2 }}>
         <Button
-          variant="contained"
           color="secondary"
+          variant="contained"
           onClick={() => handleClick()}
         >
           Success
         </Button>
         <Button
-          variant="outlined"
           color="secondary"
+          variant="outlined"
           onClick={() => handleClick(true)}
         >
           Failure

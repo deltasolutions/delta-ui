@@ -16,4 +16,4 @@ const pairs = [
 
 export const Basics = () => <PairList pairs={pairs} />;
 
-export const Column = () => <PairList variant="column" pairs={pairs} />;
+export const Column = () => <PairList pairs={pairs} variant="column" />;

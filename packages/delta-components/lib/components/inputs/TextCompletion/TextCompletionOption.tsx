@@ -26,6 +26,15 @@ export const TextCompletionOption = forwardRef<
   return (
     <Button
       ref={mergedRef}
+      sx={{
+        paddingX: 1,
+        paddingY: 1,
+        textAlign: 'left',
+        fontSize: 2,
+        outline: 'none',
+        borderRadius: 2,
+        transition: 'background-color 30ms ease-out, color 30ms ease-out',
+      }}
       onMouseEnter={() => {
         if (buttonRef.current) {
           buttonRef.current.style.backgroundColor = primary;
@@ -37,15 +46,6 @@ export const TextCompletionOption = forwardRef<
           buttonRef.current.style.backgroundColor = 'inherit';
           buttonRef.current.style.color = 'inherit';
         }
-      }}
-      sx={{
-        paddingX: 1,
-        paddingY: 1,
-        textAlign: 'left',
-        fontSize: 2,
-        outline: 'none',
-        borderRadius: 2,
-        transition: 'background-color 30ms ease-out, color 30ms ease-out',
       }}
       {...rest}
     />

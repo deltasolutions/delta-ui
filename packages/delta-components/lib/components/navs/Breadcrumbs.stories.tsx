@@ -14,7 +14,7 @@ export const Basics = () => {
       <Breadcrumbs>
         <Anchor variant="pure">Home</Anchor>
         <Anchor variant="pure">Categories</Anchor>
-        <Anchor variant="pure" sx={{ color: 'accentOnBackground' }}>
+        <Anchor sx={{ color: 'accentOnBackground' }} variant="pure">
           Laptops
         </Anchor>
       </Breadcrumbs>

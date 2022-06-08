@@ -4,7 +4,7 @@ import {
   useMemo,
   useState,
   Dispatch,
-  SetStateAction
+  SetStateAction,
 } from 'react';
 
 interface LoaderRegistryDatum {
@@ -16,7 +16,7 @@ class LoaderRegistry {
   data = new Map<any, LoaderRegistryDatum>();
   globalDatum: LoaderRegistryDatum = {
     count: 0,
-    subscriptions: []
+    subscriptions: [],
   };
 
   addDelta(ids: any[] | undefined, delta: 1 | -1) {

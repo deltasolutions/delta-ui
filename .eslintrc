@@ -4,7 +4,7 @@
   "parserOptions": {
     "project": "./tsconfig.json"
   },
-  "plugins": ["@typescript-eslint", "import"],
+  "plugins": ["@typescript-eslint", "import", "react"],
   "rules": {
     "@typescript-eslint/adjacent-overload-signatures": ["error"],
     "@typescript-eslint/array-type": ["error"],
@@ -70,21 +70,21 @@
         }
       }
     ],
-    "@typescript-eslint/naming-convention": [
-      "error",
-      {
-        "format": ["StrictPascalCase"],
-        "selector": ["enumMember"]
-      },
-      {
-        "filter": {
-          "match": false,
-          "regex": "^_$"
-        },
-        "format": ["strictCamelCase", "StrictPascalCase"],
-        "selector": ["variableLike", "memberLike"]
-      }
-    ],
+    // "@typescript-eslint/naming-convention": [
+    //   "error",
+    //   {
+    //     "format": ["StrictPascalCase"],
+    //     "selector": ["enumMember"]
+    //   },
+    //   {
+    //     "filter": {
+    //       "match": false,
+    //       "regex": "^_$"
+    //     },
+    //     "format": ["strictCamelCase", "StrictPascalCase"],
+    //     "selector": ["variableLike", "memberLike"]
+    //   }
+    // ],
     "@typescript-eslint/no-base-to-string": ["error"],
     "import/no-cycle": ["error"],
     "import/no-unresolved": ["error"],
@@ -94,6 +94,15 @@
         "groups": ["builtin", "external", "parent", "sibling", "index"],
         "newlines-between": "never",
         "alphabetize": { "order": "asc", "caseInsensitive": true }
+      }
+    ],
+    "react/jsx-sort-props": [
+      "error",
+      {
+        "callbacksLast": true,
+        "ignoreCase": true,
+        "reservedFirst": true,
+        "shorthandFirst": true
       }
     ]
   },

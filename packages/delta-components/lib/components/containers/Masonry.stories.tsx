@@ -41,7 +41,7 @@ export const Basics = () => {
   }, []);
   return (
     <Box>
-      <Button variant="contained" sx={{ mb: 3 }} onClick={toggle}>
+      <Button sx={{ mb: 3 }} variant="contained" onClick={toggle}>
         Toggle
       </Button>
       <Masonry

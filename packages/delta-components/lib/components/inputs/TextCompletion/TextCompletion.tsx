@@ -104,14 +104,14 @@ export const TextCompletion = forwardRef<HTMLInputElement, TextCompletionProps>(
           {portal}
           <TextInput
             ref={inputRef}
-            value={innerValue}
             disabled={disabled}
             placeholder={placeholder}
+            value={innerValue}
+            onBlur={onBlur}
             onChange={handleChange}
             onClick={openDrop}
-            onKeyDown={ev => ev.key === 'ArrowDown' && openDrop()}
             onFocus={onFocus}
-            onBlur={onBlur}
+            onKeyDown={ev => ev.key === 'ArrowDown' && openDrop()}
           />
         </Box>
       </TextCompletionContext.Provider>
@@ -175,6 +175,15 @@ export const TextCompletionOption = forwardRef<
   return (
     <Button
       ref={mergedRef}
+      sx={{
+        paddingX: 1,
+        paddingY: 1,
+        textAlign: 'left',
+        fontSize: 2,
+        outline: 'none',
+        borderRadius: 2,
+        transition: 'background-color 30ms ease-out, color 30ms ease-out',
+      }}
       onMouseEnter={() => {
         if (ref.current) {
           ref.current.style.backgroundColor = primary;
@@ -186,15 +195,6 @@ export const TextCompletionOption = forwardRef<
           ref.current.style.backgroundColor = 'inherit';
           ref.current.style.color = 'inherit';
         }
-      }}
-      sx={{
-        paddingX: 1,
-        paddingY: 1,
-        textAlign: 'left',
-        fontSize: 2,
-        outline: 'none',
-        borderRadius: 2,
-        transition: 'background-color 30ms ease-out, color 30ms ease-out',
       }}
       {...rest}
     />

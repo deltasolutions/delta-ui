@@ -257,19 +257,19 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
           })}
           <Box sx={{ width: 'fit-content', flexGrow: 1 }}>
             <TextInput
+              ref={inputRef}
               autoComplete="off"
               id={inputId}
-              variant="pure"
-              ref={inputRef}
-              value={innerQuery}
               placeholder={placeholder}
-              onClick={handleOpen}
+              value={innerQuery}
+              variant="pure"
+              onBlur={onBlur}
               onChange={handleQueryChange}
+              onClick={handleOpen}
               onFocus={() => {
                 handleOpen();
                 onFocus?.();
               }}
-              onBlur={onBlur}
             />
           </Box>
         </label>

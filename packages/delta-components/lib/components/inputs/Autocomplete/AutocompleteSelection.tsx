@@ -12,7 +12,6 @@ export const AutocompleteSelection = ({
 }: AutocompleteSelectionProps) => {
   return (
     <Button
-      tabIndex={-1}
       sx={{
         position: 'relative',
         px: '0.25em',
@@ -23,6 +22,7 @@ export const AutocompleteSelection = ({
         gap: 1,
         color: 'onSurface',
       }}
+      tabIndex={-1}
       {...rest}
     >
       <Box
@@ -42,7 +42,6 @@ export const AutocompleteSelection = ({
       />
       <Box sx={{ position: 'relative', zIndex: 1 }}>{children}</Box>
       <Button
-        onClick={onClick}
         sx={{
           position: 'relative',
           zIndex: 1,
@@ -50,6 +49,7 @@ export const AutocompleteSelection = ({
           display: 'flex',
           alignItems: 'center',
         }}
+        onClick={onClick}
       >
         <IoCloseCircleOutline size={14} />
       </Button>

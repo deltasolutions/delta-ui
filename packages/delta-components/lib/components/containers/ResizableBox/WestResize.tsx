@@ -18,18 +18,17 @@ export const WestResize = ({ minWidth, width, maxWidth, setWidth }) => {
   return (
     <Fragment>
       <input
-        onFocus={() => setIsFocus(true)}
-        onBlur={() => setIsFocus(false)}
+        max={-minWidth}
+        min={-maxWidth}
+        step={10}
         sx={{ opacity: 0, width: 0, position: 'absolute' }}
         type="range"
         value={width ? -width : -maxWidth}
+        onBlur={() => setIsFocus(false)}
         onChange={e => setWidth(Math.abs(e.target.valueAsNumber))}
-        min={-maxWidth}
-        max={-minWidth}
-        step={10}
+        onFocus={() => setIsFocus(true)}
       />
       <div
-        onMouseDown={onMouseDown}
         sx={{
           zIndex: 1,
           position: 'absolute',
@@ -52,6 +51,7 @@ export const WestResize = ({ minWidth, width, maxWidth, setWidth }) => {
             borderStyle: 'solid',
           },
         }}
+        onMouseDown={onMouseDown}
       />
     </Fragment>
   );

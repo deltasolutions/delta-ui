@@ -40,28 +40,28 @@ export const ResizableBox = ({
   );
   return (
     <Box
+      ref={resizableBoxRef}
       style={{ minWidth: width + 'px', width: width + 'px' }}
       sx={{ position: 'relative' }}
-      ref={resizableBoxRef}
       {...rest}
     >
       <Box sx={{ height: '100%', overflow: 'hidden' }}>
         {axis.includes('e') && (
           <EastResize
-            resizableBoxRef={resizableBoxRef}
-            minWidth={minWidth}
-            width={width}
             maxWidth={maxWidth}
+            minWidth={minWidth}
+            resizableBoxRef={resizableBoxRef}
             setWidth={tryToSetWidth}
+            width={width}
           />
         )}
         {children}
         {axis.includes('w') && (
           <WestResize
-            minWidth={minWidth}
-            width={width}
             maxWidth={maxWidth}
+            minWidth={minWidth}
             setWidth={tryToSetWidth}
+            width={width}
           />
         )}
       </Box>

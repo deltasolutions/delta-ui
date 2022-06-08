@@ -85,17 +85,17 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       >
         <TextInput
           readOnly
-          value={title ?? ''}
           disabled={disabled}
           placeholder={placeholder}
           sx={{
             cursor: disabled ? 'not-allowed' : 'default',
             paddingRight: '2em',
           }}
-          onClick={() => openDrop()}
-          onKeyDown={ev => ev.key === 'Enter' && openDrop()}
-          onFocus={onFocus}
+          value={title ?? ''}
           onBlur={onBlur}
+          onClick={() => openDrop()}
+          onFocus={onFocus}
+          onKeyDown={ev => ev.key === 'Enter' && openDrop()}
         />
         <IoChevronDown
           sx={{

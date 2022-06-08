@@ -36,7 +36,7 @@ export const SystemContainer = forwardRef<HTMLDivElement, ContainerProps>(
             }}
           >
             {children}
-            <Box id="floating-portal" ref={setPortalNode} />
+            <Box ref={setPortalNode} id="floating-portal" />
             {floatingPortal}
           </Box>
         </ThemeProvider>

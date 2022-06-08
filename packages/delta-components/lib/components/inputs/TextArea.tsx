@@ -39,11 +39,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
     return (
       <textarea
         ref={ref}
-        value={innerValue}
         disabled={disabled}
-        onChange={e => handleChange(e.target.value)}
-        onFocus={() => onFocus?.()}
-        onBlur={() => onBlur?.()}
         sx={{
           boxSizing: 'border-box',
           width: '100%',
@@ -65,6 +61,10 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
           },
           '&::placeholder': { color: 'onSurface', opacity: 0.5 },
         }}
+        value={innerValue}
+        onBlur={() => onBlur?.()}
+        onChange={e => handleChange(e.target.value)}
+        onFocus={() => onFocus?.()}
         {...rest}
       />
     );

@@ -66,14 +66,12 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(
     return (
       <input
         ref={mergedRef}
-        type="range"
         disabled={disabled}
+        type="range"
         {...{
           ...(onChange && { onChange: ev => onChange(+ev.target.value) }),
         }}
-        onInput={onInputHandler}
-        onFocus={() => onFocus?.()}
-        onBlur={() => onBlur?.()}
+        style={{ cursor: disabled ? 'auto' : 'pointer' }}
         sx={{
           accentColor: 'red',
           appearance: 'none',
@@ -106,7 +104,9 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(
             cursor: 'pointer',
           },
         }}
-        style={{ cursor: disabled ? 'auto' : 'pointer' }}
+        onBlur={() => onBlur?.()}
+        onFocus={() => onFocus?.()}
+        onInput={onInputHandler}
         {...rest}
       />
     );

@@ -32,7 +32,7 @@ export const Basics = () => {
     <Layout>
       <LayoutSidebar>
         <LayoutSidebarHeader>
-          <Heading sx={{ color: 'onPrimary' }} level={3}>
+          <Heading level={3} sx={{ color: 'onPrimary' }}>
             Heading
           </Heading>
         </LayoutSidebarHeader>
@@ -40,216 +40,216 @@ export const Basics = () => {
           <LayoutNavigation activeId={activeId}>
             <LayoutNavigationGroup title="Group title">
               <LayoutNavigationItem
-                onClick={() => setActiveId('1')}
-                id="1"
                 icon={BiPhone}
+                id="1"
+                onClick={() => setActiveId('1')}
               >
                 First
               </LayoutNavigationItem>
               <LayoutNavigationItem
-                onClick={() => setActiveId('2')}
-                id="2"
                 icon={BiPhotoAlbum}
+                id="2"
+                onClick={() => setActiveId('2')}
               >
                 Second
               </LayoutNavigationItem>
               <LayoutNavigationItem
-                onClick={() => setActiveId('3')}
-                id="3"
                 icon={BiPlanet}
+                id="3"
+                onClick={() => setActiveId('3')}
               >
                 Third
               </LayoutNavigationItem>
             </LayoutNavigationGroup>
             <LayoutNavigationGroup title="Configuration">
               <LayoutNavigationItem
-                onClick={() => setActiveId('4')}
-                id="4"
                 icon={BiPhone}
+                id="4"
+                onClick={() => setActiveId('4')}
               >
                 Display
               </LayoutNavigationItem>
               <LayoutNavigationItem
-                onClick={() => setActiveId('10')}
-                id="10"
                 icon={BiPhone}
+                id="10"
+                onClick={() => setActiveId('10')}
               >
                 My bookmarks
               </LayoutNavigationItem>
               <LayoutNavigationItem
-                onClick={() => setActiveId('5')}
-                id="5"
                 icon={BiPhotoAlbum}
+                id="5"
+                onClick={() => setActiveId('5')}
               >
                 Second
               </LayoutNavigationItem>
               <LayoutNavigationItem
-                onClick={() => setActiveId('6')}
-                id="6"
                 icon={BiPlanet}
+                id="6"
+                onClick={() => setActiveId('6')}
               >
                 Third
               </LayoutNavigationItem>
             </LayoutNavigationGroup>
             <LayoutNavigationGroup title="Subscriptions">
               <LayoutNavigationItem
-                onClick={() => setActiveId('7')}
-                id="7"
                 icon={BiPhone}
+                id="7"
+                onClick={() => setActiveId('7')}
               >
                 First
               </LayoutNavigationItem>
               <LayoutNavigationItem
-                onClick={() => setActiveId('8')}
-                id="8"
                 icon={BiPhotoAlbum}
+                id="8"
+                onClick={() => setActiveId('8')}
               >
                 Second
               </LayoutNavigationItem>
               <LayoutNavigationItem
-                onClick={() => setActiveId('9')}
-                id="9"
                 icon={BiPlanet}
+                id="9"
+                onClick={() => setActiveId('9')}
               >
                 Third
               </LayoutNavigationItem>
               <LayoutNavigationItem
-                onClick={() => setActiveId('9')}
-                id="9"
                 icon={BiPlanet}
+                id="9"
+                onClick={() => setActiveId('9')}
               >
                 Third
               </LayoutNavigationItem>{' '}
               <LayoutNavigationItem
-                onClick={() => setActiveId('9')}
-                id="9"
                 icon={BiPlanet}
+                id="9"
+                onClick={() => setActiveId('9')}
               >
                 Third
               </LayoutNavigationItem>{' '}
               <LayoutNavigationItem
-                onClick={() => setActiveId('9')}
-                id="9"
                 icon={BiPlanet}
+                id="9"
+                onClick={() => setActiveId('9')}
               >
                 Third
               </LayoutNavigationItem>{' '}
               <LayoutNavigationItem
-                onClick={() => setActiveId('9')}
-                id="9"
                 icon={BiPlanet}
+                id="9"
+                onClick={() => setActiveId('9')}
               >
                 Third
               </LayoutNavigationItem>{' '}
               <LayoutNavigationItem
-                onClick={() => setActiveId('9')}
-                id="9"
                 icon={BiPlanet}
+                id="9"
+                onClick={() => setActiveId('9')}
               >
                 Third
               </LayoutNavigationItem>{' '}
               <LayoutNavigationItem
-                onClick={() => setActiveId('9')}
-                id="9"
                 icon={BiPlanet}
+                id="9"
+                onClick={() => setActiveId('9')}
               >
                 Third
               </LayoutNavigationItem>{' '}
               <LayoutNavigationItem
-                onClick={() => setActiveId('9')}
-                id="9"
                 icon={BiPlanet}
+                id="9"
+                onClick={() => setActiveId('9')}
               >
                 Third
               </LayoutNavigationItem>{' '}
               <LayoutNavigationItem
-                onClick={() => setActiveId('9')}
-                id="9"
                 icon={BiPlanet}
+                id="9"
+                onClick={() => setActiveId('9')}
               >
                 Third
               </LayoutNavigationItem>{' '}
               <LayoutNavigationItem
-                onClick={() => setActiveId('9')}
-                id="9"
                 icon={BiPlanet}
+                id="9"
+                onClick={() => setActiveId('9')}
               >
                 Third
               </LayoutNavigationItem>{' '}
               <LayoutNavigationItem
-                onClick={() => setActiveId('9')}
-                id="9"
                 icon={BiPlanet}
+                id="9"
+                onClick={() => setActiveId('9')}
               >
                 Third
               </LayoutNavigationItem>{' '}
               <LayoutNavigationItem
-                onClick={() => setActiveId('9')}
-                id="9"
                 icon={BiPlanet}
+                id="9"
+                onClick={() => setActiveId('9')}
               >
                 Third
               </LayoutNavigationItem>{' '}
               <LayoutNavigationItem
-                onClick={() => setActiveId('9')}
-                id="9"
                 icon={BiPlanet}
+                id="9"
+                onClick={() => setActiveId('9')}
               >
                 Third
               </LayoutNavigationItem>{' '}
               <LayoutNavigationItem
-                onClick={() => setActiveId('9')}
-                id="9"
                 icon={BiPlanet}
+                id="9"
+                onClick={() => setActiveId('9')}
               >
                 Third
               </LayoutNavigationItem>{' '}
               <LayoutNavigationItem
-                onClick={() => setActiveId('9')}
-                id="9"
                 icon={BiPlanet}
+                id="9"
+                onClick={() => setActiveId('9')}
               >
                 Third
               </LayoutNavigationItem>{' '}
               <LayoutNavigationItem
-                onClick={() => setActiveId('9')}
-                id="9"
                 icon={BiPlanet}
+                id="9"
+                onClick={() => setActiveId('9')}
               >
                 Third
               </LayoutNavigationItem>{' '}
               <LayoutNavigationItem
-                onClick={() => setActiveId('9')}
-                id="9"
                 icon={BiPlanet}
+                id="9"
+                onClick={() => setActiveId('9')}
               >
                 Third
               </LayoutNavigationItem>{' '}
               <LayoutNavigationItem
-                onClick={() => setActiveId('9')}
-                id="9"
                 icon={BiPlanet}
+                id="9"
+                onClick={() => setActiveId('9')}
               >
                 Third
               </LayoutNavigationItem>
               <LayoutNavigationItem
-                onClick={() => setActiveId('9')}
-                id="9"
                 icon={BiPlanet}
+                id="9"
+                onClick={() => setActiveId('9')}
               >
                 Third
               </LayoutNavigationItem>{' '}
               <LayoutNavigationItem
-                onClick={() => setActiveId('9')}
-                id="9"
                 icon={BiPlanet}
+                id="9"
+                onClick={() => setActiveId('9')}
               >
                 Third
               </LayoutNavigationItem>{' '}
               <LayoutNavigationItem
-                onClick={() => setActiveId('9')}
-                id="9"
                 icon={BiPlanet}
+                id="9"
+                onClick={() => setActiveId('9')}
               >
                 Third
               </LayoutNavigationItem>
@@ -269,8 +269,8 @@ export const Basics = () => {
               </Anchor>
               <Anchor
                 href="#"
-                variant="pure"
                 sx={{ color: 'accentOnBackground' }}
+                variant="pure"
               >
                 Laptops
               </Anchor>
