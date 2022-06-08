@@ -2,10 +2,16 @@ import { jsx } from '@theme-ui/core';
 import { forwardRef } from 'react';
 import { Box, BoxProps } from './Box';
 
-export interface AlertHolderProps extends BoxProps {}
+export interface AlertHolderProps extends Omit<BoxProps, 'children'> {
+  children?: any;
+}
 
 export const AlertHolder = forwardRef<HTMLDivElement, AlertHolderProps>(
-  (props, ref) => {
+  ({ children, ...rest }, ref) => {
+    if (!children || children?.length === 0) {
+      return null;
+    }
+
     return (
       <Box
         ref={ref}
@@ -14,8 +20,10 @@ export const AlertHolder = forwardRef<HTMLDivElement, AlertHolderProps>(
           flexDirection: 'column',
           gap: 3,
         }}
-        {...props}
-      />
+        {...rest}
+      >
+        {children}
+      </Box>
     );
   }
 );

@@ -9,7 +9,7 @@ import { Box, BoxProps } from './Box';
 export interface NotificationProps
   extends BoxProps,
     Partial<PortalledTransitionProps> {
-  color?: 'primary' | 'secondary' | 'success' | 'error';
+  color?: 'primary' | 'secondary' | 'success' | 'error' | 'info';
 }
 
 export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
@@ -46,8 +46,8 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
           opacity: isVisible ? 1 : 0,
           backgroundColor: 'secondary',
           color: 'onSecondary',
-          transform: `translate(${
-            isVisible ? '0, 0' : isEntering ? '3rem, 0.5rem' : '3rem, 0rem'
+          transform: `translateX(${
+            isVisible ? '0, 0' : isEntering ? '3rem' : '3rem'
           })`,
           ...{
             error: { fontWeight: 500, fontSize: 1 },

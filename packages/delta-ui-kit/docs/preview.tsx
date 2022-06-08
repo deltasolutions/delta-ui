@@ -1,5 +1,6 @@
 import { Global } from '@emotion/react';
 import { jsx } from '@theme-ui/core';
+import { I18nextProvider } from 'react-i18next';
 import { Box, SystemContainer, theme } from '../lib';
 
 export const parameters = {

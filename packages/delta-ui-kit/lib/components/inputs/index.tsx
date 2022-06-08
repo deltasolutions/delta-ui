@@ -9,3 +9,4 @@ export * from './TextArea';
 export * from './TextCompletion';
 export * from './TextCompletion';
 export * from './TextInput';
+export * from './Checkbox';

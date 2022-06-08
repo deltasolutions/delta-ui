@@ -54,25 +54,25 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
 );
 
 export interface ControlledFormProps
-  extends Omit<BoxProps, 'onSubmit' | 'onChange'> {
+  extends Omit<HTMLFormElement, 'onSubmit' | 'onChange'> {
   form: UseFormReturn;
   onSubmit?: (value: { [key: string]: unknown }) => void;
 }
 
-export const ControlledForm = forwardRef<HTMLDivElement, ControlledFormProps>(
+export const ControlledForm = forwardRef<HTMLFormElement, ControlledFormProps>(
   ({ form, onSubmit, children, ...rest }, ref) => {
     return (
-      <Box ref={ref} {...rest}>
-        <form
-          noValidate
-          onSubmit={e => {
-            e.preventDefault();
-            onSubmit && form.handleSubmit(onSubmit)(e);
-          }}
-        >
-          <FormProvider {...form}>{children}</FormProvider>
-        </form>
-      </Box>
+      <form
+        ref={ref}
+        noValidate
+        onSubmit={e => {
+          e.preventDefault();
+          onSubmit && form.handleSubmit(onSubmit)(e);
+        }}
+        {...rest}
+      >
+        <FormProvider {...form}>{children}</FormProvider>
+      </form>
     );
   }
 );
@@ -112,6 +112,7 @@ export const FormGrid = forwardRef<HTMLDivElement, FormGridProps>(
         style={style}
         sx={{
           display: 'grid',
+          transition: 'all 3s ease',
           gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
           gap: 4,
         }}

@@ -33,88 +33,88 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
     }, [value]);
 
     return (
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-        <label
+      <label
+        sx={{
+          opacity: disabled ? 0.5 : 11,
+          display: 'inline-flex',
+          alignItems: 'center',
+          minHeight: '22px',
+          gap: 2,
+          position: 'relative',
+          verticalAlign: 'middle',
+          userSelect: 'none',
+          'input:checked + span': {
+            backgroundColor: 'primary',
+          },
+          'input:checked + span:before': {
+            transform: 'translateX(18px)',
+          },
+          'input:focus-visible + span': {
+            outline: '2px solid',
+            outlineColor: 'primary',
+            outlineOffset: 2,
+          },
+          'input:not(:disabled) + span': {
+            cursor: 'default',
+            opacity: 2,
+          },
+          'input:disabled + span:before': {
+            background: 'onSurface',
+          },
+          'input:disabled + span': {
+            opacity: 1,
+          },
+        }}
+      >
+        {children && <Box>{children}</Box>}
+        <input
+          ref={ref}
+          checked={innerValue}
+          disabled={disabled}
           sx={{
-            opacity: disabled ? 0.5 : 11,
-            display: 'inline-block',
-            height: '22px',
+            position: 'absolute',
+            opacity: 0,
+            cursor: 'default',
+            height: '0',
+            width: '0',
+          }}
+          type="checkbox"
+          onBlur={() => onBlur?.()}
+          onChange={ev => handleChange(ev.target.checked)}
+          onFocus={() => onFocus?.()}
+          onKeyDown={ev => {
+            if (ev.key === 'Enter') {
+              ev.preventDefault();
+              handleChange(!innerValue);
+            }
+            onKeyDown?.(ev);
+          }}
+          {...rest}
+        />
+        <span
+          sx={{
             position: 'relative',
-            verticalAlign: 'middle',
-            userSelect: 'none',
-            'input:checked + span': {
-              backgroundColor: 'primary',
-            },
-            'input:checked + span:before': {
-              transform: 'translateX(18px)',
-            },
-            'input:focus-visible + span': {
-              outline: '2px solid',
-              outlineColor: 'primary',
-              outlineOffset: 2,
-            },
-            'input:not(:disabled) + span': {
-              cursor: 'default',
-              opacity: 2,
-            },
-            'input:disabled + span:before': {
-              background: 'onSurface',
-            },
-            'input:disabled + span': {
-              opacity: 1,
+            display: 'inline-block',
+            boxSizing: 'border-box',
+            width: '40px',
+            height: '22px',
+            borderRadius: '25%/50%',
+            verticalAlign: 'top',
+            backgroundColor: 'accentSurface',
+            '&:before': {
+              content: "''",
+              position: 'absolute',
+              top: '2px',
+              left: '2px',
+              display: 'inline-block',
+              width: '18px',
+              height: '18px',
+              borderRadius: '50%',
+              backgroundColor: 'onPrimary',
             },
           }}
-        >
-          <input
-            ref={ref}
-            checked={innerValue}
-            disabled={disabled}
-            sx={{
-              position: 'absolute',
-              opacity: 0,
-              cursor: 'default',
-              height: '0',
-              width: '0',
-            }}
-            type="checkbox"
-            onBlur={() => onBlur?.()}
-            onChange={ev => handleChange(ev.target.checked)}
-            onFocus={() => onFocus?.()}
-            onKeyDown={ev => {
-              if (ev.key === 'Enter') {
-                ev.preventDefault();
-                handleChange(!innerValue);
-              }
-              onKeyDown?.(ev);
-            }}
-            {...rest}
-          />
-          <span
-            sx={{
-              position: 'relative',
-              display: 'inline-block',
-              boxSizing: 'border-box',
-              width: '40px',
-              height: '22px',
-              borderRadius: '25%/50%',
-              verticalAlign: 'top',
-              backgroundColor: 'accentSurface',
-              '&:before': {
-                content: "''",
-                position: 'absolute',
-                top: '2px',
-                left: '2px',
-                display: 'inline-block',
-                width: '18px',
-                height: '18px',
-                borderRadius: '50%',
-                backgroundColor: 'onPrimary',
-              },
-            }}
-          />
-        </label>
-        {children && <Box>{children}</Box>}
-      </Box>
+        />
+      </label>
     );
   }
 );
