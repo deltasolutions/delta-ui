@@ -1,7 +1,7 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { Button } from '../components';
-import { useNotification } from './useNotification';
+import { NotificationPlacement, useNotification } from './useNotification';
 
 export default {
   title: 'hooks/useNotification',
@@ -14,9 +14,11 @@ export const Basics = () => {
       variant="contained"
       onClick={() =>
         openNotification({
+          placement: NotificationPlacement.TopRight,
           color: 'success',
-          duration: 500,
-          render: () => 'Lorem ipsum dolor sit amet',
+          duration: 1000 * 6,
+          render: () =>
+            'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
         })
       }
     >

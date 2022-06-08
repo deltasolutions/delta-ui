@@ -30,7 +30,7 @@ export const theme = {
     onSecondary: '#2c2c2c',
     onInfo: '#ffffff',
     onSuccess: '#ffffff',
-    onWarning: '#ffffff',
+    onWarning: '#000000',
     onError: '#ffffff',
     onBackground: '#bebebe',
     onSurface: '#d3d1d1',

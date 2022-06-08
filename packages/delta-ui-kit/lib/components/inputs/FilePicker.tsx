@@ -119,8 +119,7 @@ export const FilePickerItem = forwardRef<
       download={file.name}
       href={link}
       sx={{
-        py: 2,
-        px: 3,
+        p: 2,
         w: '100%',
         fontSize: 1,
         justifyContent: 'space-between',

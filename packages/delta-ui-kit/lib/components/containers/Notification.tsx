@@ -1,7 +1,7 @@
 import { jsx } from '@theme-ui/core';
-import { forwardRef } from 'react';
+import { forwardRef, useMemo } from 'react';
 import { BsCheckCircleFill } from 'react-icons/bs';
-import { IoMdCloseCircle } from 'react-icons/io';
+import { IoIosCloseCircle } from 'react-icons/io';
 import { IoClose } from 'react-icons/io5';
 import { PortalledTransitionProps } from '../../hooks';
 import { Button } from '../Button';
@@ -25,67 +25,56 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
     },
     ref
   ) => {
+    const Icon = useMemo(
+      () =>
+        ({
+          error: IoIosCloseCircle,
+          primary: BsCheckCircleFill,
+          success: BsCheckCircleFill,
+        }[color]),
+      [color]
+    );
     return (
       <Box
         ref={ref}
         sx={{
-          m: 3,
+          m: 2,
           p: 3,
-          width: '350px',
-          minHeight: '50px',
           borderRadius: 4,
           display: 'flex',
-          justifyContent: 'space-between',
-          gap: 1,
-          alignItems: 'flex-start',
-          boxShadow: 1,
+          border: '1px grey solid',
           opacity: isVisible ? 1 : 0,
           backgroundColor: 'secondary',
           color: 'onSecondary',
-          borderLeftColor: color,
-          borderLeftWidth: '5',
-          borderLeftStyle: 'solid',
-          transform: `translateX(${
-            isVisible ? '0' : isEntering ? 'rem' : '-0.5rem'
+          transform: `translate(${
+            isVisible ? '0, 0' : isEntering ? '3rem, 0.5rem' : '3rem, 0rem'
           })`,
           ...{
-            error: { fontWeight: 400, fontSize: 1 },
-            primary: { fontWeight: 500, fontSize: 2 },
+            error: { fontWeight: 500, fontSize: 1 },
+            primary: { fontWeight: 600, fontSize: 2 },
             success: { fontWeight: 600, fontSize: 2 },
           }[color],
-          transition: [
-            'opacity 0.2s linear',
-            'transform 0.2s linear',
-            'right 0.3s ease-out',
-            'left 0.3s ease-out',
-          ].join(', '),
+          transition: ['opacity 0.2s linear', 'transform 0.2s linear'].join(
+            ', '
+          ),
         }}
         {...rest}
       >
-        {
-          {
-            error: <IoMdCloseCircle />,
-            primary: <BsCheckCircleFill />,
-            success: <BsCheckCircleFill />,
-          }[color]
-        }
-        {children}
-        {/* <Button
-          sx={{
-            aspectRatio: '1 / 1',
-            p: '0.2em',
-            ml: 'auto',
-            mr: '-0.2em',
-            my: '-0.2em',
-            borderRadius: '50%',
-            '&:hover, &:focus, &:focus-visible': {
-              backgroundColor: 'accentSecondary',
-            },
-          }}
-          onClick={handleClose}
-        >
-          <IoClose size={15} sx={{ verticalAlign: 'middle' }} />
-        </Button> */}
+        <Box sx={{ width: '326px', display: 'flex', gap: 3 }}>
+          <Box
+            sx={{
+              mt: 1,
+            }}
+          >
+            <Icon
+              size={18}
+              sx={{
+                color,
+              }}
+            />
+          </Box>
+          <Box sx={{ lineHeight: '24px', width: '296px' }}>{children}</Box>
+        </Box>
       </Box>
     );
   }

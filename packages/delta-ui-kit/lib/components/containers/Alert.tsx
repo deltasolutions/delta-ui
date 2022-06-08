@@ -6,7 +6,7 @@ import { Button } from '../Button';
 import { Box, BoxProps } from './Box';
 
 export interface AlertProps extends BoxProps {
-  color?: 'primary' | 'secondary' | 'success' | 'error';
+  color?: 'info' | 'warning' | 'success' | 'error';
   onClose?: () => void;
 }
 
@@ -16,20 +16,20 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
       <Box
         ref={ref}
         sx={{
-          px: '0.625rem',
-          py: 2,
-          alignItems: 'center',
+          alignItems: 'flex-start',
+          wordWrap: 'break-word',
           display: 'flex',
           width: '100%',
+          py: 1,
           borderRadius: 4,
           ...{
-            primary: {
-              backgroundColor: 'primary',
-              color: 'onPrimary',
+            info: {
+              backgroundColor: 'info',
+              color: 'onInfo',
             },
-            secondary: {
-              backgroundColor: 'secondary',
-              color: 'onSecondary',
+            warning: {
+              backgroundColor: 'warning',
+              color: 'onWarning',
             },
             success: {
               backgroundColor: 'success',
@@ -43,19 +43,28 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
         }}
         {...rest}
       >
-        <AiOutlineInfoCircle size={20} sx={{ my: '-0.25em', mr: 2 }} />
-        <Box>{children}</Box>
+        <AiOutlineInfoCircle
+          sx={{
+            flex: '0 0 auto',
+            width: '1.2rem',
+            height: '1.2rem',
+            verticalAlign: 'middle',
+            ml: '0.2rem',
+            mt: '0.1rem',
+            mr: '0.3rem',
+          }}
+        />
+        <Box sx={{ mr: '0.2rem' }}>{children}</Box>
         <Button
           sx={{
-            p: '0.2em',
+            mr: '0.2em',
+            mt: '0.1em',
             ml: 'auto',
-            mr: '-0.1em',
-            my: '-0.2em',
             borderRadius: '50%',
             '&:hover': {
               backgroundColor: {
-                primary: 'accentPrimary',
-                secondary: 'accentSecondary',
+                info: 'accentInfo',
+                warning: 'accentWarning',
                 success: 'accentSuccess',
                 error: 'accentError',
               }[color],
