@@ -12,7 +12,7 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
         sx={{
           paddingX: 4,
           paddingTop: 4,
-          color: 'accentOnSurface',
+          // color: 'accentOnSurface',
         }}
         {...props}
       />

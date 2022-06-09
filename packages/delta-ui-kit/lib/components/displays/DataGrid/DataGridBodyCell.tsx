@@ -1,5 +1,5 @@
 import { jsx } from '@theme-ui/core';
-import { forwardRef, HTMLAttributes } from 'react';
+import { forwardRef } from 'react';
 import { Box, BoxProps } from '../../containers';
 
 export interface TableBodyCellProps extends BoxProps {}

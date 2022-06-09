@@ -15,8 +15,8 @@ import {
   PairList,
   DataGrid,
   DataGridBody,
-  DataGridHead,
-  DataGridHeadCell,
+  DataGridHeader,
+  DataGridHeaderCell,
   DataGridRow,
   DataGridBodyCell,
 } from '../../displays';
@@ -99,17 +99,19 @@ export const Basics = () => {
             sx={{
               display: 'flex',
               flexDirection: 'column',
-              gap: 4,
+              gap: 3,
               maxWidth: '1200px',
             }}
           >
-            <Heading level={1} sx={{ color: 'accentOnSurface' }}>
-              Users
-            </Heading>
-            <Box>
-              <ExampleDataGrid />
-            </Box>
-            <Masonry columns={{ count: 2 }} sx={{ '&, & > *': { gap: 2 } }}>
+            <Card>
+              <CardHeader>
+                <Heading level={2}>Users</Heading>
+              </CardHeader>
+              <CardBody>
+                <ExampleDataGrid />
+              </CardBody>
+            </Card>
+            <Masonry columns={{ count: 2 }} sx={{ '&, & > *': { gap: 3 } }}>
               <Card>
                 <CardHeader>
                   <Heading level={2}>Information</Heading>
@@ -158,9 +160,7 @@ export const Basics = () => {
 };
 
 const ExampleMenu = () => {
-  const items = new Array(10).fill(null);
   const [activeId, setActiveId] = useState('0');
-
   return (
     <LayoutNavigation activeId={activeId} sx={{ height: '100%' }}>
       <LayoutNavigationItem
@@ -187,7 +187,7 @@ const ExampleMenu = () => {
       <Box
         sx={{
           px: 3,
-          color: 'rowSeparator',
+          color: 'border',
           mt: 3,
           mb: 2,
           position: 'relative',
@@ -202,7 +202,7 @@ const ExampleMenu = () => {
             pr: 3,
             pl: 2,
             py: 1,
-            borderBottomColor: 'rowSeparator',
+            borderBottomColor: 'border',
           }}
           variant="pure"
         />
@@ -433,18 +433,18 @@ const ExampleMenu = () => {
 const ExampleDataGrid = () => {
   return (
     <DataGrid>
-      <DataGridHead>
-        <DataGridHeadCell sx={{ width: '250px' }}>
+      <DataGridHeader>
+        <DataGridHeaderCell sx={{ width: '250px' }}>
           <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-            <Heading level={6}>Id</Heading>
+            <Heading level={5}>ID</Heading>
             <Tooltip content="Sort Ascending">
               <Button sx={{ display: 'flex', mt: '4px' }}>
                 <FaSortUp />
               </Button>
             </Tooltip>
           </Box>
-        </DataGridHeadCell>
-        <DataGridHeadCell sx={{ width: '250px' }}>
+        </DataGridHeaderCell>
+        <DataGridHeaderCell sx={{ width: '250px' }}>
           <Box
             sx={{
               display: 'flex',
@@ -452,7 +452,7 @@ const ExampleDataGrid = () => {
               alignItems: 'center',
             }}
           >
-            <Heading level={6}>Name</Heading>
+            <Heading level={5}>Name</Heading>
             <Tooltip content="Descending sort">
               <Button
                 sx={{
@@ -465,28 +465,28 @@ const ExampleDataGrid = () => {
               </Button>
             </Tooltip>
           </Box>
-        </DataGridHeadCell>
-        <DataGridHeadCell sx={{ width: '250px' }}>
+        </DataGridHeaderCell>
+        <DataGridHeaderCell sx={{ width: '250px' }}>
           <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-            <Heading level={6}>Surname</Heading>
+            <Heading level={5}>Surname</Heading>
             <Tooltip content="Lorem Ipsum is Ipsum.">
               <Button sx={{ display: 'flex', alignItems: 'center' }}>
                 <BsFillInfoCircleFill sx={{ color: 'outline' }} />
               </Button>
             </Tooltip>
           </Box>
-        </DataGridHeadCell>
-        <DataGridHeadCell sx={{ width: '250px' }}>
+        </DataGridHeaderCell>
+        <DataGridHeaderCell sx={{ width: '250px' }}>
           <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-            <Heading level={6}>Birth Date</Heading>
+            <Heading level={5}>Birth Date</Heading>
             <Tooltip content="Lorem Ipsum is simply dummy text 's Ipsum.">
               <Button sx={{ display: 'flex', alignItems: 'center' }}>
                 <BsFillInfoCircleFill sx={{ color: 'outline' }} />
               </Button>
             </Tooltip>
           </Box>
-        </DataGridHeadCell>
-      </DataGridHead>
+        </DataGridHeaderCell>
+      </DataGridHeader>
       <DataGridBody>
         <DataGridRow>
           <DataGridBodyCell sx={{ width: '250px' }}>1</DataGridBodyCell>
@@ -514,6 +514,7 @@ const ExampleDataGrid = () => {
     </DataGrid>
   );
 };
+
 const ExampleForm = () => {
   const openModal = useModal<unknown>(
     ({ context }) => {
@@ -525,7 +526,6 @@ const ExampleForm = () => {
     },
     { deps: [] }
   );
-
   const [handleSubmit, alerts] = useOperation(
     async v => {
       console.log(v);
@@ -573,7 +573,7 @@ const ExampleForm = () => {
           <Slider />
         </FormField>
         <FormField label="FilePicker" name="filePicker">
-          <FilePicker>Pick Files</FilePicker>
+          <FilePicker multiple>Pick Files</FilePicker>
         </FormField>
         <FormField label="TextArea" name="textArea">
           <TextArea />

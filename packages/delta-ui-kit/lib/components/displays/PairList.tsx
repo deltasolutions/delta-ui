@@ -40,16 +40,19 @@ export const PairList = forwardRef<HTMLDivElement, PairListProps>(
         <table
           sx={{
             borderCollapse: 'separate',
-            borderSpacing: '0 1rem',
           }}
         >
-          <tbody>
+          <tbody
+            sx={{
+              '& > tr:not(:last-of-type) > td': { pb: 3 },
+            }}
+          >
             {pairs.map(([key, value], index) => (
               <tr key={index}>
                 <td sx={{ color: 'accentOnSurface', fontWeight: 600 }}>
                   {key}
                 </td>
-                <td sx={{ width: '30px' }}></td>
+                <td sx={{ width: '2rem' }}></td>
                 <td>{value}</td>
               </tr>
             ))}

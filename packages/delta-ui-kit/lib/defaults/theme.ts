@@ -13,8 +13,7 @@ export const theme = {
     exterior: '#0a0a0a',
     contrast: '#fafafa',
     outline: '#313030',
-    fileSeparator: '#4a4545',
-    rowSeparator: '#252222',
+    border: 'rgba(255, 255, 255, 0.1)',
 
     accentPrimary: '#1daa4e',
     accentSecondary: '#e5e5e5',

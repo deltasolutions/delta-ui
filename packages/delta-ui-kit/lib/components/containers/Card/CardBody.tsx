@@ -6,6 +6,6 @@ export interface CardBodyProps extends BoxProps {}
 
 export const CardBody = forwardRef<HTMLDivElement, CardBodyProps>(
   (props, ref) => {
-    return <Box ref={ref} sx={{ paddingX: 4, paddingY: 3 }} {...props} />;
+    return <Box ref={ref} sx={{ padding: 4 }} {...props} />;
   }
 );

@@ -11,8 +11,7 @@ export const DataGridRow = forwardRef<HTMLDivElement, TableRowPropsProps>(
         ref={ref}
         role="row"
         sx={{
-          height: 4,
-          px: 3,
+          py: 3,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',

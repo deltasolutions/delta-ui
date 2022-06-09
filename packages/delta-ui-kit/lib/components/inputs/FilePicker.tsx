@@ -192,7 +192,7 @@ const DndBox = ({ onDrop, onClick, children, ...rest }: DndBoxProps) => {
               width: '100%',
               flexDirection: 'column',
               'a:not(a:last-child)': {
-                borderBottomColor: 'fileSeparator',
+                borderBottomColor: 'border',
                 borderBottomWidth: '0.1px',
                 borderBottomStyle: 'solid',
               },

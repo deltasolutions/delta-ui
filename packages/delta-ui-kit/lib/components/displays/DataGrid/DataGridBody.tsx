@@ -12,9 +12,8 @@ export const DataGridBody = forwardRef<HTMLDivElement, DataGridBodyProps>(
         role="thead"
         sx={{
           '& > div[role=row]:not(div[role=row]:last-child)': {
-            borderBottomColor: 'rowSeparator',
-            borderBottomStyle: 'solid',
-            borderBottomWidth: '0.1px',
+            borderBottom: '1px solid',
+            borderBottomColor: 'border',
           },
         }}
         {...rest}
