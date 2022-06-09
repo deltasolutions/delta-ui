@@ -49,7 +49,9 @@ export const LayoutNavigationItem = forwardRef<
       sx={{
         display: 'flex',
         px: 4,
-        minHeight: '40px',
+        ...(icon
+          ? { minHeight: 3, fontSize: 2 }
+          : { fontSize: 1, minHeight: 2 }),
         fontWeight: 400,
         color: 'onBackground',
         alignItems: 'center',

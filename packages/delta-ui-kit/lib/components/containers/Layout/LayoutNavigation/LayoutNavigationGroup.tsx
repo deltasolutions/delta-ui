@@ -15,10 +15,9 @@ export const LayoutNavigationGroup = forwardRef<
     <Box
       ref={ref}
       sx={{
+        pt: 3,
         '& + &': {
           borderTop: '1px rgba(255,255,255,0.1) solid',
-          pt: 3,
-          mt: 3,
         },
       }}
       {...rest}

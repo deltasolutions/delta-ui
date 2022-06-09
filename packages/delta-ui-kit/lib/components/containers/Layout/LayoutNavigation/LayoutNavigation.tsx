@@ -10,7 +10,11 @@ export const LayoutNavigation = forwardRef<
   LayoutNavigationProps
 >(({ activeId, children, ...rest }, ref) => {
   return (
-    <Box ref={ref} {...rest}>
+    <Box
+      ref={ref}
+      sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+      {...rest}
+    >
       <NavigationContext.Provider value={{ activeId }}>
         {children}
       </NavigationContext.Provider>

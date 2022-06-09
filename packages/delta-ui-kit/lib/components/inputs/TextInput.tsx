@@ -47,7 +47,6 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
           paddingX: 0,
           paddingY: 0,
           width: '100%',
-
           border: 'none',
           outline: 'none',
           backgroundColor: 'transparent',

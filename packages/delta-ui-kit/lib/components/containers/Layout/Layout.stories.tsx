@@ -158,11 +158,46 @@ export const Basics = () => {
     </Layout>
   );
 };
-
+const items = [
+  {
+    items: [{ title: 'Power' }, { title: 'Media' }, { title: 'Indication' }],
+    group: 'Control',
+  },
+  {
+    items: [
+      { title: 'Server Authorizatuin' },
+      { title: 'Location' },
+      { title: 'Network' },
+      { title: 'Firmware' },
+      { title: 'SNMP' },
+      { title: 'Ssl' },
+      { title: 'Ntp' },
+      { title: 'Fans' },
+      { title: 'Notifications' },
+      { title: 'User Interface' },
+    ],
+    group: 'Control',
+  },
+  {
+    items: [
+      { title: 'Server Authorizatuin' },
+      { title: 'Location' },
+      { title: 'Network' },
+      { title: 'Firmware' },
+      { title: 'SNMP' },
+      { title: 'Ssl' },
+      { title: 'Ntp' },
+      { title: 'Fans' },
+      { title: 'Notifications' },
+      { title: 'User Interface' },
+    ],
+    group: 'Configuration',
+  },
+];
 const ExampleMenu = () => {
   const [activeId, setActiveId] = useState('0');
   return (
-    <LayoutNavigation activeId={activeId} sx={{ height: '100%' }}>
+    <LayoutNavigation activeId={activeId}>
       <LayoutNavigationItem
         icon={TbHome2}
         id="1"
@@ -187,16 +222,17 @@ const ExampleMenu = () => {
       <Box
         sx={{
           px: 3,
-          color: 'border',
           mt: 3,
-          mb: 2,
+          color: 'onBackground',
           position: 'relative',
         }}
       >
         <TextInput
           placeholder="Search"
           sx={{
+            color: 'onBackground',
             backgroundColor: 'transparent',
+
             borderBottomWidth: '0.3px',
             borderBottomStyle: 'solid',
             pr: 3,
@@ -206,226 +242,35 @@ const ExampleMenu = () => {
           }}
           variant="pure"
         />
-        <CgSearch sx={{ position: 'absolute', top: 1, right: 3 }} />
+        <CgSearch sx={{ position: 'absolute', top: 1, color: '', right: 3 }} />
       </Box>
       <Box
         sx={{
           overflow: 'scroll',
-          height: '100%',
-          pt: 2,
+          background:
+            'linear-gradient(#000000 33%, rgba(0,0,0, 0)), linear-gradient(rgba(0,0,0, 0), #000000 66%) 0 100%, linear-gradient(rgba(255,255,255, 0.04), rgba(0,0,0,0)), linear-gradient(rgba(0,0,0, 0), #000000 66%) 0 100%',
+          backgroundRepeat: 'no-repeat',
+          backgroundAttachment: 'local, local, scroll, scroll',
+          backgroundSize: '100% 51px, 100% 51px, 100% 17px, 100% 17px',
         }}
       >
-        <LayoutNavigationGroup title="Configuration">
-          <LayoutNavigationItem
-            icon={BiPhone}
-            id="4"
-            onClick={() => setActiveId('4')}
-          >
-            Display
-          </LayoutNavigationItem>
-          <LayoutNavigationItem
-            icon={BiPhone}
-            id="10"
-            onClick={() => setActiveId('10')}
-          >
-            My bookmarks
-          </LayoutNavigationItem>
-          <LayoutNavigationItem
-            icon={BiPhotoAlbum}
-            id="5"
-            onClick={() => setActiveId('5')}
-          >
-            Second
-          </LayoutNavigationItem>
-          <LayoutNavigationItem
-            icon={BiPlanet}
-            id="6"
-            onClick={() => setActiveId('6')}
-          >
-            Third
-          </LayoutNavigationItem>
-        </LayoutNavigationGroup>
-        <LayoutNavigationGroup title="Subscriptions">
-          <LayoutNavigationItem
-            icon={BiPhone}
-            id="7"
-            onClick={() => setActiveId('7')}
-          >
-            First
-          </LayoutNavigationItem>
-          <LayoutNavigationItem
-            icon={BiPhotoAlbum}
-            id="8"
-            onClick={() => setActiveId('8')}
-          >
-            Second
-          </LayoutNavigationItem>
-          <LayoutNavigationItem
-            icon={BiPlanet}
-            id="9"
-            onClick={() => setActiveId('9')}
-          >
-            Third
-          </LayoutNavigationItem>
-          <LayoutNavigationItem
-            icon={BiPlanet}
-            id="1332"
-            onClick={() => setActiveId('1332')}
-          >
-            Foff
-          </LayoutNavigationItem>
-        </LayoutNavigationGroup>
-        <LayoutNavigationGroup title="Configuration">
-          <LayoutNavigationItem
-            icon={BiPhone}
-            id="4"
-            onClick={() => setActiveId('4')}
-          >
-            Display
-          </LayoutNavigationItem>
-          <LayoutNavigationItem
-            icon={BiPhone}
-            id="4"
-            onClick={() => setActiveId('4')}
-          >
-            Display
-          </LayoutNavigationItem>
-          <LayoutNavigationItem
-            icon={BiPhone}
-            id="4"
-            onClick={() => setActiveId('4')}
-          >
-            Display
-          </LayoutNavigationItem>
-          <LayoutNavigationItem
-            icon={BiPhone}
-            id="4"
-            onClick={() => setActiveId('4')}
-          >
-            Display
-          </LayoutNavigationItem>
-          <LayoutNavigationItem
-            icon={BiPhone}
-            id="4"
-            onClick={() => setActiveId('4')}
-          >
-            Display
-          </LayoutNavigationItem>
-          <LayoutNavigationItem
-            icon={BiPhone}
-            id="4"
-            onClick={() => setActiveId('4')}
-          >
-            Display
-          </LayoutNavigationItem>
-          <LayoutNavigationItem
-            icon={BiPhone}
-            id="4"
-            onClick={() => setActiveId('4')}
-          >
-            Display
-          </LayoutNavigationItem>
-          <LayoutNavigationItem
-            icon={BiPhone}
-            id="4"
-            onClick={() => setActiveId('4')}
-          >
-            Display
-          </LayoutNavigationItem>
-          <LayoutNavigationItem
-            icon={BiPhone}
-            id="4"
-            onClick={() => setActiveId('4')}
-          >
-            Display
-          </LayoutNavigationItem>
-          <LayoutNavigationItem
-            icon={BiPhone}
-            id="4"
-            onClick={() => setActiveId('4')}
-          >
-            Display
-          </LayoutNavigationItem>
-          <LayoutNavigationItem
-            icon={BiPhone}
-            id="4"
-            onClick={() => setActiveId('4')}
-          >
-            Display
-          </LayoutNavigationItem>
-          <LayoutNavigationItem
-            icon={BiPhone}
-            id="4"
-            onClick={() => setActiveId('4')}
-          >
-            Display
-          </LayoutNavigationItem>
-          <LayoutNavigationItem
-            icon={BiPhone}
-            id="4"
-            onClick={() => setActiveId('4')}
-          >
-            Display
-          </LayoutNavigationItem>
-          <LayoutNavigationItem
-            icon={BiPhone}
-            id="4"
-            onClick={() => setActiveId('4')}
-          >
-            Display
-          </LayoutNavigationItem>
-          <LayoutNavigationItem
-            icon={BiPhone}
-            id="231231"
-            onClick={() => setActiveId('10')}
-          >
-            My bookmarks
-          </LayoutNavigationItem>
-          <LayoutNavigationItem
-            icon={BiPhotoAlbum}
-            id="1235"
-            onClick={() => setActiveId('5')}
-          >
-            Second
-          </LayoutNavigationItem>
-          <LayoutNavigationItem
-            icon={BiPlanet}
-            id="63213123"
-            onClick={() => setActiveId('6')}
-          >
-            Third
-          </LayoutNavigationItem>
-        </LayoutNavigationGroup>
-        <LayoutNavigationGroup title="Configuration">
-          <LayoutNavigationItem
-            icon={BiPhone}
-            id="4"
-            onClick={() => setActiveId('4')}
-          >
-            Display
-          </LayoutNavigationItem>
-          <LayoutNavigationItem
-            icon={BiPhone}
-            id="10"
-            onClick={() => setActiveId('10')}
-          >
-            My bookmarks
-          </LayoutNavigationItem>
-          <LayoutNavigationItem
-            icon={BiPhotoAlbum}
-            id="5"
-            onClick={() => setActiveId('5')}
-          >
-            Second
-          </LayoutNavigationItem>
-          <LayoutNavigationItem
-            icon={BiPlanet}
-            id="6"
-            onClick={() => setActiveId('6')}
-          >
-            Third
-          </LayoutNavigationItem>
-        </LayoutNavigationGroup>
+        {items.map(node => {
+          return (
+            <LayoutNavigationGroup title={node.group}>
+              {node.items.map(item => {
+                return (
+                  <LayoutNavigationItem
+                    key={item.title}
+                    id={item.title}
+                    onClick={() => setActiveId(item.title)}
+                  >
+                    {item.title}
+                  </LayoutNavigationItem>
+                );
+              })}
+            </LayoutNavigationGroup>
+          );
+        })}
       </Box>
     </LayoutNavigation>
   );
