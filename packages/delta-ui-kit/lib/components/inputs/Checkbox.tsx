@@ -1,7 +1,9 @@
 import { jsx } from '@theme-ui/core';
-import { forwardRef, InputHTMLAttributes, useCallback } from 'react';
+import { forwardRef, InputHTMLAttributes } from 'react';
 import { Box } from '../containers';
+
 export interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {}
+
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
   ({ disabled, children, value, ...rest }: CheckboxProps, ref) => {
     return (
@@ -28,7 +30,6 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           'input:checked ~ .checkmark:after': { display: 'block' },
         }}
       >
-        {children && <Box>{children}</Box>}
         <input
           ref={ref}
           checked={value as unknown as boolean}
@@ -69,6 +70,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             },
           }}
         />
+        {children && <Box>{children}</Box>}
       </label>
     );
   }

@@ -15,6 +15,7 @@ export const theme = {
     outline: '#313030',
     fileSeparator: '#4a4545',
     rowSeparator: '#252222',
+
     accentPrimary: '#1daa4e',
     accentSecondary: '#e5e5e5',
     accentInfo: '#1c6ac9',

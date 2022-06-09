@@ -115,7 +115,6 @@ export const FilePickerItem = forwardRef<
   return (
     <Anchor
       ref={ref}
-      {...rest}
       download={file.name}
       href={link}
       sx={{
@@ -129,6 +128,7 @@ export const FilePickerItem = forwardRef<
         },
       }}
       variant="pure"
+      {...rest}
     >
       {file.name}{' '}
       <span sx={{ color: 'onSurface' }}>({formatBytes(file.size)})</span>
@@ -214,6 +214,7 @@ const DndBox = ({ onDrop, onClick, children, ...rest }: DndBoxProps) => {
                 display: 'flex',
                 gap: 1,
                 alignItems: 'flex-start',
+                borderRadius: 2,
                 fontSize: '0.65rem',
                 textDecoration: 'underline',
                 '&:hover, &:active, &:focus-visible': {
@@ -246,6 +247,7 @@ const DndBox = ({ onDrop, onClick, children, ...rest }: DndBoxProps) => {
               color: 'accentOnSurface',
               width: 'fit-content',
               textDecoration: 'underline',
+              borderRadius: 2,
             }}
           >
             {t('actions.browseFiles')}

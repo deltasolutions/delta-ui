@@ -10,13 +10,9 @@ import { useUpdateEffect } from '../../hooks';
 import { FormWidgetProps } from '../../types';
 
 export interface TextInputProps
-  extends Omit<
-      InputHTMLAttributes<HTMLInputElement>,
-      keyof FormWidgetProps | 'size'
-    >,
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, keyof FormWidgetProps>,
     FormWidgetProps<string> {
   variant?: 'pure';
-  size?: 'small' | 'medium';
 }
 
 export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
@@ -29,7 +25,6 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       onChange,
       onFocus,
       onBlur,
-      size,
       ...rest
     }: TextInputProps,
     ref
@@ -58,8 +53,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
           backgroundColor: 'transparent',
           ...(variant === 'pure'
             ? {}
-            : size === 'medium'
-            ? {
+            : {
                 opacity: disabled ? 0.5 : 1,
                 fontSize: 2,
                 border: 0,
@@ -70,21 +64,6 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
                 paddingY: '0.60em',
                 backgroundColor: 'accentSurface',
                 color: 'onSurface',
-                '&:focus': {
-                  outline: '2px solid',
-                  outlineColor: 'primary',
-                },
-              }
-            : {
-                fontSize: 1,
-                opacity: disabled ? 0.5 : 1,
-                borderRadius: 4,
-                letterSpacing: 'normal',
-                border: 0,
-                backgroundColor: 'accentSurface',
-                color: 'onSurface',
-                paddingX: '0.4em',
-                paddingY: '0.5em',
                 '&:focus': {
                   outline: '2px solid',
                   outlineColor: 'primary',

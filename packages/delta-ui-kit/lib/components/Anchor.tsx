@@ -18,13 +18,12 @@ export const Anchor = forwardRef<HTMLAnchorElement, AnchorProps>(
           fontSize: 'inherit',
           fontWeight: 'inherit',
           whiteSpace: 'inherit',
-          // Do we need these?
-          // '&:hover, &:active, &:focus-visible': {
-          //   color: 'unset',
-          //   fontSize: 'unset',
-          //   fontWeight: 'unset',
-          //   whiteSpace: 'unset',
-          // },
+          borderRadius: 2,
+          '&:focus-visible': {
+            outline: '2px solid',
+            outlineOffset: '2px',
+            outlineColor: 'primary',
+          },
           textDecoration: variant === 'pure' ? 'none' : 'underline',
         }}
         {...rest}

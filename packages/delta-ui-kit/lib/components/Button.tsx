@@ -28,6 +28,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             opacity: 0.5,
             cursor: 'not-allowed',
           },
+          '&:focus-visible': {
+            outline: '2px solid',
+            outlineColor: 'primary',
+            outlineOffset: 2,
+          },
           ...(zoomable && {
             '&:not(:disabled)': {
               '&:hover, &:focus-visible': { transform: 'scale(1.05)' },
@@ -81,11 +86,6 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps) => {
     textTransform: 'uppercase',
     letterSpacing: 2,
     fontWeight: 600,
-    '&:focus-visible': {
-      outline: '2px solid',
-      outlineColor: 'primary',
-      outlineOffset: 2,
-    },
     ...{
       contained: {
         primary: {

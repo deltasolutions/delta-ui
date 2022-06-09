@@ -1,7 +1,5 @@
-import { table } from 'console';
 import { jsx } from '@theme-ui/core';
-import { borderStyle } from 'polished';
-import { forwardRef, HTMLAttributes } from 'react';
+import { forwardRef } from 'react';
 import { Box, BoxProps } from '../../containers';
 
 export interface DataGridBodyProps extends BoxProps {}

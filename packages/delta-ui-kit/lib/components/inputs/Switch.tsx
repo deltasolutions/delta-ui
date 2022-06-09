@@ -66,7 +66,6 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
           },
         }}
       >
-        {children && <Box>{children}</Box>}
         <input
           ref={ref}
           checked={innerValue}
@@ -114,6 +113,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
             },
           }}
         />
+        {children && <Box>{children}</Box>}
       </label>
     );
   }

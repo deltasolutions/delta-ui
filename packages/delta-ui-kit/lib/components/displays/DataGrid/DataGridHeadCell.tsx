@@ -1,7 +1,5 @@
-import { table } from 'console';
 import { jsx } from '@theme-ui/core';
-import { forwardRef, HTMLAttributes } from 'react';
-import { FaSortDown } from 'react-icons/fa';
+import { forwardRef } from 'react';
 import { Box, BoxProps } from '../../containers';
 
 export interface DataGridHeadCellProps extends BoxProps {}
