@@ -73,20 +73,22 @@ export const useOperation = <OperationInput, OperationOutput>(
             ? (notification as NotificationOptions)
             : {
                 color: isOk ? 'success' : 'error',
-                placeholder: 'topRight',
+                // placeholder: 'topRight',
                 duration: 5000,
-                render: () => notification,
+                render: () => notification as ReactNode,
               }
         );
       }
       const alert = getAlert?.(isOk, (error ?? output)!);
       if (alert) {
-        const props = isPlainObject(alert)
-          ? alert
-          : {
-              color: isOk ? 'success' : 'error',
-              children: alert,
-            };
+        const props = (
+          isPlainObject(alert)
+            ? alert
+            : {
+                color: isOk ? 'success' : 'error',
+                children: alert,
+              }
+        ) as AlertProps;
         const reactElement = (
           <Alert
             onClose={() => {
