@@ -26,13 +26,14 @@ export const LayoutNavigationItem = forwardRef<
       ref={ref}
       sx={{
         display: 'flex',
+        alignItems: 'center',
+        gap: 2,
         px: 4,
         ...(Icon
           ? { minHeight: 3, fontSize: 2 }
           : { fontSize: 1, minHeight: 2 }),
         fontWeight: 400,
         color: 'onBackground',
-        alignItems: 'center',
         '&:hover, &:focus, &:focus-visible': {
           color: 'accentOnSurface',
         },
@@ -43,11 +44,7 @@ export const LayoutNavigationItem = forwardRef<
       variant="pure"
       {...rest}
     >
-      {Icon && (
-        <Box sx={{ minWidth: '22px', mr: 3 }}>
-          <Icon size={22} />
-        </Box>
-      )}
+      {Icon && <Icon size="1.6em" />}
       <Box
         sx={{
           textOverflow: 'ellipsis',
