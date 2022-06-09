@@ -72,7 +72,9 @@ export const useOperation = <OperationInput, OperationOutput>(
           isPlainObject(notification)
             ? (notification as NotificationOptions)
             : {
-                color: isOk ? 'info' : 'error',
+                color: isOk ? 'success' : 'error',
+                placeholder: 'topRight',
+                duration: 5000,
                 render: () => notification,
               }
         );
@@ -82,7 +84,7 @@ export const useOperation = <OperationInput, OperationOutput>(
         const props = isPlainObject(alert)
           ? alert
           : {
-              color: isOk ? 'info' : 'error',
+              color: isOk ? 'success' : 'error',
               children: alert,
             };
         const reactElement = (

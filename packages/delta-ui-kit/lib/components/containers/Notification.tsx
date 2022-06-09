@@ -1,21 +1,23 @@
 import { jsx } from '@theme-ui/core';
 import { forwardRef, useMemo } from 'react';
-import { BsCheckCircleFill } from 'react-icons/bs';
-import { IoIosCloseCircle } from 'react-icons/io';
-import { IoClose } from 'react-icons/io5';
+import {
+  RiCloseCircleFill,
+  RiErrorWarningLine,
+  RiCheckboxCircleFill,
+} from 'react-icons/ri';
 import { PortalledTransitionProps } from '../../hooks';
-import { Button } from '../Button';
 import { Box, BoxProps } from './Box';
+
 export interface NotificationProps
   extends BoxProps,
     Partial<PortalledTransitionProps> {
-  color?: 'primary' | 'secondary' | 'success' | 'error' | 'info';
+  color?: 'success' | 'error' | 'warning';
 }
 
 export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
   (
     {
-      color = 'primary',
+      color = 'success',
       children,
       context,
       handleClose,
@@ -28,9 +30,9 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
     const Icon = useMemo(
       () =>
         ({
-          error: IoIosCloseCircle,
-          primary: BsCheckCircleFill,
-          success: BsCheckCircleFill,
+          success: RiCheckboxCircleFill,
+          error: RiCloseCircleFill,
+          warning: RiErrorWarningLine,
         }[color]),
       [color]
     );
@@ -44,15 +46,15 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
           display: 'flex',
           border: '1px grey solid',
           opacity: isVisible ? 1 : 0,
-          backgroundColor: 'secondary',
-          color: 'onSecondary',
+          backgroundColor: 'contrast',
+          color: 'onContrast',
           transform: `translateX(${
             isVisible ? '0, 0' : isEntering ? '3rem' : '3rem'
           })`,
           ...{
-            error: { fontWeight: 500, fontSize: 1 },
-            primary: { fontWeight: 600, fontSize: 2 },
             success: { fontWeight: 600, fontSize: 2 },
+            error: { fontWeight: 500, fontSize: 1 },
+            warning: { fontWeight: 600, fontSize: 2 },
           }[color],
           transition: ['opacity 0.2s linear', 'transform 0.2s linear'].join(
             ', '
@@ -67,13 +69,17 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
             }}
           >
             <Icon
-              size={18}
+              size={21}
               sx={{
                 color,
               }}
             />
           </Box>
-          <Box sx={{ lineHeight: '24px', width: '296px' }}>{children}</Box>
+          <Box
+            sx={{ lineHeight: '24px', width: '296px', wordBreak: 'break-word' }}
+          >
+            {children}
+          </Box>
         </Box>
       </Box>
     );

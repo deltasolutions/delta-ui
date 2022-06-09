@@ -1,11 +1,37 @@
 import { jsx } from '@theme-ui/core';
-import { forwardRef, InputHTMLAttributes } from 'react';
+import { forwardRef, InputHTMLAttributes, useState } from 'react';
+import { useUpdateEffect } from '../../hooks';
+import { FormWidgetProps } from '../../types';
 import { Box } from '../containers';
 
-export interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {}
+export interface CheckboxProps
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, keyof FormWidgetProps>,
+    FormWidgetProps<boolean> {}
 
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
-  ({ disabled, children, value, ...rest }: CheckboxProps, ref) => {
+  (
+    {
+      value,
+      disabled,
+      invalid, // TODO
+      onChange,
+      onFocus,
+      onBlur,
+      onKeyDown,
+      children,
+      ...rest
+    }: CheckboxProps,
+    ref
+  ) => {
+    const [innerValue, setInnerValue] = useState<boolean>(value ?? false);
+    const handleChange = (nextValue: boolean) => {
+      nextValue !== innerValue && setInnerValue(nextValue);
+      nextValue !== value && onChange?.(nextValue);
+    };
+    useUpdateEffect(() => {
+      innerValue !== value && setInnerValue(value ?? false);
+    }, [value]);
+
     return (
       <label
         style={{
@@ -42,6 +68,16 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             width: '0',
           }}
           type="checkbox"
+          onBlur={() => onBlur?.()}
+          onChange={ev => handleChange(ev.target.checked)}
+          onFocus={() => onFocus?.()}
+          onKeyDown={ev => {
+            if (ev.key === 'Enter') {
+              ev.preventDefault();
+              handleChange(!innerValue);
+            }
+            onKeyDown?.(ev);
+          }}
           {...rest}
         />
         <span

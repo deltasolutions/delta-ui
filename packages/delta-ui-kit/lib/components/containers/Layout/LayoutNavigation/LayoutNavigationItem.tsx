@@ -54,10 +54,10 @@ export const LayoutNavigationItem = forwardRef<
         color: 'onBackground',
         alignItems: 'center',
         '&:hover, &:focus, &:focus-visible': {
-          color: 'primary',
+          color: 'accentOnSurface',
         },
         ...(isActive && {
-          color: 'primary',
+          color: 'accentOnSurface',
         }),
       }}
       variant="pure"

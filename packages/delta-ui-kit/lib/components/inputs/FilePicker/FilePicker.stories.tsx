@@ -1,7 +1,7 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { compact } from '../../../docs/decorators';
-import { FilePicker } from './FilePicker';
+import { compact } from '../../../../docs/decorators';
+import { FilePicker } from '../FilePicker';
 
 export default {
   title: 'Inputs/FilePicker',
@@ -9,5 +9,5 @@ export default {
 } as Meta;
 
 export const Basics = () => {
-  return <FilePicker multiple>Pick Files</FilePicker>;
+  return <FilePicker multiple />;
 };

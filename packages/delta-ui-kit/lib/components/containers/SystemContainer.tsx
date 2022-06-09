@@ -6,6 +6,8 @@ import {
   useMemo,
   useState,
 } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import { system, theme as defaultTheme, Theme } from '../../defaults';
 import { useImperativePortal } from '../../hooks';
 import { Box } from './Box';
@@ -23,23 +25,25 @@ export const SystemContainer = forwardRef<HTMLDivElement, ContainerProps>(
     const system = useMemo(() => ({ floatingPortal }), [floatingPortal]);
     return (
       <SystemContext.Provider value={system}>
-        <ThemeProvider theme={theme} {...rest}>
-          <Box
-            ref={ref}
-            sx={{
-              width: '100%',
-              minHeight: '100vh',
-              fontFamily: theme.fontFamily,
-              backgroundColor: theme.colors.background,
-              color: theme.colors.onBackground,
-              fontSize: theme.fontSizes[2],
-            }}
-          >
-            {children}
-            <Box ref={setPortalNode} id="floating-portal" />
-            {floatingPortal}
-          </Box>
-        </ThemeProvider>
+        <DndProvider backend={HTML5Backend}>
+          <ThemeProvider theme={theme} {...rest}>
+            <Box
+              ref={ref}
+              sx={{
+                width: '100%',
+                minHeight: '100vh',
+                fontFamily: theme.fontFamily,
+                backgroundColor: theme.colors.background,
+                color: theme.colors.onBackground,
+                fontSize: theme.fontSizes[2],
+              }}
+            >
+              {children}
+              <Box ref={setPortalNode} id="floating-portal" />
+              {floatingPortal}
+            </Box>
+          </ThemeProvider>
+        </DndProvider>
       </SystemContext.Provider>
     );
   }

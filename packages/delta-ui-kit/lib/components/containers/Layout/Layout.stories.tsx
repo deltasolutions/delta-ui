@@ -471,7 +471,7 @@ const ExampleDataGrid = () => {
             <Heading level={5}>Surname</Heading>
             <Tooltip content="Lorem Ipsum is Ipsum.">
               <Button sx={{ display: 'flex', alignItems: 'center' }}>
-                <BsFillInfoCircleFill sx={{ color: 'outline' }} />
+                <BsFillInfoCircleFill sx={{ opacity: 0.5 }} />
               </Button>
             </Tooltip>
           </Box>
@@ -481,7 +481,7 @@ const ExampleDataGrid = () => {
             <Heading level={5}>Birth Date</Heading>
             <Tooltip content="Lorem Ipsum is simply dummy text 's Ipsum.">
               <Button sx={{ display: 'flex', alignItems: 'center' }}>
-                <BsFillInfoCircleFill sx={{ color: 'outline' }} />
+                <BsFillInfoCircleFill sx={{ opacity: 0.5 }} />
               </Button>
             </Tooltip>
           </Box>
@@ -528,17 +528,20 @@ const ExampleForm = () => {
   );
   const [handleSubmit, alerts] = useOperation(
     async v => {
-      console.log(v);
+      if (Math.random() > 0.5) {
+        throw new Error();
+      }
     },
     {
       deps: [],
-      getAlert: () =>
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae quos, tenetur minima itaque quidem adipisci reprehenderit maiores hic, neque, numquam dolorem voluptatum quae magnam ea distinctio. Aut consectetur soluta rerum.  ',
-      getNotification: isOk => ({
-        render: () => (isOk ? 'lorem' : 'lorem'),
-        placement: 'topRight',
-        duration: 4000,
-      }),
+      getAlert: isOk =>
+        isOk
+          ? 'Success lorem ipsum dolor sit amet consectetur adipisicing elit.'
+          : 'false',
+      getNotification: isOk =>
+        isOk
+          ? 'Success lorem ipsum dolor sit amet consectetur adipisicing elit.'
+          : 'Unable to resolve service for type ¨Microsoft.entityFrameworkCore.DbContextOptions¨1[LibraryData.LibraryContext] while attempting to activate.',
     }
   );
   return (
@@ -572,8 +575,11 @@ const ExampleForm = () => {
         <FormField label="Slider" name="slider">
           <Slider />
         </FormField>
+        <FormField label="MultipleFilePicker" name="MultipleFilePicker">
+          <FilePicker multiple={true} />
+        </FormField>
         <FormField label="FilePicker" name="filePicker">
-          <FilePicker multiple>Pick Files</FilePicker>
+          <FilePicker multiple={false} />
         </FormField>
         <FormField label="TextArea" name="textArea">
           <TextArea />

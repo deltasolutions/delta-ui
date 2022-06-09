@@ -7,8 +7,8 @@ import { Button } from '../Button';
 import { Box, BoxProps } from './Box';
 
 export interface AlertProps extends BoxProps {
-  color?: 'info' | 'warning' | 'success' | 'error';
   onClose?: () => void;
+  color?: 'success' | 'error' | 'warning';
 }
 
 export const Alert = forwardRef<HTMLDivElement, AlertProps>(
@@ -23,21 +23,17 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
           paddingX: 2,
           animation: `${slideIn} 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940)`,
           ...{
-            info: {
+            success: {
               backgroundColor: 'info',
               color: 'onInfo',
-            },
-            warning: {
-              backgroundColor: 'warning',
-              color: 'onWarning',
-            },
-            success: {
-              backgroundColor: 'success',
-              color: 'onSuccess',
             },
             error: {
               backgroundColor: 'error',
               color: 'onError',
+            },
+            warning: {
+              backgroundColor: 'warning',
+              color: 'onWarning',
             },
           }[color],
         }}
@@ -55,19 +51,18 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
         </span>
         <Button
           sx={{
-            mt: 2,
-            ml: 1,
+            mt: '6px',
+            ml: 'auto',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             minHeight: 1,
             minWidth: 1,
             borderRadius: '100%',
-            '&:hover': {
+            '&:hover, &:focus-visible': {
               backgroundColor: {
-                info: 'accentInfo',
+                success: 'accentInfo',
                 warning: 'accentWarning',
-                success: 'accentSuccess',
                 error: 'accentError',
               }[color],
             },

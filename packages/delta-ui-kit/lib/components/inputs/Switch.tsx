@@ -34,8 +34,8 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
 
     return (
       <label
+        style={{ opacity: disabled ? 0.5 : 1 }}
         sx={{
-          opacity: disabled ? 0.5 : 11,
           display: 'inline-flex',
           alignItems: 'center',
           minHeight: '22px',
