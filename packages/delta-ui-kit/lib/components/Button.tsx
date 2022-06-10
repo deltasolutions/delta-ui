@@ -74,7 +74,10 @@ const getSizeStyle = ({ variant, size = 'medium' }: ButtonProps) => {
 
 const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps) => {
   if (!variant) {
-    return {};
+    return {
+      display: 'flex',
+      alignItems: 'center',
+    };
   }
   return {
     borderRadius: '500px',
