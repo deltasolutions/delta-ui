@@ -15,7 +15,6 @@ export const LayoutSidebarBody = forwardRef<
         flex: '1 1 auto',
         minHeight: 0,
         height: '100%',
-        paddingBottom: 5,
         width: '100%',
       }}
       {...props}

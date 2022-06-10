@@ -248,7 +248,7 @@ const ExampleMenu = () => {
         sx={{
           overflow: 'scroll',
           background:
-            'linear-gradient(#000000 33%, rgba(0,0,0, 0)), linear-gradient(rgba(0,0,0, 0), #000000 66%) 0 100%, linear-gradient(rgba(255,255,255, 0.04), rgba(0,0,0,0)), linear-gradient(rgba(0,0,0, 0), #000000 66%) 0 100%',
+            'linear-gradient(#0a0a0a 33%, rgba(0,0,0, 0)), linear-gradient(rgba(0,0,0, 0), #0a0a0a 66%) 0 100%, linear-gradient(rgba(255,255,255, 0.04), rgba(0,0,0,0)), linear-gradient(rgba(0,0,0, 0), #0a0a0a 66%) 0 100%',
           backgroundRepeat: 'no-repeat',
           backgroundAttachment: 'local, local, scroll, scroll',
           backgroundSize: '100% 51px, 100% 51px, 100% 17px, 100% 17px',

@@ -13,6 +13,6 @@ const Template: ComponentStory<typeof Alert> = args => <Alert {...args} />;
 
 export const Basics = Template.bind({});
 Basics.args = {
-  color: 'primary',
+  color: 'success',
   children: 'Click Me',
 };

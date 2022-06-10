@@ -54,6 +54,7 @@ export const LayoutNavigationItem = forwardRef<
           : { fontSize: 1, minHeight: 2 }),
         fontWeight: 400,
         color: 'onBackground',
+        cursor: icon ? 'pointer' : 'default',
         alignItems: 'center',
         '&:hover, &:focus, &:focus-visible': {
           color: 'accentOnSurface',
