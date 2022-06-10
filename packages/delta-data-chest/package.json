@@ -18,7 +18,7 @@
     "release": "delta-release"
   },
   "peerDependencies": {
-    "nats.ws": "^1.4.1",
+    "nats.ws": ">=1.4.1",
     "react": ">=16.13.1",
     "restyler": ">=0.30.0"
   },

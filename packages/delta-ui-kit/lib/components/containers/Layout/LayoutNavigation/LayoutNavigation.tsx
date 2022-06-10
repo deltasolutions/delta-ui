@@ -5,6 +5,7 @@ import { Box, BoxProps } from '../../Box';
 export interface LayoutNavigationProps extends BoxProps {
   activeId?: string;
 }
+
 export const LayoutNavigation = forwardRef<
   HTMLDivElement,
   LayoutNavigationProps
