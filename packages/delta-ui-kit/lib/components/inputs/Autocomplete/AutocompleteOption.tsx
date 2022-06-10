@@ -1,9 +1,11 @@
 import { useTheme } from '@emotion/react';
 import { jsx } from '@theme-ui/core';
 import { forwardRef, useContext, useMemo, useRef } from 'react';
+import { ImCheckmark } from 'react-icons/im';
 import { Theme } from '../../../defaults';
 import { mergeRefs } from '../../../utils';
 import { Button, ButtonProps } from '../../Button';
+import { Option } from '../../containers';
 import { AutocompleteDropContext } from './AutocompleteDrop';
 
 export interface AutocompleteOptionProps
@@ -12,38 +14,55 @@ export interface AutocompleteOptionProps
   title?: string;
   index?: number;
   active?: boolean;
+  selected?: boolean;
+  onAdd?: () => void;
+  onRemove?: () => void;
 }
 
 export const AutocompleteOption = forwardRef<
   HTMLButtonElement,
   AutocompleteOptionProps
->(({ value, title, index, active, ...rest }, ref) => {
-  const buttonRef = useRef<HTMLButtonElement>(null);
-  const mergedRef = useMemo(
-    () => mergeRefs([ref, buttonRef]),
-    [ref, buttonRef]
-  );
-  const {
-    colors: { primary, onPrimary },
-  } = useTheme() as Theme;
-  const { setActiveIndex } = useContext(AutocompleteDropContext);
-  return (
-    <Button
-      ref={mergedRef}
-      style={{
-        ...(active && { backgroundColor: primary, color: onPrimary }),
-      }}
-      sx={{
-        paddingX: 1,
-        paddingY: 1,
-        textAlign: 'left',
-        borderRadius: 2,
-        fontSize: 2,
-      }}
-      tabIndex={-1}
-      onMouseEnter={() => setActiveIndex(index as number)}
-      onMouseLeave={() => setActiveIndex(null)}
-      {...rest}
-    />
-  );
-});
+>(
+  (
+    {
+      children,
+      value,
+      onAdd,
+      onRemove,
+      title,
+      selected,
+      index,
+      active,
+      ...rest
+    },
+    ref
+  ) => {
+    const buttonRef = useRef<HTMLButtonElement>(null);
+    const mergedRef = useMemo(
+      () => mergeRefs([ref, buttonRef]),
+      [ref, buttonRef]
+    );
+    const {
+      colors: { onPrimary, monkaS },
+    } = useTheme() as Theme;
+    const { setActiveIndex } = useContext(AutocompleteDropContext);
+
+    return (
+      <Option
+        ref={mergedRef}
+        style={{
+          ...(active && { backgroundColor: monkaS, color: onPrimary }),
+        }}
+
+        tabIndex={-1}
+        onClick={selected ? onRemove : onAdd}
+        onMouseEnter={() => setActiveIndex(index as number)}
+        onMouseLeave={() => setActiveIndex(null)}
+        {...rest}
+      >
+        {children}
+        {selected && <ImCheckmark size={13} sx={{ color: 'primary' }} />}
+      </Option>
+    );
+  }
+);

@@ -79,8 +79,8 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
                   borderRadius: 4,
                   letterSpacing: 'normal',
                   paddingX: '0.55em',
-                  minWidth: '100px',
                   paddingY: '0.60em',
+                  minWidth: '100px',
                   backgroundColor: 'accentSurface',
                   color: 'onSurface',
                   '&:focus': {

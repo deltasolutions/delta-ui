@@ -28,15 +28,15 @@ export interface AutocompleteSelection {
 
 export interface AutocompleteContextValue {
   childrenArray: ReactElement<AutocompleteOptionProps>[];
-  availables: ReactElement<AutocompleteOptionProps>[];
   selections: AutocompleteSelection[];
+  handleRemoval: (value: unknown) => void;
   handleAddition: (value: unknown, title: string) => void;
 }
 
 export const AutocompleteContext = createContext<AutocompleteContextValue>({
   childrenArray: [],
-  availables: [],
   selections: [],
+  handleRemoval: () => {},
   handleAddition: () => {},
 });
 
@@ -97,13 +97,6 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
     const [selections, setSelections] = useState<AutocompleteSelection[]>(() =>
       getInitialInnerValue(childrenArray, value)
     );
-    const availables = useMemo(
-      () =>
-        childrenArray.filter(
-          child => !selections.some(v => v.value === child.props.value)
-        ),
-      [childrenArray, selections]
-    );
     const handleAddition = useCallback(
       (value: unknown, title: string) => {
         setBackspacePressed(false);
@@ -144,7 +137,7 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
     );
     const handleOpen = useCallback(() => {
       closeDropRef.current = openDrop();
-    }, [openDrop, availables]);
+    }, [openDrop]);
     const handleClose = useCallback(() => {
       closeDropRef.current?.();
     }, []);
@@ -158,8 +151,8 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
       [onQuery, handleOpen]
     );
     const contextValue = useMemo<AutocompleteContextValue>(
-      () => ({ childrenArray, availables, selections, handleAddition }),
-      [childrenArray, availables, selections, handleAddition]
+      () => ({ childrenArray, selections, handleRemoval, handleAddition }),
+      [childrenArray, selections, handleRemoval, handleAddition]
     );
     useUpdateEffect(() => {
       const items = value ?? [];
@@ -197,8 +190,10 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
         if (ev.key === 'Backspace') {
           if (ev.target.selectionStart === 0) {
             if (backspacePressed) {
-              handleRemoval(selections[selections.length - 1].value);
               setBackspacePressed(false);
+              if (selections.length > 0) {
+                handleRemoval(selections[selections.length - 1].value);
+              }
             } else {
               setBackspacePressed(true);
             }
@@ -219,16 +214,21 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
         <label
           ref={mergedRef}
           htmlFor={inputId}
+          style={{
+            ...((selections?.length || 0) === 0
+              ? {
+                  padding: '0.55em 0.60em',
+                }
+              : {}),
+          }}
           sx={{
             width: '100%',
             position: 'relative',
             backgroundColor: 'accentSurface',
             borderRadius: 4,
-            paddingX: '0.55em',
-            paddingY: '0.60em',
-            gap: '10px 8px',
+            padding: '3px',
+            gap: '2px',
             height: '100%',
-            lineHeight: '1rem',
             letterSpacing: 'normal',
             alignItems: 'center',
             display: 'flex',
@@ -261,6 +261,13 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
               autoComplete="off"
               id={inputId}
               placeholder={placeholder}
+              style={{
+                ...((selections?.length || 0) !== 0
+                  ? {
+                      padding: '0.45em 0.50em',
+                    }
+                  : {}),
+              }}
               value={innerQuery}
               variant="pure"
               onBlur={onBlur}

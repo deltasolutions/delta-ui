@@ -20,9 +20,10 @@ export const Anchor = forwardRef<HTMLAnchorElement, AnchorProps>(
           whiteSpace: 'inherit',
           borderRadius: 2,
           '&:focus-visible': {
-            outline: '2px solid',
-            outlineOffset: '2px',
             outlineColor: 'primary',
+          },
+          '&:active, &:focus-visible, &:hover': {
+            color: 'accentOnBackground',
           },
           textDecoration: variant === 'pure' ? 'none' : 'underline',
         }}

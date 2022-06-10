@@ -27,6 +27,8 @@ export const theme = {
     accentContrast: '#e1e0e0',
     accentOutline: '#282727',
 
+    monkaS: '#3e3e3e',
+
     onPrimary: '#ffffff',
     onSecondary: '#2c2c2c',
     onInfo: '#ffffff',

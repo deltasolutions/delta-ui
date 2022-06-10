@@ -10,8 +10,9 @@ import {
   useRef,
   useState,
 } from 'react';
-import { IoBanOutline } from 'react-icons/io5';
-import { DropRendererProps, useUpdateEffect } from '../../../hooks';
+import { useTranslation } from 'react-i18next';
+import { DropRendererProps } from '../../../hooks';
+import { getChildrenKey } from '../../../utils';
 import { Box } from '../../containers';
 import { AutocompleteContext } from './Autocomplete';
 import { getTitleByChild } from './utils';
@@ -29,23 +30,30 @@ export const AutocompleteDrop = forwardRef<
   HTMLDivElement,
   AutocompleteDropProps
 >(({ handleClose }, ref) => {
-  const { availables, handleAddition } = useContext(AutocompleteContext);
+  const [tCommon] = useTranslation('common');
+  const { childrenArray, selections, handleRemoval, handleAddition } =
+    useContext(AutocompleteContext);
   const [activeIndex, setActiveIndex] = useState(0);
   const contextValue = useMemo(
     () => ({ activeIndex, setActiveIndex }),
     [activeIndex]
   );
-  const availablesRef = useRef(availables);
-  useUpdateEffect(() => {
-    availablesRef.current = availables;
-  }, [availables]);
+  const selectedValues = useMemo(
+    () => selections.map(i => i.value),
+    [selections]
+  );
+  useEffect(() => {
+    setActiveIndex(0);
+  }, [getChildrenKey(childrenArray, { pivots: ['value'] })]);
   useEffect(() => {
     const handleKeyDown = ev => {
       switch (ev.key) {
         case 'Enter':
-          const child = availablesRef.current[activeIndex];
-          handleAddition(child.props?.value, getTitleByChild(child));
-          setActiveIndex(0);
+          const child = childrenArray[activeIndex];
+          const value = child.props.value;
+          selectedValues.includes(value)
+            ? handleRemoval(value)
+            : handleAddition(child.props?.value, getTitleByChild(child));
           break;
         case 'Escape':
           handleClose();
@@ -54,34 +62,17 @@ export const AutocompleteDrop = forwardRef<
           setActiveIndex(v => (v === 0 ? v : v - 1));
           break;
         case 'ArrowDown':
-          setActiveIndex(v =>
-            v === availablesRef.current.length - 1 ? v : v + 1
-          );
+          setActiveIndex(v => (v === childrenArray.length - 1 ? v : v + 1));
           break;
       }
     };
     addEventListener('keydown', handleKeyDown);
     return () => removeEventListener('keydown', handleKeyDown);
-  }, [activeIndex, handleAddition]);
-  if (availables.length === 0) {
-    return (
-      <Box
-        sx={{
-          p: 1,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <IoBanOutline
-          size={18}
-          sx={{
-            verticalAlign: 'middle',
-          }}
-        />
-      </Box>
-    );
+  }, [activeIndex, childrenArray, handleAddition, handleRemoval]);
+  if (childrenArray.length === 0) {
+    return null;
   }
+
   return (
     <AutocompleteDropContext.Provider value={contextValue}>
       <Box
@@ -90,18 +81,26 @@ export const AutocompleteDrop = forwardRef<
           p: 1,
           display: 'flex',
           flexDirection: 'column',
+          border: '1px solid',
+          borderColor: 'border',
+          backgroundColor: 'onContrast',
+          borderRadius: 4,
         }}
       >
-        {availables.map((v, i) =>
-          cloneElement(v, {
+        {childrenArray.map((v, i) => {
+          const value = v.props?.value;
+          const selected = selectedValues?.includes(value);
+          return cloneElement(v, {
             index: i,
+            selected,
             active: i === activeIndex,
-            onClick: () => {
-              handleAddition(v?.props?.value, getTitleByChild(v));
+            onAdd: () => {
+              handleAddition(value, getTitleByChild(v));
               setActiveIndex(0);
             },
-          })
-        )}
+            onRemove: () => handleRemoval(value),
+          });
+        })}
       </Box>
     </AutocompleteDropContext.Provider>
   );

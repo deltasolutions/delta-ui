@@ -21,7 +21,7 @@ export const TextCompletionOption = forwardRef<
     [ref, buttonRef]
   );
   const {
-    colors: { primary, onPrimary },
+    colors: { monkaS, onPrimary },
   } = useTheme() as Theme;
   return (
     <Button
@@ -37,7 +37,7 @@ export const TextCompletionOption = forwardRef<
       }}
       onMouseEnter={() => {
         if (buttonRef.current) {
-          buttonRef.current.style.backgroundColor = primary;
+          buttonRef.current.style.backgroundColor = monkaS;
           buttonRef.current.style.color = onPrimary;
         }
       }}

@@ -29,9 +29,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             cursor: 'not-allowed',
           },
           '&:focus-visible': {
-            outline: '2px solid',
+            outline: '1px solid',
             outlineColor: 'primary',
-            outlineOffset: 2,
           },
           ...(zoomable && {
             '&:not(:disabled)': {
@@ -72,7 +71,7 @@ const getSizeStyle = ({ variant, size = 'medium' }: ButtonProps) => {
   }[size];
 };
 
-const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps) => {
+const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps): any => {
   if (!variant) {
     return {
       display: 'flex',
@@ -83,6 +82,7 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps) => {
     borderRadius: '500px',
     display: 'inline-block',
     textAlign: 'center',
+    outlineOffset: '3px',
     overflow: 'hidden',
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',

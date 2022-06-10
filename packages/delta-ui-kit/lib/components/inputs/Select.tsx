@@ -13,7 +13,7 @@ import { DropRendererProps, useDrop, useUpdateEffect } from '../../hooks';
 import { FormWidgetProps } from '../../types';
 import { mergeRefs } from '../../utils';
 import { Button, ButtonProps } from '../Button';
-import { Box, BoxProps } from '../containers';
+import { Box, BoxProps, Option } from '../containers';
 import { TextInput } from './TextInput';
 
 export interface SelectProps
@@ -126,11 +126,13 @@ export const SelectDrop = ({
     <FocusTrap focusTrapOptions={{ escapeDeactivates: false }}>
       <Box
         sx={{
-          padding: 1,
+          p: 1,
           display: 'flex',
           flexDirection: 'column',
-          overflow: 'hidden',
-          borderRadius: 3,
+          border: '1px solid',
+          borderColor: 'border',
+          backgroundColor: 'onContrast',
+          borderRadius: 4,
         }}
       >
         {children.map(v =>
@@ -157,23 +159,6 @@ export interface SelectOptionProps
 
 export const SelectOption = forwardRef<HTMLButtonElement, SelectOptionProps>(
   ({ value, ...rest }, ref) => {
-    return (
-      <Button
-        ref={ref}
-        sx={{
-          paddingX: 2,
-          paddingY: 1,
-          textAlign: 'left',
-          fontSize: 1,
-          outline: 'none',
-          borderRadius: 2,
-          '&:focus': {
-            backgroundColor: 'primary',
-            color: 'onPrimary',
-          },
-        }}
-        {...rest}
-      />
-    );
+    return <Option ref={ref} sx={{}} {...rest} />;
   }
 );

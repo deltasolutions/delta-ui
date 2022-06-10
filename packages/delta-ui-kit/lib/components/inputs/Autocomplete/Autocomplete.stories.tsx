@@ -10,7 +10,7 @@ import { AutocompleteOption } from './AutocompleteOption';
 
 export default {
   title: 'Inputs/Autocomplete',
-  decorators: [compact('300px')],
+  decorators: [compact('400px')],
 } as Meta;
 
 const options = ['First Option', 'Second Option', 'Third Option'];
@@ -21,9 +21,11 @@ const isAlike = (query: string, option: string) =>
 export const Basics = () => {
   return (
     <Autocomplete placeholder="Placeholder">
-      <AutocompleteOption value={1}>A</AutocompleteOption>
-      <AutocompleteOption value={2}>B</AutocompleteOption>
-      <AutocompleteOption value={3}>C</AutocompleteOption>
+      <AutocompleteOption value={1}>The Godfather</AutocompleteOption>
+      <AutocompleteOption value={2}>
+        The Shawshank Redemption
+      </AutocompleteOption>
+      <AutocompleteOption value={3}>The Godfather: Part II</AutocompleteOption>
     </Autocomplete>
   );
 };
