@@ -129,10 +129,9 @@ export const SelectDrop = ({
           p: 1,
           display: 'flex',
           flexDirection: 'column',
-          border: '1px solid',
           borderColor: 'border',
-          backgroundColor: 'onContrast',
           borderRadius: 4,
+          backgroundColor: 'onContrast',
         }}
       >
         {children.map(v =>
@@ -159,6 +158,6 @@ export interface SelectOptionProps
 
 export const SelectOption = forwardRef<HTMLButtonElement, SelectOptionProps>(
   ({ value, ...rest }, ref) => {
-    return <Option ref={ref} sx={{}} {...rest} />;
+    return <Option ref={ref} {...rest} />;
   }
 );

@@ -11,10 +11,12 @@ export const Drop = forwardRef<HTMLDivElement, DropProps>(
       <Box
         ref={ref}
         sx={{
-          borderRadius: 3,
           backgroundColor: 'onContrast',
           color: 'onSurface',
           boxShadow: 1,
+          border: '1px solid',
+          borderColor: 'border',
+          borderRadius: 4,
         }}
         {...rest}
       />
