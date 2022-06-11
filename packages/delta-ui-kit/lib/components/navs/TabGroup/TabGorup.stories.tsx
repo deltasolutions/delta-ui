@@ -8,7 +8,7 @@ export default {
   title: 'Navs/TabGroup',
 } as Meta;
 
-const options = ['First', 'Second', 'Third'];
+const options = ['First item', 'Second item', 'Third item'];
 
 export const Basics = () => {
   const [activeId, setActiveId] = useState(options[0]);

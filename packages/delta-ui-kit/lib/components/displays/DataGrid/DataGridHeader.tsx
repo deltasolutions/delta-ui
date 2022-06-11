@@ -13,7 +13,8 @@ export const DataGridHeader = forwardRef<HTMLDivElement, DataGridHeaderProps>(
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
-          pb: 3,
+          py: 2,
+          minHeight: '40px',
           px: 3,
           borderTopLeftRadius: 4,
           borderTopRightRadius: 4,

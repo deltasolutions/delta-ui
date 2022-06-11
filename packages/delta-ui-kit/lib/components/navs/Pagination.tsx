@@ -12,6 +12,12 @@ import {
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AiOutlineEnter } from 'react-icons/ai';
+import { HiChevronRight } from 'react-icons/hi';
+import {
+  MdKeyboardArrowLeft,
+  MdKeyboardArrowRight,
+  MdOutlineKeyboardArrowRight,
+} from 'react-icons/md';
 import { Theme } from '../../defaults';
 import { DropRendererProps, useDrop, useImperativePortal } from '../../hooks';
 import { Button, ButtonProps } from '../Button';
@@ -43,83 +49,70 @@ export const Pagination = ({
     props => <PaginationDrop {...props} />,
     { deps: [], portal, placement: 'top-start' }
   );
+  let arr = Array.from(Array(pages).keys()).map(i => i + 1);
+  arr = [
+    ...arr.slice(0, currentPage).reverse().slice(0, 2).reverse(),
+    ...arr.slice(currentPage, currentPage + 1),
+  ];
   return (
     <PaginationContext.Provider value={{ pages, currentPage, onChange }}>
       <Box
         sx={{
           display: 'flex',
-          borderRadius: '4px',
-          border: '1px solid',
-          borderColor: 'border',
-          color: 'secondary',
-          backgroundColor: 'accentSurface',
+          gap: 1,
         }}
-        {...rest}
       >
-        {portal}
-        <Button
+        <Item
           disabled={currentPage === 1}
-          sx={{
-            borderRight: '1px solid',
-            borderRightColor: 'border',
-            borderRadius: '4px 0px 0px 4px',
-            px: 3,
-            py: 2,
-            ...(prevButtonProps?.disabled
-              ? { opacity: 0.5 }
-              : {
-                  '&:hover, &:active, &:focus-visible': {
-                    backdropFilter: 'brightness(130%)',
-                  },
-                }),
-          }}
           onClick={() => onChange(currentPage - 1)}
-          {...prevButtonProps}
         >
-          {tCommon('Назад')}
-        </Button>
-        <Button
-          ref={anchorRef}
-          sx={{
-            color: 'accentOnSurface',
-            display: 'flex',
-            width: '45px',
-            justifyContent: 'center',
-            alignItems: 'center',
-            fontWeight: 700,
-            '&:hover, &:active, &:focus-visible': {
-              backdropFilter: 'brightness(130%)',
-            },
-          }}
-          onClick={openDrop}
-        >
-          {currentPage}
-        </Button>
-        <Button
+          <MdKeyboardArrowLeft size={21} />
+        </Item>
+        {arr.map(i => (
+          <Item
+            key={i}
+            isActive={i === currentPage}
+            sx={{ px: 3 }}
+            onClick={() => onChange(i)}
+          >
+            {i}
+          </Item>
+        ))}
+
+        <Item
           disabled={currentPage === pages}
-          sx={{
-            borderLeft: '1px solid',
-            borderLeftColor: 'border',
-            borderRadius: '0px 4px 4px 0px',
-            px: 3,
-            py: 2,
-            ...(nextButtonProps?.disabled
-              ? { opacity: 0.5 }
-              : {
-                  '&:hover, &:active, &:focus-visible': {
-                    backdropFilter: 'brightness(130%)',
-                  },
-                }),
-          }}
           onClick={() => onChange(currentPage + 1)}
-          {...nextButtonProps}
         >
-          {tCommon('Дальше')}
-        </Button>
+          <MdKeyboardArrowRight size={21} />
+        </Item>
       </Box>
     </PaginationContext.Provider>
   );
 };
+const Item = ({ children, disabled = false, isActive = false, ...rest }) => (
+  <Button
+    disabled={disabled}
+    sx={{
+      justifyContent: 'center',
+      borderRadius: 4,
+      px: 2,
+      height: '28px',
+      ...(!disabled && {
+        '&:hover, &:active, &:focus-visible': {
+          backgroundColor: 'rgba(255,255,255,0.1)',
+        },
+      }),
+      ...(isActive && {
+        backgroundColor: 'rgba(255,255,255,0.1)',
+        color: 'accentOnSurface',
+      }),
+    }}
+    {...rest}
+  >
+    {children}
+  </Button>
+);
+
 const PaginationContext = createContext(
   {} as { pages: number; currentPage: number; onChange: (v: number) => void }
 );

@@ -1,5 +1,5 @@
 import { jsx } from '@theme-ui/core';
-import { forwardRef } from 'react';
+import { forwardRef, ReactNode } from 'react';
 import { Box, BoxProps } from '../../containers';
 
 export interface TableBodyCellProps extends BoxProps {}
@@ -10,7 +10,7 @@ export const DataGridBodyCell = forwardRef<HTMLDivElement, TableBodyCellProps>(
       <Box
         ref={ref}
         role="cell"
-        sx={{ color: 'accentContrast', fontSize: 3 }}
+        sx={{ color: 'onSurface', fontSize: 2 }}
         {...rest}
       />
     );

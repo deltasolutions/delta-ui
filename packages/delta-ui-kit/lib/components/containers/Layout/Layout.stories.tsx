@@ -1,14 +1,15 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { Fragment, useState } from 'react';
-import { BiPhone, BiPhotoAlbum, BiPlanet } from 'react-icons/bi';
-import { BsFillInfoCircleFill } from 'react-icons/bs';
+import { Fragment, useContext, useLayoutEffect, useRef, useState } from 'react';
 import { CgSearch } from 'react-icons/cg';
-import { FaSortDown, FaSortUp, FaSearch } from 'react-icons/fa';
+import { GrSettingsOption } from 'react-icons/gr';
+import { IoMdSearch } from 'react-icons/io';
+import { IoIosSettings } from 'react-icons/io';
 import { MdOutlineSearch } from 'react-icons/md';
 import { RiSettings5Line } from 'react-icons/ri';
 import { TbHome2 } from 'react-icons/tb';
-import { useModal, useOperation } from '../../../hooks';
+import { useModal } from '../../../hooks';
+import { hash } from '../../../utils';
 import { Anchor } from '../../Anchor';
 import { Button } from '../../Button';
 import {
@@ -20,33 +21,18 @@ import {
   DataGridRow,
   DataGridBodyCell,
 } from '../../displays';
-import {
-  Form,
-  FormGrid,
-  FormField,
-  Switch,
-  Select,
-  SelectOption,
-  Radio,
-  RadioOption,
-  Slider,
-  FilePicker,
-  TextArea,
-  TextInput,
-} from '../../inputs';
-import { Checkbox } from '../../inputs';
-import { Breadcrumbs } from '../../navs';
-import { Tooltip } from '../../Tooltip';
-import { AlertHolder } from '../AlertHolder';
+import { TextInput } from '../../inputs';
+import { Basics as FormStory } from '../../inputs/Form.stories';
+import { Breadcrumbs, Pagination, TabGroup, TabOption } from '../../navs';
 import { Box } from '../Box';
 import { Card, CardBody, CardHeader } from '../Card';
 import { Heading } from '../Heading';
 import { Masonry } from '../Masonry';
-import { ModalBody } from '../Modal';
+import { ModalBody, ModalFooter, ModalHeader } from '../Modal';
 import { Layout } from './Layout';
 import { LayoutMain } from './LayoutMain';
 import { LayoutMainBody } from './LayoutMainBody';
-import { LayoutMainHeader } from './LayoutMainHeader';
+import { layoutHeaderHeight, LayoutMainHeader } from './LayoutMainHeader';
 import {
   LayoutNavigation,
   LayoutNavigationGroup,
@@ -60,8 +46,8 @@ import {
 export default {
   title: 'Containers/Layout',
 } as Meta;
-
 export const Basics = () => {
+  const [activeId, setActiveId] = useState('1');
   return (
     <Layout>
       <LayoutSidebar>
@@ -100,17 +86,9 @@ export const Basics = () => {
               display: 'flex',
               flexDirection: 'column',
               gap: 3,
-              maxWidth: '1200px',
+              maxWidth: '1600px',
             }}
           >
-            <Card>
-              <CardHeader>
-                <Heading level={2}>Users</Heading>
-              </CardHeader>
-              <CardBody>
-                <ExampleDataGrid />
-              </CardBody>
-            </Card>
             <Masonry columns={{ count: 2 }} sx={{ '&, & > *': { gap: 3 } }}>
               <Card>
                 <CardHeader>
@@ -129,18 +107,12 @@ export const Basics = () => {
               </Card>
               <Card>
                 <CardBody>
-                  <ExampleForm />
-                </CardBody>
-              </Card>
-              <Card>
-                <CardBody>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
                   Beatae quos, tenetur minima itaque quidem adipisci
                   reprehenderit maiores hic, neque, numquam dolorem voluptatum
                   quae magnam ea distinctio. Aut consectetur soluta rerum.
                 </CardBody>
               </Card>
-
               <Card>
                 <CardBody>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -150,6 +122,74 @@ export const Basics = () => {
                 </CardBody>
               </Card>
             </Masonry>
+            <TabGroup activeId={activeId} sx={{ my: 3 }}>
+              <TabOption id="1" onClick={() => setActiveId('1')}>
+                First item
+              </TabOption>
+              <TabOption id="2" onClick={() => setActiveId('2')}>
+                Second item
+              </TabOption>
+              <TabOption id="3" onClick={() => setActiveId('3')}>
+                Third item
+              </TabOption>
+            </TabGroup>
+            {
+              {
+                1: (
+                  <Card>
+                    <CardBody>
+                      <ExampleDataGrid />
+                    </CardBody>
+                  </Card>
+                ),
+                2: (
+                  <Masonry
+                    columns={{ count: 2 }}
+                    sx={{ '&, & > *': { gap: 3 } }}
+                  >
+                    <Card>
+                      <CardHeader>
+                        <Heading level={2}>Information</Heading>
+                      </CardHeader>
+                      <CardBody>
+                        <PairList
+                          pairs={[
+                            ['Name', 'Carly'],
+                            ['Surname', 'Townsend'],
+                            ['IP address', '192.168.l.254'],
+                            ['Birth Date', '19.10.1996'],
+                          ]}
+                        />
+                      </CardBody>
+                    </Card>
+                    {/* <Card>
+                      <CardBody>
+                        <ExampleForm />
+                      </CardBody>
+                    </Card> */}
+                    <Card>
+                      <CardBody>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Beatae quos, tenetur minima itaque quidem adipisci
+                        reprehenderit maiores hic, neque, numquam dolorem
+                        voluptatum quae magnam ea distinctio. Aut consectetur
+                        soluta rerum.
+                      </CardBody>
+                    </Card>
+                    <Card>
+                      <CardBody>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Beatae quos, tenetur minima itaque quidem adipisci
+                        reprehenderit maiores hic, neque, numquam dolorem
+                        voluptatum quae magnam ea distinctio. Aut consectetur
+                        soluta rerum.
+                      </CardBody>
+                    </Card>
+                  </Masonry>
+                ),
+                3: <ExampleDataGrid />,
+              }[activeId]
+            }
             <Box sx={{ height: '200vh', width: '1px' }} />
             Bottom Text
           </Box>
@@ -254,13 +294,13 @@ const ExampleMenu = () => {
           backgroundSize: '100% 51px, 100% 51px, 100% 17px, 100% 17px',
         }}
       >
-        {items.map(node => {
+        {items.map((node, index) => {
           return (
-            <LayoutNavigationGroup title={node.group}>
-              {node.items.map(item => {
+            <LayoutNavigationGroup key={index} title={node.group}>
+              {node.items.map((item, index) => {
                 return (
                   <LayoutNavigationItem
-                    key={item.title}
+                    key={index}
                     id={item.title}
                     onClick={() => setActiveId(item.title)}
                   >
@@ -276,163 +316,292 @@ const ExampleMenu = () => {
   );
 };
 const ExampleDataGrid = () => {
-  return (
-    <DataGrid>
-      <DataGridHeader>
-        <DataGridHeaderCell sx={{ width: '250px' }}>
-          <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-            <Heading level={5}>ID</Heading>
-            <Tooltip content="Sort Ascending">
-              <Button sx={{ display: 'flex', mt: '4px' }}>
-                <FaSortUp />
-              </Button>
-            </Tooltip>
-          </Box>
-        </DataGridHeaderCell>
-        <DataGridHeaderCell sx={{ width: '250px' }}>
-          <Box
-            sx={{
-              display: 'flex',
-              gap: 1,
-              alignItems: 'center',
-            }}
-          >
-            <Heading level={5}>Name</Heading>
-            <Tooltip content="Descending sort">
-              <Button
-                sx={{
-                  display: 'flex',
-                  mt: '-3px',
-                  alignItems: 'center',
-                }}
-              >
-                <FaSortDown />
-              </Button>
-            </Tooltip>
-          </Box>
-        </DataGridHeaderCell>
-        <DataGridHeaderCell sx={{ width: '250px' }}>
-          <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-            <Heading level={5}>Surname</Heading>
-            <Tooltip content="Lorem Ipsum is Ipsum.">
-              <Button sx={{ display: 'flex', alignItems: 'center' }}>
-                <BsFillInfoCircleFill sx={{ opacity: 0.5 }} />
-              </Button>
-            </Tooltip>
-          </Box>
-        </DataGridHeaderCell>
-        <DataGridHeaderCell sx={{ width: '250px' }}>
-          <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-            <Heading level={5}>Birth Date</Heading>
-            <Tooltip content="Lorem Ipsum is simply dummy text 's Ipsum.">
-              <Button sx={{ display: 'flex', alignItems: 'center' }}>
-                <BsFillInfoCircleFill sx={{ opacity: 0.5 }} />
-              </Button>
-            </Tooltip>
-          </Box>
-        </DataGridHeaderCell>
-      </DataGridHeader>
-      <DataGridBody>
-        <DataGridRow>
-          <DataGridBodyCell sx={{ width: '250px' }}>1</DataGridBodyCell>
-          <DataGridBodyCell sx={{ width: '250px' }}>Alexander</DataGridBodyCell>
-          <DataGridBodyCell sx={{ width: '250px' }}>Zosimus</DataGridBodyCell>
-          <DataGridBodyCell sx={{ width: '250px' }}>4.05.2002</DataGridBodyCell>
-        </DataGridRow>
-        <DataGridRow>
-          <DataGridBodyCell sx={{ width: '250px' }}>2</DataGridBodyCell>
-          <DataGridBodyCell sx={{ width: '250px' }}>Alexey</DataGridBodyCell>
-          <DataGridBodyCell sx={{ width: '250px' }}>Corinna</DataGridBodyCell>
-          <DataGridBodyCell sx={{ width: '250px' }}>
-            31.04.1931
-          </DataGridBodyCell>
-        </DataGridRow>
-        <DataGridRow>
-          <DataGridBodyCell sx={{ width: '250px' }}>3</DataGridBodyCell>
-          <DataGridBodyCell sx={{ width: '250px' }}>Jack</DataGridBodyCell>
-          <DataGridBodyCell sx={{ width: '250px' }}>Menelaos</DataGridBodyCell>
-          <DataGridBodyCell sx={{ width: '250px' }}>
-            18.01.2000
-          </DataGridBodyCell>
-        </DataGridRow>
-      </DataGridBody>
-    </DataGrid>
-  );
-};
-
-const ExampleForm = () => {
-  const openModal = useModal<unknown>(
-    ({ context }) => {
-      return (
-        <ModalBody>
-          <pre>{JSON.stringify(context, null, 2)}</pre>
-        </ModalBody>
-      );
-    },
-    { deps: [] }
-  );
-  const [handleSubmit, alerts] = useOperation(
-    async v => {
-      if (Math.random() > 0.5) {
-        throw new Error();
-      }
+  const [active, setActive] = useState(1);
+  const pages = 1000;
+  const itemsPerPage = 20;
+  const pagesLength = Math.ceil(pages / itemsPerPage);
+  const onChage = v => {
+    setActive(v);
+  };
+  const data = [
+    {
+      id: 1,
+      name: 'Lorefidiandop',
+      surname: 'Tetraideodss',
+      birthDate: '19.10.2002',
     },
     {
+      id: 1,
+      name: 'Lorefidiandop',
+      surname: 'Tetraideodss',
+      birthDate: '19.10.2002',
+    },
+    {
+      id: 1,
+      name: 'Lorefidiandop',
+      surname: 'Tetraideodss',
+      birthDate: '19.10.2002',
+    },
+    {
+      id: 1,
+      name: 'Lorefidiandop',
+      surname: 'Tetraideodss',
+      birthDate: '19.10.2002',
+    },
+    {
+      id: 1,
+      name: 'Lorefidiandop',
+      surname: 'Tetraideodss',
+      birthDate: '19.10.2002',
+    },
+    {
+      id: 1,
+      name: 'Lorefidiandop',
+      surname: 'Tetraideodss',
+      birthDate: '19.10.2002',
+    },
+    {
+      id: 1,
+      name: 'Lorefidiandop',
+      surname: 'Tetraideodss',
+      birthDate: '19.10.2002',
+    },
+    {
+      id: 1,
+      name: 'Lorefidiandop',
+      surname: 'Tetraideodss',
+      birthDate: '19.10.2002',
+    },
+    {
+      id: 1,
+      name: 'Lorefidiandop',
+      surname: 'Tetraideodss',
+      birthDate: '19.10.2002',
+    },
+    {
+      id: 1,
+      name: 'Lorefidiandop',
+      surname: 'Tetraideodss',
+      birthDate: '19.10.2002',
+    },
+    {
+      id: 1,
+      name: 'Lorefidiandop',
+      surname: 'Tetraideodss',
+      birthDate: '19.10.2002',
+    },
+    {
+      id: 1,
+      name: 'Lorefidiandop',
+      surname: 'Tetraideodss',
+      birthDate: '19.10.2002',
+    },
+    {
+      id: 1,
+      name: 'Lorefidiandop',
+      surname: 'Tetraideodss',
+      birthDate: '19.10.2002',
+    },
+    {
+      id: 1,
+      name: 'Lorefidiandop',
+      surname: 'Tetraideodss',
+      birthDate: '19.10.2002',
+    },
+    {
+      id: 1,
+      name: 'Lorefidiandop',
+      surname: 'Tetraideodss',
+      birthDate: '19.10.2002',
+    },
+    {
+      id: 1,
+      name: 'Lorefidiandop',
+      surname: 'Tetraideodss',
+      birthDate: '19.10.2002',
+    },
+    {
+      id: 1,
+      name: 'Lorefidiandop',
+      surname: 'Tetraideodss',
+      birthDate: '19.10.2002',
+    },
+    {
+      id: 1,
+      name: 'Lorefidiandop',
+      surname: 'Tetraideodss',
+      birthDate: '19.10.2002',
+    },
+    {
+      id: 1,
+      name: 'Lorefidiandop',
+      surname: 'Tetraideodss',
+      birthDate: '19.10.2002',
+    },
+    {
+      id: 1,
+      name: 'Lorefidiandop',
+      surname: 'Tetraideodss',
+      birthDate: '19.10.2002',
+    },
+    {
+      id: 1,
+      name: 'Lorefidiandop',
+      surname: 'Tetraideodss',
+      birthDate: '19.10.2002',
+    },
+    {
+      id: 1,
+      name: 'Lorefidiandop',
+      surname: 'Tetraideodss',
+      birthDate: '19.10.2002',
+    },
+    {
+      id: 1,
+      name: 'Lorefidiandop',
+      surname: 'Tetraideodss',
+      birthDate: '19.10.2002',
+    },
+    {
+      id: 1,
+      name: 'Lorefidiandop',
+      surname: 'Tetraideodss',
+      birthDate: '19.10.2002',
+    },
+    {
+      id: 1,
+      name: 'Lorefidiandop',
+      surname: 'Tetraideodss',
+      birthDate: '19.10.2002',
+    },
+    {
+      id: 1,
+      name: 'Lorefidiandop',
+      surname: 'Tetraideodss',
+      birthDate: '19.10.2002',
+    },
+  ].map(d => ({ ...d, _setting: null }));
+  const ref = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => {
+    if (!ref.current) {
+      return;
+    }
+    const observer = new IntersectionObserver(
+      ([e]) => {
+        console.log('event');
+        return e.target.classList.toggle('chumba', e.intersectionRatio < 1);
+      },
+      {
+        rootMargin: `-${layoutHeaderHeight + 1}px 0px 0px 0px`,
+        threshold: [1],
+      }
+    );
+    observer.observe(ref.current);
+    return () => {
+      observer.disconnect();
+    };
+  }, [ref.current]);
+
+  const openModal = useModal(
+    () => (
+      <Fragment>
+        <ModalHeader>
+          <Heading level={3}>Настройки таблицы</Heading>
+        </ModalHeader>
+        <ModalBody>
+          <FormStory />
+        </ModalBody>
+        <ModalFooter></ModalFooter>
+      </Fragment>
+    ),
+    {
       deps: [],
-      getAlert: isOk =>
-        isOk
-          ? 'Success lorem ipsum dolor sit amet consectetur adipisicing elit.'
-          : 'false',
-      getNotification: isOk =>
-        isOk
-          ? 'Success lorem ipsum dolor sit amet consectetur adipisicing elit.'
-          : 'Unable to resolve service for type ¨Microsoft.entityFrameworkCore.DbContextOptions¨1[LibraryData.LibraryContext] while attempting to activate.',
     }
   );
   return (
-    <Form
-      sx={{ display: 'flex', flexDirection: 'column' }}
-      onSubmit={handleSubmit}
-    >
-      <FormGrid columns={{ count: 1 }}>
-        <AlertHolder>{alerts}</AlertHolder>
-        <FormField label="Default Widget" name="defaultWidget" />
-        <FormField name="switch">
-          <Switch>Switch</Switch>
-        </FormField>
-        <FormField name="checkbox">
-          <Checkbox>Checkbox</Checkbox>
-        </FormField>
-        <FormField label="Select" name="select">
-          <Select>
-            <SelectOption value={1}>A</SelectOption>
-            <SelectOption value={2}>B</SelectOption>
-            <SelectOption value={3}>C</SelectOption>
-          </Select>
-        </FormField>
-        <FormField label="Radio" name="radio">
-          <Radio>
-            <RadioOption value={1}>A</RadioOption>
-            <RadioOption value={2}>B</RadioOption>
-            <RadioOption value={3}>C</RadioOption>
-          </Radio>
-        </FormField>
-        <FormField label="Slider" name="slider">
-          <Slider />
-        </FormField>
-        <FormField label="MultipleFilePicker" name="MultipleFilePicker">
-          <FilePicker multiple={true} />
-        </FormField>
-        <FormField label="FilePicker" name="filePicker">
-          <FilePicker multiple={false} />
-        </FormField>
-        <FormField label="TextArea" name="textArea">
-          <TextArea />
-        </FormField>
-      </FormGrid>
-      <Button sx={{ mt: 4, ml: 'auto' }} type="submit" variant="contained">
-        Submit
-      </Button>
-    </Form>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+      <DataGrid
+        sx={{
+          '.chumba': {
+            borderBottom: '1px solid',
+            borderBottomColor: 'border',
+            boxShadow: 1,
+            backgroundColor: '#181818',
+            mx: '-56px',
+            px: '72px',
+          },
+        }}
+      >
+        <DataGridHeader
+          ref={ref}
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            borderRadius: 0,
+            position: 'sticky',
+            top: `${layoutHeaderHeight}px`,
+            borderBottom: '1px solid',
+            borderBottomColor: 'border',
+            zIndex: 1,
+          }}
+        >
+          <DataGridHeaderCell label="ID" sx={{ minWidth: '250px' }} />
+          <DataGridHeaderCell label="Name" sx={{ minWidth: '250px' }} />
+          <DataGridHeaderCell label="Surname" sx={{ minWidth: '250px' }} />
+          <DataGridHeaderCell label="Birth Date" sx={{ minWidth: '250px' }} />
+          <Box
+            sx={{
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'flex-end',
+              gap: 2,
+            }}
+          >
+            <TextInput
+              placeholder="Search"
+              startAdornment={
+                <Button sx={{ ml: '2px' }} tabIndex={-1}>
+                  <IoMdSearch size={18} />
+                </Button>
+              }
+              sx={{ width: '210px' }}
+            />
+            <Button
+              sx={{
+                width: '32px',
+                justifyContent: 'center',
+                borderRadius: 4,
+                backgroundColor: 'accentSurface',
+                color: 'onSurface',
+              }}
+              onClick={() => openModal()}
+            >
+              <IoIosSettings size={22} sx={{}} />
+            </Button>
+          </Box>
+        </DataGridHeader>
+        <DataGridBody>
+          {data.map((datum, index) => (
+            <DataGridRow key={hash(datum) + index}>
+              {Object.values(datum).map((d, index) => (
+                <DataGridBodyCell
+                  key={index}
+                  sx={{ minWidth: d === null ? '100%' : '250px' }}
+                >
+                  {d}
+                </DataGridBodyCell>
+              ))}
+            </DataGridRow>
+          ))}
+        </DataGridBody>
+      </DataGrid>
+      <Box sx={{ ml: 'auto' }}>
+        <Pagination
+          currentPage={active}
+          pages={pagesLength}
+          onChange={onChage}
+        />
+      </Box>
+    </Box>
   );
 };
