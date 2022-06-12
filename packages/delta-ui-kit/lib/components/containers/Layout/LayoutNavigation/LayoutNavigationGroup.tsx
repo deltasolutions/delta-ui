@@ -15,9 +15,9 @@ export const LayoutNavigationGroup = forwardRef<
     <Box
       ref={ref}
       sx={{
-        pt: 3,
+        mt: 4,
         '& + &': {
-          borderTop: '1px rgba(255,255,255,0.1) solid',
+          // borderTop: '1px rgba(255,255,255,0.1) solid',
         },
       }}
       {...rest}
@@ -26,17 +26,27 @@ export const LayoutNavigationGroup = forwardRef<
         level={6}
         sx={{
           textTransform: 'uppercase',
-          px: 4,
+          fontFamily: 'Arial, sans-serif',
+          ml: 3,
           pb: 2,
-          color: '#b3b3b3',
-          fontSize: 1,
+          color: 'onExterior',
           fontWeight: 600,
           letterSpacing: 0.4,
+          textOverflow: 'ellipsis',
+          overflow: 'hidden',
+          whiteSpace: 'nowrap',
         }}
       >
         {title}
       </Heading>
-      <Box sx={{ display: 'flex', flexDirection: 'column' }}>{children}</Box>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        {children}
+      </Box>
     </Box>
   );
 });

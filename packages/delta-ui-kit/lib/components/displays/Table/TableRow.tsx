@@ -1,13 +1,14 @@
 import { jsx } from '@theme-ui/core';
-import { forwardRef } from 'react';
+import { forwardRef, HTMLAttributes } from 'react';
 import { Box, BoxProps } from '../../containers';
 
-export interface TableRowPropsProps extends BoxProps {}
+export interface TableRowPropsProps
+  extends HTMLAttributes<HTMLTableRowElement> {}
 
-export const DataGridRow = forwardRef<HTMLDivElement, TableRowPropsProps>(
+export const TableRow = forwardRef<HTMLTableRowElement, TableRowPropsProps>(
   ({ ...rest }, ref) => {
     return (
-      <Box
+      <tr
         ref={ref}
         role="row"
         sx={{

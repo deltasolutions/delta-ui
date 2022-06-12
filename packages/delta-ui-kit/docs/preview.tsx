@@ -19,7 +19,6 @@ export const decorators = [
               width: '100%',
               minHeight: '100vh',
               colorScheme: theme.colorScheme,
-              overscrollBehaviorY: 'none',
             },
           }}
         />

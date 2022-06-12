@@ -28,7 +28,7 @@ export const TabOption = forwardRef<HTMLAnchorElement, TabOptionProps>(
       <Anchor
         ref={ref}
         href={href ?? '#'}
-        sx={{ ...getVariantStyle({ variant, isActive }) }}
+        sx={{ display: 'block', ...getVariantStyle({ variant, isActive }) }}
         variant="pure"
         onClick={handleClick}
         {...rest}

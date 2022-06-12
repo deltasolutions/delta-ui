@@ -43,7 +43,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       innerValue !== value && setInnerValue(value ?? '');
     }, [value]);
     return (
-      <Box sx={{ position: 'relative' }}>
+      <Fragment>
         <Box
           sx={{
             position: 'absolute',
@@ -106,7 +106,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
         >
           {endAdornment}
         </Box>
-      </Box>
+      </Fragment>
     );
   }
 );
