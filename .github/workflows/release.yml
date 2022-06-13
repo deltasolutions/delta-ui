@@ -24,6 +24,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: 'npm'
+          # Enable when GH issue will be fixed.
+          # https://github.com/actions/setup-node/issues/516
+          # cache: 'npm'
       - run: npm ci
       - run: npx nx run {{ github.event.inputs.package }} -- --increment {{ github.event.inputs.increment }}
