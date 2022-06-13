@@ -21,22 +21,13 @@ export interface LayoutNavigationItemProps
 export const LayoutNavigationItem = forwardRef<
   HTMLAnchorElement,
   LayoutNavigationItemProps
->(({ children, onClick, href, icon: Icon, id, ...rest }, ref) => {
+>(({ children, icon: Icon, id, ...rest }, ref) => {
   const { activeId } = useContext(NavigationContext);
   const isActive = useMemo(() => id === activeId, [id, activeId]);
-  const handleOnClick = useCallback(
-    e => {
-      if (!href || href === '#') {
-        e.preventDefault();
-        onClick?.();
-      }
-    },
-    [onClick, href]
-  );
+
   return (
     <Anchor
       ref={ref}
-      href={href}
       sx={{
         position: 'relative',
         py: 2,
@@ -72,7 +63,6 @@ export const LayoutNavigationItem = forwardRef<
             }),
       }}
       variant="pure"
-      onClick={handleOnClick}
       {...rest}
     >
       {Icon && <Icon size="1.5em" />}

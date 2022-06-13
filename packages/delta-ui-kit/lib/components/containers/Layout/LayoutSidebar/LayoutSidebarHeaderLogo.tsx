@@ -1,5 +1,5 @@
 import { jsx } from '@theme-ui/core';
-import { forwardRef, HTMLProps, ImgHTMLAttributes } from 'react';
+import { forwardRef, ImgHTMLAttributes } from 'react';
 
 export interface LayoutSidebarHeaderLogoProps
   extends ImgHTMLAttributes<HTMLImageElement> {}

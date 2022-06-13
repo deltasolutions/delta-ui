@@ -1,11 +1,8 @@
 import { jsx } from '@theme-ui/core';
-import { forwardRef, ReactNode } from 'react';
+import { forwardRef } from 'react';
 import { Box, BoxProps } from '../../Box';
-import { Heading } from '../../Heading';
 
-export interface LayoutSidebarHeaderProps extends BoxProps {
-  logo?: ReactNode;
-}
+export interface LayoutSidebarHeaderProps extends BoxProps {}
 
 export const LayoutSidebarHeader = forwardRef<
   HTMLDivElement,
