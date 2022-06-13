@@ -24,6 +24,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
+          registry-url: https://registry.npmjs.org
           # Enable when GH issue will be fixed.
           # https://github.com/actions/setup-node/issues/516
           # cache: 'npm'
