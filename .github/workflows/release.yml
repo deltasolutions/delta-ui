@@ -1,0 +1,29 @@
+name: Package Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      package:
+        type: string
+        description: Package
+        required: true
+      increment:
+        type: choice
+        description: Increment
+        options:
+          - major
+          - minor
+          - patch
+        required: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: npm
+      - run: npm ci
+      - run: npx nx run {{ github.event.inputs.package }} -- --increment {{ github.event.inputs.increment }}
