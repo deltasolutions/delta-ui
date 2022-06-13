@@ -1,6 +1,5 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { Button } from '../../../Button';
 import { TabGroup, TabOption } from '../../../navs';
 import { Box } from '../../Box';
 import { Card, CardBody, CardHeader } from '../../Card';
