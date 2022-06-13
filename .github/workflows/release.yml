@@ -28,4 +28,4 @@ jobs:
           # https://github.com/actions/setup-node/issues/516
           # cache: 'npm'
       - run: npm ci
-      - run: npx nx run {{ github.event.inputs.package }} -- --increment {{ github.event.inputs.increment }}
+      - run: npx nx run ${{ github.event.inputs.package }} -- --increment ${{ github.event.inputs.increment }}
