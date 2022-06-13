@@ -1,0 +1,42 @@
+name: Package Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      package:
+        type: string
+        description: Package
+        required: true
+      increment:
+        type: choice
+        description: Increment
+        options:
+          - patch
+          - minor
+          - major
+        required: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: https://registry.npmjs.org
+          # Enable when GH issue will be fixed.
+          # https://github.com/actions/setup-node/issues/516
+          # cache: 'npm'
+      - run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+      - run: npm ci
+      - run: npx nx run delta-release:build
+      - run: npm i
+      - run: >-
+          npx nx run
+          ${{ github.event.inputs.package }}:release --
+          --increment ${{ github.event.inputs.increment }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
