@@ -11,9 +11,9 @@ on:
         type: choice
         description: Increment
         options:
-          - major
-          - minor
           - patch
+          - minor
+          - major
         required: true
 
 jobs:
@@ -24,6 +24,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: npm
+          cache: 'npm'
       - run: npm ci
       - run: npx nx run {{ github.event.inputs.package }} -- --increment {{ github.event.inputs.increment }}
