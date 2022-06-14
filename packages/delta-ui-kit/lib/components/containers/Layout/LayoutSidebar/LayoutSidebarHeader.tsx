@@ -12,11 +12,11 @@ export const LayoutSidebarHeader = forwardRef<
     <Box
       ref={ref}
       sx={{
-        mx: 3,
+        m: 3,
         flex: '0 0 auto',
-        my: 3,
         display: 'flex',
-        alignItems: 'center',
+        flexDirection: 'column',
+        gap: 3,
         color: 'accentOnSurface',
         width: 'auto',
         height: 'auto',

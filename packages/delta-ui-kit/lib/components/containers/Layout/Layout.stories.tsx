@@ -1,6 +1,7 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { MdOutlineSpaceDashboard } from 'react-icons/md';
+import { MdOutlineSettings, MdOutlineSpaceDashboard } from 'react-icons/md';
+import { SiDeno } from 'react-icons/si';
 import { Heading } from '../Heading';
 import { Layout } from './Layout';
 import { LayoutMain } from './LayoutMain';
@@ -21,42 +22,55 @@ export default {
   title: 'Containers/Layout',
 } as Meta;
 
-export const Basics = () => (
-  <Layout>
-    <LayoutSidebar>
-      <LayoutSidebarHeader>
-        <Heading level={3}>Heading</Heading>
-      </LayoutSidebarHeader>
-      <LayoutSidebarBody>
-        <LayoutNavigation activeId="1">
-          <LayoutNavigationGroup title="Group 1">
-            <LayoutNavigationItem icon={MdOutlineSpaceDashboard} id="1">
+export const Basics = () => {
+  return (
+    <Layout>
+      <LayoutSidebar>
+        <LayoutSidebarHeader>
+          <SiDeno
+            sx={{
+              width: '3.45rem',
+              height: '3.45rem',
+              verticalAlign: 'middle',
+              mx: 'auto',
+              mt: 2,
+            }}
+          />
+        </LayoutSidebarHeader>
+        <LayoutSidebarBody>
+          <LayoutNavigation activeId="0-1">
+            <LayoutNavigationItem icon={MdOutlineSpaceDashboard} id="0-1">
               Dashboard
             </LayoutNavigationItem>
-            <LayoutNavigationItem id="2">
-              Navigation item 2
+            <LayoutNavigationItem icon={MdOutlineSettings} id="0-2">
+              Settings
             </LayoutNavigationItem>
-            <LayoutNavigationItem id="3">
-              Navigation item 3
-            </LayoutNavigationItem>
-          </LayoutNavigationGroup>
-          <LayoutNavigationGroup title="Group 2">
-            <LayoutNavigationItem id="4">
-              Navigation item 4
-            </LayoutNavigationItem>
-            <LayoutNavigationItem id="5">
-              Navigation item 5
-            </LayoutNavigationItem>
-            <LayoutNavigationItem id="6">
-              Navigation item 6
-            </LayoutNavigationItem>
-          </LayoutNavigationGroup>
-        </LayoutNavigation>
-      </LayoutSidebarBody>
-    </LayoutSidebar>
-    <LayoutMain>
-      <LayoutMainHeader>header</LayoutMainHeader>
-      <LayoutMainBody>body</LayoutMainBody>
-    </LayoutMain>
-  </Layout>
-);
+            <LayoutNavigationGroup title="Group 1">
+              <LayoutNavigationItem id="1-0">
+                Navigation item 1-0
+              </LayoutNavigationItem>
+              <LayoutNavigationItem id="1-1">
+                Navigation item 1-1
+              </LayoutNavigationItem>
+            </LayoutNavigationGroup>
+            <LayoutNavigationGroup title="Group 2">
+              <LayoutNavigationItem id="2-0">
+                Navigation item 2-0
+              </LayoutNavigationItem>
+              <LayoutNavigationItem id="2-1">
+                Navigation item 2-1
+              </LayoutNavigationItem>
+              <LayoutNavigationItem id="2-2">
+                Navigation item 2-2
+              </LayoutNavigationItem>
+            </LayoutNavigationGroup>
+          </LayoutNavigation>
+        </LayoutSidebarBody>
+      </LayoutSidebar>
+      <LayoutMain>
+        <LayoutMainHeader>header</LayoutMainHeader>
+        <LayoutMainBody>body</LayoutMainBody>
+      </LayoutMain>
+    </Layout>
+  );
+};

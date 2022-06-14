@@ -43,7 +43,6 @@ export const LayoutSidebar = forwardRef<HTMLDivElement, LayoutSidebarProps>(
               display: 'flex',
               width: '100%',
               flexDirection: 'column',
-              gap: 2,
             }}
           >
             {children}

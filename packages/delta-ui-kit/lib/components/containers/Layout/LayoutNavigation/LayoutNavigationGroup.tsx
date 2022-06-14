@@ -1,7 +1,6 @@
 import { jsx } from '@theme-ui/core';
 import { forwardRef, ReactNode } from 'react';
 import { Box, BoxProps } from '../../Box';
-import { Heading } from '../../Heading';
 
 export interface LayoutNavigationGroupProps extends Omit<BoxProps, 'title'> {
   title: ReactNode;
@@ -12,26 +11,21 @@ export const LayoutNavigationGroup = forwardRef<
   LayoutNavigationGroupProps
 >(({ children, title, ...rest }, ref) => {
   return (
-    <Box
-      ref={ref}
-      sx={{
-        py: 2,
-        mr: 2,
-      }}
-      {...rest}
-    >
+    <Box ref={ref} {...rest}>
       <Box
         sx={{
-          fontSize: '12px',
-          ml: '18px',
-          mb: 1,
-          color: 'onExterior',
-          fontWeight: 500,
-          textOverflow: 'ellipsis',
-          overflow: 'hidden',
+          px: '1.35rem',
           display: 'flex',
           alignItems: 'center',
+          color: 'onExterior',
+          fontSize: 2,
+          fontWeight: 600,
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
           whiteSpace: 'nowrap',
+          '&:not(:last-of-type)': {
+            mt: 3,
+          },
         }}
       >
         {title}
@@ -40,7 +34,7 @@ export const LayoutNavigationGroup = forwardRef<
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          gap: 1,
+          pt: 2,
         }}
       >
         {children}

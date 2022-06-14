@@ -1,6 +1,5 @@
 import { jsx } from '@theme-ui/core';
 import { forwardRef } from 'react';
-import SimpleBar from 'simplebar-react';
 import { Box, BoxProps } from '../../Box';
 
 export interface LayoutSidebarBodyProps extends BoxProps {}
@@ -11,6 +10,7 @@ export const LayoutSidebarBody = forwardRef<
 >((props, ref) => {
   return (
     <Box
+      ref={ref}
       sx={{
         flex: '1 1 auto',
         minHeight: 0,

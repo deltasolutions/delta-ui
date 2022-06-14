@@ -23,47 +23,56 @@ export const LayoutNavigationItem = forwardRef<
   LayoutNavigationItemProps
 >(({ children, icon: Icon, id, ...rest }, ref) => {
   const { activeId } = useContext(NavigationContext);
-  const isActive = useMemo(() => id === activeId, [id, activeId]);
-
+  const active = useMemo(() => id === activeId, [id, activeId]);
   return (
     <Anchor
       ref={ref}
       sx={{
+        py: 2,
+        px: '1.35rem',
         position: 'relative',
-        px: 3,
-        display: 'flex',
-        alignItems: 'center',
-        fontSize: '13px',
-        color: 'accentOnExterior',
-        userSelect: 'none',
-        gap: 2,
-        ml: '10px',
-        mr: '4px',
-        borderRadius: '5px',
-        height: '28px',
-        p: '0 5px 0 8px',
+        fontSize: 2,
         cursor: 'default',
-        '&:hover, &:active, &:focus-visible': {
+        userSelect: 'none',
+        '&, &:hover, &:active, &:focus-visible': {
           color: 'accentOnExterior',
         },
-        ...(isActive && {
-          border: '1px solid',
-          borderColor: 'rgba(255,255,255,0.04)',
-          backgroundColor: 'rgba(255,255,255,0.1)',
+        ...(active && {
+          '&:before': {
+            content: '""',
+            position: 'absolute',
+            display: 'block',
+            top: 0,
+            left: '0.8rem',
+            width: 'calc(100% - 1.6rem)',
+            height: '100%',
+            borderRadius: 3,
+            backgroundColor: 'accentExterior',
+          },
         }),
       }}
       variant="pure"
       {...rest}
     >
-      {Icon && <Icon size="1.3em" />}
       <Box
         sx={{
-          textOverflow: 'ellipsis',
-          overflow: 'hidden',
-          whiteSpace: 'nowrap',
+          zIndex: 1,
+          position: 'relative',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2,
         }}
       >
-        {children}
+        {Icon && <Icon size="1.3em" />}
+        <Box
+          sx={{
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+          }}
+        >
+          {children}
+        </Box>
       </Box>
     </Anchor>
   );
