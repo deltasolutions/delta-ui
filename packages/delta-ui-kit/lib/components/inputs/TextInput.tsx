@@ -1,11 +1,5 @@
 import { jsx } from '@theme-ui/core';
-import {
-  forwardRef,
-  Fragment,
-  InputHTMLAttributes,
-  ReactNode,
-  useState,
-} from 'react';
+import { forwardRef, InputHTMLAttributes, ReactNode, useState } from 'react';
 import { useUpdateEffect } from '../../hooks';
 import { FormWidgetProps } from '../../types';
 import { Box } from '../containers';
@@ -14,8 +8,8 @@ export interface TextInputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, keyof FormWidgetProps>,
     FormWidgetProps<string> {
   variant?: 'pure';
-  startAdornment?: ReactNode;
-  endAdornment?: ReactNode;
+  startIcon?: ReactNode;
+  endIcon?: ReactNode;
 }
 
 export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
@@ -25,11 +19,11 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       value,
       disabled,
       invalid, // TODO
-      endAdornment,
-      startAdornment,
       onChange,
       onFocus,
       onBlur,
+      startIcon,
+      endIcon,
       ...rest
     }: TextInputProps,
     ref
@@ -43,7 +37,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       innerValue !== value && setInnerValue(value ?? '');
     }, [value]);
     return (
-      <Fragment>
+      <Box sx={{ position: 'relative' }}>
         <Box
           sx={{
             position: 'absolute',
@@ -52,14 +46,14 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             transform: 'translateY(-50%)',
           }}
         >
-          {startAdornment}
+          {startIcon}
         </Box>
         <input
           ref={ref}
           disabled={disabled}
           style={{
-            ...(startAdornment && { paddingLeft: '30px' }),
-            ...(endAdornment && { paddingRight: '30px' }),
+            ...(startIcon && { paddingLeft: '30px' }),
+            ...(endIcon && { paddingRight: '30px' }),
           }}
           sx={{
             boxSizing: 'border-box',
@@ -74,6 +68,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
               ? {}
               : {
                   opacity: disabled ? 0.5 : 1,
+                  '&::placeholder': { color: 'onBackground' },
                   fontSize: 2,
                   border: 0,
                   borderRadius: 4,
@@ -104,9 +99,9 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             transform: 'translateY(-50%)',
           }}
         >
-          {endAdornment}
+          {endIcon}
         </Box>
-      </Fragment>
+      </Box>
     );
   }
 );

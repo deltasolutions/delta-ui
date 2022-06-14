@@ -12,12 +12,7 @@ import {
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AiOutlineEnter } from 'react-icons/ai';
-import { HiChevronRight } from 'react-icons/hi';
-import {
-  MdKeyboardArrowLeft,
-  MdKeyboardArrowRight,
-  MdOutlineKeyboardArrowRight,
-} from 'react-icons/md';
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 import { Theme } from '../../defaults';
 import { DropRendererProps, useDrop, useImperativePortal } from '../../hooks';
 import { Button, ButtonProps } from '../Button';
@@ -41,14 +36,6 @@ export const Pagination = ({
   pages,
   ...rest
 }: PaginationProps) => {
-  const [tCommon] = useTranslation('common');
-  const { floatingPortal } = useContext(SystemContext);
-  const portal = useImperativePortal(floatingPortal);
-
-  const [openDrop, anchorRef] = useDrop<HTMLButtonElement>(
-    props => <PaginationDrop {...props} />,
-    { deps: [], portal, placement: 'top-start' }
-  );
   let arr = Array.from(Array(pages).keys()).map(i => i + 1);
   arr = [
     ...arr.slice(0, currentPage).reverse().slice(0, 2).reverse(),
@@ -156,14 +143,14 @@ const PaginationDrop = forwardRef<HTMLDivElement, DropRendererProps>(
           }}
         >
           <TextInput
-            endAdornment={
+            max={pages}
+            min={1}
+            placeholder={pages.toString()}
+            startIcon={
               <Button sx={{ borderRadius: '100%' }} onClick={handleChangePage}>
                 <AiOutlineEnter />
               </Button>
             }
-            max={pages}
-            min={1}
-            placeholder={pages.toString()}
             sx={{
               width: '120px',
               px: 1,

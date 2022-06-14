@@ -2,7 +2,6 @@ import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { MdOutlineSettings, MdOutlineSpaceDashboard } from 'react-icons/md';
 import { SiDeno } from 'react-icons/si';
-import { Heading } from '../Heading';
 import { Layout } from './Layout';
 import { LayoutMain } from './LayoutMain';
 import { LayoutMainBody } from './LayoutMainBody';
@@ -46,23 +45,13 @@ export const Basics = () => {
               Settings
             </LayoutNavigationItem>
             <LayoutNavigationGroup title="Group 1">
-              <LayoutNavigationItem id="1-0">
-                Navigation item 1-0
-              </LayoutNavigationItem>
-              <LayoutNavigationItem id="1-1">
-                Navigation item 1-1
-              </LayoutNavigationItem>
+              <LayoutNavigationItem id="1-0">Devices</LayoutNavigationItem>
+              <LayoutNavigationItem id="1-1">Rooms</LayoutNavigationItem>
             </LayoutNavigationGroup>
             <LayoutNavigationGroup title="Group 2">
-              <LayoutNavigationItem id="2-0">
-                Navigation item 2-0
-              </LayoutNavigationItem>
-              <LayoutNavigationItem id="2-1">
-                Navigation item 2-1
-              </LayoutNavigationItem>
-              <LayoutNavigationItem id="2-2">
-                Navigation item 2-2
-              </LayoutNavigationItem>
+              <LayoutNavigationItem id="2-0">Racks</LayoutNavigationItem>
+              <LayoutNavigationItem id="2-1">Display</LayoutNavigationItem>
+              <LayoutNavigationItem id="2-2">Interface</LayoutNavigationItem>
             </LayoutNavigationGroup>
           </LayoutNavigation>
         </LayoutSidebarBody>

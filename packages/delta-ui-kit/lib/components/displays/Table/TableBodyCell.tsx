@@ -24,6 +24,7 @@ export const TableBodyCell = forwardRef<
         sx={{
           textOverflow: 'ellipsis',
           overflow: 'hidden',
+          color: '#a7a7a7',
           whiteSpace: 'nowrap',
         }}
       >

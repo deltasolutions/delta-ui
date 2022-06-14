@@ -20,7 +20,7 @@ export const TableHeaderCell = forwardRef<
         display: 'flex',
         alignItems: 'flex-start',
         position: 'relative',
-        fontWeight: 500,
+        fontWeight: 300,
         gap: 1,
       }}
       {...rest}

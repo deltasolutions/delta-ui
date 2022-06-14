@@ -2,17 +2,18 @@ import { jsx } from '@theme-ui/core';
 import { forwardRef, HTMLAttributes } from 'react';
 import { Box, BoxProps } from '../../containers';
 
-export interface TableRowPropsProps
+export interface TableBodyRowProps
   extends HTMLAttributes<HTMLTableRowElement> {}
 
-export const TableRow = forwardRef<HTMLTableRowElement, TableRowPropsProps>(
+export const TableBodyRow = forwardRef<HTMLTableRowElement, TableBodyRowProps>(
   ({ ...rest }, ref) => {
     return (
       <tr
         ref={ref}
         role="row"
         sx={{
-          p: 3,
+          py: 3,
+          px: 4,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
