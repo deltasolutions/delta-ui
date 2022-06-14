@@ -1,10 +1,10 @@
 import { jsx } from '@theme-ui/core';
-import { forwardRef, Fragment, ReactElement, ReactNode } from 'react';
+import { forwardRef, ReactNode } from 'react';
 import { Box, BoxProps } from '../../Box';
 import { Heading } from '../../Heading';
-import {} from 'react-icons';
+
 export interface LayoutNavigationGroupProps extends Omit<BoxProps, 'title'> {
-  title?: ReactNode;
+  title: ReactNode;
 }
 
 export const LayoutNavigationGroup = forwardRef<
@@ -15,34 +15,32 @@ export const LayoutNavigationGroup = forwardRef<
     <Box
       ref={ref}
       sx={{
-        mt: 4,
-        '& + &': {
-          // borderTop: '1px rgba(255,255,255,0.1) solid',
-        },
+        py: 2,
+        mr: 2,
       }}
       {...rest}
     >
-      <Heading
-        level={6}
+      <Box
         sx={{
-          textTransform: 'uppercase',
-          fontFamily: 'Arial, sans-serif',
-          ml: 3,
-          pb: 2,
+          fontSize: '12px',
+          ml: '18px',
+          mb: 1,
           color: 'onExterior',
-          fontWeight: 600,
-          letterSpacing: 0.4,
+          fontWeight: 500,
           textOverflow: 'ellipsis',
           overflow: 'hidden',
+          display: 'flex',
+          alignItems: 'center',
           whiteSpace: 'nowrap',
         }}
       >
         {title}
-      </Heading>
+      </Box>
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
+          gap: 1,
         }}
       >
         {children}

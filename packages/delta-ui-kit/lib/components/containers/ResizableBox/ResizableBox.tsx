@@ -17,7 +17,7 @@ export const ResizableBox = ({
   onResize,
   minWidth = 200,
   maxWidth = 600,
-  width: suggestedWidth = 230,
+  width: suggestedWidth = 250,
   axis = ['e'],
   ...rest
 }: ResizableBoxProps) => {
@@ -41,11 +41,14 @@ export const ResizableBox = ({
   return (
     <Box
       ref={resizableBoxRef}
-      style={{ minWidth: width + 'px', width: width + 'px' }}
+      style={{
+        minWidth: width + 'px',
+        width: width + 'px',
+      }}
       sx={{ position: 'relative' }}
       {...rest}
     >
-      <Box sx={{ height: '100%', overflow: 'hidden' }}>
+      <Box>
         {axis.includes('e') && (
           <EastResize
             maxWidth={maxWidth}

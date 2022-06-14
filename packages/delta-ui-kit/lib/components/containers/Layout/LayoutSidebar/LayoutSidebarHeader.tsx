@@ -12,8 +12,8 @@ export const LayoutSidebarHeader = forwardRef<
     <Box
       ref={ref}
       sx={{
+        mx: 3,
         flex: '0 0 auto',
-        m: 2,
         my: 3,
         display: 'flex',
         alignItems: 'center',

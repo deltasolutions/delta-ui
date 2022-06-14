@@ -37,7 +37,7 @@ export const theme = {
     onError: '#ffffff',
     onBackground: '#b3b3b3',
     onSurface: '#d3d1d1',
-    onExterior: '#c7c7c7',
+    onExterior: '#aaaaaa',
     onContrast: '#282828',
     onOutline: '#ffffff',
 
@@ -49,7 +49,7 @@ export const theme = {
     accentOnError: '#ffffff',
     accentOnBackground: '#e6e6e6',
     accentOnSurface: '#f5f3f3',
-    accentOnExterior: '#efefef',
+    accentOnExterior: '#ffffff',
     accentOnContrast: '#282828',
     accentOnOutline: '#ffffff',
   },

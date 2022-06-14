@@ -1,5 +1,5 @@
 import { jsx } from '@theme-ui/core';
-import { forwardRef, useCallback, useContext, useMemo } from 'react';
+import { forwardRef, useContext, useMemo } from 'react';
 import { Anchor, AnchorProps } from '../../../Anchor';
 import { Box } from '../../Box';
 import { NavigationContext } from './LayoutNavigation';
@@ -30,42 +30,32 @@ export const LayoutNavigationItem = forwardRef<
       ref={ref}
       sx={{
         position: 'relative',
-        py: 2,
+        px: 3,
         display: 'flex',
         alignItems: 'center',
-        borderRadius: 3,
-        fontSize: 1,
+        fontSize: '13px',
+        color: 'accentOnExterior',
         userSelect: 'none',
-
         gap: 2,
-        ...(isActive
-          ? {
-              mx: 2,
-              pl: 2,
-              backgroundColor: 'rgba(255,255,255,0.08)',
-              color: 'white',
-              '&:active': {
-                color: 'onBackground',
-              },
-              '&:hover, &:active, &:focus-visible': {
-                color: 'white',
-              },
-            }
-          : {
-              px: 3,
-              color: 'onExterior',
-              '&:hover, &:active, &:focus-visible': {
-                mx: 2,
-                pl: 2,
-                backgroundColor: 'rgba(255,255,255,0.08)',
-                color: 'white',
-              },
-            }),
+        ml: '10px',
+        mr: '4px',
+        borderRadius: '5px',
+        height: '28px',
+        p: '0 5px 0 8px',
+        cursor: 'default',
+        '&:hover, &:active, &:focus-visible': {
+          color: 'accentOnExterior',
+        },
+        ...(isActive && {
+          border: '1px solid',
+          borderColor: 'rgba(255,255,255,0.04)',
+          backgroundColor: 'rgba(255,255,255,0.1)',
+        }),
       }}
       variant="pure"
       {...rest}
     >
-      {Icon && <Icon size="1.5em" />}
+      {Icon && <Icon size="1.3em" />}
       <Box
         sx={{
           textOverflow: 'ellipsis',
