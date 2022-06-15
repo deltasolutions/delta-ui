@@ -1,11 +1,6 @@
 import { jsx } from '@theme-ui/core';
-import {
-  forwardRef,
-  HTMLAttributes,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-} from 'react';
+import { forwardRef, HTMLAttributes, useMemo, useRef } from 'react';
+import { useIsomorphicLayoutEffect } from '../../../hooks';
 import { mergeRefs } from '../../../utils';
 
 export interface TableHeaderProps
@@ -19,14 +14,14 @@ export const TableHeader = forwardRef<
 >(({ stickyOffset, ...rest }, propsRef) => {
   const ref = useRef<HTMLTableSectionElement>(null);
   const mergedRef = useMemo(() => mergeRefs([ref, propsRef]), [ref, propsRef]);
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!ref.current) {
       return;
     }
     const observer = new IntersectionObserver(
       ([e]) => {
         return e.target.classList.toggle(
-          'sticky-border',
+          'sticked-header',
           e.intersectionRatio < 1
         );
       },

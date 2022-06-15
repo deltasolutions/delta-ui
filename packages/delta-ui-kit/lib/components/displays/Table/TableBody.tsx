@@ -12,6 +12,7 @@ export const TableBody = forwardRef<HTMLTableSectionElement, TableBodyProps>(
         ref={ref}
         role="thead"
         sx={{
+          color: '#b3b3b3',
           '& > div[role=row]': {
             borderBottom: '1px solid',
             borderBottomColor: 'border',

@@ -15,7 +15,7 @@ export const TableBodyCell = forwardRef<
       role="cell"
       sx={{
         py: 3,
-        px: 4,
+        px: 2,
       }}
       {...rest}
     >
@@ -24,7 +24,6 @@ export const TableBodyCell = forwardRef<
           display: 'flex',
           alignItems: 'center',
           fontSize: 2,
-          color: 'onSurface',
         }}
       >
         {children}

@@ -16,14 +16,13 @@ export const TableHeaderCell = forwardRef<
       ref={ref}
       role="cell"
       sx={{
-        color: 'onSurfacee',
         position: 'relative',
-        fontWeight: 300,
         gap: 1,
-        py: 2,
-        px: 4,
+        py: '9px',
+        width: 'auto',
         borderBottom: '1px solid',
         borderBottomColor: 'border',
+        px: 2,
       }}
       {...rest}
     >
@@ -31,6 +30,8 @@ export const TableHeaderCell = forwardRef<
         sx={{
           display: 'flex',
           gap: 1,
+          color: 'onSurface',
+          fontWeight: 300,
           pr: 1,
           alignItems: 'center',
         }}

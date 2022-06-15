@@ -2,16 +2,21 @@ import { jsx } from '@theme-ui/core';
 import { forwardRef } from 'react';
 import { Box, BoxProps } from '../Box';
 
-export interface CardBodyProps extends BoxProps {}
+export interface CardBodyProps extends BoxProps {
+  variant?: 'table';
+}
 
 export const CardBody = forwardRef<HTMLDivElement, CardBodyProps>(
-  ({ ...rest }, ref) => {
+  ({ variant, ...rest }, ref) => {
     return (
       <Box
         ref={ref}
         sx={{
-          paddingY: 4,
-          paddingX: 4,
+          py: 0,
+          px: variant === 'table' ? 0 : 4,
+          '& + &': { pt: 3 },
+          '&:first-of-type': { pt: 3 },
+          '&:last-of-type': { pb: 3 },
         }}
         {...rest}
       />

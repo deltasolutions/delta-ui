@@ -12,8 +12,18 @@ export const TableBodyRow = forwardRef<HTMLTableRowElement, TableBodyRowProps>(
         ref={ref}
         role="row"
         sx={{
+          '& > td:first-of-type': {
+            borderTopLeftRadius: 4,
+            borderBottomLeftRadius: 4,
+            pl: 4,
+          },
+          '& > td:last-of-type': {
+            borderTopRightRadius: 4,
+            borderBottomRightRadius: 4,
+            pr: 4,
+          },
           '&:hover, &:active, &:focus-visible': {
-            backgroundColor: 'rgba(255,255,255,.02)',
+            backgroundColor: 'rgba(255,255,255,.03)',
           },
         }}
         {...rest}

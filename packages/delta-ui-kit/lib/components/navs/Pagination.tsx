@@ -5,7 +5,6 @@ import {
   createContext,
   forwardRef,
   useContext,
-  useLayoutEffect,
   useRef,
   useCallback,
   useState,
@@ -14,7 +13,12 @@ import { useTranslation } from 'react-i18next';
 import { AiOutlineEnter } from 'react-icons/ai';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 import { Theme } from '../../defaults';
-import { DropRendererProps, useDrop, useImperativePortal } from '../../hooks';
+import {
+  DropRendererProps,
+  useDrop,
+  useImperativePortal,
+  useIsomorphicLayoutEffect,
+} from '../../hooks';
 import { Button, ButtonProps } from '../Button';
 import { Box, BoxProps, Option, SystemContext } from '../containers';
 import { TextInput } from '../inputs';
@@ -119,7 +123,7 @@ const PaginationDrop = forwardRef<HTMLDivElement, DropRendererProps>(
     ];
     final[0] = 1;
     final[final.length - 1] = pages;
-    useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
       console.log(ref.current?.focus());
     }, []);
     const handleChangePage = useCallback(() => {

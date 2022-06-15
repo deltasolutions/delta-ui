@@ -2,14 +2,13 @@ import { useTheme } from '@emotion/react';
 import { jsx } from '@theme-ui/core';
 import {
   forwardRef,
-  useEffect,
   InputHTMLAttributes,
   useCallback,
   useMemo,
   useRef,
-  useLayoutEffect,
 } from 'react';
 import { Theme } from '../../defaults';
+import { useIsomorphicLayoutEffect } from '../../hooks';
 import { FormWidgetProps } from '../../types';
 import { mergeRefs } from '../../utils';
 
@@ -60,7 +59,7 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(
       },
       [onInput]
     );
-    useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
       setBackground(ref, ref.current?.value);
     }, []);
     return (

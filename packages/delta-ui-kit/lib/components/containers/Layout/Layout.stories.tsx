@@ -57,7 +57,9 @@ export const Basics = () => {
       </LayoutSidebar>
       <LayoutMain>
         <LayoutMainHeader>header</LayoutMainHeader>
-        <LayoutMainBody>body</LayoutMainBody>
+        <LayoutMainBody>
+          <div sx={{ height: '3000px' }}></div>
+        </LayoutMainBody>
       </LayoutMain>
     </Layout>
   );

@@ -11,7 +11,12 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
         ref={ref}
         sx={{
           paddingX: 4,
-          paddingTop: 4,
+          display: 'flex',
+          justifyContent: 'space-between',
+          gap: 2,
+          py: 3,
+          flexWrap: 'wrap',
+          alignItems: 'flex-start',
           color: 'accentOnSurface',
         }}
         {...rest}

@@ -15,7 +15,12 @@ export const TableHeaderRow = forwardRef<
       sx={{
         py: 2,
         px: 4,
-        backgroundColor: 'surface',
+        '& > th:first-of-type': {
+          pl: 4,
+        },
+        '& > th:last-of-type': {
+          pr: 4,
+        },
       }}
       {...rest}
     />

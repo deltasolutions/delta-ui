@@ -14,7 +14,10 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(
           borderCollapse: 'separate',
           borderSpacing: '0px',
           tableLayout: 'fixed',
-          '.sticky-border': {
+          '.sticked-header': {
+            '& > tr > th': {
+              backgroundColor: '#181716',
+            },
             boxShadow: 1,
           },
         }}
