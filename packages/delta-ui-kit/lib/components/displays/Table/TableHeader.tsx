@@ -26,7 +26,7 @@ export const TableHeader = forwardRef<
     const observer = new IntersectionObserver(
       ([e]) => {
         return e.target.classList.toggle(
-          'active-sticky-header',
+          'sticky-border',
           e.intersectionRatio < 1
         );
       },
@@ -44,7 +44,10 @@ export const TableHeader = forwardRef<
     <thead
       ref={mergedRef}
       role="thead"
-      sx={{ position: 'sticky', top: `${stickyOffset}px` }}
+      sx={{
+        position: 'sticky',
+        top: `${stickyOffset}px`,
+      }}
       {...rest}
     />
   );

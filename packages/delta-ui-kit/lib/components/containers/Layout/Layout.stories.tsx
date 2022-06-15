@@ -16,7 +16,6 @@ import {
   LayoutSidebarBody,
   LayoutSidebarHeader,
 } from './LayoutSidebar';
-
 export default {
   title: 'Containers/Layout',
 } as Meta;

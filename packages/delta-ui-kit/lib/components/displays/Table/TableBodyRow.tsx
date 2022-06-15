@@ -12,11 +12,6 @@ export const TableBodyRow = forwardRef<HTMLTableRowElement, TableBodyRowProps>(
         ref={ref}
         role="row"
         sx={{
-          py: 3,
-          px: 4,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
           '&:hover, &:active, &:focus-visible': {
             backgroundColor: 'rgba(255,255,255,.02)',
           },

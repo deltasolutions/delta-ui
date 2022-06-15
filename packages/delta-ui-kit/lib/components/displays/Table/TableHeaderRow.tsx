@@ -13,12 +13,9 @@ export const TableHeaderRow = forwardRef<
       ref={ref}
       role="rowheader"
       sx={{
-        display: 'flex',
-        justifyContent: 'space-between',
         py: 2,
         px: 4,
-        borderBottom: '1px solid',
-        borderBottomColor: 'border',
+        backgroundColor: 'surface',
       }}
       {...rest}
     />

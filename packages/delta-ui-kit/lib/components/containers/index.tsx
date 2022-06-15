@@ -12,3 +12,4 @@ export * from './Option';
 export * from './Scroll';
 export * from './SystemContainer';
 export * from './Card';
+export * from './TableCard';

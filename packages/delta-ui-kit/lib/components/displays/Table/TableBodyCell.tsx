@@ -1,5 +1,6 @@
 import { jsx } from '@theme-ui/core';
 import { forwardRef, HTMLAttributes } from 'react';
+import { Box } from '../../containers';
 
 export interface TableBodyCellProps
   extends HTMLAttributes<HTMLTableCellElement> {}
@@ -13,23 +14,21 @@ export const TableBodyCell = forwardRef<
       ref={ref}
       role="cell"
       sx={{
-        color: 'onSurface',
-        fontSize: 2,
-        display: 'flex',
-        alignItems: 'center',
+        py: 3,
+        px: 4,
       }}
       {...rest}
     >
-      <span
+      <Box
         sx={{
-          textOverflow: 'ellipsis',
-          overflow: 'hidden',
-          color: '#a7a7a7',
-          whiteSpace: 'nowrap',
+          display: 'flex',
+          alignItems: 'center',
+          fontSize: 2,
+          color: 'onSurface',
         }}
       >
         {children}
-      </span>
+      </Box>
     </td>
   );
 });

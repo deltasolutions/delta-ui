@@ -11,13 +11,11 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(
         role="table"
         sx={{
           width: '100%',
-          '.active-sticky-header': {
-            '& > tr': {
-              backgroundColor: 'surface',
-              borderBottom: '1px solid',
-              borderBottomColor: 'border',
-              boxShadow: 1,
-            },
+          borderCollapse: 'separate',
+          borderSpacing: '0px',
+          tableLayout: 'fixed',
+          '.sticky-border': {
+            boxShadow: 1,
           },
         }}
         {...rest}
