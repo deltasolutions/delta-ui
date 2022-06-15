@@ -26,8 +26,5 @@
     "react-dom": ">=16.13.1",
     "react-hook-form": "^7.31.2",
     "react-i18next": ">=11.13.0"
-  },
-  "dependencies": {
-    "simplebar-react": "^2.4.1"
   }
 }
