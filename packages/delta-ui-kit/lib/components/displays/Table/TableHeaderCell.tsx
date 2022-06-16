@@ -21,7 +21,7 @@ export const TableHeaderCell = forwardRef<
         py: '9px',
         width: 'auto',
         borderBottom: '1px solid',
-        backgroundColor: '#181716',
+        backgroundColor: '#202020',
         borderBottomColor: 'border',
         px: 2,
       }}
