@@ -77,7 +77,7 @@ const StoryTable = () => (
 
 export const Basics = () => {
   return (
-    <Box sx={{ my: '100px' }}>
+    <Box sx={{ my: '100px', '--even-background': '#222222' }}>
       <StoryTable />
     </Box>
   );
@@ -90,7 +90,12 @@ export const InCard = () => {
           <Heading level={3}>Devices</Heading>
           <Controls />
         </CardHeader>
-        <CardBody variant="table">
+        <CardBody
+          sx={{
+            '--even-background': '#242424',
+          }}
+          variant="table"
+        >
           <StoryTable />
         </CardBody>
       </Card>

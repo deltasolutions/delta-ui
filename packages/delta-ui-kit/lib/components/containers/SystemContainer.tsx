@@ -36,6 +36,7 @@ export const SystemContainer = forwardRef<HTMLDivElement, ContainerProps>(
                 backgroundColor: theme.colors.background,
                 color: theme.colors.onBackground,
                 fontSize: theme.fontSizes[2],
+                '--even-background': '#242424',
               }}
             >
               {children}

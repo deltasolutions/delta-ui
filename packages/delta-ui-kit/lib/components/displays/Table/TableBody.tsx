@@ -18,7 +18,7 @@ export const TableBody = forwardRef<HTMLTableSectionElement, TableBodyProps>(
             borderBottomColor: 'border',
           },
           '& > tr:nth-child(even)': {
-            backgroundColor: '#202020',
+            backgroundColor: 'var(--even-background)',
           },
         }}
         {...rest}
