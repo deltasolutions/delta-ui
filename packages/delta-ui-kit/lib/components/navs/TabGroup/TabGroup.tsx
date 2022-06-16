@@ -2,12 +2,14 @@ import { jsx } from '@theme-ui/core';
 import {
   Children,
   cloneElement,
+  createContext,
   FC,
   forwardRef,
   HTMLAttributes,
   ReactElement,
 } from 'react';
 import { Box } from '../../containers';
+import { TabContext } from './TabContext';
 import { TabOptionProps } from './TabOption';
 
 export interface TabGroupProps
@@ -22,31 +24,33 @@ export const TabGroup: FC<TabGroupProps> = forwardRef<
 >(({ children, activeId = '', ...rest }, ref) => {
   return (
     <Box>
-      <ul
-        ref={ref}
-        sx={{
-          textDecoration: 'none',
-          padding: 0,
-          margin: 0,
-          listStyle: 'none',
-          position: 'relative',
-          display: 'inline-flex',
-        }}
-        {...rest}
-      >
-        {Children.map(children, (child: ReactElement<TabOptionProps>) => (
-          <li
-            sx={{
-              margin: 0,
-              padding: 0,
-              listStyle: 'none',
-              textDecoration: 'none',
-            }}
-          >
-            {cloneElement(child, { isActive: activeId === child.props.id })}
-          </li>
-        ))}
-      </ul>
+      <TabContext.Provider value={{ activeId }}>
+        <ul
+          ref={ref}
+          sx={{
+            textDecoration: 'none',
+            padding: 0,
+            margin: 0,
+            listStyle: 'none',
+            position: 'relative',
+            display: 'inline-flex',
+          }}
+          {...rest}
+        >
+          {Children.map(children, (child: ReactElement<TabOptionProps>) => (
+            <li
+              sx={{
+                margin: 0,
+                padding: 0,
+                listStyle: 'none',
+                textDecoration: 'none',
+              }}
+            >
+              {child}
+            </li>
+          ))}
+        </ul>
+      </TabContext.Provider>
     </Box>
   );
 });

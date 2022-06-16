@@ -1,6 +1,7 @@
 import { jsx } from '@theme-ui/core';
-import { forwardRef, useCallback } from 'react';
+import { forwardRef, useCallback, useContext } from 'react';
 import { Anchor, AnchorProps } from '../../Anchor';
+import { TabContext } from './TabContext';
 
 export interface TabOptionProps extends Omit<AnchorProps, 'variant'> {
   id: string;
@@ -8,7 +9,9 @@ export interface TabOptionProps extends Omit<AnchorProps, 'variant'> {
 }
 
 export const TabOption = forwardRef<HTMLAnchorElement, TabOptionProps>(
-  ({ children, onClick, href, id, isActive, ...rest }, ref) => {
+  ({ children, onClick, href, id, ...rest }, ref) => {
+    const { activeId } = useContext(TabContext);
+    const isActive = id === activeId;
     const handleClick = useCallback(
       e => {
         if (!href) {

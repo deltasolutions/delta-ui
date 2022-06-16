@@ -5,6 +5,7 @@ import { HiSearch } from 'react-icons/hi';
 import { compact } from '../../../../docs/decorators';
 import { Button } from '../../Button';
 import { Box, Card, CardBody, CardHeader, Heading } from '../../containers';
+import { Tooltip } from '../../Tooltip';
 import { Table } from './Table';
 import { TableBody } from './TableBody';
 import { TableBodyCell } from './TableBodyCell';
@@ -77,7 +78,7 @@ const StoryTable = () => (
 
 export const Basics = () => {
   return (
-    <Box sx={{ my: '100px', '--even-background': '#222222' }}>
+    <Box sx={{ my: '100px' }}>
       <StoryTable />
     </Box>
   );
@@ -90,12 +91,7 @@ export const InCard = () => {
           <Heading level={3}>Devices</Heading>
           <Controls />
         </CardHeader>
-        <CardBody
-          sx={{
-            '--even-background': '#242424',
-          }}
-          variant="table"
-        >
+        <CardBody variant="table">
           <StoryTable />
         </CardBody>
       </Card>
