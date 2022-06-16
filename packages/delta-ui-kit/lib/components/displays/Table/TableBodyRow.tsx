@@ -22,9 +22,6 @@ export const TableBodyRow = forwardRef<HTMLTableRowElement, TableBodyRowProps>(
             borderBottomRightRadius: 4,
             pr: 4,
           },
-          '&:hover, &:active, &:focus-visible': {
-            backgroundColor: 'rgba(255,255,255,.03)',
-          },
         }}
         {...rest}
       />

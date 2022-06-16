@@ -21,6 +21,7 @@ export const TableHeaderCell = forwardRef<
         py: '9px',
         width: 'auto',
         borderBottom: '1px solid',
+        backgroundColor: '#181716',
         borderBottomColor: 'border',
         px: 2,
       }}
@@ -30,8 +31,10 @@ export const TableHeaderCell = forwardRef<
         sx={{
           display: 'flex',
           gap: 1,
+          textTransform: 'uppercase',
           color: 'onSurface',
           fontWeight: 300,
+          fontSize: 1,
           pr: 1,
           alignItems: 'center',
         }}

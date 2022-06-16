@@ -17,6 +17,7 @@ export const PairList = forwardRef<HTMLDivElement, PairListProps>(
           flexDirection: 'column',
           gap: 3,
         }}
+        {...rest}
       >
         {pairs.map(([key, value]) => {
           return (
