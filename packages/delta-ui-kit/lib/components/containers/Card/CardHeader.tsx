@@ -5,16 +5,21 @@ import { Box } from '../Box';
 export interface CardHeaderProps extends HTMLAttributes<HTMLDivElement> {}
 
 export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
-  (props, ref) => {
+  ({ ...rest }, ref) => {
     return (
       <Box
         ref={ref}
         sx={{
           paddingX: 4,
-          paddingTop: 4,
-          // color: 'accentOnSurface',
+          display: 'flex',
+          justifyContent: 'space-between',
+          gap: 2,
+          py: 3,
+          flexWrap: 'wrap',
+          alignItems: 'flex-start',
+          color: 'accentOnSurface',
         }}
-        {...props}
+        {...rest}
       />
     );
   }

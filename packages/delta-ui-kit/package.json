@@ -1,6 +1,6 @@
 {
   "name": "delta-ui-kit",
-  "version": "0.1.10",
+  "version": "0.2.3",
   "license": "MIT",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -26,8 +26,5 @@
     "react-dom": ">=16.13.1",
     "react-hook-form": "^7.31.2",
     "react-i18next": ">=11.13.0"
-  },
-  "dependencies": {
-    "simplebar-react": "^2.4.1"
   }
 }

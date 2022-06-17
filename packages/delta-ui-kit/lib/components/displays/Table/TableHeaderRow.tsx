@@ -13,12 +13,14 @@ export const TableHeaderRow = forwardRef<
       ref={ref}
       role="rowheader"
       sx={{
-        display: 'flex',
-        justifyContent: 'space-between',
         py: 2,
-        px: 3,
-        borderBottom: '1px solid',
-        borderBottomColor: 'border',
+        px: 4,
+        '& > th:first-of-type': {
+          pl: 4,
+        },
+        '& > th:last-of-type': {
+          pr: 4,
+        },
       }}
       {...rest}
     />

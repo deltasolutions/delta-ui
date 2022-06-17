@@ -3,5 +3,5 @@ export * from './TableBody';
 export * from './TableBodyCell';
 export * from './TableHeader';
 export * from './TableHeaderCell';
-export * from './TableRow';
+export * from './TableBodyRow';
 export * from './TableHeaderRow';

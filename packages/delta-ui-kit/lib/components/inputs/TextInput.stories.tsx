@@ -19,7 +19,7 @@ export const Basics = () => {
   return (
     <Box sx={{ gap: 2, flexDirection: 'column', display: 'flex' }}>
       <TextInput
-        endAdornment={
+        endIcon={
           <Button tabIndex={-1}>
             <MdOutlineMail size={20} />
           </Button>
@@ -27,7 +27,8 @@ export const Basics = () => {
         placeholder="Email"
       />
       <TextInput
-        endAdornment={
+        placeholder="Password"
+        startIcon={
           <Button
             sx={{
               borderRadius: '100%',
@@ -44,7 +45,6 @@ export const Basics = () => {
             )}
           </Button>
         }
-        placeholder="Password"
         type={shown ? 'text' : 'password'}
       />
     </Box>

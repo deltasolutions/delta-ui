@@ -12,9 +12,13 @@ export const TableBody = forwardRef<HTMLTableSectionElement, TableBodyProps>(
         ref={ref}
         role="thead"
         sx={{
+          color: 'onBackground',
           '& > div[role=row]': {
             borderBottom: '1px solid',
             borderBottomColor: 'border',
+          },
+          '& > tr:nth-child(even)': {
+            backgroundColor: 'accentBackground',
           },
         }}
         {...rest}

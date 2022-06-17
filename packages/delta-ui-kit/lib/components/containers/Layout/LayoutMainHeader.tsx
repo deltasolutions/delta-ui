@@ -1,6 +1,6 @@
 import { useTheme } from '@emotion/react';
 import { jsx } from '@theme-ui/core';
-import { opacify, parseToRgb } from 'polished';
+import { parseToRgb } from 'polished';
 import { forwardRef, useEffect, useMemo, useState } from 'react';
 import { Theme } from '../../../defaults';
 import { Box, BoxProps } from '../Box';
@@ -25,6 +25,7 @@ export const LayoutMainHeader = forwardRef<
   }, [offset]);
   useEffect(() => {
     const handleScroll = () => setOffset(window.scrollY);
+    handleScroll();
     addEventListener('scroll', handleScroll);
     return () => removeEventListener('scroll', handleScroll);
   }, []);

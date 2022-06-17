@@ -16,24 +16,31 @@ export const TableHeaderCell = forwardRef<
       ref={ref}
       role="cell"
       sx={{
-        color: 'onSurfacee',
-        display: 'flex',
-        alignItems: 'flex-start',
         position: 'relative',
-        fontWeight: 500,
         gap: 1,
+        py: '9px',
+        width: 'auto',
+        borderBottom: '1px solid',
+        backgroundColor: 'accentBackground',
+        borderBottomColor: 'border',
+        px: 2,
       }}
       {...rest}
     >
-      <span
+      <Box
         sx={{
-          textOverflow: 'ellipsis',
-          overflow: 'hidden',
-          whiteSpace: 'nowrap',
+          display: 'flex',
+          gap: 1,
+          textTransform: 'uppercase',
+          color: 'onSurface',
+          fontWeight: 300,
+          fontSize: 1,
+          pr: 1,
+          alignItems: 'center',
         }}
       >
         {children}
-      </span>
+      </Box>
     </th>
   );
 });
