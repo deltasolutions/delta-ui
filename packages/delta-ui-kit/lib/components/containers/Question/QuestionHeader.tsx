@@ -12,7 +12,9 @@ export const QuestionHeader = forwardRef<HTMLDivElement, QuestionHeaderProps>(
         sx={{
           paddingX: 4,
           paddingTop: 3,
-          color: 'accentOnContrast',
+          '& > h4': {
+            color: 'accentOnContrast',
+          },
         }}
         {...props}
       />
