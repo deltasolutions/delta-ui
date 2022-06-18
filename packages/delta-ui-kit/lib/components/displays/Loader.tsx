@@ -60,9 +60,9 @@ export const Loader = forwardRef<HTMLDivElement, LoaderProps>(
                   color ?? theme?.colors?.onBackground
                 } transparent transparent transparent`,
             },
-            'div:nth-child(1)': { animationDelay: '-0.6s' },
-            'div:nth-child(2)': { animationDelay: '-0.4s' },
-            'div:nth-child(3)': { animationDelay: '-0.2s' },
+            'div:nth-of-type(1)': { animationDelay: '-0.6s' },
+            'div:nth-of-type(2)': { animationDelay: '-0.4s' },
+            'div:nth-of-type(3)': { animationDelay: '-0.2s' },
           }}
         >
           <Box />
