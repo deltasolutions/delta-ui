@@ -13,15 +13,26 @@ import {
   useDismiss,
 } from '@floating-ui/react-dom-interactions';
 import { jsx } from '@theme-ui/core';
-import { cloneElement, Fragment, ReactNode, useEffect, useState } from 'react';
+import {
+  cloneElement,
+  Component,
+  Fragment,
+  ReactNode,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { Theme } from '../defaults';
+import { mergeRefs } from '../utils';
 import { Box, BoxProps } from './containers';
 
 export interface TooltipProps extends Omit<BoxProps, 'children'> {
   content: ReactNode;
   delay?: number;
   placement?: Placement;
-  children: JSX.Element;
+
+  //TODO FIXME PLZ
+  children: any;
 }
 
 export const Tooltip = ({
@@ -56,10 +67,14 @@ export const Tooltip = ({
   if (!children) {
     return null;
   }
+  const mergedRef = useMemo(
+    () => mergeRefs([reference, children?.ref]),
+    [reference, children?.ref]
+  );
   return (
     <Fragment>
       {cloneElement(children, {
-        ...getReferenceProps({ ref: reference, ...rest }),
+        ...getReferenceProps({ ref: mergedRef, ...rest }),
       })}
       {open && (
         <Box

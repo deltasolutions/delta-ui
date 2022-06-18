@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm, useFormState } from 'react-hook-form';
 import { compact } from '../../../docs/decorators';
 import { useModal } from '../../hooks';
 import { Button } from '../Button';
@@ -68,7 +68,16 @@ export const Basics = () => {
 };
 
 export const Controlled = () => {
-  const form = useForm();
+  const form = useForm({
+    defaultValues: {
+      showInput: false,
+      textInput: '',
+    },
+  });
+  const { control, getValues } = form;
+  const { isDirty } = useFormState({ control });
+  console.log(getValues());
+
   return (
     <Form form={form}>
       <FormField name="showInput">
@@ -77,7 +86,12 @@ export const Controlled = () => {
       {form.watch('showInput') && (
         <FormField label="Text Input" name="textInput" sx={{ mt: 4 }} />
       )}
-      <Button sx={{ mt: 4 }} type="submit" variant="contained">
+      <Button
+        disabled={!isDirty}
+        sx={{ mt: 4 }}
+        type="submit"
+        variant="contained"
+      >
         Submit
       </Button>
     </Form>
