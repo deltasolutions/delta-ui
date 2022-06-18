@@ -26,6 +26,7 @@ export const Basics = () => {
       </Button>
       {items.map(item => (
         <Chip
+          key={item}
           variant={item === 'Alexander Emelyanov' ? 'contained' : 'outlined'}
           onDelete={
             item === 'Name Surname'
