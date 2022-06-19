@@ -96,7 +96,7 @@ export const PairList = forwardRef<HTMLDivElement, PairListProps>(
             }}
           >
             {pairs.map(([key, value], index) => (
-              <tr key={index}>
+              <tr key={key}>
                 <td
                   aria-label="key"
                   sx={{ color: 'accentOnSurface', fontWeight: 600 }}

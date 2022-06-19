@@ -21,6 +21,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
           alignItems: 'flex-start',
           borderRadius: 4,
           paddingX: 2,
+          width: '100%',
           animation: `${slideIn} 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940)`,
           ...{
             success: {
@@ -41,6 +42,8 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
       >
         <span
           sx={{
+            overflow: 'hidden',
+            wordBreak: 'break-word',
             paddingY: 2,
             fontWeight: 0,
             display: 'flex',

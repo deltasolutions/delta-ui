@@ -35,18 +35,25 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
           render={({
             field: { onChange, onBlur, value },
             fieldState: { error },
-          }) =>
-            children ? (
-              cloneElement(children, {
-                value,
-                invalid: Boolean(error),
-                onChange,
-                onBlur,
-              })
-            ) : (
-              <TextInput value={value} onBlur={onBlur} onChange={onChange} />
-            )
-          }
+          }) => (
+            <Box>
+              {children ? (
+                cloneElement(children, {
+                  value,
+                  invalid: Boolean(error),
+                  onChange,
+                  onBlur,
+                })
+              ) : (
+                <TextInput value={value} onBlur={onBlur} onChange={onChange} />
+              )}
+              <Box sx={{ mt: 1 }}>
+                <span sx={{ color: 'error', fontSize: 1 }}>
+                  {error?.message}
+                </span>
+              </Box>
+            </Box>
+          )}
         />
       </Box>
     );
