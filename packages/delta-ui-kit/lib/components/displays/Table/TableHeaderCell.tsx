@@ -19,23 +19,26 @@ export const TableHeaderCell = forwardRef<
       sx={{
         position: 'relative',
         gap: 1,
-        py: '9px',
+        px: 2,
+        py: '0.75em',
         width: 'auto',
         backgroundColor: 'accentBackground',
-        px: 2,
+        '&:first-of-type': { pl: 4 },
+        '&:last-of-type': { pr: 4 },
       }}
       {...rest}
     >
       <Box
         sx={{
           display: 'flex',
-          gap: 1,
-          textTransform: 'uppercase',
-          color: 'onSurface',
-          fontWeight: 300,
-          fontSize: 1,
-          pr: 1,
           alignItems: 'center',
+          gap: 1,
+          pr: 1,
+          color: 'onSurface',
+          fontSize: 1,
+          fontWeight: 300,
+          textTransform: 'uppercase',
+          letterSpacing: '0.04em',
         }}
       >
         {children}

@@ -37,19 +37,9 @@ export const LayoutNavigationItem = forwardRef<
         '&, &:hover, &:active, &:focus-visible': {
           color: 'accentOnExterior',
         },
-        ...(active && {
-          '&:before': {
-            content: '""',
-            position: 'absolute',
-            display: 'block',
-            top: 0,
-            left: '0.8rem',
-            width: 'calc(100% - 1.6rem)',
-            height: '100%',
-            borderRadius: 3,
-            backgroundColor: 'accentExterior',
-          },
-        }),
+        ...(active
+          ? { '&:before': getAccentBlockStyle(1.0) }
+          : { '&:hover::before': getAccentBlockStyle(0.75) }),
       }}
       variant="pure"
       {...rest}
@@ -77,3 +67,17 @@ export const LayoutNavigationItem = forwardRef<
     </Anchor>
   );
 });
+
+const getAccentBlockStyle = (opacity = 1) =>
+  ({
+    content: '""',
+    position: 'absolute',
+    display: 'block',
+    top: 0,
+    left: '0.8rem',
+    width: 'calc(100% - 1.6rem)',
+    height: '100%',
+    borderRadius: 3,
+    backgroundColor: 'accentExterior',
+    opacity,
+  } as const);

@@ -6,6 +6,17 @@ export interface TableBodyRowProps
 
 export const TableBodyRow = forwardRef<HTMLTableRowElement, TableBodyRowProps>(
   ({ ...rest }, ref) => {
-    return <tr ref={ref} role="row" {...rest} />;
+    return (
+      <tr
+        ref={ref}
+        role="row"
+        sx={{
+          '&:nth-of-type(even)': {
+            backgroundColor: 'accentBackground',
+          },
+        }}
+        {...rest}
+      />
+    );
   }
 );
