@@ -263,11 +263,10 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
               placeholder={placeholder}
               style={{
                 ...((selections?.length || 0) !== 0
-                  ? {
-                      padding: '0.45em 0.50em',
-                    }
+                  ? { padding: '0.45em 0.50em' }
                   : {}),
               }}
+              sx={{ fontSize: 2 }}
               value={innerQuery}
               variant="pure"
               onBlur={onBlur}

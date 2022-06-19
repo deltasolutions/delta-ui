@@ -1,5 +1,8 @@
+import { useTheme } from '@emotion/react';
 import { jsx } from '@theme-ui/core';
+import { darken } from 'polished';
 import { IoIosClose } from 'react-icons/io';
+import { Theme } from '../../../defaults';
 import { Button, ButtonProps } from '../../Button';
 import { Box, BoxProps } from '../../containers';
 
@@ -12,6 +15,8 @@ export const AutocompleteSelection = ({
   onClick,
   ...rest
 }: AutocompleteSelectionProps) => {
+  const theme = useTheme() as Theme;
+  const backgroundColor = darken(0.9, theme.colors.accentOnSurface);
   return (
     <Box
       sx={{
@@ -20,8 +25,7 @@ export const AutocompleteSelection = ({
         pr: 1,
         py: 1,
         gap: '2px',
-        backgroundColor: '#1b1919',
-        border: '1px #303030 solid',
+        backgroundColor,
         borderRadius: 3,
         display: 'flex',
         alignItems: 'center',
@@ -45,7 +49,14 @@ export const AutocompleteSelection = ({
           }}
           onClick={onClick}
         >
-          <IoIosClose size={14} />
+          <IoIosClose
+            sx={{
+              width: '1em',
+              height: '1em',
+              transform: 'scale(1.2)',
+              verticalAlign: 'middle',
+            }}
+          />
         </Button>
       </Box>
     </Box>

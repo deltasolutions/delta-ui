@@ -14,9 +14,6 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(
           borderCollapse: 'separate',
           borderSpacing: '0px',
           tableLayout: 'fixed',
-          '.sticked-header': {
-            boxShadow: 1,
-          },
         }}
         {...rest}
       />

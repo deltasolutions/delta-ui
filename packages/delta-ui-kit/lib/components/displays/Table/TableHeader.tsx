@@ -1,49 +1,61 @@
 import { jsx } from '@theme-ui/core';
-import { forwardRef, HTMLAttributes, useMemo, useRef } from 'react';
+import {
+  createContext,
+  forwardRef,
+  HTMLAttributes,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useIsomorphicLayoutEffect } from '../../../hooks';
 import { mergeRefs } from '../../../utils';
 
+export const TableHeaderContext = createContext({
+  sticked: false,
+});
+
 export interface TableHeaderProps
-  extends HTMLAttributes<HTMLTableSectionElement> {
-  stickyOffset: number;
-}
+  extends HTMLAttributes<HTMLTableSectionElement> {}
 
 export const TableHeader = forwardRef<
   HTMLTableSectionElement,
   TableHeaderProps
->(({ stickyOffset, ...rest }, propsRef) => {
-  const ref = useRef<HTMLTableSectionElement>(null);
-  const mergedRef = useMemo(() => mergeRefs([ref, propsRef]), [ref, propsRef]);
+>((props, ref) => {
+  const [element, setElement] = useState<HTMLTableSectionElement | null>(null);
+  const mergedRef = useMemo(
+    () => mergeRefs([ref, setElement]),
+    [ref, setElement]
+  );
+  const [sticked, setSticked] = useState(false);
+  const contextValue = useMemo(() => ({ sticked }), [sticked]);
   useIsomorphicLayoutEffect(() => {
-    if (!ref.current) {
+    if (!element) {
       return;
     }
     const observer = new IntersectionObserver(
-      ([e]) => {
-        return e.target.classList.toggle(
-          'sticked-header',
-          e.intersectionRatio < 1
-        );
+      ([ev]) => {
+        const sticked = ev.intersectionRatio < 1;
+        setSticked(sticked);
       },
-      {
-        rootMargin: `-${stickyOffset + 1}px 1000px 1000px 1000px`,
-        threshold: [1],
-      }
+      { threshold: [1] }
     );
-    observer.observe(ref.current);
-    return () => {
-      observer.disconnect();
-    };
-  }, [ref.current]);
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [element]);
   return (
-    <thead
-      ref={mergedRef}
-      role="thead"
-      sx={{
-        position: 'sticky',
-        top: `${stickyOffset}px`,
-      }}
-      {...rest}
-    />
+    <TableHeaderContext.Provider value={contextValue}>
+      <thead
+        ref={mergedRef}
+        role="thead"
+        sx={{
+          position: 'sticky',
+          // The top value needs to be -1px or the element
+          // will never intersect with the top of the window.
+          top: '-1px',
+          boxShadow: sticked ? 2 : 'none',
+        }}
+        {...props}
+      />
+    </TableHeaderContext.Provider>
   );
 });

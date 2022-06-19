@@ -1,6 +1,7 @@
 import { jsx } from '@theme-ui/core';
-import { forwardRef, HTMLAttributes, ReactNode } from 'react';
-import { Box, BoxProps } from '../../containers';
+import { forwardRef, HTMLAttributes, ReactNode, useContext } from 'react';
+import { Box } from '../../containers';
+import { TableHeaderContext } from './TableHeader';
 
 export interface TableHeaderCellProps
   extends HTMLAttributes<HTMLTableCellElement> {
@@ -20,9 +21,7 @@ export const TableHeaderCell = forwardRef<
         gap: 1,
         py: '9px',
         width: 'auto',
-        borderBottom: '1px solid',
         backgroundColor: 'accentBackground',
-        borderBottomColor: 'border',
         px: 2,
       }}
       {...rest}

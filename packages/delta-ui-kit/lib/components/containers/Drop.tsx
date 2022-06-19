@@ -14,8 +14,6 @@ export const Drop = forwardRef<HTMLDivElement, DropProps>(
           backgroundColor: 'onContrast',
           color: 'onSurface',
           boxShadow: 1,
-          border: '1px solid',
-          borderColor: 'border',
           borderRadius: 4,
         }}
         {...rest}

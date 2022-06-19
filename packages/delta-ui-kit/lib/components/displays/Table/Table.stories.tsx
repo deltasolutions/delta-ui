@@ -21,7 +21,7 @@ export default {
 
 const StoryTable = () => (
   <Table>
-    <TableHeader stickyOffset={-0.01}>
+    <TableHeader>
       <TableHeaderRow>
         <TableHeaderCell sx={{ width: '300px' }}>
           <span>Id</span>

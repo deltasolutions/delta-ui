@@ -70,7 +70,6 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
                   opacity: disabled ? 0.5 : 1,
                   '&::placeholder': { color: 'onBackground' },
                   fontSize: 2,
-                  border: 0,
                   borderRadius: 4,
                   letterSpacing: 'normal',
                   paddingX: '0.55em',

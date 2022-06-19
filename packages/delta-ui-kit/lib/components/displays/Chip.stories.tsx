@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Button } from '../Button';
 import { Box } from '../containers';
 import { Chip } from './Chip';
@@ -16,9 +16,6 @@ export const Basics = () => {
     'Name Surname',
   ]);
   const ref = useRef<HTMLButtonElement>(null);
-  const f = e => {
-    console.log(e, 'hueta');
-  };
   return (
     <Box sx={{ display: 'flex', gap: 2 }}>
       <Button ref={ref} color="secondary" variant="contained">

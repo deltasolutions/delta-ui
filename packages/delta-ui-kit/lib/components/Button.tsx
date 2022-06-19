@@ -29,7 +29,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             cursor: 'not-allowed',
           },
           '&:focus-visible': {
-            outline: '1px solid',
+            outline: '2px solid',
             outlineColor: 'primary',
           },
           ...(zoomable && {
@@ -114,22 +114,22 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps): any => {
       },
       outlined: {
         primary: {
-          border: '1px solid',
+          border: '2px solid',
           borderColor: 'primary',
           color: 'primary',
         },
         secondary: {
-          border: '1px solid',
+          border: '2px solid',
           borderColor: 'secondary',
           color: 'secondary',
         },
         success: {
-          border: '1px solid',
+          border: '2px solid',
           borderColor: 'success',
           color: 'success',
         },
         error: {
-          border: '1px solid',
+          border: '2px solid',
           borderColor: 'error',
           color: 'error',
         },
