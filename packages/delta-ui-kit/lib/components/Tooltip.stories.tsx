@@ -10,16 +10,19 @@ export default {
 } as Meta;
 
 export const Basics = () => {
-  const [openDrop, anchorRef] = useDrop(() => <Box>SUKAA</Box>, { deps: [] });
+  const [openDrop, anchorRef] = useDrop(
+    () => <Box sx={{ p: 2 }}>Ref passed</Box>,
+    { deps: [] }
+  );
   return (
-    <Tooltip content="Bebra" delay={1000}>
+    <Tooltip content="Tooltip content" delay={1000}>
       <Button
         ref={anchorRef}
         color="secondary"
         variant="outlined"
         onClick={() => openDrop()}
       >
-        Abobus
+        Hover or click
       </Button>
     </Tooltip>
   );

@@ -131,7 +131,7 @@ const ControlItem = ({ ...rest }) => (
       justifyContent: 'center',
       borderRadius: 4,
       '&:hover, &:focus-visible': {
-        backgroundColor: 'rgba(255,255,255,0.1)',
+        backgroundColor: 'accentContext',
       },
     }}
     {...rest}

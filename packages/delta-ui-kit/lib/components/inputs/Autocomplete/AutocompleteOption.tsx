@@ -1,10 +1,9 @@
-import { useTheme } from '@emotion/react';
 import { jsx } from '@theme-ui/core';
 import { forwardRef, useContext, useMemo, useRef } from 'react';
 import { ImCheckmark } from 'react-icons/im';
-import { Theme } from '../../../defaults';
+import { useDeltaTheme } from '../../../hooks';
 import { mergeRefs } from '../../../utils';
-import { Button, ButtonProps } from '../../Button';
+import { ButtonProps } from '../../Button';
 import { Option } from '../../containers';
 import { AutocompleteDropContext } from './AutocompleteDrop';
 
@@ -43,17 +42,18 @@ export const AutocompleteOption = forwardRef<
       [ref, buttonRef]
     );
     const {
-      colors: { onPrimary, monkaS },
-    } = useTheme() as Theme;
+      colors: { accentContext, accentOnContext },
+    } = useDeltaTheme();
     const { setActiveIndex } = useContext(AutocompleteDropContext);
-
     return (
       <Option
         ref={mergedRef}
         style={{
-          ...(active && { backgroundColor: monkaS, color: onPrimary }),
+          ...(active && {
+            backgroundColor: accentContext,
+            color: accentOnContext,
+          }),
         }}
-
         tabIndex={-1}
         onClick={selected ? onRemove : onAdd}
         onMouseEnter={() => setActiveIndex(index as number)}

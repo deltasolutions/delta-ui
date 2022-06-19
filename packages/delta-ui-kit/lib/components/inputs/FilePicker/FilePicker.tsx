@@ -92,7 +92,7 @@ export const FilePicker = forwardRef<HTMLDivElement, FilePickerProps>(
       }),
       [handleChange, multiple]
     );
-    const isActive = useMemo(() => canDrop && isOver, [canDrop, isOver]);
+    const active = useMemo(() => canDrop && isOver, [canDrop, isOver]);
     useUpdateEffect(() => {
       innerValue !== value && setInnerValue(value);
     }, [value]);
@@ -110,7 +110,7 @@ export const FilePicker = forwardRef<HTMLDivElement, FilePickerProps>(
         <Box
           ref={drop}
           sx={{
-            backgroundColor: 'accentSurface',
+            backgroundColor: 'accentContext',
             borderRadius: 4,
             paddingY: 2,
             minHeight: '4rem',
@@ -123,12 +123,12 @@ export const FilePicker = forwardRef<HTMLDivElement, FilePickerProps>(
           }}
           {...(!innerValue && { onClick: onBrowseFiles })}
           style={{
-            outlineColor: 'primary',
             outlineStyle: 'solid',
+            outlineColor: 'primary',
             outlineWidth: 0,
-            ...(isActive && {
+            ...(active && {
               opacity: 0.5,
-              outlineWidth: 1,
+              outlineWidth: 2,
             }),
           }}
           {...rest}
@@ -140,7 +140,7 @@ export const FilePicker = forwardRef<HTMLDivElement, FilePickerProps>(
               isMultiple={multiple}
               onBrowseFiles={onBrowseFiles}
             />
-          ) : isActive ? (
+          ) : active ? (
             <RiUploadCloudLine size={26} />
           ) : (
             <FilePickerPreview isMultiple={multiple} />

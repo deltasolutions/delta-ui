@@ -53,7 +53,9 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             outlineColor: 'primary',
             outlineOffset: 2,
           },
-          'input:checked ~ .checkmark:after': { display: 'block' },
+          'input:checked ~ .checkmark:after': {
+            display: 'block',
+          },
         }}
       >
         <input
@@ -89,7 +91,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             borderRadius: 4,
             height: '22px',
             width: '22px',
-            backgroundColor: 'accentSurface',
+            backgroundColor: 'accentContext',
             '&:after': {
               content: '""',
               position: 'absolute',
@@ -98,7 +100,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
               top: '4px',
               width: '5px',
               height: '9px',
-              border: 'solid white',
+              border: 'solid white', // FIXME
               borderWidth: '0 3px 3px 0',
               WebkitTransform: 'rotate(45deg)',
               msTransform: 'rotate(45deg)',

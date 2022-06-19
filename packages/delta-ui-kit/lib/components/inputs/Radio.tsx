@@ -104,7 +104,7 @@ export const RadioOption = ({
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: active ? 'primary' : 'accentSurface',
+          backgroundColor: active ? 'primary' : 'accentContext',
           opacity: disabled ? 0.5 : 1,
           '&:focus-visible': {
             outline: '2px solid',

@@ -1,13 +1,12 @@
-import { useTheme } from '@emotion/react';
 import { jsx } from '@theme-ui/core';
-import { darken } from 'polished';
+import { lighten } from 'polished';
 import { IoIosClose } from 'react-icons/io';
-import { Theme } from '../../../defaults';
-import { Button, ButtonProps } from '../../Button';
+import { useDeltaTheme } from '../../../hooks';
+import { Button } from '../../Button';
 import { Box, BoxProps } from '../../containers';
 
 export interface AutocompleteSelectionProps extends BoxProps {
-  onClick;
+  onClick?: () => void;
 }
 
 export const AutocompleteSelection = ({
@@ -15,8 +14,7 @@ export const AutocompleteSelection = ({
   onClick,
   ...rest
 }: AutocompleteSelectionProps) => {
-  const theme = useTheme() as Theme;
-  const backgroundColor = darken(0.9, theme.colors.accentOnSurface);
+  const { colors } = useDeltaTheme();
   return (
     <Box
       sx={{
@@ -25,7 +23,7 @@ export const AutocompleteSelection = ({
         pr: 1,
         py: 1,
         gap: '2px',
-        backgroundColor,
+        backgroundColor: lighten(0.065, colors.accentContext),
         borderRadius: 3,
         display: 'flex',
         alignItems: 'center',
@@ -43,8 +41,8 @@ export const AutocompleteSelection = ({
             zIndex: 1,
             borderRadius: '100%',
             '&:hover, &:focus, &:focus-visible': {
-              color: 'accentOnSurface',
-              backgroundColor: 'accentSurface',
+              backgroundColor: 'accentContext',
+              color: 'accentOnContext',
             },
           }}
           onClick={onClick}

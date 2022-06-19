@@ -13,13 +13,12 @@ export const Account = ({ children, ...rest }: AccountProps) => {
           p: 1,
           display: 'flex',
           alignItems: 'center',
-          backgroundColor: 'accentBackground',
+          backgroundColor: 'accentContext',
           borderRadius: '100vw',
         }}
       >
         <FaUserCircle
           sx={{
-            // color: 'accentSurface',
             width: '1.5rem',
             height: '1.5rem',
           }}

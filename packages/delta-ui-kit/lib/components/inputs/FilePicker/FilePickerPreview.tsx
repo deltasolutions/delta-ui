@@ -27,7 +27,7 @@ export const FilePickerPreview = ({ isMultiple }: FilePickerPreviewProps) => {
       </Box>
       <Button
         sx={{
-          color: 'accentOnSurface',
+          color: 'accentOnContext',
           width: 'fit-content',
           textDecoration: 'underline',
           borderRadius: 2,

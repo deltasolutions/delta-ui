@@ -15,14 +15,14 @@ import {
 import { jsx } from '@theme-ui/core';
 import {
   cloneElement,
-  Component,
   Fragment,
+  ReactElement,
   ReactNode,
   useEffect,
   useMemo,
   useState,
 } from 'react';
-import { Theme } from '../defaults';
+import { DeltaTheme } from '../defaults';
 import { mergeRefs } from '../utils';
 import { Box, BoxProps } from './containers';
 
@@ -30,9 +30,7 @@ export interface TooltipProps extends Omit<BoxProps, 'children'> {
   content: ReactNode;
   delay?: number;
   placement?: Placement;
-
-  //TODO FIXME PLZ
-  children: any;
+  children: ReactElement;
 }
 
 export const Tooltip = ({
@@ -43,7 +41,7 @@ export const Tooltip = ({
   ...rest
 }: TooltipProps) => {
   const [open, setOpen] = useState(false);
-  const { space } = useTheme() as Theme;
+  const { space } = useTheme() as DeltaTheme;
   const padding = space[2];
   const { x, y, reference, floating, strategy, context, refs, update } =
     useFloating<HTMLDivElement>({
@@ -68,8 +66,8 @@ export const Tooltip = ({
     return null;
   }
   const mergedRef = useMemo(
-    () => mergeRefs([reference, children?.ref]),
-    [reference, children?.ref]
+    () => mergeRefs([reference, (children as any)?.ref]),
+    [reference, (children as any)?.ref]
   );
   return (
     <Fragment>
@@ -81,9 +79,9 @@ export const Tooltip = ({
           sx={{
             padding: 2,
             borderRadius: 3,
-            backgroundColor: '#282828',
+            backgroundColor: 'accentSurface',
             boxShadow: 1,
-            color: '#fff',
+            color: 'accentOnSurface',
             fontSize: 2,
             fontWeight: 400,
             animation: `${appear} 0.1s cubic-bezier(0.250, 0.460, 0.450, 0.940)`,

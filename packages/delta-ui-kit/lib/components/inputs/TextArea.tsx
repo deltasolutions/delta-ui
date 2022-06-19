@@ -52,14 +52,17 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
           letterSpacing: 'normal',
           paddingX: '0.55em',
           paddingY: '0.60em',
-          backgroundColor: 'accentSurface',
-          color: 'onSurface',
+          backgroundColor: 'accentContext',
+          color: 'onContext',
           resize: 'vertical',
           '&:focus': {
             outline: '2px solid',
             outlineColor: 'primary',
           },
-          '&::placeholder': { color: 'onSurface', opacity: 0.5 },
+          '&::placeholder': {
+            color: 'onContext',
+            opacity: 0.5,
+          },
         }}
         value={innerValue}
         onBlur={() => onBlur?.()}

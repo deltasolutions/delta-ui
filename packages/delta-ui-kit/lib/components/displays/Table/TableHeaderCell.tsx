@@ -22,7 +22,6 @@ export const TableHeaderCell = forwardRef<
         px: 2,
         py: '0.75em',
         width: 'auto',
-        backgroundColor: 'accentBackground',
         '&:first-of-type': { pl: 4 },
         '&:last-of-type': { pr: 4 },
       }}
@@ -34,7 +33,6 @@ export const TableHeaderCell = forwardRef<
           alignItems: 'center',
           gap: 1,
           pr: 1,
-          color: 'onSurface',
           fontSize: 1,
           fontWeight: 300,
           textTransform: 'uppercase',

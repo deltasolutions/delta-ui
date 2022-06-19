@@ -59,7 +59,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
             opacity: 2,
           },
           'input:disabled + span:before': {
-            background: 'onSurface',
+            background: 'accentOnContext',
           },
           'input:disabled + span': {
             opacity: 1,
@@ -99,7 +99,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
             height: '22px',
             borderRadius: '25%/50%',
             verticalAlign: 'top',
-            backgroundColor: 'accentSurface',
+            backgroundColor: 'accentContext',
             '&:before': {
               content: "''",
               position: 'absolute',
@@ -109,7 +109,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
               width: '18px',
               height: '18px',
               borderRadius: '50%',
-              backgroundColor: 'onPrimary',
+              backgroundColor: 'accentOnPrimary',
             },
           }}
         />

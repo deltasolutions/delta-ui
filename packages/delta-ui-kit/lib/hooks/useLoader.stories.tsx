@@ -50,7 +50,7 @@ export const SharedLoaders = () => {
           mt: 2,
           p: 3,
           borderRadius: 2,
-          border: '1px dashed',
+          border: '2px dashed',
           borderColor: isLoading ? 'warning' : 'success',
         }}
       >

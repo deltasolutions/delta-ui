@@ -7,7 +7,7 @@ import {
   useMemo,
   useRef,
 } from 'react';
-import { Theme } from '../../defaults';
+import { DeltaTheme } from '../../defaults';
 import { useIsomorphicLayoutEffect } from '../../hooks';
 import { FormWidgetProps } from '../../types';
 import { mergeRefs } from '../../utils';
@@ -30,8 +30,8 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(
     propsRef
   ) => {
     const {
-      colors: { accentPrimary, accentSurface },
-    } = useTheme() as Theme;
+      colors: { accentPrimary, accentContext },
+    } = useTheme() as DeltaTheme;
     const ref = useRef<HTMLInputElement>(null);
     const mergedRef = useMemo(
       () => mergeRefs([ref, propsRef]),
@@ -45,12 +45,12 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(
             `to right,` +
             `${accentPrimary} 0%,` +
             `${accentPrimary} ${value}%,` +
-            `${accentSurface} ${value}%,` +
-            `${accentSurface} 100%` +
+            `${accentContext} ${value}%,` +
+            `${accentContext} 100%` +
             `)`;
         }
       },
-      [accentPrimary, accentSurface]
+      [accentPrimary, accentContext]
     );
     const onInputHandler = useCallback(
       ev => {

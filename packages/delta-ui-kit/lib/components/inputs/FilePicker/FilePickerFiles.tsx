@@ -42,12 +42,12 @@ export const FilePickerFiles = ({
             fontSize: '0.7rem',
             textDecoration: 'underline',
             '&:hover, &:active, &:focus-visible': {
-              color: 'accentOnSurface',
+              color: 'accentOnContext',
             },
           }}
-          onClick={() => handleInputChange(undefined)}
+          onClick={onBrowseFiles}
         >
-          <RiDeleteBin5Fill size={13} />
+          <RiUpload2Fill size={16} />
         </Button>
         <Button
           sx={{
@@ -58,12 +58,12 @@ export const FilePickerFiles = ({
             fontSize: '0.7rem',
             textDecoration: 'underline',
             '&:hover, &:active, &:focus-visible': {
-              color: 'accentOnSurface',
+              color: 'accentOnContext',
             },
           }}
-          onClick={onBrowseFiles}
+          onClick={() => handleInputChange(undefined)}
         >
-          <RiUpload2Fill size={13} />
+          <RiDeleteBin5Fill size={16} />
         </Button>
       </Box>
       <Box
@@ -73,9 +73,8 @@ export const FilePickerFiles = ({
           mt: '-8px',
           flexDirection: 'column',
           'a:not(a:last-child)': {
+            borderBottom: '1px solid',
             borderBottomColor: 'border',
-            borderBottomWidth: '0.1px',
-            borderBottomStyle: 'solid',
           },
         }}
       >

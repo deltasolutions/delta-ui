@@ -224,7 +224,7 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
           sx={{
             width: '100%',
             position: 'relative',
-            backgroundColor: 'accentSurface',
+            backgroundColor: 'accentContext',
             borderRadius: 4,
             padding: '3px',
             gap: '2px',

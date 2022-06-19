@@ -34,7 +34,7 @@ export const PairList = forwardRef<HTMLDivElement, PairListProps>(
               <Box
                 aria-label="key"
                 sx={{
-                  color: 'accentOnSurface',
+                  color: 'accentOnContext',
                   textAlign: 'right',
                   fontWeight: 600,
                 }}
@@ -74,7 +74,7 @@ export const PairList = forwardRef<HTMLDivElement, PairListProps>(
             >
               <Box
                 aria-label="key"
-                sx={{ color: 'accentOnSurface', fontWeight: 600 }}
+                sx={{ color: 'accentOnContext', fontWeight: 600 }}
               >
                 {key}
               </Box>

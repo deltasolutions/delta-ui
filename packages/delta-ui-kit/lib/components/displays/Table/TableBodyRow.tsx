@@ -12,7 +12,7 @@ export const TableBodyRow = forwardRef<HTMLTableRowElement, TableBodyRowProps>(
         role="row"
         sx={{
           '&:nth-of-type(even)': {
-            backgroundColor: 'accentBackground',
+            backgroundColor: 'accentContext',
           },
         }}
         {...rest}

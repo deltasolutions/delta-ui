@@ -10,7 +10,6 @@ export const Layout = forwardRef<HTMLDivElement, LayoutProps>(
       <Box
         ref={ref}
         sx={{
-          backgroundColor: 'background',
           display: 'flex',
           width: '100%',
           minHeight: '100vh',

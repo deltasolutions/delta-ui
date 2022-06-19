@@ -17,7 +17,6 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
           py: 3,
           flexWrap: 'wrap',
           alignItems: 'flex-start',
-          color: 'accentOnSurface',
         }}
         {...rest}
       />

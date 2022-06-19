@@ -35,7 +35,7 @@ export const TabOption = forwardRef<HTMLAnchorElement, TabOptionProps>(
           mx: '3px',
           ...(isActive
             ? {
-                backgroundColor: 'accentOnSurface',
+                backgroundColor: 'accentOnContext',
                 color: '#000000',
                 '&:hover, &:focus-visible, &:active': {
                   color: '#000000',
@@ -43,7 +43,7 @@ export const TabOption = forwardRef<HTMLAnchorElement, TabOptionProps>(
               }
             : {
                 backgroundColor: 'rgba(255, 255, 255, 0.07)',
-                color: 'accentOnSurface',
+                color: 'accentOnContext',
                 '&:hover, &:active, &:focus-visible': {
                   backgroundColor: 'rgba(255, 255, 255, 0.09)',
                 },

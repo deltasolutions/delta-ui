@@ -1,80 +1,99 @@
 import { keyframes } from '@emotion/react';
-import { jsx } from '@theme-ui/core';
-import { forwardRef } from 'react';
-import { AiOutlineInfoCircle } from 'react-icons/ai';
+import { jsx, ThemeProvider } from '@theme-ui/core';
+import { forwardRef, useMemo } from 'react';
 import { IoClose } from 'react-icons/io5';
+import { useDeltaTheme } from '../../hooks';
 import { Button } from '../Button';
 import { Box, BoxProps } from './Box';
 
 export interface AlertProps extends BoxProps {
   onClose?: () => void;
-  color?: 'success' | 'error' | 'warning';
+  color?: 'info' | 'success' | 'warning' | 'error';
 }
 
 export const Alert = forwardRef<HTMLDivElement, AlertProps>(
-  ({ color = 'primary', onClose, children, ...rest }, ref) => {
-    return (
-      <Box
-        ref={ref}
-        sx={{
-          display: 'inline-flex',
-          alignItems: 'flex-start',
-          borderRadius: 4,
-          paddingX: 2,
-          width: '100%',
-          animation: `${slideIn} 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940)`,
-          ...{
+  ({ color = 'info', onClose, children, ...rest }, ref) => {
+    const overrides = useMemo(
+      () => ({
+        colors:
+          {
+            info: {
+              context: 'info',
+              accentContext: 'accentInfo',
+              onContext: 'onInfo',
+              accentOnContext: 'accentOnInfo',
+            },
             success: {
-              backgroundColor: 'info',
-              color: 'onInfo',
+              context: 'success',
+              accentContext: 'accentSuccess',
+              onContext: 'onSuccess',
+              accentOnContext: 'accentOnSuccess',
             },
             error: {
-              backgroundColor: 'error',
-              color: 'onError',
+              context: 'error',
+              accentContext: 'accentError',
+              onContext: 'onError',
+              accentOnContext: 'accentOnError',
             },
             warning: {
-              backgroundColor: 'warning',
-              color: 'onWarning',
+              context: 'warning',
+              accentContext: 'accentWarning',
+              onContext: 'onWarning',
+              accentOnContext: 'accentOnWarning',
             },
-          }[color],
-        }}
-        {...rest}
-      >
-        <span
+          }[color] ?? undefined,
+      }),
+      [color]
+    );
+    const theme = useDeltaTheme(overrides);
+    return (
+      <ThemeProvider theme={theme}>
+        <Box
+          ref={ref}
           sx={{
-            overflow: 'hidden',
-            wordBreak: 'break-word',
-            paddingY: 2,
-            fontWeight: 0,
-            display: 'flex',
-            alignItems: 'center',
+            display: 'inline-flex',
+            alignItems: 'flex-start',
+            borderRadius: 4,
+            paddingX: 2,
+            width: '100%',
+            backgroundColor: 'context',
+            color: 'onContext',
+            animation: `${slideIn} 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940)`,
           }}
+          {...rest}
         >
-          {children}
-        </span>
-        <Button
-          sx={{
-            mt: '6px',
-            ml: 'auto',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            minHeight: 1,
-            minWidth: 1,
-            borderRadius: '100%',
-            '&:hover, &:focus-visible': {
-              backgroundColor: {
-                success: 'accentInfo',
-                warning: 'accentWarning',
-                error: 'accentError',
-              }[color],
-            },
-          }}
-          onClick={onClose}
-        >
-          <IoClose size={18} />
-        </Button>
-      </Box>
+          <span
+            sx={{
+              overflow: 'hidden',
+              wordBreak: 'break-word',
+              paddingY: 2,
+              fontWeight: 0,
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            {children}
+          </span>
+          <Button
+            sx={{
+              mt: '6px',
+              ml: 'auto',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              minHeight: 1,
+              minWidth: 1,
+              borderRadius: '100%',
+              '&:hover, &:focus-visible': {
+                backgroundColor: 'accentContext',
+              },
+            }}
+            onClick={onClose}
+          >
+            <IoClose size={18} />
+          </Button>
+        </Box>
+      </ThemeProvider>
     );
   }
 );

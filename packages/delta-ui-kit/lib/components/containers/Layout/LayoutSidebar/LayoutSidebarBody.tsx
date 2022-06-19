@@ -19,16 +19,16 @@ export const LayoutSidebarBody = forwardRef<
           backgroundColor: 'outline',
           width: '8px',
         },
-        '&::-webkit-scrollbar-track': { backgroundColor: 'exterior' },
+        '&::-webkit-scrollbar-track': { backgroundColor: 'context' },
         '&::-webkit-scrollbar-track:hover': {
-          backgroundColor: 'exterior',
+          backgroundColor: 'context',
         },
         '&::-webkit-scrollbar-thumb': {
-          backgroundColor: 'rgba(255,255,255,0.2)',
+          backgroundColor: 'accentContext',
           borderRadius: 4,
         },
         '&::-webkit-scrollbar-thumb:hover': {
-          backgroundColor: '#ffffff',
+          backgroundColor: 'onContext',
         },
         '&::-webkit-scrollbar-button': { display: 'none' },
       }}

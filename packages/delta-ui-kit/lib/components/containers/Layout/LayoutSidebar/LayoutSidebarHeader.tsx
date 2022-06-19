@@ -17,7 +17,7 @@ export const LayoutSidebarHeader = forwardRef<
         display: 'flex',
         flexDirection: 'column',
         gap: 3,
-        color: 'accentOnSurface',
+        color: 'accentOnContext',
         width: 'auto',
         height: 'auto',
       }}

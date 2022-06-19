@@ -8,14 +8,14 @@ import {
 } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { system, theme as defaultTheme, Theme } from '../../defaults';
+import { system, deltaTheme as defaultTheme, DeltaTheme } from '../../defaults';
 import { useImperativePortal } from '../../hooks';
 import { Box } from './Box';
 
 export const SystemContext = createContext(system);
 
 export interface ContainerProps extends HTMLAttributes<HTMLDivElement> {
-  theme?: Theme;
+  theme?: DeltaTheme;
 }
 
 export const SystemContainer = forwardRef<HTMLDivElement, ContainerProps>(
@@ -33,9 +33,9 @@ export const SystemContainer = forwardRef<HTMLDivElement, ContainerProps>(
                 width: '100%',
                 minHeight: '100vh',
                 fontFamily: theme.fontFamily,
-                backgroundColor: theme.colors.background,
-                color: theme.colors.onBackground,
-                fontSize: theme.fontSizes[2],
+                backgroundColor: 'background',
+                color: 'onBackground',
+                fontSize: 2,
               }}
             >
               {children}

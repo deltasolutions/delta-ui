@@ -131,7 +131,6 @@ export const SelectDrop = ({
           flexDirection: 'column',
           borderColor: 'border',
           borderRadius: 4,
-          backgroundColor: 'onContrast',
         }}
       >
         {children.map(v =>

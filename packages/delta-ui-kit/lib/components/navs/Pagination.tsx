@@ -1,27 +1,8 @@
-import { useTheme } from '@emotion/react';
 import { jsx } from '@theme-ui/core';
-import FocusTrap from 'focus-trap-react';
-import {
-  createContext,
-  forwardRef,
-  useContext,
-  useRef,
-  useCallback,
-  useState,
-} from 'react';
-import { useTranslation } from 'react-i18next';
-import { AiOutlineEnter } from 'react-icons/ai';
+import { createContext } from 'react';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
-import { Theme } from '../../defaults';
-import {
-  DropRendererProps,
-  useDrop,
-  useImperativePortal,
-  useIsomorphicLayoutEffect,
-} from '../../hooks';
 import { Button, ButtonProps } from '../Button';
-import { Box, BoxProps, Option, SystemContext } from '../containers';
-import { TextInput } from '../inputs';
+import { Box, BoxProps } from '../containers';
 
 export interface PaginationProps extends BoxProps {
   onChange: (page) => void;
@@ -52,6 +33,7 @@ export const Pagination = ({
           display: 'flex',
           gap: 1,
         }}
+        {...rest}
       >
         <Item
           disabled={currentPage === 1}
@@ -95,7 +77,7 @@ const Item = ({ children, disabled = false, isActive = false, ...rest }) => (
       }),
       ...(isActive && {
         backgroundColor: 'rgba(255,255,255,0.1)',
-        color: 'accentOnSurface',
+        color: 'accentOnContext',
       }),
     }}
     {...rest}
@@ -108,96 +90,96 @@ const PaginationContext = createContext(
   {} as { pages: number; currentPage: number; onChange: (v: number) => void }
 );
 
-const PaginationDrop = forwardRef<HTMLDivElement, DropRendererProps>(
-  ({ handleClose }, propsRef) => {
-    const ref = useRef<HTMLButtonElement>(null);
-    const [inputValue, setInputValue] = useState<string>();
-    const {
-      colors: { monkaS },
-    } = useTheme() as Theme;
-    const { pages, currentPage, onChange } = useContext(PaginationContext);
-    const items = Array.from(Array(pages).keys()).map(i => i + 1);
-    const final = [
-      ...items.slice(0, currentPage).reverse().slice(0, 5).reverse(),
-      ...items.slice(currentPage, currentPage + 4),
-    ];
-    final[0] = 1;
-    final[final.length - 1] = pages;
-    useIsomorphicLayoutEffect(() => {
-      console.log(ref.current?.focus());
-    }, []);
-    const handleChangePage = useCallback(() => {
-      if (!inputValue) {
-        return;
-      }
-      const v = Math.max(Math.min(+inputValue, pages), 0);
-      onChange(v);
-      setInputValue('');
-    }, [inputValue, onChange]);
-    return (
-      <FocusTrap>
-        <Box
-          ref={propsRef}
-          sx={{
-            py: 1,
-            'input::-webkit-inner-spin-button': {
-              WebkitAppearance: 'none',
-              margin: '0',
-            },
-          }}
-        >
-          <TextInput
-            max={pages}
-            min={1}
-            placeholder={pages.toString()}
-            startIcon={
-              <Button sx={{ borderRadius: '100%' }} onClick={handleChangePage}>
-                <AiOutlineEnter />
-              </Button>
-            }
-            sx={{
-              width: '120px',
-              px: 1,
-              py: 1,
-              borderBottom: '1px solid',
-              borderBottomColor: 'border',
-            }}
-            type="number"
-            value={inputValue}
-            variant="pure"
-            onChange={setInputValue}
-            onKeyDown={e => {
-              if (e.key === 'Enter' && inputValue) {
-                handleChangePage();
-              }
-            }}
-          />
-          {final.map(i => (
-            <Option
-              key={i}
-              {...(i === currentPage && { ref })}
-              style={{
-                ...(i == currentPage && {
-                  backgroundColor: monkaS,
-                  color: 'onPrimary',
-                }),
-              }}
-              sx={{ width: '100%' }}
-              onClick={() => onChange(i)}
-              onKeyDown={e => {
-                if (e.key === 'Enter') {
-                  onChange(i);
-                }
-                if (e.key === 'Escape') {
-                  handleClose();
-                }
-              }}
-            >
-              {i}
-            </Option>
-          ))}
-        </Box>
-      </FocusTrap>
-    );
-  }
-);
+// const PaginationDrop = forwardRef<HTMLDivElement, DropRendererProps>(
+//   ({ handleClose }, propsRef) => {
+//     const ref = useRef<HTMLButtonElement>(null);
+//     const [inputValue, setInputValue] = useState<string>();
+//     const {
+//       colors: { monkaS },
+//     } = useTheme() as DeltaTheme;
+//     const { pages, currentPage, onChange } = useContext(PaginationContext);
+//     const items = Array.from(Array(pages).keys()).map(i => i + 1);
+//     const final = [
+//       ...items.slice(0, currentPage).reverse().slice(0, 5).reverse(),
+//       ...items.slice(currentPage, currentPage + 4),
+//     ];
+//     final[0] = 1;
+//     final[final.length - 1] = pages;
+//     useIsomorphicLayoutEffect(() => {
+//       console.log(ref.current?.focus());
+//     }, []);
+//     const handleChangePage = useCallback(() => {
+//       if (!inputValue) {
+//         return;
+//       }
+//       const v = Math.max(Math.min(+inputValue, pages), 0);
+//       onChange(v);
+//       setInputValue('');
+//     }, [inputValue, onChange]);
+//     return (
+//       <FocusTrap>
+//         <Box
+//           ref={propsRef}
+//           sx={{
+//             py: 1,
+//             'input::-webkit-inner-spin-button': {
+//               WebkitAppearance: 'none',
+//               margin: '0',
+//             },
+//           }}
+//         >
+//           <TextInput
+//             max={pages}
+//             min={1}
+//             placeholder={pages.toString()}
+//             startIcon={
+//               <Button sx={{ borderRadius: '100%' }} onClick={handleChangePage}>
+//                 <AiOutlineEnter />
+//               </Button>
+//             }
+//             sx={{
+//               width: '120px',
+//               px: 1,
+//               py: 1,
+//               borderBottom: '1px solid',
+//               borderBottomColor: 'border',
+//             }}
+//             type="number"
+//             value={inputValue}
+//             variant="pure"
+//             onChange={setInputValue}
+//             onKeyDown={e => {
+//               if (e.key === 'Enter' && inputValue) {
+//                 handleChangePage();
+//               }
+//             }}
+//           />
+//           {final.map(i => (
+//             <Option
+//               key={i}
+//               {...(i === currentPage && { ref })}
+//               style={{
+//                 ...(i == currentPage && {
+//                   backgroundColor: monkaS,
+//                   color: 'onPrimary',
+//                 }),
+//               }}
+//               sx={{ width: '100%' }}
+//               onClick={() => onChange(i)}
+//               onKeyDown={e => {
+//                 if (e.key === 'Enter') {
+//                   onChange(i);
+//                 }
+//                 if (e.key === 'Escape') {
+//                   handleClose();
+//                 }
+//               }}
+//             >
+//               {i}
+//             </Option>
+//           ))}
+//         </Box>
+//       </FocusTrap>
+//     );
+//   }
+// );

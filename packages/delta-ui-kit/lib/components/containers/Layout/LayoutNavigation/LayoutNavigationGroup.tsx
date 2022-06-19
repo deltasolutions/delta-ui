@@ -17,7 +17,6 @@ export const LayoutNavigationGroup = forwardRef<
           px: '1.35rem',
           display: 'flex',
           alignItems: 'center',
-          color: 'onExterior',
           fontSize: 2,
           fontWeight: 300,
           textTransform: 'uppercase',
@@ -25,9 +24,7 @@ export const LayoutNavigationGroup = forwardRef<
           overflow: 'hidden',
           textOverflow: 'ellipsis',
           whiteSpace: 'nowrap',
-          '&:not(:last-of-type)': {
-            mt: 3,
-          },
+          '&:not(:last-of-type)': { mt: 3 },
         }}
       >
         {title}

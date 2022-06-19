@@ -6,16 +6,6 @@ export interface ModalHeaderProps extends HTMLAttributes<HTMLDivElement> {}
 
 export const ModalHeader = forwardRef<HTMLDivElement, ModalHeaderProps>(
   (props, ref) => {
-    return (
-      <Box
-        ref={ref}
-        sx={{
-          paddingX: 5,
-          paddingTop: 4,
-          color: 'accentOnSurface',
-        }}
-        {...props}
-      />
-    );
+    return <Box ref={ref} sx={{ paddingX: 5, paddingTop: 4 }} {...props} />;
   }
 );

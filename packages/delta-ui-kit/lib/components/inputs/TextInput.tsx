@@ -68,18 +68,21 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
               ? {}
               : {
                   opacity: disabled ? 0.5 : 1,
-                  '&::placeholder': { color: 'onBackground' },
                   fontSize: 2,
                   borderRadius: 4,
                   letterSpacing: 'normal',
                   paddingX: '0.55em',
                   paddingY: '0.60em',
                   minWidth: '100px',
-                  backgroundColor: 'accentSurface',
-                  color: 'onSurface',
+                  backgroundColor: 'accentContext',
+                  color: 'onContext',
                   '&:focus': {
                     outline: '2px solid',
                     outlineColor: 'primary',
+                  },
+                  '&::placeholder': {
+                    color: 'onContext',
+                    opacity: 0.5,
                   },
                 }),
           }}

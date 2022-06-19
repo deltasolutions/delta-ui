@@ -18,7 +18,7 @@ export const Option = forwardRef<HTMLButtonElement, ButtonProps>(
           gap: 2,
           fontSize: 2,
           '&:focus, &:active, &:focus-visible': {
-            backgroundColor: 'monkaS',
+            backgroundColor: 'accentContext',
             color: 'onPrimary',
           },
         }}

@@ -30,7 +30,7 @@ export const FilePickerWidget = forwardRef<
         w: '100%',
         fontSize: 1,
         justifyContent: 'space-between',
-        color: 'accentOnSurface',
+        color: 'accentOnContext',
         '&:hover, &:active, &:focus-visible': {
           textDecoration: 'underline',
         },
@@ -39,7 +39,7 @@ export const FilePickerWidget = forwardRef<
       {...rest}
     >
       {file.name}{' '}
-      <span sx={{ color: 'onSurface' }}>({formatBytes(file.size)})</span>
+      <span sx={{ color: 'onContext' }}>({formatBytes(file.size)})</span>
     </Anchor>
   );
 });

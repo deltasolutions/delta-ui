@@ -81,9 +81,6 @@ export const AutocompleteDrop = forwardRef<
           p: 1,
           display: 'flex',
           flexDirection: 'column',
-          border: '1px solid',
-          borderColor: 'border',
-          backgroundColor: 'onContrast',
           borderRadius: 4,
         }}
       >

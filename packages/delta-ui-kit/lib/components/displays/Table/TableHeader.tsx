@@ -1,4 +1,5 @@
 import { jsx } from '@theme-ui/core';
+import { lighten } from 'polished';
 import {
   createContext,
   forwardRef,
@@ -7,7 +8,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { useIsomorphicLayoutEffect } from '../../../hooks';
+import { useDeltaTheme, useIsomorphicLayoutEffect } from '../../../hooks';
 import { mergeRefs } from '../../../utils';
 
 export const TableHeaderContext = createContext({
@@ -21,6 +22,7 @@ export const TableHeader = forwardRef<
   HTMLTableSectionElement,
   TableHeaderProps
 >((props, ref) => {
+  const { colors } = useDeltaTheme();
   const [element, setElement] = useState<HTMLTableSectionElement | null>(null);
   const mergedRef = useMemo(
     () => mergeRefs([ref, setElement]),
@@ -52,7 +54,12 @@ export const TableHeader = forwardRef<
           // The top value needs to be -1px or the element
           // will never intersect with the top of the window.
           top: '-1px',
-          boxShadow: sticked ? 2 : 'none',
+          boxShadow: sticked ? 1 : 'none',
+          backgroundColor: sticked
+            ? lighten(0.05, colors.accentContext)
+            : 'accentContext',
+          color: 'onContext',
+          transition: 'background-color 0.1s linear, box-shadow 0.1s linear',
         }}
         {...props}
       />

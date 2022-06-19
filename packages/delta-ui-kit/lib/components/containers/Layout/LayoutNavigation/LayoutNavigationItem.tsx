@@ -32,10 +32,10 @@ export const LayoutNavigationItem = forwardRef<
         px: '1.35rem',
         position: 'relative',
         fontSize: 2,
-        cursor: 'default',
+        cursor: 'pointer',
         userSelect: 'none',
         '&, &:hover, &:active, &:focus-visible': {
-          color: 'accentOnExterior',
+          color: 'accentOnContext',
         },
         ...(active
           ? { '&:before': getAccentBlockStyle(1.0) }
@@ -78,6 +78,6 @@ const getAccentBlockStyle = (opacity = 1) =>
     width: 'calc(100% - 1.6rem)',
     height: '100%',
     borderRadius: 3,
-    backgroundColor: 'accentExterior',
+    backgroundColor: 'accentContext',
     opacity,
   } as const);

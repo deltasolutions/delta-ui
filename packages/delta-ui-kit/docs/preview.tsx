@@ -1,7 +1,7 @@
 import { Global } from '@emotion/react';
 import { jsx } from '@theme-ui/core';
 import { I18nextProvider } from 'react-i18next';
-import { Box, SystemContainer, theme } from '../lib';
+import { Box, SystemContainer, deltaTheme } from '../lib';
 
 export const parameters = {
   layout: 'fullscreen',
@@ -18,7 +18,7 @@ export const decorators = [
               padding: 0,
               width: '100%',
               minHeight: '100vh',
-              colorScheme: theme.colorScheme,
+              colorScheme: deltaTheme.colorScheme,
             },
           }}
         />
