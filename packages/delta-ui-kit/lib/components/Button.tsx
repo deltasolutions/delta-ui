@@ -82,7 +82,7 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps): any => {
     borderRadius: '500px',
     display: 'inline-block',
     textAlign: 'center',
-    outlineOffset: '3px',
+    outlineOffset: '2px',
     overflow: 'hidden',
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
@@ -114,22 +114,22 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps): any => {
       },
       outlined: {
         primary: {
-          border: '2px solid',
+          border: '1px solid',
           borderColor: 'primary',
           color: 'primary',
         },
         secondary: {
-          border: '2px solid',
+          border: '1px solid',
           borderColor: 'secondary',
           color: 'secondary',
         },
         success: {
-          border: '2px solid',
+          border: '1px solid',
           borderColor: 'success',
           color: 'success',
         },
         error: {
-          border: '2px solid',
+          border: '1px solid',
           borderColor: 'error',
           color: 'error',
         },
