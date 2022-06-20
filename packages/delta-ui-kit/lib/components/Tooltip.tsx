@@ -1,4 +1,4 @@
-import { keyframes, useTheme } from '@emotion/react';
+import { keyframes } from '@emotion/react';
 import {
   Placement,
   offset,
@@ -22,7 +22,7 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { DeltaTheme } from '../defaults';
+import { useDeltaTheme } from '../hooks';
 import { mergeRefs } from '../utils';
 import { Box, BoxProps } from './containers';
 
@@ -41,7 +41,7 @@ export const Tooltip = ({
   ...rest
 }: TooltipProps) => {
   const [open, setOpen] = useState(false);
-  const { space } = useTheme() as DeltaTheme;
+  const { space } = useDeltaTheme();
   const padding = space[2];
   const { x, y, reference, floating, strategy, context, refs, update } =
     useFloating<HTMLDivElement>({

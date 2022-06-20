@@ -1,4 +1,3 @@
-import { useTheme } from '@emotion/react';
 import { jsx } from '@theme-ui/core';
 import {
   forwardRef,
@@ -7,8 +6,7 @@ import {
   useMemo,
   useRef,
 } from 'react';
-import { DeltaTheme } from '../../defaults';
-import { useIsomorphicLayoutEffect } from '../../hooks';
+import { useDeltaTheme, useIsomorphicLayoutEffect } from '../../hooks';
 import { FormWidgetProps } from '../../types';
 import { mergeRefs } from '../../utils';
 
@@ -31,7 +29,7 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(
   ) => {
     const {
       colors: { accentPrimary, accentContext },
-    } = useTheme() as DeltaTheme;
+    } = useDeltaTheme();
     const ref = useRef<HTMLInputElement>(null);
     const mergedRef = useMemo(
       () => mergeRefs([ref, propsRef]),
