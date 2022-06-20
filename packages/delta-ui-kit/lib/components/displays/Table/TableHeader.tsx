@@ -36,26 +36,19 @@ export const TableHeader = forwardRef<
     if (!element) {
       return;
     }
-    const handleSticked = () => {
-      setSticked(element.offsetTop - stickyOffset <= window.scrollY);
-    };
-    handleSticked();
-    addEventListener('scroll', handleSticked);
-    return () => removeEventListener('scroll', handleSticked);
-    // TODO: Consider using IntersectionObserver.
-    // The following implementation is broken.
-    // const observer = new IntersectionObserver(
-    //   ([ev]) => {
-    //     const sticked = ev.intersectionRatio < 1;
-    //     setSticked(sticked);
-    //   },
-    //   {
-    //     rootMargin: `-${stickyOffset + 1}px 0px 0px 0px`,
-    //     threshold: [1],
-    //   }
-    // );
-    // observer.observe(element);
-    // return () => observer.disconnect();
+    const frameOffset = window.frameElement?.getBoundingClientRect().y ?? 0;
+    const observer = new IntersectionObserver(
+      ([ev]) => {
+        const sticked = ev.intersectionRatio < 1;
+        setSticked(sticked);
+      },
+      {
+        rootMargin: `-${stickyOffset + frameOffset + 1}px 1000px 1000px 1000px`,
+        threshold: [1],
+      }
+    );
+    observer.observe(element);
+    return () => observer.disconnect();
   }, [element]);
 
   return (
