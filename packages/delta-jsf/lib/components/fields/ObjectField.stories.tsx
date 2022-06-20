@@ -5,7 +5,7 @@ import { ObjectField } from './ObjectField';
 
 const meta: Meta = {
   title: 'fields/ObjectField',
-  ...formStoryParameters
+  ...formStoryParameters,
 };
 
 export default meta;
@@ -24,14 +24,14 @@ export const Basics = props => {
             oneOf: [{ const: '1' }, { const: '2' }, { const: '3' }],
             layout: {
               field: 'select',
-              placeholder: 'Select an option'
-            }
+              placeholder: 'Select an option',
+            },
           },
           b: {
             title: 'BBB',
-            type: 'string'
-          }
-        }
+            type: 'string',
+          },
+        },
       }}
       {...fieldProps}
     />
@@ -42,7 +42,7 @@ export const InitialValue = props => {
   const fieldProps = useStoryFieldProps(props, {
     a: 2,
     b: 'test-42',
-    c: [42, 24]
+    c: [42, 24],
   });
   return (
     <ObjectField
@@ -54,18 +54,18 @@ export const InitialValue = props => {
             title: 'AAA',
             type: 'string',
             oneOf: [{ const: '1' }, { const: '2' }, { const: '3' }],
-            layout: { field: 'select' }
+            layout: { field: 'select' },
           },
           b: {
             title: 'BBB',
-            type: 'string'
+            type: 'string',
           },
           c: {
             title: 'CCC',
             type: 'array',
-            items: { type: 'string' }
-          }
-        }
+            items: { type: 'string' },
+          },
+        },
       }}
       {...fieldProps}
     />
@@ -85,20 +85,21 @@ export const AllOf = props => {
             properties: {
               a: {
                 title: 'AAA',
-                type: 'string'
-              }
-            }
+                type: 'string',
+              },
+            },
+            required: ['a'],
           },
           {
             type: 'object',
             properties: {
               b: {
                 title: 'BBB',
-                type: 'string'
-              }
-            }
-          }
-        ]
+                type: 'string',
+              },
+            },
+          },
+        ],
       }}
       {...fieldProps}
     />
@@ -115,26 +116,26 @@ export const If = props => {
         properties: {
           a: {
             title: 'AAA',
-            type: 'string'
+            type: 'string',
           },
           b: {
             title: 'BBB',
-            type: 'number'
-          }
+            type: 'number',
+          },
         },
         if: {
           type: 'object',
           properties: {
-            b: { const: 5 }
+            b: { const: 5 },
           },
-          required: ['b']
+          required: ['b'],
         },
         then: {
           type: 'object',
           properties: {
-            c: { type: 'string', title: 'CCC' }
-          }
-        }
+            c: { type: 'string', title: 'CCC' },
+          },
+        },
       }}
       {...fieldProps}
     />
@@ -154,47 +155,47 @@ export const MultipleIfs = props => {
             properties: {
               a: {
                 title: 'AAA',
-                type: 'string'
+                type: 'string',
               },
               b: {
                 title: 'BBB',
-                type: 'number'
-              }
-            }
+                type: 'number',
+              },
+            },
           },
           {
             type: 'object',
             if: {
               type: 'object',
               properties: {
-                b: { const: 5 }
+                b: { const: 5 },
               },
-              required: ['b']
+              required: ['b'],
             },
             then: {
               type: 'object',
               properties: {
-                c: { type: 'number', title: 'CCC' }
-              }
-            }
+                c: { type: 'number', title: 'CCC' },
+              },
+            },
           },
           {
             type: 'object',
             if: {
               type: 'object',
               properties: {
-                c: { const: 5 }
+                c: { const: 5 },
               },
-              required: ['c']
+              required: ['c'],
             },
             then: {
               type: 'object',
               properties: {
-                d: { type: 'string', title: 'DDD' }
-              }
-            }
-          }
-        ]
+                d: { type: 'string', title: 'DDD' },
+              },
+            },
+          },
+        ],
       }}
       {...fieldProps}
     />

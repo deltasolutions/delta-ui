@@ -5,7 +5,7 @@ import { Form } from '../../lib';
 
 const meta: Meta = {
   title: 'General/Form',
-  ...formStoryParameters
+  ...formStoryParameters,
 };
 
 export default meta;
@@ -23,18 +23,18 @@ export const Basics = props => {
             a: {
               type: 'integer',
               title: 'AAA',
-              maximum: 5
-            }
-          }
+              maximum: 5,
+            },
+          },
         },
         {
           type: 'object',
           if: {
             type: 'object',
             properties: {
-              a: { const: 5 }
+              a: { const: 5 },
             },
-            required: ['a']
+            required: ['a'],
           },
           then: {
             type: 'object',
@@ -44,14 +44,14 @@ export const Basics = props => {
                 title: 'BBB',
                 oneOf: [{ const: '1' }, { const: '2' }, { const: '3' }],
                 layout: {
-                  field: 'select'
-                }
-              }
-            }
-          }
-        }
-      ]
-    }
+                  field: 'select',
+                },
+              },
+            },
+          },
+        },
+      ],
+    },
   });
   return <Form {...formProps} />;
 };
@@ -67,12 +67,12 @@ export const Collections = props => {
         properties: {
           name: {
             title: 'Name',
-            type: 'string'
-          }
+            type: 'string',
+          },
         },
-        required: ['name']
-      }
-    }
+        required: ['name'],
+      },
+    },
   });
   return <Form {...formProps} />;
 };
@@ -85,21 +85,21 @@ export const HiddenField = props => {
       properties: {
         name: {
           title: 'Name',
-          type: 'string'
+          type: 'string',
         },
         surname: {
           title: 'Surname',
           type: 'string',
           layout: {
-            field: 'hidden'
-          }
-        }
-      }
+            field: 'hidden',
+          },
+        },
+      },
     },
     initialValue: {
       name: 'Lorem',
-      surname: 'Ipsum'
-    }
+      surname: 'Ipsum',
+    },
   });
   return <Form {...formProps} />;
 };
@@ -109,9 +109,9 @@ export const Sandbox = props => {
   const formProps = useStoryFormProps({
     schema: schema || {
       type: 'null',
-      title: 'Invalid JSON'
+      title: 'Invalid JSON',
     },
-    ...rest
+    ...rest,
   });
   return <Form {...formProps} />;
 };
@@ -122,15 +122,58 @@ Sandbox.args = {
     properties: {
       username: {
         title: 'Username',
-        type: 'string'
+        type: 'string',
       },
       password: {
         title: 'Password',
         type: 'string',
-        minLength: 8
-      }
+        minLength: 8,
+      },
     },
-    required: ['username', 'password']
+    required: ['username', 'password'],
   },
-  initialValue: {}
+  initialValue: {},
+};
+
+export const ComplexDeps = props => {
+  const formProps = useStoryFormProps({
+    ...props,
+    schema: {
+      type: 'object',
+      title: 'allOf usage',
+      allOf: [
+        {
+          type: 'object',
+          properties: {
+            a: {
+              title: 'AAA',
+              type: 'string',
+            },
+          },
+        },
+        {
+          type: 'object',
+          properties: {
+            b: {
+              title: 'BBB',
+              type: 'string',
+            },
+          },
+        },
+        {
+          if: {
+            type: 'object',
+            properties: {
+              a: { const: '1234' },
+            },
+            required: ['a'],
+          },
+          then: {
+            required: ['b'],
+          },
+        },
+      ],
+    },
+  });
+  return <Form {...formProps} />;
 };

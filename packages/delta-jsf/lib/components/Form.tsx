@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { useFormManager } from '../hooks';
 import { FormProps, Validity } from '../models';
 import { areManagedFormProps, getFieldComponent } from '../utils';
@@ -19,10 +19,7 @@ export const Form = <T extends unknown>(props: FormProps<T>) => {
     validity,
     setValue,
     extendValidity,
-    isValid,
-    wait,
-    submit,
-    validate
+    validate,
   } = targetManager;
 
   const rootFieldProps = {
@@ -36,24 +33,24 @@ export const Form = <T extends unknown>(props: FormProps<T>) => {
     },
     onValidity: (e: Validity) => {
       extendValidity(e);
-    }
+    },
   };
 
   const RootField = getFieldComponent(rootFieldProps);
 
   return (
     <form
-      style={style}
+      noValidate
       className={className}
       id={id}
-      noValidate
+      style={style}
       onSubmit={async e => {
         e.preventDefault();
-        await wait();
-        if (!isValid) {
+        await targetManager.wait();
+        if (!targetManager.isValid) {
           return;
         }
-        submit();
+        targetManager.submit();
       }}
     >
       <RootField {...rootFieldProps} />

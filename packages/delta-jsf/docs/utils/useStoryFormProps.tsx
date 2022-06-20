@@ -3,7 +3,7 @@ import {
   defaults,
   useFormManager,
   FormProps,
-  FormManagerOptions
+  FormManagerOptions,
 } from '../../lib';
 
 export const useStoryFormProps = <T extends unknown>(
@@ -11,16 +11,17 @@ export const useStoryFormProps = <T extends unknown>(
 ): FormProps<T | undefined> => {
   const manager = useFormManager<T, FormManagerOptions<T>>({
     ...options,
-    registry: defaults.registry
+    registry: defaults.registry,
   });
   return {
     manager,
     children: (
       <div style={{ marginTop: '1rem' }}>
         <button type="submit">
-          {manager.isSubmitted ? 'Submit again' : 'Submit'}
+          {manager.isSubmitted ? 'Submit again' : 'Submit'}{' '}
+          {manager.isValid ? 'valid' : 'invalid'}
         </button>
       </div>
-    )
+    ),
   };
 };
