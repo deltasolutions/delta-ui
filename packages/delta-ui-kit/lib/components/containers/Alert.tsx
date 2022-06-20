@@ -76,7 +76,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
           </span>
           <Button
             sx={{
-              mt: '6px',
+              mt: '7px',
               ml: 'auto',
               display: 'flex',
               alignItems: 'center',
