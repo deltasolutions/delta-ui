@@ -46,7 +46,7 @@ export const WestResize = ({ minWidth, width, maxWidth, setWidth }) => {
               userSelect: 'none',
             },
             cursor: 'col-resize',
-            borderColor: 'essential_outline',
+            borderColor: 'accentExterior',
             borderWidth: '0 0 0 1px',
             borderStyle: 'solid',
           },

@@ -21,7 +21,6 @@ export const Drop = forwardRef<HTMLDivElement, DropProps>(
       };
     }, [colors]);
     const theme = useDeltaTheme(overrides);
-    console.log('drop', theme.colors.context);
     return (
       <ThemeProvider theme={theme}>
         <Box

@@ -16,12 +16,14 @@ export const TableHeaderContext = createContext({
 });
 
 export interface TableHeaderProps
-  extends HTMLAttributes<HTMLTableSectionElement> {}
+  extends HTMLAttributes<HTMLTableSectionElement> {
+  stickyOffset?: number;
+}
 
 export const TableHeader = forwardRef<
   HTMLTableSectionElement,
   TableHeaderProps
->((props, ref) => {
+>(({ stickyOffset = 0, ...rest }, ref) => {
   const { colors } = useDeltaTheme();
   const [element, setElement] = useState<HTMLTableSectionElement | null>(null);
   const mergedRef = useMemo(
@@ -34,16 +36,28 @@ export const TableHeader = forwardRef<
     if (!element) {
       return;
     }
-    const observer = new IntersectionObserver(
-      ([ev]) => {
-        const sticked = ev.intersectionRatio < 1;
-        setSticked(sticked);
-      },
-      { threshold: [1] }
-    );
-    observer.observe(element);
-    return () => observer.disconnect();
+    const handleSticked = () => {
+      setSticked(element.offsetTop - stickyOffset <= window.scrollY);
+    };
+    handleSticked();
+    addEventListener('scroll', handleSticked);
+    return () => removeEventListener('scroll', handleSticked);
+    // TODO: Consider using IntersectionObserver.
+    // The following implementation is broken.
+    // const observer = new IntersectionObserver(
+    //   ([ev]) => {
+    //     const sticked = ev.intersectionRatio < 1;
+    //     setSticked(sticked);
+    //   },
+    //   {
+    //     rootMargin: `-${stickyOffset + 1}px 0px 0px 0px`,
+    //     threshold: [1],
+    //   }
+    // );
+    // observer.observe(element);
+    // return () => observer.disconnect();
   }, [element]);
+
   return (
     <TableHeaderContext.Provider value={contextValue}>
       <thead
@@ -51,9 +65,7 @@ export const TableHeader = forwardRef<
         role="thead"
         sx={{
           position: 'sticky',
-          // The top value needs to be -1px or the element
-          // will never intersect with the top of the window.
-          top: '-1px',
+          top: `${stickyOffset}px`,
           boxShadow: sticked ? 1 : 'none',
           backgroundColor: sticked
             ? lighten(0.05, colors.accentContext)
@@ -61,7 +73,7 @@ export const TableHeader = forwardRef<
           color: 'onContext',
           transition: 'background-color 0.1s linear, box-shadow 0.1s linear',
         }}
-        {...props}
+        {...rest}
       />
     </TableHeaderContext.Provider>
   );

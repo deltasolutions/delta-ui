@@ -80,7 +80,6 @@ export const Controlled = () => {
   });
   const { control, handleSubmit, register } = form;
   const { errors } = useFormState({ control });
-  console.log(errors);
   return (
     <Form form={form} onSubmit={handleSubmit(v => alert(v))}>
       <FormField name="showInput">

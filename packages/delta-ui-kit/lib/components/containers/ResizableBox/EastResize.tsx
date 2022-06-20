@@ -54,7 +54,7 @@ export const EastResize = ({
               userSelect: 'none',
             },
             cursor: 'col-resize',
-            borderColor: 'essential_outline',
+            borderColor: 'accentExterior',
             borderWidth: '0 1px 0 0',
             borderStyle: 'solid',
           },

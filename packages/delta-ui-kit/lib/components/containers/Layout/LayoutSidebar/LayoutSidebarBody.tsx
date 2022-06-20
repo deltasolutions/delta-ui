@@ -16,7 +16,7 @@ export const LayoutSidebarBody = forwardRef<
         minHeight: 0,
         overflowY: 'auto',
         '&::-webkit-scrollbar': {
-          backgroundColor: 'outline',
+          backgroundColor: 'accentExterior',
           width: '8px',
         },
         '&::-webkit-scrollbar-track': { backgroundColor: 'context' },

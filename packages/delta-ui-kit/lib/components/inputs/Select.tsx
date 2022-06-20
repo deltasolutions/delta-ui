@@ -129,7 +129,6 @@ export const SelectDrop = ({
           p: 1,
           display: 'flex',
           flexDirection: 'column',
-          borderColor: 'border',
           borderRadius: 4,
         }}
       >

@@ -11,8 +11,9 @@ export interface ChipProps extends HtmlHTMLAttributes<HTMLDivElement> {
 
 export const Chip = forwardRef<HTMLDivElement, ChipProps>(
   ({ onDelete, children, id, variant = 'contained', ...rest }, ref) => {
+    const variantStyle = useVariantStyle(variant);
     return (
-      <Box ref={ref} id={id} sx={getVariantStyle(variant)} {...rest}>
+      <Box ref={ref} id={id} sx={variantStyle} {...rest}>
         <Box role="contentinfo">{children}</Box>
         {onDelete && (
           <Button role="button" onClick={() => onDelete(id)}>
@@ -24,7 +25,7 @@ export const Chip = forwardRef<HTMLDivElement, ChipProps>(
   }
 );
 
-const getVariantStyle = (variant: ChipProps['variant']) => {
+const useVariantStyle = (variant: ChipProps['variant']) => {
   if (!variant) {
     return {};
   }

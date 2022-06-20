@@ -1,11 +1,8 @@
 import { jsx } from '@theme-ui/core';
+import { rgba } from 'polished';
 import { Fragment } from 'react';
-import { useTranslation } from 'react-i18next';
-import {
-  RiDeleteBin5Fill,
-  RiUpload2Fill,
-  RiUploadCloudLine,
-} from 'react-icons/ri';
+import { RiDeleteBin5Fill, RiUpload2Fill } from 'react-icons/ri';
+import { useDeltaTheme } from '../../../hooks';
 import { Button } from '../../Button';
 import { Box, BoxProps } from '../../containers';
 import { FilePickerWidget } from './FilePickerWidget';
@@ -22,6 +19,7 @@ export const FilePickerFiles = ({
   handleInputChange,
   onBrowseFiles,
 }: FilePickerFilesProps) => {
+  const { colors } = useDeltaTheme();
   return (
     <Fragment>
       <Box
@@ -74,7 +72,7 @@ export const FilePickerFiles = ({
           flexDirection: 'column',
           'a:not(a:last-child)': {
             borderBottom: '1px solid',
-            borderBottomColor: 'border',
+            borderBottomColor: rgba(colors.onContext, 0.4),
           },
         }}
       >
