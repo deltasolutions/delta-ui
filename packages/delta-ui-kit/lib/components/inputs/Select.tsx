@@ -1,19 +1,20 @@
 import { jsx } from '@theme-ui/core';
-import FocusTrap from 'focus-trap-react';
 import {
   Children,
-  cloneElement,
   forwardRef,
   ReactElement,
+  useCallback,
+  useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 import { IoChevronDown } from 'react-icons/io5';
-import { DropRendererProps, useDrop, useUpdateEffect } from '../../hooks';
+import { useDrop, useUpdateEffect } from '../../hooks';
 import { FormWidgetProps } from '../../types';
 import { mergeRefs } from '../../utils';
-import { Button, ButtonProps } from '../Button';
-import { Box, BoxProps, Option } from '../containers';
+import { Box, BoxProps } from '../containers';
+import { DropMenu, DropMenuItem, DropMenuItemProps } from './DropMenu';
 import { TextInput } from './TextInput';
 
 export interface SelectProps
@@ -38,6 +39,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
     },
     ref
   ) => {
+    const inputRef = useRef<HTMLInputElement>(null);
     const [innerValue, setInnerValue] = useState<unknown>(value);
     const childrenArray = useMemo(
       () =>
@@ -53,15 +55,18 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
     const handleChange = (nextValue: unknown) => {
       nextValue !== innerValue && setInnerValue(nextValue);
       nextValue !== value && onChange?.(nextValue);
+      handleClose();
     };
     useUpdateEffect(() => {
       innerValue !== value && setInnerValue(value);
     }, [value]);
+    const dropRef = useRef<HTMLDivElement>(null);
+    const closeDropRef = useRef<undefined | (() => void)>();
     const [openDrop, anchorRef] = useDrop<HTMLDivElement>(
       props => (
-        <SelectDrop handleChange={handleChange} {...props}>
+        <DropMenu ref={dropRef} onItemClick={handleChange} {...props}>
           {childrenArray}
-        </SelectDrop>
+        </DropMenu>
       ),
       {
         deps: [childrenArray, handleChange],
@@ -69,6 +74,35 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
         placement: 'bottom-start',
       }
     );
+    const handleOpen = useCallback(() => {
+      closeDropRef.current = openDrop();
+    }, [openDrop]);
+    const handleClose = useCallback(() => {
+      closeDropRef.current?.();
+    }, []);
+    useEffect(() => {
+      const handleNativeBlur = ev => {
+        if (
+          !ev.relatedTarget ||
+          !dropRef.current ||
+          !dropRef.current.contains(ev.relatedTarget)
+        ) {
+          handleClose();
+        }
+      };
+      const handleKeydown = ev => {
+        if (ev.key === 'ArrowDown') {
+          handleOpen();
+          return;
+        }
+      };
+      inputRef.current?.addEventListener('blur', handleNativeBlur);
+      inputRef.current?.addEventListener('keydown', handleKeydown);
+      return () => {
+        inputRef.current?.removeEventListener('blur', handleNativeBlur);
+        inputRef.current?.removeEventListener('keydown', handleKeydown);
+      };
+    }, [handleOpen]);
     const mergedRef = useMemo(
       () => mergeRefs([ref, anchorRef]),
       [ref, anchorRef]
@@ -84,6 +118,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
         {...rest}
       >
         <TextInput
+          ref={inputRef}
           readOnly
           disabled={disabled}
           placeholder={placeholder}
@@ -93,9 +128,8 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
           }}
           value={title ?? ''}
           onBlur={onBlur}
-          onClick={() => openDrop()}
+          onClick={handleOpen}
           onFocus={onFocus}
-          onKeyDown={ev => ev.key === 'Enter' && openDrop()}
         />
         <IoChevronDown
           sx={{
@@ -112,50 +146,10 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
   }
 );
 
-export interface SelectDropProps extends DropRendererProps {
-  children: ReactElement<SelectOptionProps>[];
-  handleChange: (v: unknown) => void;
-}
-
-export const SelectDrop = ({
-  children,
-  handleChange,
-  handleClose,
-}: SelectDropProps) => {
-  return (
-    <FocusTrap focusTrapOptions={{ escapeDeactivates: false }}>
-      <Box
-        sx={{
-          p: 1,
-          display: 'flex',
-          flexDirection: 'column',
-          borderRadius: 4,
-        }}
-      >
-        {children.map(v =>
-          cloneElement(v, {
-            onClick: () => {
-              handleChange(v.props.value);
-              handleClose();
-            },
-            onMouseEnter: e => {
-              e.target.focus();
-            },
-          })
-        )}
-      </Box>
-    </FocusTrap>
-  );
-};
-
-export interface SelectOptionProps
-  extends Omit<ButtonProps, 'value' | 'children'> {
-  value: unknown;
+export interface SelectOptionProps extends Omit<DropMenuItemProps, 'children'> {
   children: string;
 }
 
-export const SelectOption = forwardRef<HTMLButtonElement, SelectOptionProps>(
-  ({ value, ...rest }, ref) => {
-    return <Option ref={ref} {...rest} />;
-  }
+export const SelectOption = (props: SelectOptionProps) => (
+  <DropMenuItem {...props} />
 );

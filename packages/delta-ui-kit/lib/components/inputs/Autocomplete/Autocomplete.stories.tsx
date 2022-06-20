@@ -1,10 +1,9 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { useCallback, useMemo, useState } from 'react';
+import { useState } from 'react';
 import { compact } from '../../../../docs/decorators';
 import { Button } from '../../Button';
 import { Box } from '../../containers';
-``;
 import { Autocomplete } from './Autocomplete';
 import { AutocompleteOption } from './AutocompleteOption';
 
