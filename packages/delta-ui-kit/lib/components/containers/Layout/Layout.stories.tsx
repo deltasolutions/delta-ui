@@ -2,6 +2,7 @@ import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { MdOutlineSettings, MdOutlineSpaceDashboard } from 'react-icons/md';
 import { SiDeno } from 'react-icons/si';
+import { Heading } from '../Heading';
 import { Layout } from './Layout';
 import { LayoutMain } from './LayoutMain';
 import { LayoutMainBody } from './LayoutMainBody';
@@ -25,16 +26,22 @@ export const Basics = () => {
   return (
     <Layout>
       <LayoutSidebar>
-        <LayoutSidebarHeader>
+        <LayoutSidebarHeader
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: 2,
+          }}
+        >
           <SiDeno
             sx={{
-              width: '3.45rem',
-              height: '3.45rem',
+              width: '2rem',
+              height: '2rem',
               verticalAlign: 'middle',
-              mx: 'auto',
-              mt: 2,
             }}
           />
+          <Heading level={3}>Brand</Heading>
         </LayoutSidebarHeader>
         <LayoutSidebarBody>
           <LayoutNavigation activeId="0-1">

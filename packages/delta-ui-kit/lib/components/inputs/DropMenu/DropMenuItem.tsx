@@ -3,8 +3,7 @@ import { forwardRef, useContext, useMemo, useRef } from 'react';
 import { ImCheckmark } from 'react-icons/im';
 import { useDeltaTheme } from '../../../hooks';
 import { mergeRefs } from '../../../utils';
-import { ButtonProps } from '../../Button';
-import { Option } from '../../containers';
+import { Button, ButtonProps } from '../../Button';
 import { DropMenuContext } from './DropMenu';
 
 export interface DropMenuItemProps
@@ -28,13 +27,27 @@ export const DropMenuItem = forwardRef<HTMLButtonElement, DropMenuItemProps>(
     } = useDeltaTheme();
     const { setActiveIndex } = useContext(DropMenuContext);
     return (
-      <Option
+      <Button
         ref={mergedRef}
         style={{
           ...(active && {
             backgroundColor: accentContext,
             color: accentOnContext,
           }),
+        }}
+        sx={{
+          paddingX: 1,
+          paddingY: 1,
+          textAlign: 'left',
+          display: 'flex',
+          justifyContent: 'space-between',
+          borderRadius: '2px',
+          gap: 2,
+          fontSize: 2,
+          '&:focus, &:active, &:focus-visible': {
+            backgroundColor: 'accentContext',
+            color: 'onPrimary',
+          },
         }}
         tabIndex={-1}
         onClick={onClick}
@@ -44,7 +57,7 @@ export const DropMenuItem = forwardRef<HTMLButtonElement, DropMenuItemProps>(
       >
         {children}
         {selected && <ImCheckmark size={13} sx={{ color: 'primary' }} />}
-      </Option>
+      </Button>
     );
   }
 );
