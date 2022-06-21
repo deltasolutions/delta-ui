@@ -1,6 +1,5 @@
 import { jsx } from '@theme-ui/core';
 import { forwardRef, HTMLAttributes } from 'react';
-import { Box, BoxProps } from '../../containers';
 
 export interface TableBodyProps
   extends HTMLAttributes<HTMLTableSectionElement> {}

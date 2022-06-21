@@ -1,7 +1,6 @@
 import { jsx } from '@theme-ui/core';
-import { forwardRef, HTMLAttributes, ReactNode, useContext } from 'react';
+import { forwardRef, HTMLAttributes, ReactNode } from 'react';
 import { Box } from '../../containers';
-import { TableHeaderContext } from './TableHeader';
 
 export interface TableHeaderCellProps
   extends HTMLAttributes<HTMLTableCellElement> {

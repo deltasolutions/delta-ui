@@ -1,7 +1,6 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { Box } from '../containers';
-import { TextInput } from '../inputs';
 import { Loader } from './Loader';
 
 export default {

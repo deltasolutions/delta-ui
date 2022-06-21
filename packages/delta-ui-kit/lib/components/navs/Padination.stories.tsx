@@ -1,8 +1,6 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { useState } from 'react';
-import { Anchor } from '../Anchor';
-import { Heading } from '../containers';
 import { Pagination } from './Pagination';
 
 export default {

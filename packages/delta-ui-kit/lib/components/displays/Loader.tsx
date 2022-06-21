@@ -1,7 +1,6 @@
-import { keyframes, useTheme } from '@emotion/react';
+import { keyframes } from '@emotion/react';
 import { jsx } from '@theme-ui/core';
-import { forwardRef, HtmlHTMLAttributes, useMemo } from 'react';
-import { DeltaTheme } from '../../defaults';
+import { forwardRef, HtmlHTMLAttributes } from 'react';
 import { Box } from '../containers';
 
 export interface LoaderProps extends HtmlHTMLAttributes<HTMLDivElement> {

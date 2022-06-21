@@ -5,7 +5,6 @@ import { HiSearch } from 'react-icons/hi';
 import { compact } from '../../../../docs/decorators';
 import { Button } from '../../Button';
 import { Box, Card, CardBody, CardHeader, Heading } from '../../containers';
-import { Tooltip } from '../../Tooltip';
 import { Table } from './Table';
 import { TableBody } from './TableBody';
 import { TableBodyCell } from './TableBodyCell';

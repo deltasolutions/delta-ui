@@ -1,14 +1,12 @@
 import { jsx } from '@theme-ui/core';
-import { lighten } from 'polished';
 import {
   createContext,
   forwardRef,
   HTMLAttributes,
   useMemo,
-  useRef,
   useState,
 } from 'react';
-import { useDeltaTheme, useIsomorphicLayoutEffect } from '../../../hooks';
+import { useIsomorphicLayoutEffect } from '../../../hooks';
 import { mergeRefs } from '../../../utils';
 
 export const TableHeaderContext = createContext({
@@ -24,7 +22,6 @@ export const TableHeader = forwardRef<
   HTMLTableSectionElement,
   TableHeaderProps
 >(({ stickyOffset = 0, ...rest }, ref) => {
-  const { colors } = useDeltaTheme();
   const [element, setElement] = useState<HTMLTableSectionElement | null>(null);
   const mergedRef = useMemo(
     () => mergeRefs([ref, setElement]),
@@ -61,7 +58,7 @@ export const TableHeader = forwardRef<
           top: `${stickyOffset}px`,
           ...(sticked && {
             '& > tr > th': {
-              borderBottom: theme => `1px rgba(255,255,255,0.1) solid`,
+              borderBottom: '1px rgba(255,255,255,0.1) solid',
             },
           }),
           backgroundColor: 'accentContext',

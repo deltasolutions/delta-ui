@@ -1,15 +1,6 @@
 import { jsx } from '@theme-ui/core';
-import { Fragment, ReactNode, useCallback, useRef } from 'react';
-import {
-  BasicQuestion,
-  Button,
-  Question,
-  QuestionBody,
-  QuestionFooter,
-  QuestionHeader,
-  QuestionProps,
-} from '../components';
-import { Heading } from '../components/containers/Heading';
+import { ReactNode, useCallback, useRef } from 'react';
+import { BasicQuestion, Question, QuestionProps } from '../components';
 import { DialogOptions, DialogProps, useDialog } from './useDialog';
 
 export interface QuestionRendererProps<C>

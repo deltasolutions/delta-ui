@@ -1,13 +1,5 @@
 import { jsx } from '@theme-ui/core';
-import {
-  Children,
-  cloneElement,
-  createContext,
-  FC,
-  forwardRef,
-  HTMLAttributes,
-  ReactElement,
-} from 'react';
+import { Children, FC, forwardRef, HTMLAttributes, ReactElement } from 'react';
 import { Box } from '../../containers';
 import { TabContext } from './TabContext';
 import { TabOptionProps } from './TabOption';

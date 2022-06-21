@@ -2,7 +2,6 @@ import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { useState } from 'react';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-import { BiDollar } from 'react-icons/bi';
 import { MdOutlineMail } from 'react-icons/md';
 import { compact } from '../../../docs/decorators';
 import { Button } from '../Button';
