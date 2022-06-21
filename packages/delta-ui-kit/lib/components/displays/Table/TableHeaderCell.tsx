@@ -20,7 +20,7 @@ export const TableHeaderCell = forwardRef<
         position: 'relative',
         gap: 1,
         px: 2,
-        py: '0.75em',
+        py: '0.65em',
         width: 'auto',
         '&:first-of-type': { pl: 4 },
         '&:last-of-type': { pr: 4 },

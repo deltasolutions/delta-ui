@@ -14,7 +14,7 @@ export const TableBodyCell = forwardRef<
       ref={ref}
       role="cell"
       sx={{
-        py: 3,
+        py: '1.05em',
         px: 2,
         '&:first-of-type': { pl: 4 },
         '&:last-of-type': { pr: 4 },

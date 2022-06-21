@@ -59,10 +59,13 @@ export const TableHeader = forwardRef<
         sx={{
           position: 'sticky',
           top: `${stickyOffset}px`,
-          boxShadow: sticked ? 1 : 'none',
-          backgroundColor: sticked
-            ? lighten(0.05, colors.accentContext)
-            : 'accentContext',
+          ...(sticked && {
+            '& > tr > th': {
+              borderBottom: theme => `1px rgba(255,255,255,0.1) solid`,
+            },
+          }),
+          backgroundColor: 'accentContext',
+          borderBottom: '1px red solid',
           color: 'onContext',
           transition: 'background-color 0.1s linear, box-shadow 0.1s linear',
         }}
