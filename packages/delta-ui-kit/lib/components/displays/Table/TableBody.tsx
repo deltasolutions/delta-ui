@@ -8,7 +8,7 @@ export interface TableBodyProps
 export const TableBody = forwardRef<HTMLTableSectionElement, TableBodyProps>(
   ({ ...rest }, ref) => {
     return (
-      <tbody ref={ref} role="thead" sx={{ color: 'onContext' }} {...rest} />
+      <tbody ref={ref} role="tbody" sx={{ color: 'onContext' }} {...rest} />
     );
   }
 );

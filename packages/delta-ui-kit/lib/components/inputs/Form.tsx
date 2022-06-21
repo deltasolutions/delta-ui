@@ -16,44 +16,57 @@ import { TextInput } from './TextInput';
 export interface FormFieldProps extends Omit<BoxProps, 'children'> {
   name: string;
   label?: string;
+  required?: boolean;
   children?: ReactElement<FormWidgetProps>;
 }
 
 export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
-  ({ name, label, children, ...rest }, ref) => {
+  ({ name, label, children, required, ...rest }, ref) => {
     const { control } = useFormContext();
+    console.log(rest);
     return (
       <Box
         ref={ref}
         sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
         {...rest}
       >
-        {label && <Box sx={{ fontWeight: 600 }}>{label}</Box>}
+        {label && (
+          <Box sx={{ fontWeight: 600 }}>
+            {label} {required && <span>*</span>}
+          </Box>
+        )}
         <Controller
           control={control}
           name={name}
           render={({
             field: { onChange, onBlur, value },
             fieldState: { error },
-          }) => (
-            <Box>
-              {children ? (
-                cloneElement(children, {
-                  value,
-                  invalid: Boolean(error),
-                  onChange,
-                  onBlur,
-                })
-              ) : (
-                <TextInput value={value} onBlur={onBlur} onChange={onChange} />
-              )}
-              <Box sx={{ mt: 1 }}>
-                <span sx={{ color: 'error', fontSize: 1 }}>
-                  {error?.message}
-                </span>
+          }) => {
+            console.log();
+            return (
+              <Box>
+                {children ? (
+                  cloneElement(children, {
+                    value,
+                    invalid: Boolean(error),
+                    onChange,
+                    onBlur,
+                  })
+                ) : (
+                  <TextInput
+                    value={value}
+                    onBlur={onBlur}
+                    onChange={onChange}
+                  />
+                )}
+                <Box sx={{ mt: 1 }}>
+                  <span sx={{ color: 'error', fontSize: 1 }}>
+                    {error?.message}
+                  </span>
+                </Box>
               </Box>
-            </Box>
-          )}
+            );
+          }}
         />
       </Box>
     );

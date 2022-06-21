@@ -79,7 +79,6 @@ export const Controlled = () => {
     },
   });
   const { control, handleSubmit, register } = form;
-  const { errors } = useFormState({ control });
   return (
     <Form form={form} onSubmit={handleSubmit(v => alert(v))}>
       <FormField name="showInput">
@@ -87,14 +86,10 @@ export const Controlled = () => {
       </FormField>
       <FormGrid>
         <FormField
+          required
           label="Default Widget 1"
           {...register('defaultWidget1', {
-            validate: v => {
-              if (!v) {
-                return 'Error message';
-              }
-              return true;
-            },
+            required: 'this is required field',
           })}
         />
         <FormField
