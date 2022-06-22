@@ -7,14 +7,16 @@ export interface AccountProps extends AnchorProps {}
 
 export const Account = ({ children, ...rest }: AccountProps) => {
   return (
-    <Anchor variant="pure" {...rest}>
+    <Anchor
+      sx={{ backgroundColor: 'accentContext', borderRadius: '100vw' }}
+      variant="pure"
+      {...rest}
+    >
       <Box
         sx={{
           p: 1,
           display: 'flex',
           alignItems: 'center',
-          backgroundColor: 'accentContext',
-          borderRadius: '100vw',
         }}
       >
         <FaUserCircle

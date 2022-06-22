@@ -18,85 +18,52 @@ export default {
   decorators: [compact('1000px')],
 } as Meta;
 
-const StoryTable = () => (
-  <Table>
-    <TableHeader>
-      <TableHeaderRow>
-        <TableHeaderCell sx={{ width: '300px' }}>
-          <span>Id</span>
-        </TableHeaderCell>
-        <TableHeaderCell>
-          <span>Имя</span>
-        </TableHeaderCell>
-        <TableHeaderCell>
-          <span>lorem</span>
-          <Button sx={{ borderRadius: '100%' }}>
-            <FiChevronDown />
-          </Button>
-        </TableHeaderCell>
-        <TableHeaderCell>
-          <span>Id</span>
-        </TableHeaderCell>
-        <TableHeaderCell>
-          <span>Id</span>
-        </TableHeaderCell>
-        <TableHeaderCell>
-          <span>Id</span>
-        </TableHeaderCell>
-      </TableHeaderRow>
-    </TableHeader>
-    <TableBody>
-      {new Array(30).fill(undefined).map((_, index) => (
-        <TableBodyRow key={index}>
-          <TableBodyCell>
-            <span
-              sx={{
-                display: 'block',
-                overflow: 'hidden',
-                whiteSpace: 'nowrap',
-                textOverflow: 'ellipsis',
-              }}
-            >
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem
-              ipsum dolor sit amet consectetur adipisicing elit. Velit ullam
-              reprehenderit consequuntur, commodi non perferendis odit, quas
-              voluptas aspernatur labore suscipit iure? Optio veritatis
-              dignissimos fuga eum. Mollitia, quos quae!
-            </span>
-          </TableBodyCell>
-          <TableBodyCell>3</TableBodyCell>
-          <TableBodyCell>1-3</TableBodyCell>
-          <TableBodyCell>1-3</TableBodyCell>
-          <TableBodyCell>1-3</TableBodyCell>
-          <TableBodyCell>1-3</TableBodyCell>
-        </TableBodyRow>
-      ))}
-    </TableBody>
-  </Table>
-);
+export const Basics = ({ stickyOffset = 0 }) => {
+  return (
+    <Table>
+      <TableHeader stickyOffset={stickyOffset}>
+        <TableHeaderRow>
+          <TableHeaderCell sx={{ width: '300px' }}>
+            <span>Id</span>
+          </TableHeaderCell>
+          <TableHeaderCell>
+            <span>Name</span>
+            <Button sx={{ borderRadius: '100%' }}>
+              <FiChevronDown />
+            </Button>
+          </TableHeaderCell>
+          <TableHeaderCell>
+            <span>Description</span>
+          </TableHeaderCell>
+        </TableHeaderRow>
+      </TableHeader>
+      <TableBody>
+        {new Array(30).fill(undefined).map((_, index) => (
+          <TableBodyRow key={index}>
+            <TableBodyCell>{crypto.randomUUID()}</TableBodyCell>
+            <TableBodyCell>Name {index}</TableBodyCell>
+            <TableBodyCell>Description {index}</TableBodyCell>
+          </TableBodyRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
+};
 
-export const Basics = () => {
+export const InCard = ({ stickyOffset = 0 }) => {
   return (
-    <Box sx={{ my: '100px' }}>
-      <StoryTable />
-    </Box>
+    <Card>
+      <CardHeader>
+        <Heading level={3}>Devices</Heading>
+        <Controls />
+      </CardHeader>
+      <CardBody variant="table">
+        <Basics stickyOffset={stickyOffset} />
+      </CardBody>
+    </Card>
   );
 };
-export const InCard = () => {
-  return (
-    <Box sx={{ my: '100px' }}>
-      <Card>
-        <CardHeader>
-          <Heading level={3}>Devices</Heading>
-          <Controls />
-        </CardHeader>
-        <CardBody variant="table">
-          <StoryTable />
-        </CardBody>
-      </Card>
-    </Box>
-  );
-};
+
 const Controls = () => {
   return (
     <Box

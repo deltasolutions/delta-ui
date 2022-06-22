@@ -1,6 +1,9 @@
 import { jsx } from '@theme-ui/core';
-import { forwardRef, HTMLAttributes, ReactNode } from 'react';
+import { transparentize } from 'polished';
+import { forwardRef, HTMLAttributes, ReactNode, useContext } from 'react';
+import { useDeltaTheme } from '../../../hooks';
 import { Box } from '../../containers';
+import { TableHeaderContext } from './TableHeader';
 
 export interface TableHeaderCellProps
   extends HTMLAttributes<HTMLTableCellElement> {
@@ -11,6 +14,8 @@ export const TableHeaderCell = forwardRef<
   HTMLTableCellElement,
   TableHeaderCellProps
 >(({ children, ...rest }, ref) => {
+  const { colors } = useDeltaTheme();
+  const { sticked } = useContext(TableHeaderContext);
   return (
     <th
       ref={ref}
@@ -21,6 +26,8 @@ export const TableHeaderCell = forwardRef<
         px: 2,
         py: '0.65em',
         width: 'auto',
+        borderBottom: sticked ? '1px solid' : undefined,
+        borderBottomColor: transparentize(0.8, colors.onContext),
         '&:first-of-type': { pl: 4 },
         '&:last-of-type': { pr: 4 },
       }}

@@ -5,8 +5,8 @@ const baseColors = {
   warning: '#ffa42b',
   success: '#1cb454',
   error: '#cc2222',
-  background: '#161616',
-  surface: '#212121',
+  background: '#111111',
+  surface: 'rgba(255, 255, 255, 0.03)',
   exterior: '#030303',
   contrast: '#fafafa',
 
@@ -16,8 +16,8 @@ const baseColors = {
   accentWarning: '#e39022',
   accentSuccess: '#149b45',
   accentError: '#ae2222',
-  accentBackground: 'rgb(30 30 30)',
-  accentSurface: 'rgb(40 40 40)',
+  accentBackground: '#202020',
+  accentSurface: 'rgba(255, 255, 255, 0.025)',
   accentExterior: '#1d1d1d',
   accentContrast: '#e1e0e0',
 

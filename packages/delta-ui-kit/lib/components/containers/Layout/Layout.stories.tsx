@@ -1,12 +1,26 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
+import { ImHome } from 'react-icons/im';
 import { MdOutlineSettings, MdOutlineSpaceDashboard } from 'react-icons/md';
 import { SiDeno } from 'react-icons/si';
+import { Account } from '../../Account';
+import { Anchor } from '../../Anchor';
+import { Button } from '../../Button';
+import { InCard } from '../../displays/Table/Table.stories';
+import {
+  Breadcrumbs,
+  BreadcrumbsHome,
+  BreadcrumbsItem,
+  TabGroup,
+  TabOption,
+} from '../../navs';
+import { Box } from '../Box';
 import { Heading } from '../Heading';
 import { Layout } from './Layout';
 import { LayoutMain } from './LayoutMain';
 import { LayoutMainBody } from './LayoutMainBody';
 import { LayoutMainHeader } from './LayoutMainHeader';
+import { LayoutMainNavbar, layoutMainNavbarHeight } from './LayoutMainNavbar';
 import {
   LayoutNavigation,
   LayoutNavigationGroup,
@@ -64,9 +78,75 @@ export const Basics = () => {
         </LayoutSidebarBody>
       </LayoutSidebar>
       <LayoutMain>
-        <LayoutMainHeader>header</LayoutMainHeader>
-        <LayoutMainBody>
-          <div sx={{ height: '3000px' }}></div>
+        <LayoutMainNavbar>
+          {sticked => {
+            return (
+              <Box
+                sx={{
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  gap: 4,
+                }}
+              >
+                <Breadcrumbs
+                  sx={{
+                    backgroundColor: sticked ? 'transparent' : undefined,
+                    transition: 'background-color 0.15s linear',
+                  }}
+                >
+                  <BreadcrumbsHome />
+                  <BreadcrumbsItem>Datacenters</BreadcrumbsItem>
+                  <BreadcrumbsItem>Datacenter 1</BreadcrumbsItem>
+                </Breadcrumbs>
+                <Account
+                  sx={{
+                    backgroundColor: sticked ? 'transparent' : undefined,
+                    transition: 'background-color 0.15s linear',
+                  }}
+                >
+                  root
+                </Account>
+              </Box>
+            );
+          }}
+        </LayoutMainNavbar>
+        <LayoutMainHeader
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: 4,
+          }}
+        >
+          <Heading level={1}>Datacenter 1</Heading>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Button zoomable color="secondary" variant="outlined">
+              Edit
+            </Button>
+            <Button zoomable color="error" variant="outlined">
+              Delete
+            </Button>
+          </Box>
+        </LayoutMainHeader>
+        <LayoutMainBody variant="tabs">
+          <TabGroup activeId="3">
+            <TabOption id="1" variant="layout">
+              Overview
+            </TabOption>
+            <TabOption id="2" variant="layout">
+              Rooms
+            </TabOption>
+            <TabOption id="3" variant="layout">
+              Devices
+            </TabOption>
+          </TabGroup>
+        </LayoutMainBody>
+        <LayoutMainBody sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Box sx={{ width: '100%', maxWidth: '900px' }}>
+            <InCard stickyOffset={layoutMainNavbarHeight} />
+          </Box>
         </LayoutMainBody>
       </LayoutMain>
     </Layout>

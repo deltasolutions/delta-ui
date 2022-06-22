@@ -1,0 +1,54 @@
+import { jsx, ThemeProvider } from '@theme-ui/core';
+import { forwardRef, ReactNode, useMemo } from 'react';
+import { useDeltaTheme, useSticked } from '../../../hooks';
+import { mergeRefs } from '../../../utils';
+import { Box, BoxProps } from '../Box';
+
+export const layoutMainNavbarHeight = 52;
+
+export interface LayoutMainNavbarProps extends Omit<BoxProps, 'children'> {
+  children?: ReactNode | ((ratio: boolean) => ReactNode);
+}
+
+export const LayoutMainNavbar = forwardRef<
+  HTMLDivElement,
+  LayoutMainNavbarProps
+>(({ children, ...rest }: LayoutMainNavbarProps, ref) => {
+  const theme = useDeltaTheme({
+    colors: {
+      context: 'exterior',
+      accentContext: 'accentExterior',
+      onContext: 'onExterior',
+      accentOnContext: 'accentOnExterior',
+    },
+  });
+  const [sticked, setElement] = useSticked();
+  const mergedRef = useMemo(
+    () => mergeRefs([ref, setElement]),
+    [ref, setElement]
+  );
+  return (
+    <ThemeProvider theme={theme}>
+      <Box
+        ref={mergedRef}
+        sx={{
+          mt: 3,
+          position: 'sticky',
+          top: 0,
+          zIndex: 2,
+          width: '100%',
+          height: `${layoutMainNavbarHeight}px`,
+          paddingX: 5,
+          display: 'flex',
+          alignItems: 'center',
+          backgroundColor: sticked ? 'exterior' : 'transparent',
+          color: 'onContext',
+          transition: 'background-color 0.15s linear',
+        }}
+        {...rest}
+      >
+        {children instanceof Function ? children(sticked) : children}
+      </Box>
+    </ThemeProvider>
+  );
+});

@@ -26,6 +26,7 @@ export const TabGroup: FC<TabGroupProps> = forwardRef<
             listStyle: 'none',
             position: 'relative',
             display: 'inline-flex',
+            gap: 2,
           }}
           {...rest}
         >

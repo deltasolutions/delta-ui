@@ -13,6 +13,7 @@ export * from './useOperation';
 export * from './usePortalled';
 export * from './usePortalledTransition';
 export * from './useQuestion';
+export * from './useSticked';
 export * from './useThrottledCallback';
 export * from './useTransition';
 export * from './useUpdateEffect';

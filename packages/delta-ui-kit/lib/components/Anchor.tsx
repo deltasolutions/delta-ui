@@ -16,6 +16,7 @@ export const Anchor = forwardRef<HTMLAnchorElement, AnchorProps>(
           cursor: 'pointer',
           color: 'inherit',
           fontSize: 'inherit',
+          fontFamily: 'inherit',
           fontWeight: 'inherit',
           whiteSpace: 'inherit',
           borderRadius: 2,
