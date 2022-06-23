@@ -32,7 +32,7 @@ export const Basics = () => {
             sx={{
               borderRadius: '100%',
               '&:hover, &:active, &:focus-visible': {
-                color: 'accentOnSurface',
+                color: 'accentOnContext',
               },
             }}
             onClick={() => setShown(prev => !prev)}

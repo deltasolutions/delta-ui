@@ -79,9 +79,9 @@ export const Tooltip = ({
           sx={{
             padding: 2,
             borderRadius: 3,
-            backgroundColor: 'accentSurface',
+            backgroundColor: 'accentMundane',
             boxShadow: 1,
-            color: 'accentOnSurface',
+            color: 'accentOnMundane',
             fontSize: 2,
             fontWeight: 400,
             animation: `${appear} 0.1s cubic-bezier(0.250, 0.460, 0.450, 0.940)`,

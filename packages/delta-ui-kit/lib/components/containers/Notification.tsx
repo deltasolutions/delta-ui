@@ -50,9 +50,12 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
           transform: `translateX(${
             isVisible ? '0, 0' : isEntering ? '3rem' : '3rem'
           })`,
-          transition: ['opacity 0.2s linear', 'transform 0.2s linear'].join(
-            ', '
-          ),
+          transition: [
+            'opacity 0.2s linear',
+            'transform 0.2s linear',
+            'top 0.2s ease-out',
+            'bottom 0.2s ease-out',
+          ].join(', '),
         }}
         {...rest}
       >

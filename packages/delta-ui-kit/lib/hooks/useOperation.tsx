@@ -73,7 +73,6 @@ export const useOperation = <OperationInput, OperationOutput>(
             ? (notification as NotificationOptions)
             : {
                 color: isOk ? 'success' : 'error',
-                // placeholder: 'topRight',
                 duration: 5000,
                 render: () => notification as ReactNode,
               }
@@ -85,7 +84,7 @@ export const useOperation = <OperationInput, OperationOutput>(
           isPlainObject(alert)
             ? alert
             : {
-                color: isOk ? 'success' : 'error',
+                color: isOk ? 'info' : 'error',
                 children: alert,
               }
         ) as AlertProps;

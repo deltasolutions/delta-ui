@@ -99,7 +99,7 @@ export const PairList = forwardRef<HTMLDivElement, PairListProps>(
               <tr key={key}>
                 <td
                   aria-label="key"
-                  sx={{ color: 'accentOnSurface', fontWeight: 600 }}
+                  sx={{ color: 'accentOnContext', fontWeight: 600 }}
                 >
                   {key}
                 </td>

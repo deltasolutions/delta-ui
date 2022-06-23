@@ -53,12 +53,12 @@ const useVariantStyle = (variant: ChipProps['variant']) => {
       backgroundColor: 'onContrast',
       '& > div[role=contentinfo]': {
         ...contentStyle,
-        color: 'onSurface',
+        color: 'onContext',
       },
       '& > button[role=button]': {
         ...buttonStyle,
         '&:hover, &:active, &:focus-visible': {
-          color: 'accentOnSurface',
+          color: 'accentOnContext',
         },
       },
     },
@@ -69,12 +69,12 @@ const useVariantStyle = (variant: ChipProps['variant']) => {
       borderColor: 'border',
       '& > div[role=contentinfo]': {
         ...contentStyle,
-        color: 'onSurface',
+        color: 'onContext',
       },
       '& > button[role=button]': {
         ...buttonStyle,
         '&:hover, &:active, &:focus-visible': {
-          color: 'accentOnSurface',
+          color: 'accentOnContext',
         },
       },
     },

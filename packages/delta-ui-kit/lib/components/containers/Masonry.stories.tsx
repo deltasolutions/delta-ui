@@ -29,8 +29,8 @@ export const Basics = () => {
       <Box
         sx={{
           height: `${height}px`,
-          backgroundColor: 'accentSurface',
-          color: 'onSurface',
+          backgroundColor: 'mundane',
+          color: 'onMundane',
         }}
       >
         <Box>#{index}</Box>
