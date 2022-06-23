@@ -1,5 +1,6 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
+import { ReactNode } from 'react';
 import { useForm } from 'react-hook-form';
 import { compact } from '../../../docs/decorators';
 import { useModal } from '../../hooks';
@@ -18,7 +19,13 @@ export default {
   decorators: [compact('300px')],
 } as Meta;
 
-export const Basics = () => {
+export const Basics = ({
+  submitter = (
+    <Button sx={{ mt: 4 }} type="submit" variant="contained">
+      Submit
+    </Button>
+  ) as ReactNode,
+}) => {
   const openModal = useModal<unknown>(
     ({ context }) => {
       return (
@@ -60,9 +67,7 @@ export const Basics = () => {
           <TextArea />
         </FormField>
       </FormGrid>
-      <Button sx={{ mt: 4 }} type="submit" variant="contained">
-        Submit
-      </Button>
+      {submitter}
     </Form>
   );
 };

@@ -15,6 +15,7 @@ export const LayoutMainBody = ({ variant, ...rest }: LayoutMainBodyProps) => {
         ...(variant === 'tabs'
           ? {}
           : {
+              flex: '1 1 auto',
               paddingY: 5,
               background:
                 `linear-gradient(` +

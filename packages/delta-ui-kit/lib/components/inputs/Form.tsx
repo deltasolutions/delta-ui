@@ -123,9 +123,8 @@ export const FormGrid = forwardRef<HTMLDivElement, FormGridProps>(
         ref={ref}
         style={style}
         sx={{
-          display: 'grid',
-          transition: 'all 3s ease',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+          display: 'flex',
+          flexDirection: 'column',
           gap: 4,
         }}
         {...rest}

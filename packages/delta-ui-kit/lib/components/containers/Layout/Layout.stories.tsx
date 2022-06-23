@@ -6,7 +6,8 @@ import { SiDeno } from 'react-icons/si';
 import { useModal } from '../../../hooks';
 import { Account } from '../../Account';
 import { Button } from '../../Button';
-import { InCard } from '../../displays/Table/Table.stories';
+import { InCard as TableStory } from '../../displays/Table/Table.stories';
+import { Basics as FormStory } from '../../inputs/Form.stories';
 import {
   Breadcrumbs,
   BreadcrumbsHome,
@@ -15,6 +16,7 @@ import {
   TabOption,
 } from '../../navs';
 import { Box } from '../Box';
+import { Card, CardBody } from '../Card';
 import { Heading } from '../Heading';
 import { ModalBody, ModalHeader } from '../Modal';
 import { Layout } from './Layout';
@@ -134,7 +136,7 @@ export const Resource = () => {
         </LayoutMainBody>
         <LayoutMainBody sx={{ display: 'flex', justifyContent: 'center' }}>
           <Box sx={{ width: '100%', maxWidth: '900px' }}>
-            <InCard stickyOffset={layoutMainNavbarHeight} />
+            <TableStory stickyOffset={layoutMainNavbarHeight} />
           </Box>
         </LayoutMainBody>
       </LayoutMain>
@@ -177,7 +179,7 @@ export const Collection = () => {
         </LayoutMainHeader>
         <LayoutMainBody sx={{ display: 'flex', justifyContent: 'center' }}>
           <Box sx={{ width: '100%', maxWidth: '900px' }}>
-            <InCard
+            <TableStory
               heading={
                 <TabGroup activeId="1">
                   <TabOption id="1" variant="chip">
@@ -190,6 +192,42 @@ export const Collection = () => {
               }
               stickyOffset={layoutMainNavbarHeight}
             />
+          </Box>
+        </LayoutMainBody>
+      </LayoutMain>
+    </Layout>
+  );
+};
+
+export const Form = () => {
+  return (
+    <Layout>
+      {sidebar}
+      <LayoutMain>
+        {navbar([
+          <BreadcrumbsHome />,
+          <BreadcrumbsItem>Devices</BreadcrumbsItem>,
+          <BreadcrumbsItem>Device 1</BreadcrumbsItem>,
+          <BreadcrumbsItem>Edit</BreadcrumbsItem>,
+        ])}
+        <LayoutMainHeader>
+          <Heading level={1}>Edit Device 1</Heading>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Button zoomable color="secondary" variant="outlined">
+              Cancel
+            </Button>
+            <Button zoomable color="success" variant="outlined">
+              Save
+            </Button>
+          </Box>
+        </LayoutMainHeader>
+        <LayoutMainBody sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Box sx={{ width: '100%', maxWidth: '500px' }}>
+            <Card>
+              <CardBody>
+                <FormStory submitter={null} />
+              </CardBody>
+            </Card>
           </Box>
         </LayoutMainBody>
       </LayoutMain>

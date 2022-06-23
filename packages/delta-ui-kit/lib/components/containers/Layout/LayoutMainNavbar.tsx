@@ -33,10 +33,11 @@ export const LayoutMainNavbar = forwardRef<
         ref={mergedRef}
         sx={{
           mt: 3,
-          position: 'sticky',
-          top: 0,
           zIndex: 2,
           width: '100%',
+          position: 'sticky',
+          top: 0,
+          flex: '0 0 auto',
           height: `${layoutMainNavbarHeight}px`,
           paddingX: 5,
           display: 'flex',
