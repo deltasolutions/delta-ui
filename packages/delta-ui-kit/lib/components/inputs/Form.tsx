@@ -52,11 +52,13 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
               ) : (
                 <TextInput value={value} onBlur={onBlur} onChange={onChange} />
               )}
-              <Box sx={{ mt: 1 }}>
-                <span sx={{ color: 'error', fontSize: 1 }}>
-                  {error?.message}
-                </span>
-              </Box>
+              {error?.message && (
+                <Box sx={{ mt: 1 }}>
+                  <span sx={{ color: 'error', fontSize: 1 }}>
+                    {error?.message}
+                  </span>
+                </Box>
+              )}
             </Box>
           )}
         />

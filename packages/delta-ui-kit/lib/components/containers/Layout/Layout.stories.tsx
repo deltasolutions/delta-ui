@@ -117,9 +117,9 @@ export const Resource = () => {
       {sidebar}
       <LayoutMain>
         {navbar([
-          <BreadcrumbsHome />,
-          <BreadcrumbsItem>Datacenters</BreadcrumbsItem>,
-          <BreadcrumbsItem>Datacenter 1</BreadcrumbsItem>,
+          <BreadcrumbsHome key="1" />,
+          <BreadcrumbsItem key="2">Datacenters</BreadcrumbsItem>,
+          <BreadcrumbsItem key="3">Datacenter 1</BreadcrumbsItem>,
         ])}
         <LayoutMainHeader>
           <Heading level={1}>Datacenter 1</Heading>
@@ -174,8 +174,8 @@ export const Collection = () => {
       {sidebar}
       <LayoutMain>
         {navbar([
-          <BreadcrumbsHome />,
-          <BreadcrumbsItem>Devices</BreadcrumbsItem>,
+          <BreadcrumbsHome key="1" />,
+          <BreadcrumbsItem key="2">Devices</BreadcrumbsItem>,
         ])}
         <LayoutMainHeader>
           <Heading level={1}>Devices</Heading>
@@ -220,10 +220,10 @@ export const Form = () => {
       {sidebar}
       <LayoutMain>
         {navbar([
-          <BreadcrumbsHome />,
-          <BreadcrumbsItem>Devices</BreadcrumbsItem>,
-          <BreadcrumbsItem>Device 1</BreadcrumbsItem>,
-          <BreadcrumbsItem>Edit</BreadcrumbsItem>,
+          <BreadcrumbsHome key="1" />,
+          <BreadcrumbsItem key="2">Devices</BreadcrumbsItem>,
+          <BreadcrumbsItem key="3">Device 1</BreadcrumbsItem>,
+          <BreadcrumbsItem key="4">Edit</BreadcrumbsItem>,
         ])}
         <LayoutMainHeader>
           <Heading level={1}>Edit Device 1</Heading>
