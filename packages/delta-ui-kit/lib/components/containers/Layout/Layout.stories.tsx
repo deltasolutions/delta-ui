@@ -5,6 +5,7 @@ import { MdOutlineSettings, MdOutlineSpaceDashboard } from 'react-icons/md';
 import { SiDeno } from 'react-icons/si';
 import { useModal } from '../../../hooks';
 import { Account } from '../../Account';
+import { Anchor } from '../../Anchor';
 import { Button } from '../../Button';
 import { InCard as TableStory } from '../../displays/Table/Table.stories';
 import { Basics as FormStory } from '../../inputs/Form.stories';
@@ -22,6 +23,7 @@ import { ModalBody, ModalHeader } from '../Modal';
 import { Layout } from './Layout';
 import { LayoutMain } from './LayoutMain';
 import { LayoutMainBody } from './LayoutMainBody';
+import { LayoutMainFooter } from './LayoutMainFooter';
 import { LayoutMainHeader } from './LayoutMainHeader';
 import { LayoutMainNavbar, layoutMainNavbarHeight } from './LayoutMainNavbar';
 import {
@@ -100,6 +102,15 @@ const navbar = (breadcrumbsItems = null as ReactNode) => (
   </LayoutMainNavbar>
 );
 
+const footer = (
+  <LayoutMainFooter>
+    <Anchor href="https://deltasolutions.ru" variant="pure">
+      DELTA Solutions
+    </Anchor>
+    <Anchor variant="pure">© 2022</Anchor>
+  </LayoutMainFooter>
+);
+
 export const Resource = () => {
   return (
     <Layout>
@@ -139,6 +150,7 @@ export const Resource = () => {
             <TableStory stickyOffset={layoutMainNavbarHeight} />
           </Box>
         </LayoutMainBody>
+        {footer}
       </LayoutMain>
     </Layout>
   );
@@ -194,6 +206,7 @@ export const Collection = () => {
             />
           </Box>
         </LayoutMainBody>
+        {footer}
       </LayoutMain>
     </Layout>
   );
@@ -230,6 +243,7 @@ export const Form = () => {
             </Card>
           </Box>
         </LayoutMainBody>
+        {footer}
       </LayoutMain>
     </Layout>
   );

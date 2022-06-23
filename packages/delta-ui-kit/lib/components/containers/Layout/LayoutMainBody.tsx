@@ -21,7 +21,7 @@ export const LayoutMainBody = ({ variant, ...rest }: LayoutMainBodyProps) => {
                 `linear-gradient(` +
                 `${colors.accentBackground} 0, ` +
                 `transparent 270px` +
-                `), ${noise}`,
+                `), ${layoutMainNoise}`,
             }),
       }}
       {...rest}
@@ -29,7 +29,7 @@ export const LayoutMainBody = ({ variant, ...rest }: LayoutMainBodyProps) => {
   );
 };
 
-const noise =
+export const layoutMainNoise =
   `url(data:image/svg+xml;base64,` +
   `PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv` +
   `MjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0i` +
