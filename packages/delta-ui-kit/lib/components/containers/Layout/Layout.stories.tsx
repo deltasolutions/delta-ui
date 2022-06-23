@@ -145,10 +145,11 @@ export const Resource = () => {
             </TabOption>
           </TabGroup>
         </LayoutMainBody>
-        <LayoutMainBody sx={{ display: 'flex', justifyContent: 'center' }}>
-          <Box sx={{ width: '100%', maxWidth: '900px' }}>
-            <TableStory stickyOffset={layoutMainNavbarHeight} />
-          </Box>
+        <LayoutMainBody
+          size="medium"
+          sx={{ display: 'flex', justifyContent: 'center' }}
+        >
+          <TableStory stickyOffset={layoutMainNavbarHeight} />
         </LayoutMainBody>
         {footer}
       </LayoutMain>
@@ -189,22 +190,23 @@ export const Collection = () => {
             </Button>
           </Box>
         </LayoutMainHeader>
-        <LayoutMainBody sx={{ display: 'flex', justifyContent: 'center' }}>
-          <Box sx={{ width: '100%', maxWidth: '900px' }}>
-            <TableStory
-              heading={
-                <TabGroup activeId="1">
-                  <TabOption id="1" variant="chip">
-                    All
-                  </TabOption>
-                  <TabOption id="2" variant="chip">
-                    Found
-                  </TabOption>
-                </TabGroup>
-              }
-              stickyOffset={layoutMainNavbarHeight}
-            />
-          </Box>
+        <LayoutMainBody
+          size="medium"
+          sx={{ display: 'flex', justifyContent: 'center' }}
+        >
+          <TableStory
+            heading={
+              <TabGroup activeId="1">
+                <TabOption id="1" variant="chip">
+                  All
+                </TabOption>
+                <TabOption id="2" variant="chip">
+                  Found
+                </TabOption>
+              </TabGroup>
+            }
+            stickyOffset={layoutMainNavbarHeight}
+          />
         </LayoutMainBody>
         {footer}
       </LayoutMain>
@@ -234,14 +236,15 @@ export const Form = () => {
             </Button>
           </Box>
         </LayoutMainHeader>
-        <LayoutMainBody sx={{ display: 'flex', justifyContent: 'center' }}>
-          <Box sx={{ width: '100%', maxWidth: '500px' }}>
-            <Card>
-              <CardBody>
-                <FormStory submitter={null} />
-              </CardBody>
-            </Card>
-          </Box>
+        <LayoutMainBody
+          size="small"
+          sx={{ display: 'flex', justifyContent: 'center' }}
+        >
+          <Card>
+            <CardBody>
+              <FormStory submitter={null} />
+            </CardBody>
+          </Card>
         </LayoutMainBody>
         {footer}
       </LayoutMain>

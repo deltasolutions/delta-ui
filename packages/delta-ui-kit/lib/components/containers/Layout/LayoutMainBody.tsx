@@ -4,9 +4,15 @@ import { Box, BoxProps } from '../Box';
 
 export interface LayoutMainBodyProps extends BoxProps {
   variant?: 'tabs';
+  size?: 'small' | 'medium' | 'large';
 }
 
-export const LayoutMainBody = ({ variant, ...rest }: LayoutMainBodyProps) => {
+export const LayoutMainBody = ({
+  variant,
+  size,
+  children,
+  ...rest
+}: LayoutMainBodyProps) => {
   const { colors } = useDeltaTheme();
   return (
     <Box
@@ -17,6 +23,8 @@ export const LayoutMainBody = ({ variant, ...rest }: LayoutMainBodyProps) => {
           : {
               flex: '1 1 auto',
               paddingY: 5,
+              display: 'flex',
+              justifyContent: 'center',
               background:
                 `linear-gradient(` +
                 `${colors.accentBackground} 0, ` +
@@ -25,7 +33,20 @@ export const LayoutMainBody = ({ variant, ...rest }: LayoutMainBodyProps) => {
             }),
       }}
       {...rest}
-    />
+    >
+      <Box
+        sx={{
+          width: '100%',
+          maxWidth: {
+            small: '500px',
+            medium: '900px',
+            large: '1280px',
+          }[size ?? ''],
+        }}
+      >
+        {children}
+      </Box>
+    </Box>
   );
 };
 
