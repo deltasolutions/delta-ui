@@ -18,8 +18,8 @@ const baseColors = {
   accentSuccess: '#149b45',
   accentError: '#ae2222',
   accentBackground: '#202020',
-  accentMundane: 'rgba(255, 255, 255, 0.025)',
-  accentCelestial: '#272727',
+  accentMundane: 'rgba(255, 255, 255, 0.05)',
+  accentCelestial: '#2a2a2a',
   accentContrast: '#e1e0e0',
   accentExterior: '#1d1d1d',
 

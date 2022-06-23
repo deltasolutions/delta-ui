@@ -1,5 +1,5 @@
 import { jsx } from '@theme-ui/core';
-import { rgba } from 'polished';
+import { invert, rgba, saturate } from 'polished';
 import { forwardRef, useCallback, useContext } from 'react';
 import { useDeltaTheme } from '../../../hooks';
 import { Anchor, AnchorProps } from '../../Anchor';
@@ -61,21 +61,20 @@ export const TabOption = forwardRef<HTMLAnchorElement, TabOptionProps>(
             chip: {
               display: 'block',
               fontSize: 2,
-              padding: '8px 12px',
+              padding: ['0.5rem 0.75rem'],
               borderRadius: 5,
               ...(active
                 ? {
                     backgroundColor: 'accentOnContext',
-                    color: '#000000',
-                    '&:hover, &:focus-visible, &:active': {
-                      color: '#000000',
+                    '&, &:hover, &:active, &:focus-visible': {
+                      color: invert(colors.accentOnContext),
                     },
                   }
                 : {
-                    backgroundColor: 'rgba(255, 255, 255, 0.07)',
-                    color: 'accentOnContext',
+                    backgroundColor: 'accentContext',
+                    color: 'onContext',
                     '&:hover, &:active, &:focus-visible': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.09)',
+                      color: 'accentOnContext',
                     },
                   }),
             },
