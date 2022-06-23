@@ -8,10 +8,10 @@ export interface CardProps extends BoxProps {}
 export const Card = forwardRef<HTMLDivElement, CardProps>((props, ref) => {
   const theme = useDeltaTheme({
     colors: {
-      context: 'surface',
-      accentContext: 'accentSurface',
-      onContext: 'onSurface',
-      accentOnContext: 'accentOnSurface',
+      context: 'mundane',
+      accentContext: 'accentMundane',
+      onContext: 'onMundane',
+      accentOnContext: 'accentOnMundane',
     },
   });
   return (

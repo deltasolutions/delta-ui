@@ -6,9 +6,10 @@ const baseColors = {
   success: '#1cb454',
   error: '#cc2222',
   background: '#111111',
-  surface: 'rgba(255, 255, 255, 0.03)',
-  exterior: '#030303',
+  mundane: 'rgba(255, 255, 255, 0.03)',
+  celestial: '#1e1e1e',
   contrast: '#fafafa',
+  exterior: '#030303',
 
   accentPrimary: '#1daa4e',
   accentSecondary: '#e5e5e5',
@@ -17,9 +18,10 @@ const baseColors = {
   accentSuccess: '#149b45',
   accentError: '#ae2222',
   accentBackground: '#202020',
-  accentSurface: 'rgba(255, 255, 255, 0.025)',
-  accentExterior: '#1d1d1d',
+  accentMundane: 'rgba(255, 255, 255, 0.025)',
+  accentCelestial: '#272727',
   accentContrast: '#e1e0e0',
+  accentExterior: '#1d1d1d',
 
   onPrimary: '#ffffff',
   onSecondary: '#2c2c2c',
@@ -28,9 +30,10 @@ const baseColors = {
   onWarning: '#000000',
   onError: '#ffffff',
   onBackground: '#b6b6b6',
-  onSurface: '#d3d1d1',
-  onExterior: '#aaaaaa',
+  onMundane: '#d3d1d1',
+  onCelestial: '#d3d1d1',
   onContrast: '#282828',
+  onExterior: '#aaaaaa',
 
   accentOnPrimary: '#ffffff',
   accentOnSecondary: '#000000',
@@ -39,9 +42,10 @@ const baseColors = {
   accentOnWarning: '#ffffff',
   accentOnError: '#ffffff',
   accentOnBackground: '#e9e9e9',
-  accentOnSurface: '#f5f3f3',
-  accentOnExterior: '#ffffff',
+  accentOnMundane: '#f5f3f3',
+  accentOnCelestial: '#f5f3f3',
   accentOnContrast: '#282828',
+  accentOnExterior: '#ffffff',
 };
 
 export const deltaTheme = {

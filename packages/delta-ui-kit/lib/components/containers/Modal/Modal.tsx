@@ -12,10 +12,10 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
   ({ variant, size = 'medium', ...rest }, ref) => {
     const theme = useDeltaTheme({
       colors: {
-        context: 'surface',
-        accentContext: 'accentSurface',
-        onContext: 'onSurface',
-        accentOnContext: 'accentOnSurface',
+        context: 'celestial',
+        accentContext: 'accentCelestial',
+        onContext: 'onCelestial',
+        accentOnContext: 'accentOnCelestial',
       },
     });
     return (
