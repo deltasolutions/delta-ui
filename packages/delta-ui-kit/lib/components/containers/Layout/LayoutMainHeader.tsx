@@ -10,6 +10,10 @@ export const LayoutMainHeader = (props: LayoutMainHeaderProps) => {
         paddingX: 5,
         paddingTop: 3,
         paddingBottom: 4,
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        gap: 4,
       }}
       {...props}
     />

@@ -14,7 +14,7 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          gap: 2,
+          gap: 3,
           py: 3,
           flexWrap: 'wrap',
         }}

@@ -26,6 +26,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
             borderRadius: 4,
             backgroundColor: 'context',
             color: 'onContext',
+            backdropFilter: 'blur(20px)',
             ...{
               page: { width: '100vw', height: '100vh' },
             }[variant ?? ''],

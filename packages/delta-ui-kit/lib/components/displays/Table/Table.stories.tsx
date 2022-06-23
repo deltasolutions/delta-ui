@@ -50,11 +50,14 @@ export const Basics = ({ stickyOffset = 0 }) => {
   );
 };
 
-export const InCard = ({ stickyOffset = 0 }) => {
+export const InCard = ({
+  heading = <Heading level={3}>Devices</Heading>,
+  stickyOffset = 0,
+}) => {
   return (
     <Card>
       <CardHeader>
-        <Heading level={3}>Devices</Heading>
+        {heading}
         <Controls />
       </CardHeader>
       <CardBody variant="table">
