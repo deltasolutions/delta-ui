@@ -5,7 +5,7 @@ import { Validity } from './Validity';
 export interface FormManagerOptions<T = any> {
   initialValue?: T;
   schema: Schema;
-  registry?: Registry;
+  registry?: Partial<Registry>;
   dereference?: (schema: Schema) => Promise<Schema>;
   onValue?: (value: T) => void;
   onValidity?: (validation: Validity) => void;

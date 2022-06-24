@@ -8,7 +8,7 @@ export default {
 export const Basics = createFormStory({
   schema: {
     type: 'string',
-    title: 'Input',
+    title: 'Base Input',
     description: 'Description',
     layout: {
       placeholder: 'Type anything',
@@ -17,21 +17,10 @@ export const Basics = createFormStory({
   initialValue: '',
 });
 
-export const Mask = createFormStory({
-  schema: {
-    type: 'string',
-    title: 'Input',
-    layout: {
-      mask: 'aaa000',
-    },
-  },
-  initialValue: '',
-});
-
 export const Date = createFormStory({
   schema: {
     type: 'string',
-    title: 'Input',
+    title: 'Date',
     layout: {
       date: 'DD-MM-YY',
     },
@@ -42,7 +31,7 @@ export const Date = createFormStory({
 export const DateTime = createFormStory({
   schema: {
     type: 'string',
-    title: 'Input',
+    title: 'DateTime',
     layout: {
       dateTime: 'DD-MM-YY HH:mm',
     },
@@ -53,7 +42,7 @@ export const DateTime = createFormStory({
 export const Time = createFormStory({
   schema: {
     type: 'string',
-    title: 'Input',
+    title: 'Time',
     layout: {
       time: 'HH:mm',
     },

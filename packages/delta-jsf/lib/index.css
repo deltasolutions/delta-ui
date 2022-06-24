@@ -23,6 +23,11 @@
   color: rgba(0, 0, 0, 0.8);
 }
 
+.djsf-primitive > .description {
+  margin-top: 0.2rem;
+  color: rgba(0, 0, 0, 0.4);
+}
+
 .djsf-primitive > .content > input,
 .djsf-primitive > .content > select {
   margin: 0;
@@ -60,6 +65,11 @@
   margin-bottom: 0.7rem;
   font-weight: bold;
   color: rgba(0, 0, 0, 0.5);
+}
+
+.djsf-object > .description {
+  margin-top: 0.2rem;
+  color: rgba(0, 0, 0, 0.4);
 }
 
 .djsf-object > .content {

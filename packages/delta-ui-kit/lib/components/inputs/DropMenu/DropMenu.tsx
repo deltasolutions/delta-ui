@@ -42,6 +42,8 @@ export const DropMenu = forwardRef<HTMLDivElement, DropMenuProps>(
       const handleKeyDown = ev => {
         switch (ev.key) {
           case 'Enter':
+            ev.preventDefault();
+            ev.stopPropagation();
             const child = childrenArray[activeIndex];
             const value = child.props.value;
             onItemClick?.(value);

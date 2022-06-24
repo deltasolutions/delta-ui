@@ -140,13 +140,14 @@ export const ComplexDeps = props => {
     ...props,
     schema: {
       type: 'object',
-      title: 'allOf usage',
+      title: 'Complex Deps',
       allOf: [
         {
           type: 'object',
           properties: {
             a: {
               title: 'AAA',
+              description: 'Type in "1234"',
               type: 'string',
             },
           },

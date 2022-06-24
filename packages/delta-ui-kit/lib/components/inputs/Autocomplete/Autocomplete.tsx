@@ -222,6 +222,7 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
               : {}),
           }}
           sx={{
+            boxSizing: 'border-box',
             width: '100%',
             position: 'relative',
             backgroundColor: 'accentContext',
@@ -235,9 +236,8 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
             flexWrap: 'wrap',
             cursor: disabled ? 'not-allowed' : 'text',
             '&:focus-within': {
+              outline: '2px solid',
               outlineColor: 'primary',
-              outlineStyle: 'solid',
-              outlineWidth: '2px',
             },
           }}
           {...rest}

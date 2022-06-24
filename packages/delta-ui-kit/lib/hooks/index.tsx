@@ -1,6 +1,7 @@
 export * from './useCleanableRef';
 export * from './useClickOutside';
 export * from './useDataStack';
+export * from './useDebounce';
 export * from './useDeltaTheme';
 export * from './useDrop';
 export * from './useForwardRef';

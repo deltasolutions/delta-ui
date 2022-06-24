@@ -13,10 +13,10 @@ export const Drop = forwardRef<HTMLDivElement, DropProps>(
       const value = 0.065;
       return {
         colors: {
-          context: lighten(value, colors.context),
-          accentContext: lighten(value, colors.accentContext),
-          onContext: lighten(value, colors.onContext),
-          accentOnContext: lighten(value, colors.accentOnContext),
+          context: lighten(value, colors.celestial),
+          accentContext: lighten(value, colors.accentCelestial),
+          onContext: lighten(value, colors.onCelestial),
+          accentOnContext: lighten(value, colors.accentOnCelestial),
         },
       };
     }, [colors]);

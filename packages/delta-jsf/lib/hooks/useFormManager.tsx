@@ -1,6 +1,6 @@
 import { useCallback, useLayoutEffect, useMemo, useState } from 'react';
 import { defaults } from '../components';
-import { Validity } from '../models';
+import { ValidateAgainstSchemaFunction, Validity } from '../models';
 import { FormManager, FormManagerOptions } from '../models';
 import { clone, merge } from '../utils';
 import { useDereferencedOptions } from './useDereferencedOptions';
@@ -15,28 +15,20 @@ export const useFormManager = <
   ? FormManager<T>
   : FormManager<T | undefined> => {
   const dereferencedOptions = useDereferencedOptions(options);
-  const {
-    schema,
-    initialValue,
-    onValue,
-    onValidity,
-    onSubmit,
-    registry = defaults.registry
-  } = dereferencedOptions;
+  const { schema, initialValue, onValue, onValidity, onSubmit, registry } =
+    dereferencedOptions;
+  const validateAgainstSchema: ValidateAgainstSchemaFunction =
+    registry?.utils?.validateAgainstSchema ??
+    defaults.registry.utils.validateAgainstSchema;
 
-  const {
-    utils: { validateAgainstSchema }
-  } = registry;
-
-  const [value, setValue] = useState(initialValue);
   const [schemaValidity, setSchemaValidity] = useState<Validity>({});
   const [extensionValidity, extendValidity, wait] = useMergeQueue<Validity>({});
-
   const validity = useMemo(
     () => merge(clone(schemaValidity), clone(extensionValidity)),
     [schemaValidity, extensionValidity]
   );
 
+  const [value, setValue] = useState(initialValue);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const isValid = useMemo(() => {
     const check = v =>
@@ -89,6 +81,6 @@ export const useFormManager = <
     isSubmitted,
     wait,
     submit,
-    validate
+    validate,
   } as any;
 };

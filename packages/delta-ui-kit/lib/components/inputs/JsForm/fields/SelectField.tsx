@@ -13,14 +13,14 @@ export const SelectField = (props: FieldProps) => {
   } = props;
   const { placeholder } = schema.layout ?? {};
   const toPickFrom = schema.oneOf ?? [];
-  const getValue = value => value ?? schema.default;
+  const sanitizeValue = value => value ?? schema.default;
   return (
     <PrimitiveTemplate {...props}>
       <Select
         placeholder={placeholder ? String(placeholder) : undefined}
-        value={getValue(value)}
+        value={sanitizeValue(value)}
         onChange={(v: unknown) => {
-          onValue?.(getValue(v));
+          onValue?.(sanitizeValue(v));
         }}
       >
         {toPickFrom.reduce((res, curr, index) => {

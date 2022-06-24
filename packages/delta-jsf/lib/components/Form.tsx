@@ -1,30 +1,32 @@
-import React, { useEffect, useLayoutEffect } from 'react';
-import { useFormManager } from '../hooks';
-import { FormProps, Validity } from '../models';
-import { areManagedFormProps, getFieldComponent } from '../utils';
+import React, { useMemo } from 'react';
+import { FormProps, Registry, Validity } from '../models';
+import { merge, getFieldComponent } from '../utils';
 import { defaults } from './defaults';
 
-export const Form = <T extends unknown>(props: FormProps<T>) => {
-  const { style, className, id, children } = props ?? {};
-  const defaultManager = useFormManager(
-    areManagedFormProps(props) ? { schema: { type: 'null' } } : props
-  );
-  const targetManager = areManagedFormProps(props)
-    ? props.manager
-    : defaultManager;
-
-  const {
-    options: { schema, registry = defaults.registry },
+export const Form = <T extends unknown>({
+  manager: {
+    options: { schema, registry },
     value,
-    validity,
     setValue,
+    validity,
     extendValidity,
+    isValid,
     validate,
-  } = targetManager;
-
+    submit,
+    wait,
+  },
+  style,
+  className,
+  id,
+  children,
+}: FormProps<T>) => {
+  const mergedRegistry = useMemo(
+    () => merge({}, defaults.registry, registry) as Registry,
+    [registry]
+  );
   const rootFieldProps = {
     schema,
-    registry,
+    registry: mergedRegistry,
     value,
     validity,
     onValue: v => {
@@ -35,9 +37,7 @@ export const Form = <T extends unknown>(props: FormProps<T>) => {
       extendValidity(e);
     },
   };
-
   const RootField = getFieldComponent(rootFieldProps);
-
   return (
     <form
       noValidate
@@ -46,11 +46,11 @@ export const Form = <T extends unknown>(props: FormProps<T>) => {
       style={style}
       onSubmit={async e => {
         e.preventDefault();
-        await targetManager.wait();
-        if (!targetManager.isValid) {
+        await wait();
+        if (!isValid) {
           return;
         }
-        targetManager.submit();
+        submit();
       }}
     >
       <RootField {...rootFieldProps} />

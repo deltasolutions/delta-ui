@@ -1,15 +1,18 @@
-import { jsx } from '@theme-ui/core';
 import { ErrorObject as AjvError } from 'ajv';
 import localizeEn from 'ajv-i18n/localize/en';
 import localizeRu from 'ajv-i18n/localize/ru';
 import {
   defaults as basicJsFormDefaults,
-  Form as BasicJsFrom,
-  FormProps as BasicJsFromProps,
+  Form as JsForm,
+  FormProps as JsFormProps,
+  FormManager as JsFormManager,
+  FormManagerOptions as JsFormManagerOptions,
+  useFormManager as useBasicJsFormManager,
   ValidateAgainstSchemaOptions,
   validateAgainstSchemaViaAjv,
 } from 'delta-jsf';
-import { Fragment, useCallback, useMemo } from 'react';
+import merge from 'lodash-es/merge';
+import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fields as customFields } from './fields';
 import { templates as customTemplates } from './templates';
@@ -31,26 +34,45 @@ export const useJsFormDefaults = () => {
       validateAgainstSchemaViaAjv({ ...options, transformAjvErrors }),
     [transformAjvErrors]
   );
-  return {
-    registry: {
-      fields: { ...fields, ...customFields },
-      templates: { ...templates, ...customTemplates },
-      utils: {
-        ...utils,
-        validateAgainstSchema,
+  return useMemo(
+    () => ({
+      registry: {
+        fields: { ...fields, ...customFields },
+        templates: { ...templates, ...customTemplates },
+        utils: {
+          ...utils,
+          validateAgainstSchema,
+        },
       },
-    },
-  };
+    }),
+    [i18n.language, validateAgainstSchema]
+  );
 };
 
-export type JsFormProps<T = any> = BasicJsFromProps<T>;
-
-export const JsForm = (props: JsFormProps) => {
-  const { children, ...rest } = props as any;
-  const { registry } = useJsFormDefaults();
-  return (
-    <BasicJsFrom {...rest} registry={registry}>
-      {children ?? <Fragment />}
-    </BasicJsFrom>
+const useJsFormManager = <
+  T extends unknown,
+  O extends JsFormManagerOptions<T> = JsFormManagerOptions<T>
+>(
+  options: O
+) => {
+  const defaults = useJsFormDefaults();
+  const mergedOptions = useMemo(
+    () => merge({}, defaults, options),
+    [defaults, options]
   );
+  return useBasicJsFormManager(mergedOptions) as O extends {
+    initialValue: T;
+  }
+    ? JsFormManager<T>
+    : JsFormManager<T | undefined>;
+};
+
+export {
+  JsForm,
+  JsFormProps,
+  JsFormManager,
+  JsFormManagerOptions,
+  useJsFormManager,
+  ValidateAgainstSchemaOptions,
+  validateAgainstSchemaViaAjv,
 };

@@ -13,6 +13,9 @@ export function createFieldTemplate(topClassName: string) {
           </div>
         )}
         <div className="content">{children}</div>
+        {schema.description && (
+          <div className="description">{schema.description}</div>
+        )}
         <ErrorList validity={validity} />
       </div>
     );

@@ -1,21 +1,11 @@
 import { FormHTMLAttributes, ReactNode } from 'react';
 import { FormManager } from './FormManager';
-import { FormManagerOptions } from './FormManagerOptions';
 
-export interface NativeFormProps
+export interface FormProps<T = any>
   extends Pick<
     FormHTMLAttributes<HTMLFormElement>,
     'style' | 'className' | 'id'
   > {
+  manager: FormManager<T>;
   children?: ReactNode | ReactNode[];
 }
-
-export interface ManagedFormProps<T = any> extends NativeFormProps {
-  manager: FormManager<T>;
-}
-
-export interface UnmanagedFormProps<T = any>
-  extends FormManagerOptions<T>,
-    NativeFormProps {}
-
-export type FormProps<T = any> = UnmanagedFormProps<T> | ManagedFormProps<T>;

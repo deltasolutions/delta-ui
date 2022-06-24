@@ -1,14 +1,12 @@
 import { jsx } from '@theme-ui/core';
-import { Schema } from 'delta-jsf';
+import { FormManagerOptions } from 'delta-jsf';
 import { GenericFormStory } from './GenericFormStory';
 
-export interface FormStoryOptions {
-  schema: Schema;
-  initialValue: any;
-}
+export interface FormStoryOptions
+  extends Pick<FormManagerOptions, 'schema' | 'initialValue' | 'registry'> {}
 
-export const createFormStory = ({ schema, initialValue }: FormStoryOptions) => {
+export const createFormStory = (options: FormStoryOptions) => {
   const Story = props => <GenericFormStory {...props} />;
-  Story.args = { schema, initialValue };
+  Story.args = options;
   return Story;
 };

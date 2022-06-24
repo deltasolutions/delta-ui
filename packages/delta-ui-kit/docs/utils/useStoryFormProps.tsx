@@ -1,19 +1,20 @@
 import { jsx } from '@theme-ui/core';
-import { useFormManager, FormProps, FormManagerOptions } from 'delta-jsf';
 import { useReducer } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Button, useJsFormDefaults } from '../../lib';
+import {
+  Box,
+  Button,
+  JsFormManagerOptions,
+  JsFormProps,
+  useJsFormManager,
+} from '../../lib';
 
 export const useStoryFormProps = <T extends unknown>(
-  options: FormManagerOptions<T>
-): FormProps<T | undefined> => {
+  options: JsFormManagerOptions<T>
+): JsFormProps<T | undefined> => {
   const [t] = useTranslation('common');
   const [submitsCount, increaseSubmitsCount] = useReducer(v => v + 1, 0);
-  const { registry } = useJsFormDefaults();
-  const manager = useFormManager<T, FormManagerOptions<T>>({
-    ...options,
-    registry,
-  });
+  const manager = useJsFormManager<T, JsFormManagerOptions<T>>(options);
   return {
     manager,
     children: (
