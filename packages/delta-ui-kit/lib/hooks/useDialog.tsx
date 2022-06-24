@@ -4,6 +4,7 @@ import {
   DependencyList,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useRef,
 } from 'react';
@@ -42,6 +43,17 @@ export const useDialog = <C extends unknown = never>(
       const handleClose = useCallback(() => {
         handleImplicitClose();
         onClose?.();
+      }, []);
+      useEffect(() => {
+        const listener = e => {
+          if (e.key === 'Escape') {
+            handleClose();
+          }
+        };
+        window.addEventListener('keydown', listener);
+        return () => {
+          window.removeEventListener('keydown', listener);
+        };
       }, []);
       return (
         <FocusTrap

@@ -8,9 +8,16 @@ export default {
 } as Meta;
 
 export const Basics = () => {
-  const openModal = useModal(() => <ModalBody>Content</ModalBody>, {
-    deps: [],
-  });
+  const openModal = useModal(
+    () => (
+      <ModalBody>
+        Content <input placeholder="test escape" />
+      </ModalBody>
+    ),
+    {
+      deps: [],
+    }
+  );
   return (
     <Button variant="contained" onClick={() => openModal()}>
       Open

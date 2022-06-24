@@ -1,7 +1,8 @@
 import { jsx, ThemeProvider } from '@theme-ui/core';
-import { lighten } from 'polished';
+import { lighten, transparentize } from 'polished';
 import { forwardRef, useMemo } from 'react';
 import { PortalledProps, useDeltaTheme } from '../../hooks';
+import { Button, ButtonProps } from '../Button';
 import { Box, BoxProps } from './Box';
 
 export interface DropProps extends BoxProps, Partial<PortalledProps> {}
@@ -13,7 +14,7 @@ export const Drop = forwardRef<HTMLDivElement, DropProps>(
       const value = 0.065;
       return {
         colors: {
-          context: lighten(value, colors.celestial),
+          context: transparentize(0.03, lighten(value, colors.background)),
           accentContext: lighten(value, colors.accentCelestial),
           onContext: lighten(value, colors.onCelestial),
           accentOnContext: lighten(value, colors.accentOnCelestial),
@@ -27,13 +28,45 @@ export const Drop = forwardRef<HTMLDivElement, DropProps>(
           ref={ref}
           sx={{
             backgroundColor: 'context',
-            color: 'onContext',
+            display: 'flex',
+            flexDirection: 'column',
             boxShadow: 1,
+            p: '4px',
             borderRadius: 4,
           }}
           {...rest}
         />
       </ThemeProvider>
+    );
+  }
+);
+
+export interface DropOptionProps extends ButtonProps {
+  size?: 'small' | 'medium';
+}
+
+export const DropOption = forwardRef<HTMLButtonElement, DropOptionProps>(
+  ({ size = 'medium', ...rest }, ref) => {
+    return (
+      <Button
+        ref={ref}
+        sx={{
+          height: size === 'medium' ? 3 : 2,
+          width: '200px',
+          display: 'flex',
+          px: '16px',
+          fontFamily: 'Montserrat, sans-serif',
+          alignItems: 'center',
+          gap: 2,
+          borderRadius: 3,
+          '&:hover, &:focus, &:active': {
+            backgroundColor: 'accentContext',
+            color: 'accentOnContext',
+          },
+          color: 'onContext',
+        }}
+        {...rest}
+      />
     );
   }
 );

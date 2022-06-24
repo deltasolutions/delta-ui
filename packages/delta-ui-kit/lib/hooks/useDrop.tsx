@@ -1,5 +1,6 @@
 import { autoUpdate, Placement, useFloating } from '@floating-ui/react-dom';
 import { jsx } from '@theme-ui/core';
+import FocusTrap from 'focus-trap-react';
 import {
   useCallback,
   useContext,
@@ -9,7 +10,7 @@ import {
   useMemo,
   useRef,
 } from 'react';
-import { Drop, DropProps, SystemContext } from '../components';
+import { Box, Drop, DropProps, SystemContext } from '../components';
 import { mergeRefs } from '../utils';
 import { useClickOutside } from './useClickOutside';
 import { ImperativePortal } from './useImperativePortal';
@@ -60,6 +61,7 @@ export const useDrop = <T extends HTMLElement, C extends unknown = never>(
         () => mergeRefs([ref, floating, clickOusideRef]),
         [ref, floating, clickOusideRef]
       );
+
       const handleClose = useCallback(() => {
         handleImplicitClose();
         onClose?.();
@@ -78,24 +80,38 @@ export const useDrop = <T extends HTMLElement, C extends unknown = never>(
           update
         );
       }, [refs.reference.current, refs.floating.current, update]);
+      useEffect(() => {
+        if (!blurResistant) {
+          const keyDownListener = e => {
+            if (e.key === 'Escape') {
+              handleClose();
+            }
+          };
+          window.addEventListener('keydown', keyDownListener);
+          return () => {
+            window.removeEventListener('keydown', keyDownListener);
+          };
+        }
+        return;
+      }, []);
       const { width = 0 } = anchor?.getBoundingClientRect() ?? {};
       return (
-        <Drop
+        <Box
           ref={mergedRef}
-          handleClose={handleClose}
           style={{
             position: strategy,
             left: x ?? '-100vw',
             top: y ?? '-100vh',
             width: tailored ? width : undefined,
           }}
-          {...dropProps}
         >
-          {render?.({
-            handleClose,
-            ...dropProps,
-          })}
-        </Drop>
+          <FocusTrap>
+            {render?.({
+              handleClose,
+              ...dropProps,
+            })}
+          </FocusTrap>
+        </Box>
       );
     },
     {
