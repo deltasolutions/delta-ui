@@ -1,5 +1,5 @@
 import { jsx } from '@theme-ui/core';
-import { Children, ReactElement, ReactNode } from 'react';
+import { Children, forwardRef, ReactElement, ReactNode } from 'react';
 import { ImHome } from 'react-icons/im';
 import { RiHomeFill } from 'react-icons/ri';
 import { TbChevronRight } from 'react-icons/tb';
@@ -51,15 +51,19 @@ export const Breadcrumbs = ({ children, ...rest }: BreadcrumbsProps) => {
 
 export interface BreadcrumbsItemProps extends Omit<AnchorProps, 'variant'> {}
 
-export const BreadcrumbsItem = (props: BreadcrumbsItemProps) => {
-  return <Anchor variant="pure" {...props} />;
-};
+export const BreadcrumbsItem = forwardRef<
+  HTMLAnchorElement,
+  BreadcrumbsItemProps
+>((props: BreadcrumbsItemProps, ref) => {
+  return <Anchor ref={ref} variant="pure" {...props} />;
+});
 
-export const BreadcrumbsHome = (
-  props: Omit<BreadcrumbsItemProps, 'children'>
-) => {
+export const BreadcrumbsHome = forwardRef<
+  HTMLAnchorElement,
+  BreadcrumbsItemProps
+>((props: Omit<BreadcrumbsItemProps, 'children'>, ref) => {
   return (
-    <BreadcrumbsItem {...props}>
+    <BreadcrumbsItem ref={ref} {...props}>
       <Box
         sx={{
           width: '1.5rem',
@@ -84,4 +88,4 @@ export const BreadcrumbsHome = (
       </Box>
     </BreadcrumbsItem>
   );
-};
+});
