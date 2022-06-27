@@ -15,9 +15,10 @@ export const AutocompleteField = (props: FieldProps) => {
     },
   } = props;
   const { placeholder, source } = schema.layout ?? {};
-  const { oneOf: optionsFromSchema } = (schema.items ?? {}) as {
-    [key: string]: unknown;
-  };
+  const multiple = schema.type === 'array';
+  const optionsFromSchema = multiple
+    ? (schema.items as { oneOf: unknown[] })?.oneOf
+    : (schema.oneOf as unknown);
   const sanitizeOptions = (
     data: unknown
   ): {
@@ -37,8 +38,12 @@ export const AutocompleteField = (props: FieldProps) => {
       : [];
   };
   const sanitizeValue = value => {
-    const maybeArray = value ?? schema.default;
-    return Array.isArray(maybeArray) ? maybeArray : [];
+    const maybeValue = value ?? schema.default;
+    return multiple
+      ? Array.isArray(maybeValue)
+        ? maybeValue
+        : []
+      : maybeValue;
   };
   const [options, setOptions] = useState(sanitizeOptions(optionsFromSchema));
   const [query, setQuery] = useState('');
@@ -61,6 +66,7 @@ export const AutocompleteField = (props: FieldProps) => {
   return (
     <PrimitiveTemplate {...props}>
       <Autocomplete
+        multiple={multiple}
         placeholder={placeholder ? String(placeholder) : undefined}
         query={query}
         value={sanitizeValue(value)}

@@ -7,28 +7,40 @@ export default {
   title: 'JsForm/Autocomplete',
 };
 
+const oneOf = [
+  {
+    title: 'A',
+    const: 'aaa',
+  },
+  {
+    title: 'B',
+    const: 'bbb',
+  },
+  {
+    title: 'C',
+    const: 'ccc',
+  },
+];
+
 export const Basics = createFormStory({
   schema: {
-    type: 'array',
-    title: 'Autocomplete',
-    description: 'Description',
-    items: {
-      oneOf: [
-        {
-          title: 'A',
-          const: 'aaa',
-        },
-        {
-          title: 'B',
-          const: 'bbb',
-        },
-      ],
-    },
-    layout: {
-      field: 'autocomplete',
+    type: 'object',
+    properties: {
+      single: {
+        type: 'string',
+        title: 'Autocomplete (single)',
+        oneOf,
+        layout: { field: 'autocomplete' },
+      },
+      multiple: {
+        type: 'array',
+        title: 'Autocomplete (multiple)',
+        items: { oneOf },
+        layout: { field: 'autocomplete' },
+      },
     },
   },
-  initialValue: [],
+  initialValue: {},
 });
 
 export const CustomOptions = createFormStory({
