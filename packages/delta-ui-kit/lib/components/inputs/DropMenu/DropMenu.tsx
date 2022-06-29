@@ -69,7 +69,6 @@ export const DropMenu = forwardRef<HTMLDivElement, DropMenuProps>(
     if (childrenArray.length === 0) {
       return null;
     }
-
     return (
       <DropMenuContext.Provider value={contextValue}>
         <Box

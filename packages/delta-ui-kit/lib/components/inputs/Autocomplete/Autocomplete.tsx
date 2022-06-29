@@ -247,8 +247,8 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
             gap: '2px',
             height: '100%',
             letterSpacing: 'normal',
-            alignItems: 'center',
             display: 'flex',
+            alignItems: 'center',
             flexWrap: 'wrap',
             cursor: disabled ? 'not-allowed' : 'text',
             '&:focus-within': {
