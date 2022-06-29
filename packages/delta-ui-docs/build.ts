@@ -16,6 +16,15 @@ async function main() {
   for (const [index, packageName] of Object.entries(packageNames)) {
     const packageDir = path.resolve(packagesDir, packageName);
     const packageJsonFile = path.resolve(packageDir, 'package.json');
+    if (
+      await fs
+        .lstat(packageJsonFile)
+        .then(v => !v.isFile)
+        .catch(() => true)
+    ) {
+      continue;
+    }
+    console.log('!');
     const packageJson = await import(packageJsonFile);
     const counter = `(${+index + 1}/${packageNames.length})`;
     if (!packageJson.scripts?.doc) {
@@ -24,7 +33,7 @@ async function main() {
     }
     console.log('Building', packageName, counter);
     await exec('npm run doc', {
-      cwd: packageDir
+      cwd: packageDir,
     });
     const sourceDir = path.resolve(packageDir, 'dist/docs');
     const targetDir = path.resolve(outputDir, packageName);
