@@ -13,10 +13,24 @@ export interface DropMenuItemProps
   active?: boolean;
   selected?: boolean;
   onClick?: () => void;
+  size?: 'medium' | 'large';
 }
 
 export const DropMenuItem = forwardRef<HTMLButtonElement, DropMenuItemProps>(
-  ({ children, value, index, active, selected, onClick, ...rest }, ref) => {
+  (
+    {
+      children,
+      value,
+      index,
+      active,
+      selected,
+      variant,
+      onClick,
+      size = 'medium',
+      ...rest
+    },
+    ref
+  ) => {
     const buttonRef = useRef<HTMLButtonElement>(null);
     const mergedRef = useMemo(
       () => mergeRefs([ref, buttonRef]),
@@ -36,8 +50,16 @@ export const DropMenuItem = forwardRef<HTMLButtonElement, DropMenuItemProps>(
           }),
         }}
         sx={{
-          paddingX: 1,
-          paddingY: 1,
+          ...{
+            medium: {
+              paddingX: 1,
+              paddingY: 1,
+            },
+            large: {
+              paddingX: 2,
+              paddingY: 2,
+            },
+          }[size],
           textAlign: 'left',
           display: 'flex',
           justifyContent: 'space-between',

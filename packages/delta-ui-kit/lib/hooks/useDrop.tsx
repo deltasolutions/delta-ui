@@ -10,7 +10,7 @@ import {
   useMemo,
   useRef,
 } from 'react';
-import { Drop, DropProps, SystemContext } from '../components';
+import { Box, Drop, DropProps, SystemContext } from '../components';
 import { mergeRefs } from '../utils';
 import { useClickOutside } from './useClickOutside';
 import { ImperativePortal } from './useImperativePortal';
@@ -39,6 +39,7 @@ export const useDrop = <T extends HTMLElement, C extends unknown = never>(
 ) => {
   const {
     deps,
+
     placement,
     multiple,
     tailored,
@@ -52,6 +53,7 @@ export const useDrop = <T extends HTMLElement, C extends unknown = never>(
   const closeDropInstance = useRef<undefined | (() => void)>();
   const openDropInstance = usePortalled<HTMLDivElement>(
     ({ handleClose: handleImplicitClose }, ref) => {
+      const overlayRef = useRef<HTMLDivElement>(null);
       const { x, y, reference, floating, strategy, refs, update } =
         useFloating<T>({ placement });
       const clickOusideRef = useClickOutside<HTMLDivElement>(
@@ -109,7 +111,16 @@ export const useDrop = <T extends HTMLElement, C extends unknown = never>(
             width: tailored ? width : undefined,
           }}
         >
-          {blurResistant ? content : <FocusTrap>{content}</FocusTrap>}
+          <FocusTrap
+            active={blurResistant == false}
+            focusTrapOptions={{
+              escapeDeactivates: false,
+              fallbackFocus: () => overlayRef.current ?? document.body,
+              ...(typeof blurResistant === 'object' ? blurResistant : {}),
+            }}
+          >
+            {content}
+          </FocusTrap>
         </Drop>
       );
     },

@@ -1,4 +1,5 @@
 import { jsx } from '@theme-ui/core';
+import FocusTrap from 'focus-trap-react';
 import {
   cloneElement,
   createContext,
