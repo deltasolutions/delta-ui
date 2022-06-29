@@ -10,7 +10,7 @@ import {
   useMemo,
   useRef,
 } from 'react';
-import { Box, Drop, DropProps, SystemContext } from '../components';
+import { Drop, DropProps, SystemContext } from '../components';
 import { mergeRefs } from '../utils';
 import { useClickOutside } from './useClickOutside';
 import { ImperativePortal } from './useImperativePortal';
@@ -95,8 +95,12 @@ export const useDrop = <T extends HTMLElement, C extends unknown = never>(
         return;
       }, []);
       const { width = 0 } = anchor?.getBoundingClientRect() ?? {};
+      const content = render?.({
+        handleClose,
+        ...dropProps,
+      });
       return (
-        <Box
+        <Drop
           ref={mergedRef}
           style={{
             position: strategy,
@@ -105,13 +109,8 @@ export const useDrop = <T extends HTMLElement, C extends unknown = never>(
             width: tailored ? width : undefined,
           }}
         >
-          <FocusTrap>
-            {render?.({
-              handleClose,
-              ...dropProps,
-            })}
-          </FocusTrap>
-        </Box>
+          {blurResistant ? content : <FocusTrap>{content}</FocusTrap>}
+        </Drop>
       );
     },
     {

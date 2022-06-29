@@ -51,8 +51,9 @@ export interface AutocompleteProps
       HTMLAttributes<HTMLLabelElement>,
       'children' | keyof FormWidgetProps
     >,
-    FormWidgetProps<unknown[]> {
+    FormWidgetProps<unknown> {
   children: AutocompleteChild[] | ((query: string) => AutocompleteChild[]);
+  multiple?: boolean;
   placeholder?: string;
   query?: string;
   onQuery?: (query: string) => void;
@@ -62,6 +63,7 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
   (
     {
       children,
+      multiple,
       placeholder,
       query,
       onQuery,
@@ -94,18 +96,30 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
       ]
     );
     const [backspacePressed, setBackspacePressed] = useState(false);
+    const valueItems = useMemo(
+      () =>
+        multiple
+          ? Array.isArray(value)
+            ? value
+            : []
+          : value === undefined
+          ? []
+          : [value],
+      [multiple, value]
+    );
     const [selections, setSelections] = useState<AutocompleteSelection[]>(() =>
-      getInitialInnerValue(childrenArray, value)
+      getInitialInnerValue(childrenArray, valueItems)
     );
     const handleAddition = useCallback(
       (value: unknown, title: string) => {
         setBackspacePressed(false);
-        const nextSelections = selections
-          .filter(v => v.value !== value)
-          .concat([{ value, title }]);
+        const addition = [{ value, title }];
+        const nextSelections = multiple
+          ? selections.filter(v => v.value !== value).concat(addition)
+          : addition;
         setSelections(nextSelections);
         setInnerQuery('');
-        onChange?.(nextSelections.map(v => v.value));
+        onChange?.(multiple ? nextSelections.map(v => v.value) : value);
         onQuery?.('');
         inputRef.current?.focus();
       },
@@ -116,7 +130,9 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
         setBackspacePressed(false);
         const nextSelections = selections.filter(v => v.value !== value);
         setSelections(nextSelections);
-        onChange?.(nextSelections.map(v => v.value));
+        onChange?.(
+          multiple ? nextSelections.map(v => v.value) : nextSelections[0]?.value
+        );
       },
       [selections, onChange]
     );
@@ -128,6 +144,7 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
         deps: [],
         portal,
         tailored: true,
+        blurResistant: true,
         placement: 'bottom-start',
       }
     );
@@ -155,19 +172,18 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
       [childrenArray, selections, handleRemoval, handleAddition]
     );
     useUpdateEffect(() => {
-      const items = value ?? [];
       if (
-        items.length !== selections.length ||
-        items.some(item => selections.every(v => v.value !== item))
+        valueItems.length !== selections.length ||
+        valueItems.some(item => selections.every(v => v.value !== item))
       ) {
         setSelections(
-          items.map(v => ({
+          valueItems.map(v => ({
             value: v,
             title: getTitleByValue(childrenArray, v),
           }))
         );
       }
-    }, [value]);
+    }, [valueItems]);
     useUpdateEffect(() => {
       query !== innerQuery && setInnerQuery(query ?? '');
     }, [query]);

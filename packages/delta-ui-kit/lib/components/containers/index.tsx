@@ -11,3 +11,4 @@ export * from './Question';
 export * from './Scroll';
 export * from './SystemContainer';
 export * from './Card';
+export * from './Badge';

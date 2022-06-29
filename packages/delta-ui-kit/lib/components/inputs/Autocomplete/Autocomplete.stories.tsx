@@ -19,7 +19,7 @@ const isAlike = (query: string, option: string) =>
 
 export const Basics = () => {
   return (
-    <Autocomplete placeholder="Placeholder">
+    <Autocomplete multiple placeholder="Placeholder">
       <AutocompleteOption value={1}>The Godfather</AutocompleteOption>
       <AutocompleteOption value={2}>
         The Shawshank Redemption
@@ -31,7 +31,7 @@ export const Basics = () => {
 
 export const FilteringOptions = () => {
   return (
-    <Autocomplete placeholder="Placeholder">
+    <Autocomplete multiple placeholder="Placeholder">
       {query =>
         options
           .filter(v => isAlike(query, v))
@@ -64,6 +64,7 @@ export const Controlled = () => {
         Set Query
       </Button>
       <Autocomplete
+        multiple
         placeholder="Placeholder"
         query={query}
         value={value}

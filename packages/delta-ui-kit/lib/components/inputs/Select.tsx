@@ -71,6 +71,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       {
         deps: [childrenArray, handleChange],
         tailored: true,
+        blurResistant: true,
         placement: 'bottom-start',
       }
     );

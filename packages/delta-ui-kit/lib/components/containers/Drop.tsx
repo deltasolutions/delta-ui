@@ -14,7 +14,7 @@ export const Drop = forwardRef<HTMLDivElement, DropProps>(
       const value = 0.065;
       return {
         colors: {
-          context: transparentize(0.03, lighten(value, colors.background)),
+          context: lighten(value, colors.background),
           accentContext: lighten(value, colors.accentCelestial),
           onContext: lighten(value, colors.onCelestial),
           accentOnContext: lighten(value, colors.accentOnCelestial),
@@ -27,11 +27,12 @@ export const Drop = forwardRef<HTMLDivElement, DropProps>(
         <Box
           ref={ref}
           sx={{
+            zIndex: 1,
+            position: 'relative',
             backgroundColor: 'context',
             display: 'flex',
             flexDirection: 'column',
             boxShadow: 1,
-            p: '4px',
             borderRadius: 4,
           }}
           {...rest}

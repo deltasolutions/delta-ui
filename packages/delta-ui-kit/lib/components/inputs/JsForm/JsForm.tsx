@@ -4,12 +4,17 @@ import localizeRu from 'ajv-i18n/localize/ru';
 import {
   defaults as basicJsFormDefaults,
   Form as JsForm,
+  useFormManager as useBasicJsFormManager,
+  validateAgainstSchemaViaAjv,
+} from 'delta-jsf';
+// It seems that esbuild fails to differ
+// type imports from usual ones when alias is used.
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import type {
   FormProps as JsFormProps,
   FormManager as JsFormManager,
   FormManagerOptions as JsFormManagerOptions,
-  useFormManager as useBasicJsFormManager,
   ValidateAgainstSchemaOptions,
-  validateAgainstSchemaViaAjv,
 } from 'delta-jsf';
 import merge from 'lodash-es/merge';
 import { useCallback, useMemo } from 'react';

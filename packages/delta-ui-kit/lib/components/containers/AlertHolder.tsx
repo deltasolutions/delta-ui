@@ -11,7 +11,6 @@ export const AlertHolder = forwardRef<HTMLDivElement, AlertHolderProps>(
     if (!children || children?.length === 0) {
       return null;
     }
-
     return (
       <Box
         ref={ref}

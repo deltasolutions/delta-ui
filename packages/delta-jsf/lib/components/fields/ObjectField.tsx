@@ -1,5 +1,5 @@
-import React, { Key, useLayoutEffect } from 'react';
-import { useDefaults } from '../../hooks';
+import React, { Key } from 'react';
+import { useDefaults, useIsomorphicLayoutEffect } from '../../hooks';
 import { FieldProps, Schema } from '../../models';
 import { clone, getCompressed, getFieldComponent, merge } from '../../utils';
 
@@ -33,7 +33,7 @@ export function ObjectField(props: FieldProps) {
     }, [] as string[])
     .concat(Array.from(keys));
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     // An object without values from removed fields.
     const filtered = { ...value };
     const availableKeys = new Set(Object.keys(properties));

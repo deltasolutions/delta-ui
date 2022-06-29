@@ -1,9 +1,10 @@
-import { useCallback, useLayoutEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { defaults } from '../components';
 import { ValidateAgainstSchemaFunction, Validity } from '../models';
 import { FormManager, FormManagerOptions } from '../models';
 import { clone, merge } from '../utils';
 import { useDereferencedOptions } from './useDereferencedOptions';
+import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 import { useMergeQueue } from './useMergeQueue';
 
 export const useFormManager = <
@@ -62,12 +63,12 @@ export const useFormManager = <
     [schema]
   );
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     // TODO: remove type cast
     onValue?.(value as T);
   }, [value]);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     onValidity?.(validity);
   }, [validity]);
 
