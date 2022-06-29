@@ -72,12 +72,11 @@ const useJsFormManager = <
     : JsFormManager<T | undefined>;
 };
 
-export {
-  JsForm,
+export { JsForm, useJsFormManager, validateAgainstSchemaViaAjv };
+
+export type {
   JsFormProps,
   JsFormManager,
   JsFormManagerOptions,
-  useJsFormManager,
   ValidateAgainstSchemaOptions,
-  validateAgainstSchemaViaAjv,
 };
