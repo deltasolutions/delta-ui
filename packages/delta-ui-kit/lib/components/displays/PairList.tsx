@@ -19,10 +19,10 @@ export const PairList = forwardRef<HTMLDivElement, PairListProps>(
         }}
         {...rest}
       >
-        {pairs.map(([key, value]) => {
+        {pairs.map(([key, value], index) => {
           return (
             <Box
-              key={key}
+              key={['string', 'number'].includes(typeof key) ? key : index}
               sx={{
                 display: 'flex',
                 minHeight: 2,
@@ -60,10 +60,10 @@ export const PairList = forwardRef<HTMLDivElement, PairListProps>(
         sx={{ gap: 4, flexDirection: 'column', display: 'flex' }}
         {...rest}
       >
-        {pairs.map(([key, value]) => {
+        {pairs.map(([key, value], index) => {
           return (
             <Box
-              key={key}
+              key={['string', 'number'].includes(typeof key) ? key : index}
               sx={{
                 display: 'flex',
                 minHeight: 2,
@@ -96,7 +96,7 @@ export const PairList = forwardRef<HTMLDivElement, PairListProps>(
             }}
           >
             {pairs.map(([key, value], index) => (
-              <tr key={key}>
+              <tr key={['string', 'number'].includes(typeof key) ? key : index}>
                 <td
                   aria-label="key"
                   sx={{ color: 'accentOnContext', fontWeight: 600 }}
