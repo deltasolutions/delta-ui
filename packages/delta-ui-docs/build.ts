@@ -24,7 +24,6 @@ async function main() {
     ) {
       continue;
     }
-    console.log('!');
     const packageJson = await import(packageJsonFile);
     const counter = `(${+index + 1}/${packageNames.length})`;
     if (!packageJson.scripts?.doc) {
