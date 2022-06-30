@@ -1,4 +1,5 @@
 import { jsx } from '@theme-ui/core';
+import { curveCardinal } from '@visx/curve';
 import { LinearGradient } from '@visx/gradient';
 import { AreaSeries, XYChart, Tooltip } from '@visx/xychart';
 import { transparentize } from 'polished';
@@ -43,6 +44,7 @@ export const AreaChart = <T extends object>({
         />
 
         <AreaSeries
+          curve={curveCardinal}
           data={data}
           dataKey="data"
           fill="url(#gradient)"
