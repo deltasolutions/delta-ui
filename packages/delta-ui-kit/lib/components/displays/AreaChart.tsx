@@ -34,7 +34,7 @@ export const AreaChart = <T extends object>({
       <XYChart
         height={height}
         margin={margin}
-        xScale={{ type: 'band' }}
+        xScale={{ type: 'point' }}
         yScale={{ type: 'linear' }}
       >
         <LinearGradient
@@ -42,7 +42,6 @@ export const AreaChart = <T extends object>({
           id="gradient"
           to="transparent"
         />
-
         <AreaSeries
           curve={curveCardinal}
           data={data}
@@ -59,7 +58,7 @@ export const AreaChart = <T extends object>({
           snapTooltipToDatumY
           glyphStyle={{
             fill: colorString,
-            stroke: colors.onContext,
+            stroke: colors.onPrimary,
             strokeWidth: '3px',
           }}
           renderTooltip={({ tooltipData }) => {
