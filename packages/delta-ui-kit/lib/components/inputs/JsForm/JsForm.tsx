@@ -4,6 +4,7 @@ import localizeRu from 'ajv-i18n/localize/ru';
 import {
   defaults as basicJsFormDefaults,
   Form as JsForm,
+  merge,
   useFormManager as useBasicJsFormManager,
   validateAgainstSchemaViaAjv,
 } from 'delta-jsf';
@@ -16,7 +17,6 @@ import type {
   FormManagerOptions as JsFormManagerOptions,
   ValidateAgainstSchemaOptions,
 } from 'delta-jsf';
-import merge from 'lodash-es/merge';
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fields as customFields } from './fields';

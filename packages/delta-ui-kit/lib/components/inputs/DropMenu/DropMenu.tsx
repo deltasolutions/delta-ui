@@ -1,5 +1,4 @@
 import { jsx } from '@theme-ui/core';
-import FocusTrap from 'focus-trap-react';
 import {
   cloneElement,
   createContext,
@@ -12,7 +11,7 @@ import {
 } from 'react';
 import { DropRendererProps } from '../../../hooks';
 import { getChildrenKey } from '../../../utils';
-import { Box } from '../../containers';
+import { Box, BoxProps } from '../../containers';
 import { DropMenuItemProps } from './DropMenuItem';
 
 export const DropMenuContext = createContext(
@@ -22,14 +21,24 @@ export const DropMenuContext = createContext(
   }
 );
 
-export interface DropMenuProps extends DropRendererProps {
+export interface DropMenuProps extends DropRendererProps, BoxProps {
   children: ReactElement<DropMenuItemProps>[];
   selectedValues?: unknown[];
   onItemClick?: (value: unknown) => void;
 }
 
 export const DropMenu = forwardRef<HTMLDivElement, DropMenuProps>(
-  ({ children, selectedValues = [], onItemClick, handleClose }, ref) => {
+  (
+    {
+      children,
+      selectedValues = [],
+      onItemClick,
+      handleClose,
+      context: _context,
+      ...rest
+    },
+    ref
+  ) => {
     const childrenArray = Array.from(children);
     const [activeIndex, setActiveIndex] = useState(0);
     const contextValue = useMemo(
@@ -79,6 +88,7 @@ export const DropMenu = forwardRef<HTMLDivElement, DropMenuProps>(
             flexDirection: 'column',
             borderRadius: 4,
           }}
+          {...rest}
         >
           {childrenArray.map((v, i) => {
             const value = v.props?.value;
