@@ -1,6 +1,6 @@
-import { Dispatch, SetStateAction } from 'react';
-import { FormManagerOptions } from './FormManagerOptions';
-import { Validity } from './Validity';
+import { Dispatch, SetStateAction } from "react";
+import { FormManagerOptions } from "./FormManagerOptions";
+import { Validity } from "./Validity";
 
 export interface FormManager<T = any> {
   options: FormManagerOptions<T>;
@@ -10,11 +10,24 @@ export interface FormManager<T = any> {
 
   validity: Validity;
   extendValidity: (validity: Validity | Promise<Validity>) => Promise<void>;
+  flushValidity: () => void;
 
+  valid: boolean;
+  validate: () => Promise<boolean>;
+
+  submitted: boolean;
+  submitRequested: boolean;
+  submit: () => Promise<void>;
+
+  /**
+   * @deprecated
+   */
   isValid: boolean;
+
+  /**
+   * @deprecated
+   */
   isSubmitted: boolean;
 
   wait: () => Promise<void>;
-  submit: () => Promise<T>;
-  validate: (value: T) => Promise<boolean>;
 }

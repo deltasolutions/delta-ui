@@ -6,6 +6,7 @@ export interface FormManagerOptions<T = any> {
   initialValue?: T;
   schema: Schema;
   registry?: Partial<Registry>;
+  liveValidated?: boolean;
   dereference?: (schema: Schema) => Schema;
   onValue?: (value: T) => void;
   onValidity?: (validation: Validity) => void;

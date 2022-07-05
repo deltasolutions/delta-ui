@@ -1,5 +1,4 @@
 import React, { useMemo } from "react";
-import { useIsomorphicLayoutEffect } from "../hooks";
 import { FormProps, Registry, Validity } from "../models";
 import { getFieldComponent, merge } from "../utils";
 import { defaults } from "./defaults";
@@ -11,10 +10,7 @@ export const Form = <T extends unknown>({
     setValue,
     validity,
     extendValidity,
-    isValid,
-    validate,
     submit,
-    wait,
   },
   style,
   className,
@@ -30,18 +26,14 @@ export const Form = <T extends unknown>({
     registry: mergedRegistry,
     value,
     validity,
-    onValue: (v) => {
+    onValue: (v: T) => {
       setValue(v);
-      validate(v);
     },
     onValidity: (e: Validity) => {
       extendValidity(e);
     },
   };
   const RootField = getFieldComponent(rootFieldProps);
-  useIsomorphicLayoutEffect(() => {
-    validate(value);
-  }, []);
   return (
     <form
       noValidate
@@ -50,10 +42,6 @@ export const Form = <T extends unknown>({
       style={style}
       onSubmit={async (e) => {
         e.preventDefault();
-        await wait();
-        if (!isValid) {
-          return;
-        }
         submit();
       }}
     >

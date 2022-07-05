@@ -22,7 +22,7 @@ export const ErrorList = ({
         fontWeight: 600,
       }}
     >
-      {Array.from(new Set(errors)).map((e) => <Box key={e}>{e}</Box>)}
+      {errors.map((e) => <Box key={e}>{e}</Box>)}
     </Box>
   );
 };
