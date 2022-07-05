@@ -1,43 +1,42 @@
-import { useCallback, useMemo, useState } from 'react';
-import { defaults } from '../components';
-import { ValidateAgainstSchemaFunction, Validity } from '../models';
-import { FormManager, FormManagerOptions } from '../models';
-import { clone, merge } from '../utils';
-import { useDereferencedOptions } from './useDereferencedOptions';
-import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
-import { useMergeQueue } from './useMergeQueue';
+import { useCallback, useMemo, useState } from "react";
+import { defaults } from "../components";
+import { ValidateAgainstSchemaFunction, Validity } from "../models";
+import { FormManager, FormManagerOptions } from "../models";
+import { clone, merge } from "../utils";
+import { useDereferencedOptions } from "./useDereferencedOptions";
+import { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect";
+import { useMergeQueue } from "./useMergeQueue";
 
 export const useFormManager = <
   T extends unknown,
-  Options extends FormManagerOptions<T> = FormManagerOptions<T>
+  Options extends FormManagerOptions<T> = FormManagerOptions<T>,
 >(
-  options: Options
-): Options extends { initialValue: T }
-  ? FormManager<T>
+  options: Options,
+): Options extends { initialValue: T } ? FormManager<T>
   : FormManager<T | undefined> => {
   const dereferencedOptions = useDereferencedOptions(options);
   const { schema, initialValue, onValue, onValidity, onSubmit, registry } =
     dereferencedOptions;
   const validateAgainstSchema: ValidateAgainstSchemaFunction =
     registry?.utils?.validateAgainstSchema ??
-    defaults.registry.utils.validateAgainstSchema;
+      defaults.registry.utils.validateAgainstSchema;
 
   const [schemaValidity, setSchemaValidity] = useState<Validity>({});
   const [extensionValidity, extendValidity, wait] = useMergeQueue<Validity>({});
   const validity = useMemo(
     () => merge(clone(schemaValidity), clone(extensionValidity)),
-    [schemaValidity, extensionValidity]
+    [schemaValidity, extensionValidity],
   );
 
   const [value, setValue] = useState(initialValue);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const isValid = useMemo(() => {
-    const check = v =>
+    const check = (v) =>
       !v ||
-      typeof v !== 'object' ||
+      typeof v !== "object" ||
       Object.keys(v).reduce(
         (prev, curr) => prev && check(v[curr]),
-        !Array.isArray(v.errors) || v.errors.length < 1
+        !Array.isArray(v.errors) || v.errors.length < 1,
       );
     return check(validity);
   }, [validity]);
@@ -60,7 +59,7 @@ export const useFormManager = <
       const validity = validateAgainstSchema({ schema, value });
       setSchemaValidity(validity);
     },
-    [schema]
+    [schema],
   );
 
   useIsomorphicLayoutEffect(() => {

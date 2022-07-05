@@ -1,14 +1,15 @@
-import React from 'react';
+import React from "react";
 import {
   defaults,
-  useFormManager,
-  FormProps,
   FormManagerOptions,
-} from '../../lib';
+  FormProps,
+  useFormManager,
+} from "../../lib";
 
 export const useStoryFormProps = <T extends unknown>(
-  options: FormManagerOptions<T>
+  options: FormManagerOptions<T>,
 ): FormProps<T | undefined> => {
+  console.log("useStoryFormProps", options);
   const manager = useFormManager<T, FormManagerOptions<T>>({
     ...options,
     registry: defaults.registry,
@@ -16,10 +17,10 @@ export const useStoryFormProps = <T extends unknown>(
   return {
     manager,
     children: (
-      <div style={{ marginTop: '1rem' }}>
+      <div style={{ marginTop: "1rem" }}>
         <button type="submit">
-          {manager.isSubmitted ? 'Submit again' : 'Submit'}{' '}
-          {manager.isValid ? 'valid' : 'invalid'}
+          {manager.isSubmitted ? "Submit again" : "Submit"}{" "}
+          {manager.isValid ? "valid" : "invalid"}
         </button>
       </div>
     ),

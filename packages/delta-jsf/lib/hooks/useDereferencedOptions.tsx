@@ -1,21 +1,19 @@
-import { useCallback, useEffect, useState } from 'react';
-import { FormManagerOptions, Schema } from '../models';
-import { dereference as dereferenceByDefault, hash } from '../utils';
+import { useEffect, useRef, useState } from "react";
+import { FormManagerOptions, Schema } from "../models";
+import { dereference as dereferenceByDefault, hash } from "../utils";
 
 export const useDereferencedOptions = <T extends any>(
-  options: FormManagerOptions<T>
+  options: FormManagerOptions<T>,
 ): FormManagerOptions<T> => {
-  const [schema, setSchema] = useState<Schema>({ type: 'null' });
-  const updateSchema = useCallback(
-    async (withRefs: Schema) => {
-      const dereference = options.dereference ?? dereferenceByDefault;
-      const withoutRefs = await dereference(withRefs);
-      setSchema(withoutRefs);
-    },
-    [options.dereference]
-  );
+  const updated = useRef(false);
+  const dereference = options.dereference ?? dereferenceByDefault;
+  const [schema, setSchema] = useState<Schema>(dereference(options.schema));
   useEffect(() => {
-    updateSchema(options.schema);
-  }, [hash(options.schema)]);
+    if (!updated.current) {
+      updated.current = true;
+      return;
+    }
+    setSchema(dereference(options.schema));
+  }, [dereference, hash(options.schema)]);
   return { ...options, schema };
 };
