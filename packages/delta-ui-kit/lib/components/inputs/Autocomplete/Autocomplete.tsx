@@ -1,25 +1,25 @@
-import { jsx } from '@theme-ui/core';
-import { HTMLAttributes, useState } from 'react';
+import { jsx } from "@theme-ui/core";
+import { HTMLAttributes, useState } from "react";
 import {
   Children,
   createContext,
   forwardRef,
   ReactElement,
   useCallback,
-  useMemo,
   useContext,
   useEffect,
+  useMemo,
   useRef,
-} from 'react';
-import { useDrop, useImperativePortal, useUpdateEffect } from '../../../hooks';
-import { FormWidgetProps } from '../../../types';
-import { getChildrenKey, hash, mergeRefs } from '../../../utils';
-import { Box, SystemContext } from '../../containers';
-import { TextInput } from '../TextInput';
-import { AutocompleteDrop } from './AutocompleteDrop';
-import { AutocompleteOptionProps } from './AutocompleteOption';
-import { AutocompleteSelection } from './AutocompleteSelection';
-import { getInitialInnerValue, getTitleByValue } from './utils';
+} from "react";
+import { useDrop, useImperativePortal, useUpdateEffect } from "../../../hooks";
+import { FormWidgetProps } from "../../../types";
+import { getChildrenKey, hash, mergeRefs } from "../../../utils";
+import { Box, SystemContext } from "../../containers";
+import { TextInput } from "../TextInput";
+import { AutocompleteDrop } from "./AutocompleteDrop";
+import { AutocompleteOptionProps } from "./AutocompleteOption";
+import { AutocompleteSelection } from "./AutocompleteSelection";
+import { getInitialInnerValue, getTitleByValue } from "./utils";
 
 export interface AutocompleteSelection {
   value: unknown;
@@ -46,18 +46,20 @@ export type AutocompleteChild =
   | undefined
   | false;
 
-export interface AutocompleteProps
-  extends Omit<
-      HTMLAttributes<HTMLLabelElement>,
-      'children' | keyof FormWidgetProps
-    >,
-    FormWidgetProps<unknown> {
+export interface AutocompleteProps extends
+  Omit<
+    HTMLAttributes<HTMLLabelElement>,
+    "children" | keyof FormWidgetProps
+  >,
+  FormWidgetProps<unknown> {
   children: AutocompleteChild[] | ((query: string) => AutocompleteChild[]);
   multiple?: boolean;
   placeholder?: string;
   query?: string;
   onQuery?: (query: string) => void;
 }
+
+let autocompleteIndex = 0;
 
 export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
   (
@@ -75,37 +77,38 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
       onBlur,
       ...rest
     },
-    ref
+    ref,
   ) => {
-    const inputId = useMemo(() => crypto.randomUUID(), []);
+    const inputId = useMemo(
+      () => `delta-ui-kit-autocomplete-${autocompleteIndex++}`,
+      [],
+    );
     const inputRef = useRef<HTMLInputElement>(null);
     const { floatingPortal } = useContext(SystemContext);
     const portal = useImperativePortal(floatingPortal);
-    const [innerQuery, setInnerQuery] = useState(query ?? '');
+    const [innerQuery, setInnerQuery] = useState(query ?? "");
     const childrenArray = useMemo(
       () =>
         (children instanceof Function
           ? children(innerQuery)
           : Children.toArray(children).filter(
-              Boolean
-            )) as ReactElement<AutocompleteOptionProps>[],
+            Boolean,
+          )) as ReactElement<AutocompleteOptionProps>[],
       [
         children instanceof Function
           ? hash(children) + hash(innerQuery)
-          : getChildrenKey(children, { pivots: ['value'] }),
-      ]
+          : getChildrenKey(children, { pivots: ["value"] }),
+      ],
     );
     const [backspacePressed, setBackspacePressed] = useState(false);
     const valueItems = useMemo(
       () =>
         multiple
-          ? Array.isArray(value)
-            ? value
-            : []
+          ? Array.isArray(value) ? value : []
           : value === undefined
           ? []
           : [value],
-      [multiple, value]
+      [multiple, value],
     );
     const [selections, setSelections] = useState<AutocompleteSelection[]>(() =>
       getInitialInnerValue(childrenArray, valueItems)
@@ -115,42 +118,44 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
         setBackspacePressed(false);
         const addition = [{ value, title }];
         const nextSelections = multiple
-          ? selections.filter(v => v.value !== value).concat(addition)
+          ? selections.filter((v) => v.value !== value).concat(addition)
           : addition;
         setSelections(nextSelections);
-        setInnerQuery('');
-        onChange?.(multiple ? nextSelections.map(v => v.value) : value);
-        onQuery?.('');
+        setInnerQuery("");
+        onChange?.(multiple ? nextSelections.map((v) => v.value) : value);
+        onQuery?.("");
         inputRef.current?.focus();
       },
-      [selections, onChange, onQuery]
+      [selections, onChange, onQuery],
     );
     const handleRemoval = useCallback(
       (value: unknown) => {
         setBackspacePressed(false);
-        const nextSelections = selections.filter(v => v.value !== value);
+        const nextSelections = selections.filter((v) => v.value !== value);
         setSelections(nextSelections);
         onChange?.(
-          multiple ? nextSelections.map(v => v.value) : nextSelections[0]?.value
+          multiple
+            ? nextSelections.map((v) => v.value)
+            : nextSelections[0]?.value,
         );
       },
-      [selections, onChange]
+      [selections, onChange],
     );
     const dropRef = useRef<HTMLDivElement>(null);
     const closeDropRef = useRef<undefined | (() => void)>();
     const [openDrop, anchorRef] = useDrop<HTMLLabelElement>(
-      props => <AutocompleteDrop ref={dropRef} {...props} />,
+      (props) => <AutocompleteDrop ref={dropRef} {...props} />,
       {
         deps: [],
         portal,
         tailored: true,
         blurResistant: true,
-        placement: 'bottom-start',
-      }
+        placement: "bottom-start",
+      },
     );
     const mergedRef = useMemo(
       () => mergeRefs([ref, anchorRef]),
-      [ref, anchorRef]
+      [ref, anchorRef],
     );
     const handleOpen = useCallback(() => {
       closeDropRef.current = openDrop();
@@ -159,36 +164,36 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
       closeDropRef.current?.();
     }, []);
     const handleQueryChange = useCallback(
-      query => {
+      (query) => {
         handleOpen();
         setBackspacePressed(false);
         setInnerQuery(query);
         onQuery?.(query);
       },
-      [onQuery, handleOpen]
+      [onQuery, handleOpen],
     );
     const contextValue = useMemo<AutocompleteContextValue>(
       () => ({ childrenArray, selections, handleRemoval, handleAddition }),
-      [childrenArray, selections, handleRemoval, handleAddition]
+      [childrenArray, selections, handleRemoval, handleAddition],
     );
     useUpdateEffect(() => {
       if (
         valueItems.length !== selections.length ||
-        valueItems.some(item => selections.every(v => v.value !== item))
+        valueItems.some((item) => selections.every((v) => v.value !== item))
       ) {
         setSelections(
-          valueItems.map(v => ({
+          valueItems.map((v) => ({
             value: v,
             title: getTitleByValue(childrenArray, v),
-          }))
+          })),
         );
       }
     }, [valueItems]);
     useUpdateEffect(() => {
-      query !== innerQuery && setInnerQuery(query ?? '');
+      query !== innerQuery && setInnerQuery(query ?? "");
     }, [query]);
     useEffect(() => {
-      const handleNativeBlur = ev => {
+      const handleNativeBlur = (ev) => {
         if (
           !ev.relatedTarget ||
           !dropRef.current ||
@@ -198,12 +203,12 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
           handleClose();
         }
       };
-      const handleKeydown = ev => {
-        if (ev.key === 'ArrowDown') {
+      const handleKeydown = (ev) => {
+        if (ev.key === "ArrowDown") {
           handleOpen();
           return;
         }
-        if (ev.key === 'Backspace') {
+        if (ev.key === "Backspace") {
           if (ev.target.selectionStart === 0) {
             if (backspacePressed) {
               setBackspacePressed(false);
@@ -217,11 +222,11 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
           return;
         }
       };
-      inputRef.current?.addEventListener('blur', handleNativeBlur);
-      inputRef.current?.addEventListener('keydown', handleKeydown);
+      inputRef.current?.addEventListener("blur", handleNativeBlur);
+      inputRef.current?.addEventListener("keydown", handleKeydown);
       return () => {
-        inputRef.current?.removeEventListener('blur', handleNativeBlur);
-        inputRef.current?.removeEventListener('keydown', handleKeydown);
+        inputRef.current?.removeEventListener("blur", handleNativeBlur);
+        inputRef.current?.removeEventListener("keydown", handleKeydown);
       };
     }, [handleOpen, backspacePressed, selections]);
     return (
@@ -233,34 +238,34 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
           style={{
             ...((selections?.length || 0) === 0
               ? {
-                  padding: '0.55em 0.60em',
-                }
+                padding: "0.55em 0.60em",
+              }
               : {}),
           }}
           sx={{
-            boxSizing: 'border-box',
-            width: '100%',
-            position: 'relative',
-            backgroundColor: 'accentContext',
+            boxSizing: "border-box",
+            width: "100%",
+            position: "relative",
+            backgroundColor: "accentContext",
             borderRadius: 4,
-            padding: '3px',
-            gap: '2px',
-            height: '100%',
-            letterSpacing: 'normal',
-            display: 'flex',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            cursor: disabled ? 'not-allowed' : 'text',
-            '&:focus-within': {
-              outline: '2px solid',
-              outlineColor: 'primary',
+            padding: "3px",
+            gap: "2px",
+            height: "100%",
+            letterSpacing: "normal",
+            display: "flex",
+            alignItems: "center",
+            flexWrap: "wrap",
+            cursor: disabled ? "not-allowed" : "text",
+            "&:focus-within": {
+              outline: "2px solid",
+              outlineColor: "primary",
             },
           }}
           {...rest}
         >
           {selections.map(({ value, title }, index) => {
-            const removing =
-              backspacePressed && index === selections.length - 1;
+            const removing = backspacePressed &&
+              index === selections.length - 1;
             return (
               <AutocompleteSelection
                 key={hash(value)}
@@ -271,7 +276,7 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
               </AutocompleteSelection>
             );
           })}
-          <Box sx={{ width: 'fit-content', flexGrow: 1 }}>
+          <Box sx={{ width: "fit-content", flexGrow: 1 }}>
             <TextInput
               ref={inputRef}
               autoComplete="off"
@@ -279,7 +284,7 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
               placeholder={placeholder}
               style={{
                 ...((selections?.length || 0) !== 0
-                  ? { padding: '0.45em 0.50em' }
+                  ? { padding: "0.45em 0.50em" }
                   : {}),
               }}
               sx={{ fontSize: 2 }}
@@ -297,5 +302,5 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
         </label>
       </AutocompleteContext.Provider>
     );
-  }
+  },
 );
