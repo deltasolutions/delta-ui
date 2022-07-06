@@ -26,11 +26,13 @@
     "ajv-i18n": "^4.2.0",
     "dayjs": "^1.11.3",
     "delta-jsf": ">=0.8.0",
+    "leaflet": "^1.8.0",
     "react": ">=16.13.1",
     "react-dnd": ">=14.0.4",
     "react-dnd-html5-backend": ">=14.0.2",
     "react-dom": ">=16.13.1",
     "react-hook-form": "^7.31.2",
-    "react-i18next": ">=11.13.0"
+    "react-i18next": ">=11.13.0",
+    "react-leaflet": "^4.0.1"
   }
 }

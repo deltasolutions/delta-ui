@@ -1,7 +1,8 @@
 import { Global } from '@emotion/react';
 import { jsx } from '@theme-ui/core';
-import { I18nextProvider } from 'react-i18next';
-import { Box, SystemContainer, deltaTheme } from '../lib';
+import { Box, deltaTheme, SystemContainer } from '../lib';
+
+import 'leaflet/dist/leaflet.css';
 
 export const parameters = {
   layout: 'fullscreen',

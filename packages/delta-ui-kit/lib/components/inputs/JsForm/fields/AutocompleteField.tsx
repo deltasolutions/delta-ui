@@ -1,8 +1,8 @@
-import { jsx } from "@theme-ui/core";
-import { FieldProps } from "delta-jsf";
-import { ReactNode, useEffect, useState } from "react";
-import { useDebounce } from "../../../../hooks";
-import { Autocomplete, AutocompleteOption } from "../../Autocomplete";
+import { jsx } from '@theme-ui/core';
+import { FieldProps } from 'delta-jsf';
+import { ReactNode, useEffect, useState } from 'react';
+import { useDebounce } from '../../../../hooks';
+import { Autocomplete, AutocompleteOption } from '../../Autocomplete';
 
 export interface AutocompleteOptionsInit {
   target?: unknown;
@@ -21,12 +21,12 @@ export const AutocompleteField = (props: FieldProps) => {
     },
   } = props;
   const { placeholder, target } = schema.layout ?? {};
-  const multiple = schema.type === "array";
+  const multiple = schema.type === 'array';
   const optionsFromSchema = multiple
     ? (schema.items as { oneOf: unknown[] })?.oneOf
     : (schema.oneOf as unknown);
   const sanitizeOptions = (
-    data: unknown,
+    data: unknown
   ): {
     title: string;
     const: unknown;
@@ -34,17 +34,21 @@ export const AutocompleteField = (props: FieldProps) => {
   }[] => {
     return Array.isArray(data)
       ? data.reduce(
-        (p, v) =>
-          typeof v === "object" && typeof v.title === "string" && "const" in v
-            ? [...p, v]
-            : p,
-        [],
-      )
+          (p, v) =>
+            typeof v === 'object' && typeof v.title === 'string' && 'const' in v
+              ? [...p, v]
+              : p,
+          []
+        )
       : [];
   };
-  const sanitizeValue = (value) => {
+  const sanitizeValue = value => {
     const maybeValue = value ?? schema.default;
-    return multiple ? Array.isArray(maybeValue) ? maybeValue : [] : maybeValue;
+    return multiple
+      ? Array.isArray(maybeValue)
+        ? maybeValue
+        : []
+      : maybeValue;
   };
   const [options, setOptions] = useState(() => {
     if (optionsFromSchema) {
@@ -56,7 +60,7 @@ export const AutocompleteField = (props: FieldProps) => {
     const maybeOptions = getAutocompleteOptions({ target, value });
     return Array.isArray(maybeOptions) ? maybeOptions : [];
   });
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const debouncedQuery = useDebounce(query, 200);
   useEffect(() => {
     if (optionsFromSchema || !getAutocompleteOptions) {
@@ -88,7 +92,7 @@ export const AutocompleteField = (props: FieldProps) => {
       >
         {options.map((v, i) => (
           <AutocompleteOption
-            key={i + "-" + v.title}
+            key={i + '-' + v.title}
             title={v.title}
             value={v.const}
           >

@@ -1,13 +1,13 @@
-import { jsx } from "@emotion/react";
-import { JsForm } from "../../lib";
-import { useStoryFormProps } from "./useStoryFormProps";
+import { jsx } from '@emotion/react';
+import { JsForm } from '../../lib';
+import { useStoryFormProps } from './useStoryFormProps';
 
-export const GenericFormStory = (props) => {
+export const GenericFormStory = props => {
   const { schema, ...rest } = props ?? {};
   const formProps = useStoryFormProps({
     schema: schema || {
-      type: "null",
-      title: "Invalid JSON",
+      type: 'null',
+      title: 'Invalid JSON',
     },
     ...rest,
   });
