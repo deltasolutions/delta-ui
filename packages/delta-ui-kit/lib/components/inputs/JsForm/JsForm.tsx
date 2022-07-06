@@ -1,13 +1,13 @@
-import { ErrorObject as AjvError } from 'ajv';
-import localizeEn from 'ajv-i18n/localize/en';
-import localizeRu from 'ajv-i18n/localize/ru';
+import { ErrorObject as AjvError } from "ajv";
+import localizeEn from "ajv-i18n/localize/en";
+import localizeRu from "ajv-i18n/localize/ru";
 import {
   defaults as basicJsFormDefaults,
   Form as JsForm,
   merge,
   useFormManager as useBasicJsFormManager,
   validateAgainstSchemaViaAjv,
-} from 'delta-jsf';
+} from "delta-jsf";
 // It seems that esbuild fails to differ
 // type imports from usual ones when alias is used.
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
@@ -16,35 +16,35 @@ import type {
   FormManagerOptions as JsFormManagerOptions,
   FormProps as JsFormProps,
   ValidateAgainstSchemaOptions,
-} from 'delta-jsf';
-import { useCallback, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
-import { fields as customFields } from './fields';
-import { templates as customTemplates } from './templates';
+} from "delta-jsf";
+import { useCallback, useMemo } from "react";
+import { useTranslation } from "react-i18next";
+import { fields as customFields } from "./fields";
+import { templates as customTemplates } from "./templates";
 
 const { fields, templates, utils } = basicJsFormDefaults.registry;
 
 export const useJsFormDefaults = () => {
   const { i18n } = useTranslation();
   const transformAjvErrors = useMemo(() => {
-    const fn = ({
+    const localize = ({
       en: localizeEn,
       ru: localizeRu,
-    }[i18n.language] ?? (v => v)) as (es: AjvError[]) => AjvError[];
+    }[i18n.language] ?? ((v) => v)) as (es: AjvError[]) => AjvError[];
     return (es: AjvError[]) => {
-      const localized = fn(es);
-      return localized.map(e => ({
-        ...e,
-        message: e.message
+      localize(es);
+      es.forEach((e) => {
+        e.message = e.message
           ? e.message.charAt(0).toUpperCase() + e.message.slice(1)
-          : '',
-      }));
+          : undefined;
+      });
+      return es;
     };
   }, [i18n.language]);
   const validateAgainstSchema = useCallback(
     (options: ValidateAgainstSchemaOptions) =>
       validateAgainstSchemaViaAjv({ ...options, transformAjvErrors }),
-    [transformAjvErrors]
+    [transformAjvErrors],
   );
   return useMemo(
     () => ({
@@ -57,25 +57,24 @@ export const useJsFormDefaults = () => {
         },
       },
     }),
-    [i18n.language, validateAgainstSchema]
+    [i18n.language, validateAgainstSchema],
   );
 };
 
 const useJsFormManager = <
   T extends unknown,
-  O extends JsFormManagerOptions<T> = JsFormManagerOptions<T>
+  O extends JsFormManagerOptions<T> = JsFormManagerOptions<T>,
 >(
-  options: O
+  options: O,
 ) => {
   const defaults = useJsFormDefaults();
   const mergedOptions = useMemo(
     () => merge({}, defaults, options),
-    [defaults, options]
+    [defaults, options],
   );
   return useBasicJsFormManager(mergedOptions) as O extends {
     initialValue: T;
-  }
-    ? JsFormManager<T>
+  } ? JsFormManager<T>
     : JsFormManager<T | undefined>;
 };
 
