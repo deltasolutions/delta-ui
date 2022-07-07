@@ -1,7 +1,7 @@
 import { jsx } from '@theme-ui/core';
-import { forwardRef, HtmlHTMLAttributes } from 'react';
+import { forwardRef, HTMLAttributes } from 'react';
 
-export interface BoxProps extends HtmlHTMLAttributes<HTMLDivElement> {}
+export interface BoxProps extends HTMLAttributes<HTMLDivElement> {}
 
 export const Box = forwardRef<HTMLDivElement, BoxProps>(
   (props: BoxProps, ref) => {

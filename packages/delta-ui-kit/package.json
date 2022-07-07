@@ -1,6 +1,6 @@
 {
   "name": "delta-ui-kit",
-  "version": "0.4.13",
+  "version": "0.4.25",
   "license": "MIT",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -20,12 +20,19 @@
   "peerDependencies": {
     "@emotion/react": ">=11.5.0",
     "@theme-ui/core": ">=0.11.3",
+    "@visx/curve": "^2.1.0",
+    "@visx/gradient": "^2.10.0",
+    "@visx/xychart": "^2.11.1",
+    "ajv-i18n": "^4.2.0",
+    "dayjs": "^1.11.3",
     "delta-jsf": ">=0.8.0",
+    "leaflet": "^1.8.0",
     "react": ">=16.13.1",
     "react-dnd": ">=14.0.4",
     "react-dnd-html5-backend": ">=14.0.2",
     "react-dom": ">=16.13.1",
     "react-hook-form": "^7.31.2",
-    "react-i18next": ">=11.13.0"
+    "react-i18next": ">=11.13.0",
+    "react-leaflet": "^4.0.1"
   }
 }

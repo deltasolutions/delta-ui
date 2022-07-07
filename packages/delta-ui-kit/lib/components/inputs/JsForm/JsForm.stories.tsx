@@ -36,6 +36,7 @@ export const Basics = createFormStory({
         },
       },
     },
+    required: ['select'],
   },
   initialValue: {
     text: 'abcd',

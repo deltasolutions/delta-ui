@@ -20,13 +20,19 @@ export const Anchor = forwardRef<HTMLAnchorElement, AnchorProps>(
           fontWeight: 'inherit',
           whiteSpace: 'inherit',
           borderRadius: 2,
+          textDecoration: 'none',
           '&:focus-visible': {
             outlineColor: 'primary',
           },
           '&:active, &:focus-visible, &:hover': {
             color: 'accentOnBackground',
           },
-          textDecoration: variant === 'pure' ? 'none' : 'underline',
+          ...(variant === 'pure'
+            ? {}
+            : {
+                textDecoration: 'underline',
+                textUnderlineOffset: '1px',
+              }),
         }}
         {...rest}
       >

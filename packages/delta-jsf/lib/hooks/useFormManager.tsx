@@ -1,70 +1,75 @@
-import { useCallback, useMemo, useState } from 'react';
-import { defaults } from '../components';
-import { ValidateAgainstSchemaFunction, Validity } from '../models';
-import { FormManager, FormManagerOptions } from '../models';
-import { clone, merge } from '../utils';
-import { useDereferencedOptions } from './useDereferencedOptions';
-import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
-import { useMergeQueue } from './useMergeQueue';
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { defaults } from "../components";
+import { ValidateAgainstSchemaFunction, Validity } from "../models";
+import { FormManager, FormManagerOptions } from "../models";
+import { checkValidity, clone, merge } from "../utils";
+import { useDereferencedOptions } from "./useDereferencedOptions";
+import { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect";
+import { useMergeQueue } from "./useMergeQueue";
 
 export const useFormManager = <
   T extends unknown,
-  Options extends FormManagerOptions<T> = FormManagerOptions<T>
+  Options extends FormManagerOptions<T> = FormManagerOptions<T>,
 >(
-  options: Options
-): Options extends { initialValue: T }
-  ? FormManager<T>
+  options: Options,
+): Options extends { initialValue: T } ? FormManager<T>
   : FormManager<T | undefined> => {
   const dereferencedOptions = useDereferencedOptions(options);
-  const { schema, initialValue, onValue, onValidity, onSubmit, registry } =
-    dereferencedOptions;
+  const {
+    schema,
+    initialValue,
+    registry,
+    liveValidated,
+    onValue,
+    onValidity,
+    onSubmit,
+  } = dereferencedOptions;
   const validateAgainstSchema: ValidateAgainstSchemaFunction =
     registry?.utils?.validateAgainstSchema ??
-    defaults.registry.utils.validateAgainstSchema;
+      defaults.registry.utils.validateAgainstSchema;
+
+  const [value, setValue] = useState(initialValue);
 
   const [schemaValidity, setSchemaValidity] = useState<Validity>({});
   const [extensionValidity, extendValidity, wait] = useMergeQueue<Validity>({});
-  const validity = useMemo(
-    () => merge(clone(schemaValidity), clone(extensionValidity)),
-    [schemaValidity, extensionValidity]
-  );
+  const [validity, setValidity] = useState<Validity>({});
+  const flushValidity = useCallback(() => {
+    const validity = merge(clone(schemaValidity), clone(extensionValidity));
+    setValidity(validity);
+    return validity;
+  }, [schemaValidity, extensionValidity]);
 
-  const [value, setValue] = useState(initialValue);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const isValid = useMemo(() => {
-    const check = v =>
-      !v ||
-      typeof v !== 'object' ||
-      Object.keys(v).reduce(
-        (prev, curr) => prev && check(v[curr]),
-        !Array.isArray(v.errors) || v.errors.length < 1
-      );
-    return check(validity);
-  }, [validity]);
-
-  const submit = useCallback(async () => {
-    await wait();
-    // TODO: remove type cast
-    onSubmit?.(value as T);
-    setIsSubmitted(true);
-    return value;
-  }, [value]);
-
-  // TODO:
-  // Add ability to defer validation to different events,
-  // so the `validate` function splits into `validateAgainstSchema`
-  // (already in registry) for usage inside `onValue` and `flushValidity`
-  // to be used either in `onValue` or in `onSubmit`.
+  const valid = useMemo(() => checkValidity(validity), [validity]);
   const validate = useCallback(
-    (value: T) => {
+    () => {
       const validity = validateAgainstSchema({ schema, value });
       setSchemaValidity(validity);
     },
-    [schema]
+    [schema, value],
   );
 
+  const [submitted, setSubmitted] = useState(false);
+  const [submitRequested, setSubmitRequested] = useState(false);
+  const submit = useCallback(async () => {
+    await wait();
+    validate();
+    setSubmitRequested(true);
+  }, [validate]);
+
+  useEffect(() => {
+    if (!submitRequested) {
+      return;
+    }
+    setSubmitRequested(false);
+    const validity = flushValidity();
+    const valid = checkValidity(validity);
+    if (valid) {
+      onSubmit?.(value as T);
+      setSubmitted(true);
+    }
+  }, [submitRequested]);
+
   useIsomorphicLayoutEffect(() => {
-    // TODO: remove type cast
     onValue?.(value as T);
   }, [value]);
 
@@ -72,16 +77,34 @@ export const useFormManager = <
     onValidity?.(validity);
   }, [validity]);
 
+  useIsomorphicLayoutEffect(() => {
+    validate();
+  }, [validate]);
+
+  useEffect(() => {
+    liveValidated && flushValidity();
+  }, [liveValidated, flushValidity]);
+
   return {
     options: dereferencedOptions,
+
     value,
     setValue,
+
     validity,
     extendValidity,
-    isValid,
-    isSubmitted,
-    wait,
-    submit,
+    flushValidity,
+
+    valid,
     validate,
+
+    submitted,
+    submitRequested,
+    submit,
+
+    isValid: valid,
+    isSubmitted: submitted,
+
+    wait,
   } as any;
 };

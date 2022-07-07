@@ -1,8 +1,14 @@
-import { jsx } from '@theme-ui/core';
-import { FieldProps } from 'delta-jsf';
-import { ReactNode, useEffect, useState } from 'react';
-import { useDebounce } from '../../../../hooks';
-import { Autocomplete, AutocompleteOption } from '../../Autocomplete';
+import { jsx } from "@theme-ui/core";
+import { FieldProps } from "delta-jsf";
+import { ReactNode, useEffect, useState } from "react";
+import { useDebounce } from "../../../../hooks";
+import { Autocomplete, AutocompleteOption } from "../../Autocomplete";
+
+export interface AutocompleteOptionsInit {
+  target?: unknown;
+  query?: string;
+  value?: unknown;
+}
 
 export const AutocompleteField = (props: FieldProps) => {
   const {
@@ -14,13 +20,13 @@ export const AutocompleteField = (props: FieldProps) => {
       utils: { getAutocompleteOptions },
     },
   } = props;
-  const { placeholder, source } = schema.layout ?? {};
-  const multiple = schema.type === 'array';
+  const { placeholder, target } = schema.layout ?? {};
+  const multiple = schema.type === "array";
   const optionsFromSchema = multiple
     ? (schema.items as { oneOf: unknown[] })?.oneOf
     : (schema.oneOf as unknown);
   const sanitizeOptions = (
-    data: unknown
+    data: unknown,
   ): {
     title: string;
     const: unknown;
@@ -28,25 +34,29 @@ export const AutocompleteField = (props: FieldProps) => {
   }[] => {
     return Array.isArray(data)
       ? data.reduce(
-          (p, v) =>
-            typeof v === 'object' && typeof v.title === 'string' && 'const' in v
-              ? [...p, v]
-              : p,
-
-          []
-        )
+        (p, v) =>
+          typeof v === "object" && typeof v.title === "string" && "const" in v
+            ? [...p, v]
+            : p,
+        [],
+      )
       : [];
   };
-  const sanitizeValue = value => {
+  const sanitizeValue = (value) => {
     const maybeValue = value ?? schema.default;
-    return multiple
-      ? Array.isArray(maybeValue)
-        ? maybeValue
-        : []
-      : maybeValue;
+    return multiple ? Array.isArray(maybeValue) ? maybeValue : [] : maybeValue;
   };
-  const [options, setOptions] = useState(sanitizeOptions(optionsFromSchema));
-  const [query, setQuery] = useState('');
+  const [options, setOptions] = useState(() => {
+    if (optionsFromSchema) {
+      return sanitizeOptions(optionsFromSchema);
+    }
+    // Is options getter is ready to return options for initial value
+    // (without server-related or other promise-based response),
+    // then we definitely should use it.
+    const maybeOptions = getAutocompleteOptions?.({ target, value });
+    return Array.isArray(maybeOptions) ? maybeOptions : [];
+  });
+  const [query, setQuery] = useState("");
   const debouncedQuery = useDebounce(query, 200);
   useEffect(() => {
     if (optionsFromSchema || !getAutocompleteOptions) {
@@ -55,7 +65,8 @@ export const AutocompleteField = (props: FieldProps) => {
     }
     const handleOptions = async () => {
       try {
-        const options = await getAutocompleteOptions(debouncedQuery, source);
+        const init: AutocompleteOptionsInit = { target, query: debouncedQuery };
+        const options = await getAutocompleteOptions?.(init);
         setOptions(sanitizeOptions(options));
       } catch {
         setOptions([]);
@@ -77,7 +88,7 @@ export const AutocompleteField = (props: FieldProps) => {
       >
         {options.map((v, i) => (
           <AutocompleteOption
-            key={i + '-' + v.title}
+            key={i + "-" + v.title}
             title={v.title}
             value={v.const}
           >

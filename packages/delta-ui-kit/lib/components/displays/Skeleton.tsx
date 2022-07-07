@@ -1,8 +1,8 @@
 import { keyframes } from '@emotion/react';
 import { jsx } from '@theme-ui/core';
-import { Box, BoxProps } from 'delta-ui-kit';
+import { Box, BoxProps } from '../containers';
 
-export interface SkeletonProps extends BoxProps {}
+export interface SkeletonProps extends Omit<BoxProps, 'children'> {}
 
 export const Skeleton = (props: SkeletonProps) => {
   return (
@@ -11,8 +11,8 @@ export const Skeleton = (props: SkeletonProps) => {
         position: 'relative',
         overflow: 'hidden',
         borderRadius: 4,
-        width: '100%',
-        height: '100%',
+        height: '1em',
+        width: '5em',
         backgroundColor: 'accentContext',
         maskImage:
           `linear-gradient(90deg, ` +

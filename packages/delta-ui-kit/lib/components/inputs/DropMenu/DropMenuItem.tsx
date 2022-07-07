@@ -66,6 +66,7 @@ export const DropMenuItem = forwardRef<HTMLButtonElement, DropMenuItemProps>(
           borderRadius: '2px',
           gap: 2,
           fontSize: 2,
+          fontFamily: 'inherit',
           '&:focus, &:active, &:focus-visible': {
             backgroundColor: 'accentContext',
             color: 'onPrimary',

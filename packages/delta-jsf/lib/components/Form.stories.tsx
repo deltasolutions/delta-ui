@@ -1,50 +1,50 @@
-import { Meta } from '@storybook/react';
-import React from 'react';
-import { formStoryParameters, useStoryFormProps } from '../../docs/utils';
-import { Form } from '../../lib';
+import { Meta } from "@storybook/react";
+import React from "react";
+import { formStoryParameters, useStoryFormProps } from "../../docs/utils";
+import { Form } from "../../lib";
 
 const meta: Meta = {
-  title: 'General/Form',
+  title: "General/Form",
   ...formStoryParameters,
 };
 
 export default meta;
 
-export const Basics = props => {
+export const Basics = (props) => {
   const formProps = useStoryFormProps({
     ...props,
     schema: {
-      type: 'object',
-      title: 'Form',
+      type: "object",
+      title: "Form",
       allOf: [
         {
-          type: 'object',
+          type: "object",
           properties: {
             a: {
-              type: 'integer',
-              title: 'AAA',
+              type: "integer",
+              title: "AAA",
               maximum: 5,
             },
           },
         },
         {
-          type: 'object',
+          type: "object",
           if: {
-            type: 'object',
+            type: "object",
             properties: {
               a: { const: 5 },
             },
-            required: ['a'],
+            required: ["a"],
           },
           then: {
-            type: 'object',
+            type: "object",
             properties: {
               b: {
-                type: 'string',
-                title: 'BBB',
-                oneOf: [{ const: '1' }, { const: '2' }, { const: '3' }],
+                type: "string",
+                title: "BBB",
+                oneOf: [{ const: "1" }, { const: "2" }, { const: "3" }],
                 layout: {
-                  field: 'select',
+                  field: "select",
                 },
               },
             },
@@ -56,60 +56,76 @@ export const Basics = props => {
   return <Form {...formProps} />;
 };
 
-export const Collections = props => {
+export const LiveValidated = (props) => {
   const formProps = useStoryFormProps({
     ...props,
     schema: {
-      type: 'array',
-      title: 'Collection',
+      type: "number",
+      title: "Your age",
+      description: "1 <= x <= 100",
+      minimum: 1,
+      maximum: 100,
+    },
+    initialValue: 0,
+    liveValidated: true,
+  });
+  return <Form {...formProps} />;
+};
+
+export const Collections = (props) => {
+  const formProps = useStoryFormProps({
+    ...props,
+    schema: {
+      type: "array",
+      title: "Collection",
       items: {
-        type: 'object',
+        type: "object",
         properties: {
           name: {
-            title: 'Name',
-            type: 'string',
+            title: "Name",
+            type: "string",
           },
         },
-        required: ['name'],
+        required: ["name"],
       },
     },
   });
   return <Form {...formProps} />;
 };
 
-export const HiddenField = props => {
+export const HiddenField = (props) => {
   const formProps = useStoryFormProps({
     ...props,
     schema: {
-      type: 'object',
+      type: "object",
       properties: {
         name: {
-          title: 'Name',
-          type: 'string',
+          title: "Name",
+          type: "string",
         },
         surname: {
-          title: 'Surname',
-          type: 'string',
+          title: "Surname",
+          type: "string",
           layout: {
-            field: 'hidden',
+            field: "hidden",
           },
         },
       },
     },
     initialValue: {
-      name: 'Lorem',
-      surname: 'Ipsum',
+      name: "Lorem",
+      surname: "Ipsum",
     },
   });
   return <Form {...formProps} />;
 };
 
-export const Sandbox = props => {
+export const Sandbox = (props) => {
   const { schema, ...rest } = props ?? {};
   const formProps = useStoryFormProps({
     schema: schema || {
-      type: 'null',
-      title: 'Invalid JSON',
+      type: "null",
+      title: "Invalid JSON",
     },
     ...rest,
   });
@@ -117,60 +133,60 @@ export const Sandbox = props => {
 };
 Sandbox.args = {
   schema: {
-    type: 'object',
-    title: 'Please, login',
+    type: "object",
+    title: "Please, login",
     properties: {
       username: {
-        title: 'Username',
-        type: 'string',
+        title: "Username",
+        type: "string",
       },
       password: {
-        title: 'Password',
-        type: 'string',
+        title: "Password",
+        type: "string",
         minLength: 8,
       },
     },
-    required: ['username', 'password'],
+    required: ["username", "password"],
   },
   initialValue: {},
 };
 
-export const ComplexDeps = props => {
+export const ComplexDeps = (props) => {
   const formProps = useStoryFormProps({
     ...props,
     schema: {
-      type: 'object',
-      title: 'Complex Deps',
+      type: "object",
+      title: "Complex Deps",
       allOf: [
         {
-          type: 'object',
+          type: "object",
           properties: {
             a: {
-              title: 'AAA',
+              title: "AAA",
               description: 'Type in "1234"',
-              type: 'string',
+              type: "string",
             },
           },
         },
         {
-          type: 'object',
+          type: "object",
           properties: {
             b: {
-              title: 'BBB',
-              type: 'string',
+              title: "BBB",
+              type: "string",
             },
           },
         },
         {
           if: {
-            type: 'object',
+            type: "object",
             properties: {
-              a: { const: '1234' },
+              a: { const: "1234" },
             },
-            required: ['a'],
+            required: ["a"],
           },
           then: {
-            required: ['b'],
+            required: ["b"],
           },
         },
       ],
