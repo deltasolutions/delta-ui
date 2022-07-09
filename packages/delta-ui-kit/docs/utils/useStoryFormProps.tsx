@@ -26,7 +26,6 @@ export const useStoryFormProps = <T extends unknown>(
         }}
       >
         <Button
-          zoomable
           color="primary"
           type="submit"
           variant="outlined"

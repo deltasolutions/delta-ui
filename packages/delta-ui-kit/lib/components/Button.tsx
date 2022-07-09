@@ -2,16 +2,14 @@ import { jsx } from '@theme-ui/core';
 import {
   ButtonHTMLAttributes,
   ComponentType,
-  DOMAttributes,
   forwardRef,
   HTMLAttributes,
 } from 'react';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'contained' | 'outlined' | 'contextual' | 'text';
+  variant?: 'contained' | 'contained-dimmed' | 'outlined' | 'text';
   color?: 'primary' | 'secondary' | 'success' | 'error';
   size?: 'small' | 'medium' | 'large';
-  zoomable?: boolean;
   icon?: ComponentType<HTMLAttributes<Element>>;
 }
 
@@ -21,7 +19,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       variant,
       color,
       size,
-      zoomable,
       icon: Icon,
       children,
       disabled,
@@ -49,12 +46,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             outline: '2px solid',
             outlineColor: 'primary',
           },
-          ...(zoomable && {
-            '&:not(:disabled)': {
-              '&:hover, &:focus-visible': { transform: 'scale(1.05)' },
-              '&:active': { transform: 'scale(1)' },
-            },
-          }),
           ...getSizeStyle(props),
           ...getVariantStyle(props),
         }}
@@ -118,7 +109,7 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps): any => {
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
     textTransform: 'uppercase',
-    letterSpacing: 2,
+    letterSpacing: '0.15em',
     fontWeight: 600,
     ...{
       contained: {
@@ -143,29 +134,7 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps): any => {
           '&:not(:disabled):hover': { backgroundColor: 'accentError' },
         },
       },
-      outlined: {
-        primary: {
-          border: '2px solid',
-          borderColor: 'accentContext',
-          color: 'primary',
-        },
-        secondary: {
-          border: '2px solid',
-          borderColor: 'accentContext',
-          color: 'secondary',
-        },
-        success: {
-          border: '2px solid',
-          borderColor: 'accentContext',
-          color: 'success',
-        },
-        error: {
-          border: '2px solid',
-          borderColor: 'accentContext',
-          color: 'error',
-        },
-      },
-      contextual: {
+      'contained-dimmed': {
         primary: {
           backgroundColor: 'accentContext',
           color: 'accentOnContext',
@@ -196,6 +165,40 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps): any => {
           '&:not(:disabled):hover': {
             backgroundColor: 'accentError',
             color: 'onError',
+          },
+        },
+      },
+      outlined: {
+        primary: {
+          border: '2px solid',
+          borderColor: 'accentContext',
+          color: 'primary',
+          '&:not(:disabled):hover': {
+            borderColor: 'primary',
+          },
+        },
+        secondary: {
+          border: '2px solid',
+          borderColor: 'accentContext',
+          color: 'secondary',
+          '&:not(:disabled):hover': {
+            borderColor: 'secondary',
+          },
+        },
+        success: {
+          border: '2px solid',
+          borderColor: 'accentContext',
+          color: 'success',
+          '&:not(:disabled):hover': {
+            borderColor: 'success',
+          },
+        },
+        error: {
+          border: '2px solid',
+          borderColor: 'accentContext',
+          color: 'error',
+          '&:not(:disabled):hover': {
+            borderColor: 'error',
           },
         },
       },

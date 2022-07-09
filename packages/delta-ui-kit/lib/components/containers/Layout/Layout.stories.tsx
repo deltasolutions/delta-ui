@@ -138,10 +138,14 @@ export const Resource = () => {
         <LayoutMainHeader>
           <Heading level={1}>Datacenter 1</Heading>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Button color="secondary" icon={RiEditFill} variant="contextual">
+            <Button
+              color="secondary"
+              icon={RiEditFill}
+              variant="contained-dimmed"
+            >
               Edit
             </Button>
-            <Button color="error" icon={IoTrashBin} variant="contextual">
+            <Button color="error" icon={IoTrashBin} variant="contained-dimmed">
               Delete
             </Button>
           </Box>
@@ -196,7 +200,7 @@ export const Collection = () => {
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             <Button
               color="secondary"
-              variant="contextual"
+              variant="contained-dimmed"
               onClick={() => openModal()}
             >
               Create
@@ -241,10 +245,10 @@ export const Form = () => {
         <LayoutMainHeader>
           <Heading level={1}>Edit Device 1</Heading>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Button color="secondary" variant="contextual">
+            <Button color="secondary" variant="contained-dimmed">
               Cancel
             </Button>
-            <Button color="success" variant="contextual">
+            <Button color="success" variant="contained-dimmed">
               Save
             </Button>
           </Box>

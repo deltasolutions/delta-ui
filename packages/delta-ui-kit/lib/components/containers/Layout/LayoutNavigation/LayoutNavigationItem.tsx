@@ -27,7 +27,7 @@ export const LayoutNavigationItem = forwardRef<
     <Anchor
       ref={ref}
       sx={{
-        py: 2,
+        py: '0.60rem',
         px: '1.35rem',
         position: 'relative',
         fontSize: 2,

@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo } from 'react';
 
 const iconSize = 40;
 
@@ -11,14 +11,14 @@ export const useLeafletDefaults = () => {
         zoom: 13,
       },
       tileLayer: {
-        url:
-          "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png",
+        url: 'https://maps.geoapify.com/v1/tile/osm-bright-smooth/{z}/{x}/{y}.png?apiKey=45f65f7fc5bb47399e2d560a2f8d9bd3',
       },
-      icon: ({
-        iconUrl: `data:image/svg+xml;base64,` +
+      icon: {
+        iconUrl:
+          `data:image/svg+xml;base64,` +
           `PHN2ZyBzdHJva2U9ImN1cnJlbnRDb2xvciIgZmlsbD0iY3VycmVudENvbG9y` +
           `IiBzdHJva2Utd2lkdGg9IjAiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBzdHls` +
-          `ZT0iY29sb3I6IzE5YWY0ZSIgaGVpZ2h0PSI0MCIgd2lkdGg9IjQwIiB4bWxu` +
+          `ZT0iY29sb3I6IzMxOGJlNCIgaGVpZ2h0PSI0MCIgd2lkdGg9IjQwIiB4bWxu` +
           `cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjI1` +
           `NiIgY3k9IjE5MiIgcj0iMzIiPjwvY2lyY2xlPjxwYXRoIGQ9Ik0yNTYgMzJj` +
           `LTg4LjIyIDAtMTYwIDY4LjY1LTE2MCAxNTMgMCA0MC4xNyAxOC4zMSA5My41` +
@@ -27,7 +27,8 @@ export const useLeafletDefaults = () => {
           `IDgwLTEyMy4yMkMzOTcuNjkgMjc4LjYxIDQxNiAyMjUuMTkgNDE2IDE4NWMw` +
           `LTg0LjM1LTcxLjc4LTE1My0xNjAtMTUzem0wIDIyNGE2NCA2NCAwIDExNjQt` +
           `NjQgNjQuMDcgNjQuMDcgMCAwMS02NCA2NHoiPjwvcGF0aD48L3N2Zz4=`,
-        shadowUrl: `data:image/png;base64,` +
+        shadowUrl:
+          `data:image/png;base64,` +
           `iVBORw0KGgoAAAANSUhEUgAAACkAAAApCAQAAAACach9AAACMUlEQVR4Ae3S` +
           `hY7jQBAE0Aoz/f9/HTMzhg1zrdKUrJbdx+Kd2nD8VNudfsL/Th///dyQN2TH` +
           `6f3y/BGpC379rV+S+qqetBOxImNQXL8JCAr2V4iMQXHGNJxeCfZXhSRBcQMf` +
@@ -45,8 +46,8 @@ export const useLeafletDefaults = () => {
         iconAnchor: [iconSize / 2, iconSize],
         popupAnchor: [iconSize / 2, 0],
         iconSize: [iconSize, iconSize],
-      }),
+      },
     }),
-    [],
+    []
   );
 };

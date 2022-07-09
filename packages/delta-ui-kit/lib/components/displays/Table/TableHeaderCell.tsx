@@ -1,5 +1,5 @@
 import { jsx } from '@theme-ui/core';
-import { transparentize } from 'polished';
+import { rgba } from 'polished';
 import { forwardRef, HTMLAttributes, ReactNode, useContext } from 'react';
 import { useDeltaTheme } from '../../../hooks';
 import { Box } from '../../containers';
@@ -27,7 +27,7 @@ export const TableHeaderCell = forwardRef<
         py: '0.65em',
         width: 'auto',
         borderBottom: sticked ? '1px solid' : undefined,
-        borderBottomColor: transparentize(0.8, colors.onContext),
+        borderBottomColor: rgba(colors.onContext, 0.2),
         '&:first-of-type': { pl: 4 },
         '&:last-of-type': { pr: 4 },
       }}
