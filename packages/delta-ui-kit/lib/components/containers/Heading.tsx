@@ -13,10 +13,11 @@ export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(
         ref={ref}
         sx={{
           margin: 0,
+          padding: 0,
           color: 'accentOnContext',
           fontSize: 7 - level,
           fontWeight: 600,
-          padding: 0,
+          letterSpacing: '0.02em',
         }}
         {...rest}
       />

@@ -42,7 +42,7 @@ export const TableHeaderCell = forwardRef<
           fontSize: 1,
           fontWeight: 300,
           textTransform: 'uppercase',
-          letterSpacing: '0.04em',
+          letterSpacing: '0.06em',
         }}
       >
         {children}

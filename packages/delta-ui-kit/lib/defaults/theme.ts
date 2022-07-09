@@ -1,15 +1,20 @@
 const baseColors = {
-  primary: '#1db954',
+  // brandAlpha: '#d73727',
+  // brandBeta: '#1660ac',
+  brandAlpha: '#cc2222',
+  brandBeta: '#1b6cbd',
+
+  primary: '#1b6cbd',
   secondary: '#ffffff',
   info: '#1d75e0',
   warning: '#e19127',
   success: '#1cb454',
   error: '#cc2222',
   background: '#111111',
-  mundane: 'rgba(255, 255, 255, 0.03)',
+  mundane: 'rgba(255, 255, 255, 0.035)',
   celestial: '#1e1e1e',
   contrast: '#fafafa',
-  exterior: '#030303',
+  exterior: '#050505',
 
   accentPrimary: '#1daa4e',
   accentSecondary: '#e5e5e5',
@@ -21,7 +26,7 @@ const baseColors = {
   accentMundane: 'rgba(255, 255, 255, 0.05)',
   accentCelestial: '#2a2a2a',
   accentContrast: '#e1e0e0',
-  accentExterior: '#1d1d1d',
+  accentExterior: '#1b1b1b',
 
   onPrimary: '#ffffff',
   onSecondary: '#2c2c2c',
@@ -50,7 +55,7 @@ const baseColors = {
 
 export const deltaTheme = {
   colorScheme: 'dark',
-  fontFamily: 'Montserrat, sans-serif',
+  fontFamily: 'Stolzl, sans-serif',
   colors: {
     ...baseColors,
     context: baseColors.background,
@@ -62,7 +67,7 @@ export const deltaTheme = {
   sizes: [0, 20, 32, 40, 64, 80],
   ticks: [0, 100, 200, 300, 500, 1000, 1200, 1800],
   space: [0, 4, 8, 16, 24, 32, 42, 64, 128, 256, 512],
-  fontSizes: [10, 12, 14, 16, 20, 24, 40, 48, 56],
+  fontSizes: [10, 12, 14, 16, 20, 24, 36, 48, 56],
   radii: [0, 1, 2, 4, 5, 8],
   shadows: [
     'none',

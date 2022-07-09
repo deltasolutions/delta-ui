@@ -1,16 +1,33 @@
 import { jsx } from '@theme-ui/core';
-import { ButtonHTMLAttributes, forwardRef } from 'react';
+import {
+  ButtonHTMLAttributes,
+  ComponentType,
+  DOMAttributes,
+  forwardRef,
+  HTMLAttributes,
+} from 'react';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'text' | 'contained' | 'outlined';
+  variant?: 'contained' | 'outlined' | 'contextual' | 'text';
   color?: 'primary' | 'secondary' | 'success' | 'error';
   size?: 'small' | 'medium' | 'large';
   zoomable?: boolean;
+  icon?: ComponentType<HTMLAttributes<Element>>;
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (props: ButtonProps, ref) => {
-    const { variant, color, size, zoomable, disabled, type, ...rest } = props;
+    const {
+      variant,
+      color,
+      size,
+      zoomable,
+      icon: Icon,
+      children,
+      disabled,
+      type,
+      ...rest
+    } = props;
     return (
       <button
         ref={ref}
@@ -43,7 +60,21 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         }}
         type={type ?? 'button'}
         {...rest}
-      />
+      >
+        {Icon && (
+          <Icon
+            sx={{
+              width: '1.65em',
+              height: '1.65em',
+              verticalAlign: 'middle',
+              ml: '-0.5em',
+              mr: '0.65em',
+              my: '-0.5em',
+            }}
+          />
+        )}
+        {children}
+      </button>
     );
   }
 );
@@ -79,7 +110,7 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps): any => {
     };
   }
   return {
-    borderRadius: '500px',
+    borderRadius: 3,
     display: 'inline-block',
     textAlign: 'center',
     outlineOffset: '2px',
@@ -115,23 +146,57 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps): any => {
       outlined: {
         primary: {
           border: '2px solid',
-          borderColor: 'primary',
+          borderColor: 'accentContext',
           color: 'primary',
         },
         secondary: {
           border: '2px solid',
-          borderColor: 'secondary',
+          borderColor: 'accentContext',
           color: 'secondary',
         },
         success: {
           border: '2px solid',
-          borderColor: 'success',
+          borderColor: 'accentContext',
           color: 'success',
         },
         error: {
           border: '2px solid',
-          borderColor: 'error',
+          borderColor: 'accentContext',
           color: 'error',
+        },
+      },
+      contextual: {
+        primary: {
+          backgroundColor: 'accentContext',
+          color: 'accentOnContext',
+          '&:not(:disabled):hover': {
+            backgroundColor: 'accentPrimary',
+            color: 'onPrimary',
+          },
+        },
+        secondary: {
+          backgroundColor: 'accentContext',
+          color: 'accentOnContext',
+          '&:not(:disabled):hover': {
+            backgroundColor: 'accentSecondary',
+            color: 'onSecondary',
+          },
+        },
+        success: {
+          backgroundColor: 'accentContext',
+          color: 'accentOnContext',
+          '&:not(:disabled):hover': {
+            backgroundColor: 'accentSuccess',
+            color: 'onSuccess',
+          },
+        },
+        error: {
+          backgroundColor: 'accentContext',
+          color: 'accentOnContext',
+          '&:not(:disabled):hover': {
+            backgroundColor: 'accentError',
+            color: 'onError',
+          },
         },
       },
       text: {

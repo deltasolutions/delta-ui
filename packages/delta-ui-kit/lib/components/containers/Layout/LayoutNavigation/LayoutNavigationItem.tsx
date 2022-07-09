@@ -1,21 +1,20 @@
 import { jsx } from '@theme-ui/core';
-import { forwardRef, useContext, useMemo } from 'react';
+import {
+  ComponentType,
+  forwardRef,
+  HTMLAttributes,
+  useContext,
+  useMemo,
+} from 'react';
 import { Anchor, AnchorProps } from '../../../Anchor';
 import { Box } from '../../Box';
 import { NavigationContext } from './LayoutNavigation';
 
-interface IconProps extends React.SVGAttributes<SVGElement> {
-  children?: React.ReactNode;
-  size?: string | number;
-  color?: string;
-  title?: string;
-}
-
 export interface LayoutNavigationItemProps
   extends Omit<AnchorProps, 'onClick'> {
   id: string;
+  icon?: ComponentType<HTMLAttributes<Element>>;
   onClick?: () => void;
-  icon?: (props: IconProps) => JSX.Element;
 }
 
 export const LayoutNavigationItem = forwardRef<
@@ -32,6 +31,8 @@ export const LayoutNavigationItem = forwardRef<
         px: '1.35rem',
         position: 'relative',
         fontSize: 2,
+        fontWeight: 300,
+        letterSpacing: '0.04em',
         cursor: 'pointer',
         userSelect: 'none',
         '&, &:hover, &:active, &:focus-visible': {
@@ -50,10 +51,19 @@ export const LayoutNavigationItem = forwardRef<
           position: 'relative',
           display: 'flex',
           alignItems: 'center',
-          gap: 2,
         }}
       >
-        {Icon && <Icon size="1.3em" />}
+        {Icon && (
+          <Icon
+            sx={{
+              width: '1.55em',
+              height: '1.55em',
+              my: '-0.5em',
+              mr: '0.5em',
+              verticalAlign: 'middle',
+            }}
+          />
+        )}
         <Box
           sx={{
             whiteSpace: 'nowrap',
