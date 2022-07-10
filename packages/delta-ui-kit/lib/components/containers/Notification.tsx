@@ -45,7 +45,6 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
           opacity: isVisible ? 1 : 0,
           backgroundColor: 'contrast',
           color: 'onContrast',
-          fontWeight: 600,
           fontSize: 2,
           transform: `translateX(${
             isVisible ? '0, 0' : isEntering ? '3rem' : '3rem'
@@ -70,7 +69,7 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
             }}
           />
           <Box
-            sx={{ lineHeight: '24px', width: '296px', wordBreak: 'break-word' }}
+            sx={{ lineHeight: '20px', width: '296px', wordBreak: 'break-word' }}
           >
             {children}
           </Box>

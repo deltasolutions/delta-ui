@@ -1,7 +1,9 @@
 import { jsx } from '@theme-ui/core';
 import { Children, forwardRef, ReactElement, ReactNode } from 'react';
 import { ImHome } from 'react-icons/im';
+import { IoHome, IoHomeOutline } from 'react-icons/io5';
 import { RiHomeFill } from 'react-icons/ri';
+import { SiHomebridge } from 'react-icons/si';
 import { TbChevronRight } from 'react-icons/tb';
 import { VscChevronRight } from 'react-icons/vsc';
 import { Anchor, AnchorProps } from '../Anchor';
@@ -13,15 +15,10 @@ export const Breadcrumbs = ({ children, ...rest }: BreadcrumbsProps) => {
   return (
     <Box
       sx={{
-        pl: 1,
-        pr: 3,
-        py: 1,
         display: 'flex',
         alignItems: 'center',
         gap: 1,
-        fontSize: 3,
-        borderRadius: '100vw',
-        backgroundColor: 'accentContext',
+        fontSize: 2,
         color: 'onContext',
       }}
       {...rest}
@@ -35,8 +32,8 @@ export const Breadcrumbs = ({ children, ...rest }: BreadcrumbsProps) => {
                 key={i}
                 sx={{
                   whiteSpace: 'nowrap',
-                  width: '1.25em',
-                  height: '1.25em',
+                  width: '1.15em',
+                  height: '1.15em',
                 }}
               />
             ) : null,
@@ -55,7 +52,14 @@ export const BreadcrumbsItem = forwardRef<
   HTMLAnchorElement,
   BreadcrumbsItemProps
 >((props: BreadcrumbsItemProps, ref) => {
-  return <Anchor ref={ref} variant="pure" {...props} />;
+  return (
+    <Anchor
+      ref={ref}
+      sx={{ fontWeight: 300, verticalAlign: 'middle', letterSpacing: '0.04em' }}
+      variant="pure"
+      {...props}
+    />
+  );
 });
 
 export const BreadcrumbsHome = forwardRef<
@@ -64,28 +68,13 @@ export const BreadcrumbsHome = forwardRef<
 >((props: Omit<BreadcrumbsItemProps, 'children'>, ref) => {
   return (
     <BreadcrumbsItem ref={ref} {...props}>
-      <Box
+      <IoHome
         sx={{
-          width: '1.5rem',
-          height: '1.5rem',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: 'onContext',
-          borderRadius: '100vw',
-          '&:hover': {
-            backgroundColor: 'accentOnContext',
-          },
+          width: '1.45em',
+          height: '1.45em',
+          verticalAlign: 'middle',
         }}
-      >
-        <RiHomeFill
-          sx={{
-            width: '1rem',
-            height: '1rem',
-            color: 'accentContext',
-          }}
-        />
-      </Box>
+      />
     </BreadcrumbsItem>
   );
 });

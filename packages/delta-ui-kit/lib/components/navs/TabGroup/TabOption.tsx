@@ -1,17 +1,25 @@
 import { jsx } from '@theme-ui/core';
-import { invert, rgba } from 'polished';
-import { forwardRef, useCallback, useContext } from 'react';
+import { invert, lighten, rgba, transparentize } from 'polished';
+import {
+  ComponentType,
+  forwardRef,
+  HTMLAttributes,
+  useCallback,
+  useContext,
+} from 'react';
 import { useDeltaTheme } from '../../../hooks';
 import { Anchor, AnchorProps } from '../../Anchor';
+import { layoutMainNoise } from '../../containers';
 import { TabContext } from './TabContext';
 
 export interface TabOptionProps extends Omit<AnchorProps, 'variant'> {
   id: string;
   variant?: 'chip' | 'bookmark';
+  icon?: ComponentType<HTMLAttributes<Element>>;
 }
 
 export const TabOption = forwardRef<HTMLAnchorElement, TabOptionProps>(
-  ({ id, variant, children, onClick, href, ...rest }, ref) => {
+  ({ id, variant, icon: Icon, children, onClick, href, ...rest }, ref) => {
     const { colors } = useDeltaTheme();
     const { activeId } = useContext(TabContext);
     const active = id === activeId;
@@ -26,6 +34,15 @@ export const TabOption = forwardRef<HTMLAnchorElement, TabOptionProps>(
       },
       [href]
     );
+    const bookmarkActiveStyle = {
+      backgroundColor: 'accentContext',
+      color: 'accentOnContext',
+      background:
+        `linear-gradient(` +
+        `${colors.accentBackground} 0, ` +
+        `${transparentize(0.3, colors.accentBackground)} 40px` +
+        `), ${layoutMainNoise}`,
+    };
     return (
       <Anchor
         ref={ref}
@@ -34,28 +51,23 @@ export const TabOption = forwardRef<HTMLAnchorElement, TabOptionProps>(
           {
             bookmark: {
               display: 'block',
+              height: '35px',
+              lineHeight: '35px',
               fontSize: 2,
               fontWeight: 300,
               letterSpacing: '0.04em',
-              textTransform: 'uppercase',
-              borderTopRightRadius: 4,
-              borderTopLeftRadius: 4,
+              borderTopRightRadius: 3,
+              borderTopLeftRadius: 3,
               borderBottomRightRadius: 0,
               borderBottomLeftRadius: 0,
-              px: 3,
-              py: 2,
+              px: '1em',
+              pt: '2px',
               ...(active
-                ? {
-                    backgroundColor: 'accentContext',
-                    color: 'accentOnContext',
-                  }
+                ? bookmarkActiveStyle
                 : {
                     backgroundColor: rgba(colors.accentContext, 0.5),
                     color: 'onContext',
-                    '&:hover, &:focus-visible': {
-                      backgroundColor: 'accentContext',
-                      color: 'accentOnContext',
-                    },
+                    '&:hover, &:focus-visible': bookmarkActiveStyle,
                   }),
             },
             chip: {
@@ -84,6 +96,17 @@ export const TabOption = forwardRef<HTMLAnchorElement, TabOptionProps>(
         onClick={handleClick}
         {...rest}
       >
+        {Icon && (
+          <Icon
+            sx={{
+              verticalAlign: 'middle',
+              width: '1.55em',
+              height: '1.55em',
+              mt: '-2px',
+              mr: '0.5em',
+            }}
+          />
+        )}
         {children}
       </Anchor>
     );

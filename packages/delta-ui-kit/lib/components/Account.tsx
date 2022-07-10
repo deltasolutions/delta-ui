@@ -1,5 +1,9 @@
 import { jsx } from '@theme-ui/core';
-import { FaUserCircle } from 'react-icons/fa';
+import {
+  IoPersonCircle,
+  IoPersonCircleOutline,
+  IoPersonOutline,
+} from 'react-icons/io5';
 import { Anchor, AnchorProps } from './Anchor';
 import { Box } from './containers';
 
@@ -7,29 +11,25 @@ export interface AccountProps extends AnchorProps {}
 
 export const Account = ({ children, ...rest }: AccountProps) => {
   return (
-    <Anchor
-      sx={{ backgroundColor: 'accentContext', borderRadius: '100vw' }}
-      variant="pure"
-      {...rest}
-    >
+    <Anchor variant="pure" {...rest}>
       <Box
         sx={{
-          p: 1,
           display: 'flex',
           alignItems: 'center',
         }}
       >
-        <FaUserCircle
+        <IoPersonCircle
           sx={{
-            width: '1.5rem',
-            height: '1.5rem',
+            pr: 1,
+            width: '1.45rem',
+            height: '1.45rem',
           }}
         />
         <Box
           sx={{
-            pl: '0.35em',
-            pr: '0.50em',
-            fontSize: 3,
+            fontSize: 2,
+            fontWeight: 300,
+            letterSpacing: '0.04em',
           }}
         >
           {children}

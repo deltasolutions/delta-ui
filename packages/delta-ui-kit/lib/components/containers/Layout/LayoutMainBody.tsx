@@ -1,4 +1,5 @@
 import { jsx } from '@theme-ui/core';
+import { lighten, transparentize } from 'polished';
 import { useDeltaTheme } from '../../../hooks';
 import { Box, BoxProps } from '../Box';
 
@@ -27,9 +28,11 @@ export const LayoutMainBody = ({
               justifyContent: 'center',
               background:
                 `linear-gradient(` +
-                `${colors.accentBackground} 0, ` +
+                `${transparentize(0.3, colors.accentBackground)} 0, ` +
                 `transparent 270px` +
                 `), ${layoutMainNoise}`,
+              // borderTop: '1px solid',
+              // borderTopColor: lighten(0.07, colors.accentContext),
             }),
       }}
       {...rest}

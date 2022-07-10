@@ -15,7 +15,7 @@ export const Drop = forwardRef<HTMLDivElement, DropProps>(
       return {
         colors: {
           context: lighten(value, colors.celestial),
-          accentContext: lighten(value, colors.accentCelestial),
+          accentContext: lighten(value * 1.5, colors.accentCelestial),
           onContext: lighten(value, colors.onCelestial),
           accentOnContext: lighten(value, colors.accentOnCelestial),
         },

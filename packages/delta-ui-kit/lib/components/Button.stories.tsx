@@ -13,7 +13,6 @@ export const Basics = Template.bind({});
 Basics.args = {
   variant: 'contained',
   color: 'primary',
-  zoomable: true,
   disabled: false,
   children: 'Click Me',
 };

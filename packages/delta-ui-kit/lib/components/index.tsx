@@ -2,6 +2,7 @@ export * from './Account';
 export * from './Anchor';
 export * from './Button';
 export * from './Tooltip';
+export * from './DeltaLogo';
 
 export * from './containers';
 export * from './displays';

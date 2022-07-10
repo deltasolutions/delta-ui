@@ -13,7 +13,7 @@ export const ObjectTemplate = ({
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
       <Box>
         {title && (
-          <Box sx={{ fontWeight: 600 }}>
+          <Box sx={{ fontWeight: 600, letterSpacing: '0.04em' }}>
             {title}
             {required && <span sx={{ ml: 1, color: 'danger' }}>*</span>}
           </Box>

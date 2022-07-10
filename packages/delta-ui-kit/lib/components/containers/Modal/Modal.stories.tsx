@@ -23,7 +23,10 @@ export const Basics = () => {
         </Select>
       </ModalBody>
       <ModalFooter>
-        <Button color="secondary" variant="contained">
+        <Button color="primary" variant="contained-dimmed">
+          Cancel
+        </Button>
+        <Button color="primary" variant="contained">
           Button
         </Button>
       </ModalFooter>

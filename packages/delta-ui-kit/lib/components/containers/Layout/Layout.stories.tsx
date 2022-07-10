@@ -1,12 +1,19 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { Fragment, ReactNode } from 'react';
-import { MdOutlineSettings, MdOutlineSpaceDashboard } from 'react-icons/md';
-import { SiDeno } from 'react-icons/si';
+import { BsHddRack } from 'react-icons/bs';
+import { IoMapOutline, IoTrashBin } from 'react-icons/io5';
+import {
+  MdOutlineMeetingRoom,
+  MdOutlineSettings,
+  MdOutlineSpaceDashboard,
+} from 'react-icons/md';
+import { RiEditFill } from 'react-icons/ri';
 import { useModal } from '../../../hooks';
 import { Account } from '../../Account';
 import { Anchor } from '../../Anchor';
 import { Button } from '../../Button';
+import { DeltaLogo } from '../../DeltaLogo';
 import { InCard as TableStory } from '../../displays/Table/Table.stories';
 import { Basics as FormStory } from '../../inputs/Form.stories';
 import {
@@ -43,15 +50,22 @@ export default {
 
 const sidebar = (
   <LayoutSidebar>
-    <LayoutSidebarHeader>
-      <SiDeno
-        sx={{
-          width: '2rem',
-          height: '2rem',
-          verticalAlign: 'middle',
-        }}
+    <LayoutSidebarHeader
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        // display: 'flex',
+        // flexDirection: 'row',
+        // alignItems: 'baseline',
+      }}
+    >
+      <DeltaLogo
+        bottomColor="brandBeta"
+        sx={{ maxWidth: '3rem', my: 2 }}
+        topColor="brandAlpha"
       />
-      <Heading level={3}>Brand</Heading>
+      {/* <Heading level={3}>Delta DCM</Heading> */}
     </LayoutSidebarHeader>
     <LayoutSidebarBody>
       <LayoutNavigation activeId="0-1">
@@ -124,23 +138,27 @@ export const Resource = () => {
         <LayoutMainHeader>
           <Heading level={1}>Datacenter 1</Heading>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Button zoomable color="secondary" variant="outlined">
+            <Button
+              color="secondary"
+              icon={RiEditFill}
+              variant="contained-dimmed"
+            >
               Edit
             </Button>
-            <Button zoomable color="error" variant="outlined">
+            <Button color="error" icon={IoTrashBin} variant="contained-dimmed">
               Delete
             </Button>
           </Box>
         </LayoutMainHeader>
         <LayoutMainBody variant="tabs">
           <TabGroup activeId="3">
-            <TabOption id="1" variant="bookmark">
+            <TabOption icon={IoMapOutline} id="1" variant="bookmark">
               Overview
             </TabOption>
-            <TabOption id="2" variant="bookmark">
+            <TabOption icon={MdOutlineMeetingRoom} id="2" variant="bookmark">
               Rooms
             </TabOption>
-            <TabOption id="3" variant="bookmark">
+            <TabOption icon={BsHddRack} id="3" variant="bookmark">
               Devices
             </TabOption>
           </TabGroup>
@@ -181,9 +199,8 @@ export const Collection = () => {
           <Heading level={1}>Devices</Heading>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             <Button
-              zoomable
               color="secondary"
-              variant="outlined"
+              variant="contained-dimmed"
               onClick={() => openModal()}
             >
               Create
@@ -228,10 +245,10 @@ export const Form = () => {
         <LayoutMainHeader>
           <Heading level={1}>Edit Device 1</Heading>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Button zoomable color="secondary" variant="outlined">
+            <Button color="secondary" variant="contained-dimmed">
               Cancel
             </Button>
-            <Button zoomable color="success" variant="outlined">
+            <Button color="success" variant="contained-dimmed">
               Save
             </Button>
           </Box>
