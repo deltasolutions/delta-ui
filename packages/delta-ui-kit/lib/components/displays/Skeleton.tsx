@@ -11,8 +11,8 @@ export const Skeleton = (props: SkeletonProps) => {
         position: 'relative',
         overflow: 'hidden',
         borderRadius: 4,
-        height: '1em',
-        width: '5em',
+        height: '100%',
+        width: '100%',
         backgroundColor: 'accentContext',
         maskImage:
           `linear-gradient(90deg, ` +
