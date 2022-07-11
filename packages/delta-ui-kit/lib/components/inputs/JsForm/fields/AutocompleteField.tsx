@@ -34,7 +34,7 @@ export const AutocompleteField = (props: FieldProps) => {
   const source = useMemo(
     () =>
       getAutocompleteSource?.(target) as AutocompleteFieldSource | undefined,
-    []
+    [getAutocompleteSource, target]
   );
   const sanitizeOptions = (
     data: unknown
@@ -80,7 +80,12 @@ export const AutocompleteField = (props: FieldProps) => {
       }
     };
     handleOptions();
-  }, [schema, debouncedQuery]);
+  }, [
+    schema,
+    debouncedQuery,
+    // Ignoring source dependency here, since we simply
+    // don't want source change to trigger re-render.
+  ]);
   return (
     <PrimitiveTemplate {...props}>
       <Autocomplete
