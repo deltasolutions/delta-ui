@@ -1,6 +1,8 @@
 import { keyframes } from '@emotion/react';
 import { jsx } from '@theme-ui/core';
+import { rgba } from 'polished';
 import { forwardRef, HtmlHTMLAttributes } from 'react';
+import { useDeltaTheme } from '../../hooks';
 import { Box } from '../containers';
 
 export interface LoaderProps extends HtmlHTMLAttributes<HTMLDivElement> {
@@ -9,21 +11,13 @@ export interface LoaderProps extends HtmlHTMLAttributes<HTMLDivElement> {
 }
 
 export const Loader = forwardRef<HTMLDivElement, LoaderProps>(
-  (
-    {
-      size: propsSize = 'small',
-
-      color,
-      ...props
-    }: LoaderProps,
-    ref
-  ) => {
+  ({ size: propsSize = 'small', color, ...props }: LoaderProps, ref) => {
+    const { colors } = useDeltaTheme();
     const { scale, size } = {
       small: { scale: 0.3, size: 24 },
       medium: { scale: 0.45, size: 36 },
       large: { scale: 0.7, size: 56 },
     }[propsSize];
-
     return (
       <Box
         style={{
@@ -54,10 +48,9 @@ export const Loader = forwardRef<HTMLDivElement, LoaderProps>(
               border: '8px solid',
               borderRadius: '50%',
               animation: `${ldsRing} 1.6s cubic-bezier(0.5, 0, 0.5, 1) infinite`,
-              borderColor: theme =>
-                `${
-                  color ?? theme?.colors?.onBackground
-                } transparent transparent transparent`,
+              borderColor: `${
+                color ?? rgba(colors?.onContext, 1)
+              } transparent transparent transparent`,
             },
             'div:nth-of-type(1)': { animationDelay: '-0.6s' },
             'div:nth-of-type(2)': { animationDelay: '-0.4s' },
