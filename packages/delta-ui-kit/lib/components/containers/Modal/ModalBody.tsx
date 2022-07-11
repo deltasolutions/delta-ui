@@ -12,7 +12,12 @@ export const ModalBody = forwardRef<HTMLDivElement, ModalBodyProps>(
       <Box
         ref={ref}
         sx={{
+<<<<<<< HEAD
           paddingX: variant === 'wide' ? 0 : 5,
+=======
+          scrollbarWidth: 'thin',
+          paddingX: 5,
+>>>>>>> ba993cc5b751c8d5133aef93c772d22f5898ea00
           paddingY: 4,
         }}
         {...rest}

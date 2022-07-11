@@ -1,15 +1,20 @@
 import { jsx, ThemeProvider } from '@theme-ui/core';
 import { forwardRef } from 'react';
+import { IoMdClose } from 'react-icons/io';
 import { PortalledProps, useDeltaTheme } from '../../../hooks';
+import { Button } from '../../Button';
 import { Box, BoxProps } from '../Box';
 
 export interface ModalProps extends BoxProps, Partial<PortalledProps> {
-  variant?: 'page';
-  size?: 'small' | 'medium' | 'large';
+  size?: 'small' | 'medium' | 'large' | 'auto';
+  closeVariant?: 'none' | 'inside' | 'outside';
 }
 
 export const Modal = forwardRef<HTMLDivElement, ModalProps>(
-  ({ variant, size = 'medium', ...rest }, ref) => {
+  (
+    { closeVariant = 'inside', handleClose, size = 'auto', children, ...rest },
+    ref
+  ) => {
     const theme = useDeltaTheme({
       colors: {
         context: 'celestial',
@@ -28,16 +33,46 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
             color: 'onContext',
             backdropFilter: 'blur(20px)',
             ...{
-              page: { width: '100vw', height: '100vh' },
-            }[variant ?? ''],
-            ...{
               small: { width: '550px' },
               medium: { width: '650px' },
               large: { width: '750px' },
+              auto: {},
             }[size],
           }}
           {...rest}
-        />
+        >
+          {closeVariant !== 'none' && (
+            <Box
+              sx={{
+                position: 'absolute',
+                ...{
+                  inside: {
+                    top: 2,
+                    right: 2,
+                  },
+                  outside: {
+                    top: 0,
+                    right: -5,
+                  },
+                }[closeVariant],
+              }}
+            >
+              <Button
+                sx={{
+                  borderRadius: '100px',
+                  color: 'accentOnContext',
+                  backgroundColor:
+                    closeVariant === 'outside' ? 'transparent' : 'exterior',
+                }}
+                onClick={handleClose}
+              >
+                <IoMdClose size={24} />
+              </Button>
+            </Box>
+          )}
+
+          {children}
+        </Box>
       </ThemeProvider>
     );
   }
