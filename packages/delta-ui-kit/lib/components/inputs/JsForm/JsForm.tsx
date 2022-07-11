@@ -2,6 +2,7 @@ import { ErrorObject as AjvError } from 'ajv';
 import localizeEn from 'ajv-i18n/localize/en';
 import localizeRu from 'ajv-i18n/localize/ru';
 import {
+  clone,
   defaults as basicJsFormDefaults,
   Form as JsForm,
   merge,
@@ -69,7 +70,7 @@ const useJsFormManager = <
 ) => {
   const defaults = useJsFormDefaults();
   const mergedOptions = useMemo(
-    () => merge({}, defaults, options),
+    () => merge(clone(defaults), clone(options)),
     [defaults, options]
   );
   return useBasicJsFormManager(mergedOptions) as O extends {
