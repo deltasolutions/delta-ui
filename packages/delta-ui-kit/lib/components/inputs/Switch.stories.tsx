@@ -1,5 +1,6 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
+import { useState } from 'react';
 import { Switch } from './Switch';
 
 export default {
@@ -12,4 +13,9 @@ export const Basics = () => {
 
 export const Disabled = () => {
   return <Switch disabled />;
+};
+
+export const Controlled = () => {
+  const [value, setValue] = useState(false);
+  return <Switch value={value} onChange={setValue} />;
 };

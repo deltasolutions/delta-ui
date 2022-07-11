@@ -25,8 +25,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
   ) => {
     const [innerValue, setInnerValue] = useState<boolean>(value ?? false);
     const handleChange = (nextValue: boolean) => {
-      nextValue !== innerValue && setInnerValue(nextValue);
-      nextValue !== value && onChange?.(nextValue);
+      onChange ? onChange(nextValue) : setInnerValue(nextValue);
     };
     useUpdateEffect(() => {
       innerValue !== value && setInnerValue(value ?? false);
