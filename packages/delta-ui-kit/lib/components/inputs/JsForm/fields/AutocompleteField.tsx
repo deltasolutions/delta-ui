@@ -71,7 +71,7 @@ export const AutocompleteField = (props: FieldProps) => {
       setOptions(sanitizeOptions(optionsFromSchema));
       return;
     }
-    const handleOptions = async () => {
+    const handle = async () => {
       try {
         const options = await source?.onQuery(debouncedQuery);
         setOptions(sanitizeOptions(options));
@@ -79,15 +79,14 @@ export const AutocompleteField = (props: FieldProps) => {
         setOptions([]);
       }
     };
-    handleOptions();
-  }, [source, schema, debouncedQuery]);
+    handle();
+  }, [debouncedQuery, source, schema]);
   useUpdateEffect(() => {
     handleOptions();
   }, [
-    schema,
     debouncedQuery,
-    // Ignoring source dependency here, since we simply
-    // don't want source change to trigger re-render.
+    // Ignoring direct dependency here, since we simply
+    // don't want non-user changes to trigger re-render.
   ]);
   return (
     <PrimitiveTemplate {...props}>

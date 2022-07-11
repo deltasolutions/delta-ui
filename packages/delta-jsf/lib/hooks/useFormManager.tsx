@@ -1,32 +1,48 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { defaults } from "../components";
-import { ValidateAgainstSchemaFunction, Validity } from "../models";
-import { FormManager, FormManagerOptions } from "../models";
-import { checkValidity, clone, merge } from "../utils";
-import { useDereferencedOptions } from "./useDereferencedOptions";
-import { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect";
-import { useMergeQueue } from "./useMergeQueue";
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { defaults } from '../components';
+import { Registry, ValidateAgainstSchemaFunction, Validity } from '../models';
+import { FormManager, FormManagerOptions } from '../models';
+import {
+  checkValidity,
+  clone,
+  dereference as dereferenceByDefault,
+  hash,
+  merge,
+} from '../utils';
+import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
+import { useMergeQueue } from './useMergeQueue';
 
 export const useFormManager = <
   T extends unknown,
-  Options extends FormManagerOptions<T> = FormManagerOptions<T>,
+  Options extends FormManagerOptions<T> = FormManagerOptions<T>
 >(
-  options: Options,
-): Options extends { initialValue: T } ? FormManager<T>
+  options: Options
+): Options extends { initialValue: T }
+  ? FormManager<T>
   : FormManager<T | undefined> => {
-  const dereferencedOptions = useDereferencedOptions(options);
-  const {
+  const schema = useMemo(() => {
+    const fn = options.dereference ?? dereferenceByDefault;
+    return fn(options.schema);
+  }, [options.dereference, hash(options.schema)]);
+  const registry = useMemo(
+    () => merge({}, defaults.registry, options.registry) as Registry,
+    [options.registry]
+  );
+  const targetOptions = {
+    ...options,
     schema,
-    initialValue,
     registry,
+  };
+  const {
+    initialValue,
     liveValidated,
     onValue,
     onValidity,
     onSubmit,
-  } = dereferencedOptions;
-  const validateAgainstSchema: ValidateAgainstSchemaFunction =
-    registry?.utils?.validateAgainstSchema ??
-      defaults.registry.utils.validateAgainstSchema;
+    registry: {
+      utils: { validateAgainstSchema },
+    },
+  } = targetOptions;
 
   const [value, setValue] = useState(initialValue);
 
@@ -40,13 +56,10 @@ export const useFormManager = <
   }, [schemaValidity, extensionValidity]);
 
   const valid = useMemo(() => checkValidity(validity), [validity]);
-  const validate = useCallback(
-    () => {
-      const validity = validateAgainstSchema({ schema, value });
-      setSchemaValidity(validity);
-    },
-    [schema, value],
-  );
+  const validate = useCallback(() => {
+    const validity = validateAgainstSchema({ schema, value });
+    setSchemaValidity(validity);
+  }, [schema, value]);
 
   const [submitted, setSubmitted] = useState(false);
   const [submitRequested, setSubmitRequested] = useState(false);
@@ -86,7 +99,7 @@ export const useFormManager = <
   }, [liveValidated, flushValidity]);
 
   return {
-    options: dereferencedOptions,
+    options: targetOptions,
 
     value,
     setValue,
