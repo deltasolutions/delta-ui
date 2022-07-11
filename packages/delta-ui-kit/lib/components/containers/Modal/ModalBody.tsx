@@ -10,6 +10,7 @@ export const ModalBody = forwardRef<HTMLDivElement, ModalBodyProps>(
       <Box
         ref={ref}
         sx={{
+          scrollbarWidth: 'thin',
           paddingX: 5,
           paddingY: 4,
         }}

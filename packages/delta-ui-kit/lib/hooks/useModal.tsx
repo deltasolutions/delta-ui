@@ -8,11 +8,11 @@ export const useModal = <C extends unknown = never>(
 ) => {
   return useDialog<Partial<ModalProps>>(
     ({ context, handleClose }) => {
-      const content = render?.({
+      return render?.({
         context: context as C,
         handleClose,
+        ...modalProps,
       });
-      return <Modal {...modalProps}>{content}</Modal>;
     },
     {
       deps,
