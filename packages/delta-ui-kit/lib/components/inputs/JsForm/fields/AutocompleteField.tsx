@@ -1,7 +1,7 @@
 import { jsx } from '@theme-ui/core';
 import { FieldProps } from 'delta-jsf';
-import { ReactNode, useEffect, useMemo, useState } from 'react';
-import { useDebounce } from '../../../../hooks';
+import { ReactNode, useCallback, useMemo, useState } from 'react';
+import { useDebounce, useUpdateEffect } from '../../../../hooks';
 import { Autocomplete, AutocompleteOption } from '../../Autocomplete';
 
 export interface AutocompleteFieldOption {
@@ -34,7 +34,7 @@ export const AutocompleteField = (props: FieldProps) => {
   const source = useMemo(
     () =>
       getAutocompleteSource?.(target) as AutocompleteFieldSource | undefined,
-    []
+    [getAutocompleteSource, target]
   );
   const sanitizeOptions = (
     data: unknown
@@ -66,7 +66,7 @@ export const AutocompleteField = (props: FieldProps) => {
   );
   const [query, setQuery] = useState('');
   const debouncedQuery = useDebounce(query, 200);
-  useEffect(() => {
+  const handleOptions = useCallback(() => {
     if (optionsFromSchema || !source) {
       setOptions(sanitizeOptions(optionsFromSchema));
       return;
@@ -80,7 +80,15 @@ export const AutocompleteField = (props: FieldProps) => {
       }
     };
     handleOptions();
-  }, [schema, debouncedQuery]);
+  }, [source, schema, debouncedQuery]);
+  useUpdateEffect(() => {
+    handleOptions();
+  }, [
+    schema,
+    debouncedQuery,
+    // Ignoring source dependency here, since we simply
+    // don't want source change to trigger re-render.
+  ]);
   return (
     <PrimitiveTemplate {...props}>
       <Autocomplete
@@ -91,6 +99,7 @@ export const AutocompleteField = (props: FieldProps) => {
         onChange={(v: unknown) => {
           onValue?.(sanitizeValue(v));
         }}
+        onFocus={handleOptions}
         onQuery={setQuery}
       >
         {options.map((v, i) => (

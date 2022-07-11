@@ -42,7 +42,7 @@ export const Basics = () => {
       <CardHeader>
         <Heading level={3}>CPU Temperature</Heading>
       </CardHeader>
-      <CardBody sx={{ width: '600px' }} variant="table">
+      <CardBody sx={{ width: '600px' }} variant="wide">
         <AreaChart
           data={appleStock.slice(0, 30)}
           formatX={v => dayjs(v).format('YYYY-MM-DD')}

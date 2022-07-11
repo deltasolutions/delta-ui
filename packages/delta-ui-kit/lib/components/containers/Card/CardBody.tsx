@@ -3,7 +3,7 @@ import { forwardRef } from 'react';
 import { Box, BoxProps } from '../Box';
 
 export interface CardBodyProps extends BoxProps {
-  variant?: 'table';
+  variant?: 'wide';
 }
 
 export const CardBody = forwardRef<HTMLDivElement, CardBodyProps>(
@@ -13,7 +13,7 @@ export const CardBody = forwardRef<HTMLDivElement, CardBodyProps>(
         ref={ref}
         sx={{
           py: 0,
-          px: variant === 'table' ? 0 : 4,
+          px: variant === 'wide' ? 0 : 4,
           '& + &': { pt: 3 },
           '&:first-of-type': { pt: 3 },
           '&:last-of-type': { pb: 3 },

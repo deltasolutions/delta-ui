@@ -60,7 +60,7 @@ export const InCard = ({
         {heading}
         <Controls />
       </CardHeader>
-      <CardBody variant="table">
+      <CardBody variant="wide">
         <Basics stickyOffset={stickyOffset} />
       </CardBody>
     </Card>

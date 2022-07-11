@@ -1,10 +1,10 @@
 import { jsx } from '@theme-ui/core';
-import { lighten, transparentize } from 'polished';
+import { transparentize } from 'polished';
 import { useDeltaTheme } from '../../../hooks';
 import { Box, BoxProps } from '../Box';
 
 export interface LayoutMainBodyProps extends BoxProps {
-  variant?: 'tabs';
+  variant?: 'wide';
   size?: 'small' | 'medium' | 'large';
 }
 
@@ -19,7 +19,7 @@ export const LayoutMainBody = ({
     <Box
       sx={{
         paddingX: 5,
-        ...(variant === 'tabs'
+        ...(variant === 'wide'
           ? {}
           : {
               flex: '1 1 auto',
