@@ -5,7 +5,7 @@ import { GeoLocPickerField } from './GeoLocPickerField';
 import { SelectField } from './SelectField';
 import { SwitchField } from './SwitchField';
 
-export const fields = {
+export const jsFormFields = {
   autocomplete: AutocompleteField,
   boolean: SwitchField,
   checkbox: CheckboxField,
