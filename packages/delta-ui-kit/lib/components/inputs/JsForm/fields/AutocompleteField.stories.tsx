@@ -1,7 +1,4 @@
-import { jsx } from '@theme-ui/core';
 import { createFormStory, formStoryMeta } from '../../../../../docs/utils';
-import { Box } from '../../../containers';
-import { AutocompleteOptionsInit } from './AutocompleteField';
 
 export default {
   ...formStoryMeta,
@@ -76,29 +73,19 @@ export const CustomOptions = createFormStory({
   initialValue: ['aaa'],
   registry: {
     utils: {
-      getAutocompleteOptions: ({
-        target: _,
-        query,
-        value,
-      }: AutocompleteOptionsInit) => {
-        if (Array.isArray(value)) {
-          return [
-            {
-              title: `Initial title for "${value[0]}"`,
-              const: value[0],
-            },
-          ];
-        }
-        return fetch(`https://jsonplaceholder.typicode.com/users?q=${query}`)
-          .then(v => v.json())
-          .then(v =>
-            v.map(t => ({
-              title: t.name,
-              const: t.id,
-            }))
-          )
-          .catch(() => []);
-      },
+      getAutocompleteSource: () => ({
+        initials: [{ title: `Initial title`, const: 'aaa' }],
+        onQuery: query =>
+          fetch(`https://jsonplaceholder.typicode.com/users?q=${query}`)
+            .then(v => v.json())
+            .then(v =>
+              v.map(t => ({
+                title: t.name,
+                const: t.id,
+              }))
+            )
+            .catch(() => []),
+      }),
     },
   },
 });
