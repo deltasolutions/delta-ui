@@ -16,3 +16,10 @@ export const fields = {
   string: BaseInput,
   switch: SwitchField,
 };
+
+export * from './AutocompleteField';
+export * from './BaseInput';
+export * from './CheckboxField';
+export * from './GeoLocPickerField';
+export * from './SelectField';
+export * from './SwitchField';
