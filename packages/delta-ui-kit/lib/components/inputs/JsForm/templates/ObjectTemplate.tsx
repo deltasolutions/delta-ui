@@ -10,7 +10,14 @@ export const ObjectTemplate = ({
   required,
 }: TemplateProps) => {
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 3,
+        fontSize: 4,
+      }}
+    >
       {title && (
         <Box
           sx={{

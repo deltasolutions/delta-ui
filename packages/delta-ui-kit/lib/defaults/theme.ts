@@ -1,6 +1,4 @@
 const baseColors = {
-  // brandAlpha: '#d73727',
-  // brandBeta: '#1660ac',
   brandAlpha: '#cc3922',
   brandBeta: '#1b6cbd',
 
@@ -12,7 +10,6 @@ const baseColors = {
   error: '#cc3922',
   background: '#0f111a',
   mundane: 'rgba(190, 202, 255, 0.035)',
-  // mundane: 'rgba(255, 255, 255, 0.035)',
   celestial: '#1a1e2c',
   contrast: '#fafafa',
   exterior: '#09090e',
