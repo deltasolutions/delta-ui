@@ -80,10 +80,6 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
     },
     ref
   ) => {
-    const inputId = useMemo(
-      () => `delta-ui-kit-autocomplete-${autocompleteIndex++}`,
-      []
-    );
     const inputRef = useRef<HTMLInputElement>(null);
     const { floatingPortal } = useContext(SystemContext);
     const portal = useImperativePortal(floatingPortal);
@@ -235,7 +231,6 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
         {portal}
         <label
           ref={mergedRef}
-          htmlFor={inputId}
           style={{
             ...((selections?.length || 0) === 0
               ? {
@@ -282,7 +277,6 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
             <TextInput
               ref={inputRef}
               autoComplete="off"
-              id={inputId}
               placeholder={placeholder}
               style={{
                 ...((selections?.length || 0) !== 0
