@@ -61,12 +61,13 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
                 sx={{
                   borderRadius: '100px',
                   color: 'accentOnContext',
+                  p: '3px',
                   backgroundColor:
                     closeVariant === 'outside' ? 'transparent' : 'exterior',
                 }}
                 onClick={handleClose}
               >
-                <IoMdClose size={24} />
+                <IoMdClose size={20} />
               </Button>
             </Box>
           )}

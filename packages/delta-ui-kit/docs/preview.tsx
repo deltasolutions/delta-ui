@@ -47,6 +47,9 @@ export const decorators = [
                 src: url('/fonts/stolzl_medium.otf') format('opentype');
               }
             }
+            * {
+              font-family: Stolzl, sans-serif;
+            }
           `}
         />
         <Box

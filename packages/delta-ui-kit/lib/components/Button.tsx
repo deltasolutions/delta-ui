@@ -139,7 +139,8 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps): any => {
           backgroundColor: 'accentContext',
           color: 'accentOnContext',
           '&:not(:disabled):hover': {
-            backgroundColor: 'accentPrimary',
+            //TODO replace filter with backgroundColor
+            filter: 'brightness(120%)',
             color: 'onPrimary',
           },
         },

@@ -32,7 +32,7 @@ export const LayoutMainNavbar = forwardRef<
       <Box
         ref={mergedRef}
         sx={{
-          mt: 3,
+          mt: 2,
           zIndex: 2,
           width: '100%',
           position: 'sticky',
