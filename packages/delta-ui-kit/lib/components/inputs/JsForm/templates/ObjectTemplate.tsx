@@ -15,7 +15,6 @@ export const ObjectTemplate = ({
         display: 'flex',
         flexDirection: 'column',
         gap: 3,
-        fontSize: 4,
       }}
     >
       {title && (
@@ -24,6 +23,7 @@ export const ObjectTemplate = ({
             fontWeight: 600,
             letterSpacing: '0.04em',
             color: 'accentOnContext',
+            fontSize: 4,
           }}
         >
           {title}
