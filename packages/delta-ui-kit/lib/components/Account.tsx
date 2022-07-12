@@ -12,7 +12,7 @@ export const Account = forwardRef<HTMLButtonElement, AccountProps>(
       <Button
         ref={ref}
         sx={{
-          borderRadius: '100%',
+          borderRadius: '1em',
           display: 'flex',
           gap: 2,
 
