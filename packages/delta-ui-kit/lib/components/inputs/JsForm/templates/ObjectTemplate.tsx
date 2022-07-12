@@ -11,16 +11,20 @@ export const ObjectTemplate = ({
 }: TemplateProps) => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-      <Box>
-        {title && (
-          <Box sx={{ fontWeight: 600, letterSpacing: '0.04em' }}>
-            {title}
-            {required && <span sx={{ ml: 1, color: 'danger' }}>*</span>}
-          </Box>
-        )}
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-          {children}
+      {title && (
+        <Box
+          sx={{
+            fontWeight: 600,
+            letterSpacing: '0.04em',
+            color: 'accentOnContext',
+          }}
+        >
+          {title}
+          {required && <span sx={{ ml: 1, color: 'error' }}>*</span>}
         </Box>
+      )}
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+        {children}
       </Box>
       <ErrorList validity={validity} />
     </Box>
