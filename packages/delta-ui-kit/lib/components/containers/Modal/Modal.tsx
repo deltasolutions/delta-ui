@@ -6,15 +6,12 @@ import { Button } from '../../Button';
 import { Box, BoxProps } from '../Box';
 
 export interface ModalProps extends BoxProps, Partial<PortalledProps> {
-  size?: 'small' | 'medium' | 'large' | 'auto';
-  closeVariant?: 'none' | 'inside' | 'outside';
+  size?: 'small' | 'medium' | 'large';
+  closeVariant?: 'inside' | 'outside';
 }
 
 export const Modal = forwardRef<HTMLDivElement, ModalProps>(
-  (
-    { closeVariant = 'inside', handleClose, size = 'auto', children, ...rest },
-    ref
-  ) => {
+  ({ closeVariant, size, children, handleClose, ...rest }, ref) => {
     const theme = useDeltaTheme({
       colors: {
         context: 'celestial',
@@ -36,24 +33,17 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
               small: { width: '550px' },
               medium: { width: '650px' },
               large: { width: '750px' },
-              auto: {},
-            }[size],
+            }[size ?? ''],
           }}
           {...rest}
         >
-          {closeVariant !== 'none' && (
+          {closeVariant && (
             <Box
               sx={{
                 position: 'absolute',
                 ...{
-                  inside: {
-                    top: 2,
-                    right: 2,
-                  },
-                  outside: {
-                    top: 0,
-                    right: -5,
-                  },
+                  inside: { top: 2, right: 2 },
+                  outside: { top: 0, right: -5 },
                 }[closeVariant],
               }}
             >
@@ -63,7 +53,9 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
                   color: 'accentOnContext',
                   p: '3px',
                   backgroundColor:
-                    closeVariant === 'outside' ? 'transparent' : 'exterior',
+                    closeVariant === 'outside'
+                      ? 'transparent'
+                      : 'accentContext',
                 }}
                 onClick={handleClose}
               >

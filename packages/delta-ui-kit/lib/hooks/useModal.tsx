@@ -1,4 +1,5 @@
-import { ModalProps } from '../components';
+import { jsx } from '@theme-ui/core';
+import { Modal, ModalProps } from '../components';
 import { DialogOptions, DialogRenderFn, useDialog } from './useDialog';
 
 export const useModal = <C extends unknown = never>(
@@ -7,11 +8,11 @@ export const useModal = <C extends unknown = never>(
 ) => {
   return useDialog<C>(
     ({ context, handleClose }) => {
-      return render?.({
+      const content = render?.({
         context: context as C,
         handleClose,
-        ...modalProps,
       });
+      return <Modal {...modalProps}>{content}</Modal>;
     },
     {
       deps,
