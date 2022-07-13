@@ -104,11 +104,11 @@ const navbar = (breadcrumbsItems = null as ReactNode) => (
           </Breadcrumbs>
           <Account
             sx={{
-              backgroundColor: sticked ? 'transparent' : undefined,
+              backgroundColor: sticked ? undefined : undefined,
               transition: 'background-color 0.15s linear',
             }}
           >
-            root
+            Profile
           </Account>
         </Fragment>
       );
@@ -150,7 +150,7 @@ export const Resource = () => {
             </Button>
           </Box>
         </LayoutMainHeader>
-        <LayoutMainBody variant="tabs">
+        <LayoutMainBody variant="wide">
           <TabGroup activeId="3">
             <TabOption icon={IoMapOutline} id="1" variant="bookmark">
               Overview

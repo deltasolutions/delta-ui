@@ -13,6 +13,7 @@ import {
   useDismiss,
 } from '@floating-ui/react-dom-interactions';
 import { jsx } from '@theme-ui/core';
+import { darken } from 'polished';
 import {
   cloneElement,
   Fragment,
@@ -72,7 +73,7 @@ export const Tooltip = ({
   return (
     <Fragment>
       {cloneElement(children, {
-        ...getReferenceProps({ ref: mergedRef, ...rest }),
+        ...getReferenceProps({ ref: mergedRef }),
       })}
       {open && (
         <Box
@@ -83,6 +84,8 @@ export const Tooltip = ({
             boxShadow: 1,
             color: 'accentOnCelestial',
             fontSize: 2,
+            border: '1px solid',
+            borderColor: 'accentCelestial',
             fontWeight: 400,
             animation: `${appear} 0.1s cubic-bezier(0.250, 0.460, 0.450, 0.940)`,
           }}
@@ -93,6 +96,7 @@ export const Tooltip = ({
               top: y ?? '',
               left: x ?? '',
             },
+            ...rest,
           })}
         >
           {content}
