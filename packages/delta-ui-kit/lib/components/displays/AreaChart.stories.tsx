@@ -44,7 +44,7 @@ export const Basics = () => {
       </CardHeader>
       <CardBody sx={{ width: '600px' }} variant="wide">
         <AreaChart
-          data={appleStock.slice(0, 30)}
+          data={appleStock.slice(0, 8)}
           formatX={v => dayjs(v).format('YYYY-MM-DD')}
           formatY={v => `${v} Celsius`}
           getX={v => v.date}
