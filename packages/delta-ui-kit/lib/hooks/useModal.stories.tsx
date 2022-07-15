@@ -1,6 +1,14 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { Button, ModalBody } from '../components';
+import {
+  Box,
+  Button,
+  DropMenu,
+  DropMenuItem,
+  ModalBody,
+  Tooltip,
+} from '../components';
+import { useDrop } from './useDrop';
 import { useModal } from './useModal';
 
 export default {
@@ -10,12 +18,7 @@ export default {
 export const Basics = () => {
   const openModal = useModal(
     () => {
-      return (
-        <ModalBody sx={{ overflowY: 'auto', height: '100%' }}>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vitae totam
-          alias aspernatur repellendus beatae error, vel exercitatione
-        </ModalBody>
-      );
+      return <Modal />;
     },
     {
       size: 'medium',
@@ -26,5 +29,38 @@ export const Basics = () => {
     <Button variant="contained" onClick={() => openModal()}>
       Open
     </Button>
+  );
+};
+
+const Modal = () => {
+  const [openDrop, anchorRef] = useDrop(
+    props => {
+      return (
+        <DropMenu {...props}>
+          <DropMenuItem size="large" value={1}>
+            <span>Logout</span>
+          </DropMenuItem>
+          <DropMenuItem size="large" value={2}>
+            <span>Logout</span>
+          </DropMenuItem>
+        </DropMenu>
+      );
+    },
+    {
+      deps: [],
+      tailored: false,
+      blurResistant: false,
+      placement: 'bottom-start',
+    }
+  );
+  return (
+    <ModalBody sx={{ overflowY: 'auto', height: '100%' }}>
+      <Button ref={anchorRef} variant="contained" onClick={() => openDrop()}>
+        Open Drop
+      </Button>
+      <Tooltip content="Content rendered">
+        <Button>Tooltip test</Button>
+      </Tooltip>
+    </ModalBody>
   );
 };

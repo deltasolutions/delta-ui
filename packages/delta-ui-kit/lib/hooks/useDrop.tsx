@@ -105,6 +105,7 @@ export const useDrop = <T extends HTMLElement, C extends unknown = never>(
         <Drop
           ref={mergedRef}
           style={{
+            zIndex: 10000,
             position: strategy,
             left: x ?? '-100vw',
             top: y ?? '-100vh',
