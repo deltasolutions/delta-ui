@@ -11,9 +11,9 @@ export default {
   title: 'Containers/Modal',
 } as Meta;
 
-export const Basics = () => {
+export const Basics = props => {
   return (
-    <Modal>
+    <Modal sx={{ minWidth: '450px' }} {...props}>
       <ModalHeader>Header</ModalHeader>
       <ModalBody sx={{ gap: 3, flexDirection: 'column', display: 'flex' }}>
         <TextInput placeholder="Placeholder" />
@@ -32,4 +32,8 @@ export const Basics = () => {
       </ModalFooter>
     </Modal>
   );
+};
+
+export const CloseVariant = () => {
+  return <Basics closeVariant="inside" />;
 };

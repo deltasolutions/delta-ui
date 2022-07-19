@@ -1,15 +1,14 @@
 import { jsx } from '@theme-ui/core';
 import { forwardRef } from 'react';
 import { FaUserAlt } from 'react-icons/fa';
-import { Button, ButtonProps } from './Button';
-import { Box } from './containers';
+import { Anchor, AnchorProps } from './Anchor';
 
-export interface AccountProps extends ButtonProps {}
+export interface AccountProps extends AnchorProps {}
 
-export const Account = forwardRef<HTMLButtonElement, AccountProps>(
-  ({ children, ...rest }: AccountProps, ref) => {
+export const Account = forwardRef<HTMLAnchorElement, AccountProps>(
+  ({ children, ...rest }, ref) => {
     return (
-      <Button
+      <Anchor
         ref={ref}
         sx={{
           borderRadius: '1em',
@@ -17,10 +16,8 @@ export const Account = forwardRef<HTMLButtonElement, AccountProps>(
           gap: '0.5em',
           fontSize: 2,
           alignItems: 'center',
-          '&:hover': {
-            color: 'accentOnContext',
-          },
         }}
+        variant="pure"
         {...rest}
       >
         <FaUserAlt
@@ -31,7 +28,7 @@ export const Account = forwardRef<HTMLButtonElement, AccountProps>(
           }}
         />
         <span>{children}</span>
-      </Button>
+      </Anchor>
     );
   }
 );
