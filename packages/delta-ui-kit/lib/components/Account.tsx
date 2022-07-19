@@ -14,17 +14,20 @@ export const Account = forwardRef<HTMLButtonElement, AccountProps>(
         sx={{
           borderRadius: '1em',
           display: 'flex',
-          gap: 2,
-
+          gap: '0.5em',
           fontSize: 2,
           alignItems: 'center',
+          '&:hover': {
+            color: 'accentOnContext',
+          },
         }}
         {...rest}
       >
         <FaUserAlt
           sx={{
-            width: '0.78rem',
-            height: '0.78rem',
+            width: '1.15em',
+            height: '1.15em',
+            my: '-0.5em',
           }}
         />
         <span>{children}</span>

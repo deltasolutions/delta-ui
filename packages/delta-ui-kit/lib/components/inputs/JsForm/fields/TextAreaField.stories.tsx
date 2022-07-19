@@ -2,16 +2,16 @@ import { createFormStory, formStoryMeta } from '../../../../../docs/utils';
 
 export default {
   ...formStoryMeta,
-  title: 'JsForm/GeoLocPicker',
+  title: 'JsForm/TextArea',
 };
 
 export const Basics = createFormStory({
   schema: {
-    type: 'object',
-    title: 'GeoLocPicker',
+    type: 'string',
+    title: 'TextArea',
     layout: {
-      field: 'geo-loc-picker',
+      field: 'text-area',
     },
   },
-  initialValue: {},
+  initialValue: '',
 });
