@@ -86,7 +86,7 @@ export const Tooltip = ({
             fontSize: 2,
             fontWeight: 300,
             letterSpacing: '0.04em',
-            backdropFilter: 'blur(5px)',
+            backdropFilter: 'blur(10px)',
             animation: `${appear} 0.1s cubic-bezier(0.250, 0.460, 0.450, 0.940)`,
           }}
           {...getFloatingProps({
