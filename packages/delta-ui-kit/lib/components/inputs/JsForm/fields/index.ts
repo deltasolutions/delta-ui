@@ -4,17 +4,19 @@ import { CheckboxField } from './CheckboxField';
 import { GeoLocPickerField } from './GeoLocPickerField';
 import { SelectField } from './SelectField';
 import { SwitchField } from './SwitchField';
+import { TextAreaField } from './TextAreaField';
 
 export const jsFormFields = {
   autocomplete: AutocompleteField,
   boolean: SwitchField,
   checkbox: CheckboxField,
-  geoLocPicker: GeoLocPickerField,
   integer: BaseInput,
   number: BaseInput,
   select: SelectField,
   string: BaseInput,
   switch: SwitchField,
+  'geo-loc-picker': GeoLocPickerField,
+  'text-area': TextAreaField,
 };
 
 export * from './AutocompleteField';

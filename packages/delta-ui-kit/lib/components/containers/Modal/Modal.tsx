@@ -7,7 +7,7 @@ import { Box, BoxProps } from '../Box';
 
 export interface ModalProps extends BoxProps, Partial<PortalledProps> {
   size?: 'small' | 'medium' | 'large';
-  closeVariant?: 'inside' | 'outside';
+  closeVariant?: 'inside';
 }
 
 export const Modal = forwardRef<HTMLDivElement, ModalProps>(
@@ -37,7 +37,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
           }}
           {...rest}
         >
-          {closeVariant && (
+          {closeVariant === 'inside' && (
             <Box
               sx={{
                 position: 'absolute',
@@ -50,12 +50,12 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
               <Button
                 sx={{
                   borderRadius: '100px',
-                  color: 'accentOnContext',
+                  color: 'onContext',
                   p: '3px',
-                  backgroundColor:
-                    closeVariant === 'outside'
-                      ? 'transparent'
-                      : 'accentContext',
+                  backgroundColor: 'accentContext',
+                  '&:hover': {
+                    color: 'accentOnContext',
+                  },
                 }}
                 onClick={handleClose}
               >
