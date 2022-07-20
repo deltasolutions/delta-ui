@@ -13,7 +13,6 @@ import {
   useDismiss,
 } from '@floating-ui/react-dom-interactions';
 import { jsx } from '@theme-ui/core';
-import { darken } from 'polished';
 import {
   cloneElement,
   Fragment,
@@ -29,16 +28,18 @@ import { Box, BoxProps } from './containers';
 
 export interface TooltipProps extends Omit<BoxProps, 'children'> {
   content: ReactNode;
+  disabled?: boolean;
   delay?: number;
   placement?: Placement;
   children: ReactElement;
 }
 
 export const Tooltip = ({
-  children,
   content,
+  disabled,
   delay = 1000,
   placement = 'top',
+  children,
   ...rest
 }: TooltipProps) => {
   const [open, setOpen] = useState(false);
@@ -75,7 +76,7 @@ export const Tooltip = ({
       {cloneElement(children, {
         ...getReferenceProps({ ref: mergedRef }),
       })}
-      {open && (
+      {open && !disabled && (
         <Box
           sx={{
             padding: 2,
