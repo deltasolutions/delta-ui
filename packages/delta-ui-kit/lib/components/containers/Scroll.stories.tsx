@@ -8,7 +8,7 @@ export default {
 } as Meta;
 
 export const Basics = () => (
-  <Box sx={{ px: 5 }}>
+  <Box sx={{ width: '300px' }}>
     <Scroll sx={{ height: '50px' }}>
       <Box sx={{ whiteSpace: 'nowrap' }}>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam, animi
