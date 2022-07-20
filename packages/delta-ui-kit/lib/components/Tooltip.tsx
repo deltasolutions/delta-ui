@@ -92,6 +92,7 @@ export const Tooltip = ({
           {...getFloatingProps({
             ref: floating,
             style: {
+              zIndex: 1000,
               position: strategy,
               top: y ?? '',
               left: x ?? '',

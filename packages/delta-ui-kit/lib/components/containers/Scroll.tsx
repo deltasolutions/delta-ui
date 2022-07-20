@@ -87,6 +87,7 @@ export const Scroll = ({
 };
 
 const buttonBaseStyle = {
+  zIndex: 10,
   position: 'absolute',
   display: 'flex',
   alignItems: 'center',
