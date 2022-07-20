@@ -94,5 +94,5 @@ const buttonBaseStyle = {
   height: '100%',
   width: '40px',
   color: 'accentOnContext',
-  backdropFilter: 'blur(10px)',
+  backdropFilter: 'blur(5px)',
 } as const;
