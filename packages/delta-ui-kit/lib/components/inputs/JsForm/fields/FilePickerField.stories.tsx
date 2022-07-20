@@ -2,14 +2,13 @@ import { createFormStory, formStoryMeta } from '../../../../../docs/utils';
 
 export default {
   ...formStoryMeta,
-  title: 'JsForm/GeoLocPicker',
+  title: 'JsForm/FilePicker',
 };
 export const FilePicker = createFormStory({
   schema: {
-    type: 'string',
     title: 'Pick Files',
     layout: {
-      field: 'filePicker',
+      field: 'file-picker',
     },
   },
 });
