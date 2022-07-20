@@ -1,5 +1,5 @@
 import { jsx } from '@theme-ui/core';
-import { useEffect, useRef, useState } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 import { Button, ButtonProps } from '../Button';
 import { Box, BoxProps } from './Box';
@@ -9,82 +9,81 @@ export interface ScrollProps extends BoxProps {
   buttonProps?: Omit<ButtonProps, 'children'>;
 }
 
-export const Scroll = ({
-  slideStep = 300,
-  buttonProps,
-  children,
-  ...rest
-}: ScrollProps) => {
-  const ref = useRef<any>(null);
-  const [scrollX, setScrollX] = useState(0);
-  const [scrolEnd, setScrolEnd] = useState(false);
-  const handleSlide = shift => {
-    ref.current.scrollLeft += shift;
-    setScrollX(scrollX + shift);
-    if (
-      Math.floor(ref.current.scrollWidth - ref.current.scrollLeft) <=
-      ref.current.offsetWidth
-    ) {
-      setScrolEnd(true);
-    } else {
-      setScrolEnd(false);
-    }
-  };
-  const handleScroll = () => {
-    setScrollX(ref.current.scrollLeft);
-    if (
-      Math.floor(ref.current.scrollWidth - ref.current.scrollLeft) <=
-      ref.current.offsetWidth
-    ) {
-      setScrolEnd(true);
-    } else {
-      setScrolEnd(false);
-    }
-  };
-  useEffect(() => {
-    handleScroll();
-  }, [ref.current?.scrollWidth]);
-  return (
-    <Box sx={{ position: 'relative', width: '100%' }} {...rest}>
-      {scrollX !== 0 && (
-        <Button
-          sx={{ ...buttonBaseStyle, left: 0, top: 0 }}
-          onClick={() => handleSlide(-slideStep)}
-          {...buttonProps}
+export const Scroll = forwardRef<HTMLDivElement, ScrollProps>(
+  ({ slideStep = 300, buttonProps, children, ...rest }, ref) => {
+    const contentRef = useRef<any>(null);
+    const [scrollX, setScrollX] = useState(0);
+    const [scrolEnd, setScrolEnd] = useState(false);
+    const handleSlide = shift => {
+      contentRef.current.scrollLeft += shift;
+      setScrollX(scrollX + shift);
+      if (
+        Math.floor(
+          contentRef.current.scrollWidth - contentRef.current.scrollLeft
+        ) <= contentRef.current.offsetWidth
+      ) {
+        setScrolEnd(true);
+      } else {
+        setScrolEnd(false);
+      }
+    };
+    const handleScroll = () => {
+      setScrollX(contentRef.current.scrollLeft);
+      if (
+        Math.floor(
+          contentRef.current.scrollWidth - contentRef.current.scrollLeft
+        ) <= contentRef.current.offsetWidth
+      ) {
+        setScrolEnd(true);
+      } else {
+        setScrolEnd(false);
+      }
+    };
+    useEffect(() => {
+      handleScroll();
+    }, [contentRef.current?.scrollWidth]);
+    return (
+      <Box ref={ref} sx={{ position: 'relative', width: '100%' }} {...rest}>
+        <Box
+          ref={contentRef}
+          sx={{
+            overflow: 'scroll',
+            maxWidth: '100%',
+            height: 'min-content',
+            display: 'flex',
+            alignItems: 'center',
+            scrollBehavior: 'smooth',
+            '&::-webkit-scrollbar': {
+              display: 'none',
+            },
+          }}
+          onScroll={handleScroll}
+          {...rest}
         >
-          <MdKeyboardArrowLeft size={32} />
-        </Button>
-      )}
-      <Box
-        ref={ref}
-        sx={{
-          overflow: 'scroll',
-          maxWidth: '100%',
-          height: 'min-content',
-          display: 'flex',
-          alignItems: 'center',
-          scrollBehavior: 'smooth',
-          '&::-webkit-scrollbar': {
-            display: 'none',
-          },
-        }}
-        onScroll={handleScroll}
-        {...rest}
-      >
-        {children}
+          {children}
+        </Box>
+        {scrollX !== 0 && (
+          <Button
+            sx={{ ...buttonBaseStyle, left: 0, top: 0 }}
+            onClick={() => handleSlide(-slideStep)}
+            {...buttonProps}
+          >
+            <MdKeyboardArrowLeft size={32} />
+          </Button>
+        )}
+        {!scrolEnd && (
+          <Button
+            sx={{ ...buttonBaseStyle, right: 0, top: 0 }}
+            onClick={() => handleSlide(slideStep)}
+            {...buttonProps}
+          >
+            <MdKeyboardArrowRight size={32} />
+          </Button>
+        )}
       </Box>
-      {!scrolEnd && (
-        <Button
-          sx={{ ...buttonBaseStyle, right: 0, top: 0 }}
-          onClick={() => handleSlide(slideStep)}
-          {...buttonProps}
-        >
-          <MdKeyboardArrowRight size={32} />
-        </Button>
-      )}
-    </Box>
-  );
-};
+    );
+  }
+);
 
 const buttonBaseStyle = {
   zIndex: 10,
