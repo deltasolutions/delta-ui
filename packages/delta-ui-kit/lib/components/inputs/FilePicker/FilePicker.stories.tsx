@@ -9,5 +9,12 @@ export default {
 } as Meta;
 
 export const Basics = () => {
-  return <FilePicker multiple />;
+  return (
+    <FilePicker
+      multiple={true}
+      onChange={files => {
+        console.log('files', files);
+      }}
+    />
+  );
 };

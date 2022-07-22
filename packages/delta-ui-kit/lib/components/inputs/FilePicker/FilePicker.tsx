@@ -70,18 +70,14 @@ export const FilePicker = forwardRef<HTMLDivElement, FilePickerProps>(
     const [{ canDrop, isOver }, drop] = useDrop(
       () => ({
         accept: [NativeTypes.FILE],
-        drop: ({ files }) => {
-          if (files.length === 0) {
+        drop: (item: { dataTransfer: DataTransfer; files: File[] }) => {
+          if (item.files.length === 0) {
             return;
           }
-          if (multiple) {
-            handleChange(files);
+          if (!multiple && item.files.length !== 1) {
             return;
           }
-          if (files.length === 1) {
-            handleChange(files);
-            return;
-          }
+          handleChange(item.dataTransfer.files);
         },
         collect: (monitor: DropTargetMonitor) => {
           return {
