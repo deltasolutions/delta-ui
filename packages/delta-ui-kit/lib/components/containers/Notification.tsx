@@ -5,6 +5,9 @@ import { RiCloseCircleFill, RiCheckboxCircleFill } from 'react-icons/ri';
 import { PortalledTransitionProps } from '../../hooks';
 import { Box, BoxProps } from './Box';
 
+const iconSize = '24px';
+const lineHeight = '1.5em';
+
 export interface NotificationProps
   extends BoxProps,
     Partial<PortalledTransitionProps> {
@@ -42,10 +45,13 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
           p: 3,
           borderRadius: 4,
           display: 'flex',
+          alignItems: 'start',
           opacity: isVisible ? 1 : 0,
           backgroundColor: 'contrast',
           color: 'onContrast',
           fontSize: 2,
+          fontWeight: 600,
+          letterSpacing: '0.04em',
           transform: `translateX(${
             isVisible ? '0, 0' : isEntering ? '3rem' : '3rem'
           })`,
@@ -62,15 +68,14 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
           <Icon
             sx={{
               flex: '0 0 auto',
-              width: '1.5rem',
-              height: '1.5rem',
+              width: iconSize,
+              height: iconSize,
+              my: `calc(-0.5 * (${iconSize} - ${lineHeight}))`,
               verticalAlign: 'middle',
               color,
             }}
           />
-          <Box
-            sx={{ lineHeight: '20px', width: '296px', wordBreak: 'break-word' }}
-          >
+          <Box sx={{ lineHeight, width: '296px', wordBreak: 'break-word' }}>
             {children}
           </Box>
         </Box>
