@@ -60,6 +60,7 @@ export const useDialog = <C extends unknown = never>(
           active={focusTrap !== false}
           focusTrapOptions={{
             escapeDeactivates: false,
+            initialFocus: false,
             fallbackFocus: () => overlayRef.current ?? document.body,
             ...(typeof focusTrap === 'object' ? focusTrap : {}),
           }}
