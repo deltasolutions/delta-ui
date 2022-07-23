@@ -6,6 +6,8 @@ import {
   DropMenu,
   DropMenuItem,
   ModalBody,
+  Select,
+  SelectOption,
   Tooltip,
 } from '../components';
 import { useDrop } from './useDrop';
@@ -58,6 +60,11 @@ const Modal = () => {
       <Button ref={anchorRef} variant="contained" onClick={() => openDrop()}>
         Open Drop
       </Button>
+      <Select>
+        <SelectOption value={1}>1</SelectOption>
+        <SelectOption value={2}>2</SelectOption>
+      </Select>
+      <Box sx={{ width: '100%', height: '100px' }} onClick={() => {}}></Box>
       <Tooltip content="Content rendered">
         <Button>Tooltip test</Button>
       </Tooltip>

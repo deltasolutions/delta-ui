@@ -46,8 +46,8 @@ export const FilePicker = forwardRef<HTMLDivElement, FilePickerProps>(
     const inputRef = useRef<HTMLInputElement>(null);
     const handleChange = useCallback(
       (nextValue: FileList | undefined) => {
-        nextValue !== innerValue && setInnerValue(nextValue);
-        nextValue !== value && onChange?.(nextValue);
+        setInnerValue(nextValue);
+        onChange?.(nextValue);
       },
       [innerValue, value, onChange]
     );

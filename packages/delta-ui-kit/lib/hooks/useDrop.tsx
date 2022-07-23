@@ -10,7 +10,7 @@ import {
   useMemo,
   useRef,
 } from 'react';
-import { Box, Drop, DropProps, SystemContext } from '../components';
+import { Drop, DropProps, SystemContext } from '../components';
 import { mergeRefs } from '../utils';
 import { useClickOutside } from './useClickOutside';
 import { ImperativePortal } from './useImperativePortal';
@@ -39,7 +39,6 @@ export const useDrop = <T extends HTMLElement, C extends unknown = never>(
 ) => {
   const {
     deps,
-
     placement,
     multiple,
     tailored,
@@ -115,6 +114,7 @@ export const useDrop = <T extends HTMLElement, C extends unknown = never>(
           <FocusTrap
             active={blurResistant == false}
             focusTrapOptions={{
+              allowOutsideClick: true,
               escapeDeactivates: false,
               fallbackFocus: () => overlayRef.current ?? document.body,
               ...(typeof blurResistant === 'object' ? blurResistant : {}),
