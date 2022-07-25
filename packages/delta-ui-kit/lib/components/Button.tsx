@@ -7,7 +7,7 @@ import {
 } from 'react';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'contained' | 'contained-dimmed' | 'outlined' | 'text';
+  variant?: 'contained' | 'contained-dimmed' | 'outlined' | 'text' | 'icon';
   color?: 'primary' | 'secondary' | 'success' | 'error';
   size?: 'small' | 'medium' | 'large';
   icon?: ComponentType<HTMLAttributes<Element>>;
@@ -55,12 +55,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {Icon && (
           <Icon
             sx={{
+              zIndex: 1,
+              position: 'relative',
               width: '1.65em',
               height: '1.65em',
               verticalAlign: 'middle',
-              ml: '-0.5em',
-              mr: '0.65em',
               my: '-0.5em',
+              ...(variant === 'icon' ? {} : { ml: '-0.5em', mr: '0.65em' }),
             }}
           />
         )}
@@ -71,7 +72,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 );
 
 const getSizeStyle = ({ variant, size = 'medium' }: ButtonProps) => {
-  if (!variant) {
+  if (!variant || variant === 'icon') {
     return {};
   }
   return {
@@ -95,9 +96,29 @@ const getSizeStyle = ({ variant, size = 'medium' }: ButtonProps) => {
 
 const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps): any => {
   if (!variant) {
+    return {};
+  }
+  if (variant === 'icon') {
     return {
-      display: 'flex',
-      alignItems: 'center',
+      position: 'relative',
+      padding: 0,
+      display: 'inline-block',
+      aspectRatio: '1/1',
+      color: 'onContext',
+      '&:not(:disabled):hover': {
+        color: 'accentOnContext',
+        '&::before': {
+          content: `""`,
+          display: 'block',
+          position: 'absolute',
+          top: '-25%',
+          left: '-25%',
+          width: '150%',
+          height: '150%',
+          borderRadius: 4,
+          backgroundColor: 'accentContext',
+        },
+      },
     };
   }
   return {
@@ -139,8 +160,7 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps): any => {
           backgroundColor: 'accentContext',
           color: 'accentOnContext',
           '&:not(:disabled):hover': {
-            //TODO replace filter with backgroundColor
-            filter: 'brightness(120%)',
+            backgroundColor: 'accentPrimary',
             color: 'onPrimary',
           },
         },

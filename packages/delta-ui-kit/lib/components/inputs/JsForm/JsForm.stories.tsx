@@ -43,6 +43,31 @@ export const Basics = createFormStory({
   },
 });
 
+export const Array = createFormStory({
+  schema: {
+    type: 'object',
+    properties: {
+      username: {
+        title: 'Username',
+        type: 'string',
+      },
+      password: {
+        title: 'Password',
+        type: 'string',
+      },
+      roles: {
+        title: 'Roles',
+        type: 'array',
+        items: {
+          title: 'Name',
+          type: 'string',
+        },
+      },
+    },
+  },
+  initialValue: {},
+});
+
 export const LoginForm = createFormStory({
   schema: {
     type: 'object',

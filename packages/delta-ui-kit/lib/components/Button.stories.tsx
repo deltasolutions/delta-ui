@@ -1,24 +1,64 @@
 import { ComponentStory, Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { Button } from '..';
+import { IoPlay } from 'react-icons/io5';
+import { Button } from './Button';
+import { Box } from './containers';
 
 export default {
   title: 'Interactive/Button',
   component: Button,
 } as Meta;
 
-const Template: ComponentStory<typeof Button> = args => <Button {...args} />;
+const colors = ['primary', 'secondary', 'success', 'error'] as const;
 
-export const Basics = Template.bind({});
-Basics.args = {
-  variant: 'contained',
-  color: 'primary',
-  disabled: false,
-  children: 'Click Me',
-};
+export const Default = () => (
+  <Button sx={{ width: '300px', height: '300px', background: 'grey' }} />
+);
 
-export const Defaults = Template.bind({});
-Defaults.args = {
-  style: { width: '300px', height: '300px', background: 'grey' },
-  children: '',
-};
+export const Contained = () => (
+  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+    {colors.map(v => (
+      <Button key={v} color={v} variant="contained">
+        Click Me
+      </Button>
+    ))}
+  </Box>
+);
+
+export const ContainedDimmed = () => (
+  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+    {colors.map(v => (
+      <Button key={v} color={v} variant="contained-dimmed">
+        Click Me
+      </Button>
+    ))}
+  </Box>
+);
+
+export const Outlined = () => (
+  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+    {colors.map(v => (
+      <Button key={v} color={v} variant="outlined">
+        Click Me
+      </Button>
+    ))}
+  </Box>
+);
+
+export const Text = () => (
+  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+    {colors.map(v => (
+      <Button key={v} color={v} variant="text">
+        Click Me
+      </Button>
+    ))}
+  </Box>
+);
+
+export const Icon = () => <Button icon={IoPlay} variant="icon" />;
+
+export const WithIcon = () => (
+  <Button color="primary" icon={IoPlay} variant="contained">
+    Play
+  </Button>
+);
