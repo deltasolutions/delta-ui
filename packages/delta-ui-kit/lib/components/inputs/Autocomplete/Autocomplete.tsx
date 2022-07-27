@@ -60,8 +60,6 @@ export interface AutocompleteProps
   onQuery?: (query: string) => void;
 }
 
-let autocompleteIndex = 0;
-
 export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
   (
     {
@@ -123,9 +121,9 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
         setInnerQuery('');
         onChange?.(multiple ? nextSelections.map(v => v.value) : value);
         onQuery?.('');
-        inputRef.current?.focus();
+        multiple && inputRef.current?.focus();
       },
-      [selections, onChange, onQuery]
+      [selections, onChange, onQuery, multiple]
     );
     const handleRemoval = useCallback(
       (value: unknown) => {
@@ -186,6 +184,9 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
         );
       }
     }, [valueItems]);
+    useUpdateEffect(() => {
+      !multiple && handleClose();
+    }, [selections]);
     useUpdateEffect(() => {
       query !== innerQuery && setInnerQuery(query ?? '');
     }, [query]);

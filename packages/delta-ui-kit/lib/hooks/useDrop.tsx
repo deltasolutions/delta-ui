@@ -54,7 +54,10 @@ export const useDrop = <T extends HTMLElement, C extends unknown = never>(
     ({ handleClose: handleImplicitClose }, ref) => {
       const overlayRef = useRef<HTMLDivElement>(null);
       const { x, y, reference, floating, strategy, refs, update } =
-        useFloating<T>({ placement });
+        useFloating<T>({
+          placement,
+          whileElementsMounted: autoUpdate,
+        });
       const clickOusideRef = useClickOutside<HTMLDivElement>(
         () => !blurResistant && handleClose()
       );
