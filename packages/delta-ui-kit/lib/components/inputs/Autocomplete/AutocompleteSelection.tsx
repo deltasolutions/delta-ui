@@ -35,28 +35,28 @@ export const AutocompleteSelection = ({
       <Box sx={{ position: 'relative', zIndex: 1, opacity: 0.9, fontSize: 2 }}>
         {children}
       </Box>
-      <Box>
-        <Button
+      <Button
+        sx={{
+          zIndex: 1,
+          borderRadius: '100%',
+          aspectRatio: '1/1',
+          lineHeight: '100%',
+          '&:hover, &:focus-visible': {
+            backgroundColor: 'accentContext',
+            color: 'accentOnContext',
+          },
+        }}
+        onClick={onClick}
+      >
+        <IoIosClose
           sx={{
-            zIndex: 1,
-            borderRadius: '100%',
-            '&:hover, &:focus, &:focus-visible': {
-              backgroundColor: 'accentContext',
-              color: 'accentOnContext',
-            },
+            width: '1em',
+            height: '1em',
+            transform: 'scale(1.2)',
+            verticalAlign: 'middle',
           }}
-          onClick={onClick}
-        >
-          <IoIosClose
-            sx={{
-              width: '1em',
-              height: '1em',
-              transform: 'scale(1.2)',
-              verticalAlign: 'middle',
-            }}
-          />
-        </Button>
-      </Box>
+        />
+      </Button>
     </Box>
   );
 };

@@ -232,20 +232,13 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
         {portal}
         <label
           ref={mergedRef}
-          style={{
-            ...((selections?.length || 0) === 0
-              ? {
-                  padding: '0.55em 0.60em',
-                }
-              : {}),
-          }}
           sx={{
             boxSizing: 'border-box',
             width: '100%',
             position: 'relative',
             backgroundColor: 'accentContext',
             borderRadius: 4,
-            padding: '3px',
+            padding: '0.55em 0.60em',
             paddingRight: '2em',
             gap: '2px',
             height: '100%',
@@ -261,6 +254,24 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
           }}
           {...rest}
         >
+          <Box sx={{ width: 'fit-content', flexGrow: 1, order: 1000 }}>
+            <TextInput
+              ref={inputRef}
+              autoComplete="off"
+              placeholder={placeholder}
+              style={{ paddingLeft: selections?.length ? '0.45em' : 0 }}
+              sx={{ fontSize: 2 }}
+              value={innerQuery}
+              variant="pure"
+              onBlur={onBlur}
+              onChange={handleQueryChange}
+              onClick={handleOpen}
+              onFocus={() => {
+                handleOpen();
+                onFocus?.();
+              }}
+            />
+          </Box>
           {selections.map(({ value, title }, index) => {
             const removing =
               backspacePressed && index === selections.length - 1;
@@ -274,28 +285,6 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
               </AutocompleteSelection>
             );
           })}
-          <Box sx={{ width: 'fit-content', flexGrow: 1 }}>
-            <TextInput
-              ref={inputRef}
-              autoComplete="off"
-              placeholder={placeholder}
-              style={{
-                ...((selections?.length || 0) !== 0
-                  ? { padding: '0.45em 0.50em' }
-                  : {}),
-              }}
-              sx={{ fontSize: 2 }}
-              value={innerQuery}
-              variant="pure"
-              onBlur={onBlur}
-              onChange={handleQueryChange}
-              onClick={handleOpen}
-              onFocus={() => {
-                handleOpen();
-                onFocus?.();
-              }}
-            />
-          </Box>
           <IoSearch
             sx={{
               position: 'absolute',
