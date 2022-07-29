@@ -14,7 +14,7 @@ export interface QuestionRenderer<C> {
 
 export type QuestionDescription<C = never> =
   | {
-      content: ReactNode;
+      content?: ReactNode;
       heading: ReactNode;
       okText?: string;
       cancelText?: string;

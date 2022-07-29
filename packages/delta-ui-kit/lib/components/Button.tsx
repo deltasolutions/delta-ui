@@ -192,7 +192,7 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps): any => {
       outlined: {
         primary: {
           border: '2px solid',
-          borderColor: 'accentContext',
+          borderColor: 'primary',
           color: 'primary',
           '&:not(:disabled):hover': {
             borderColor: 'primary',
@@ -200,7 +200,7 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps): any => {
         },
         secondary: {
           border: '2px solid',
-          borderColor: 'accentContext',
+          borderColor: 'secondary',
           color: 'secondary',
           '&:not(:disabled):hover': {
             borderColor: 'secondary',
@@ -208,7 +208,7 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps): any => {
         },
         success: {
           border: '2px solid',
-          borderColor: 'accentContext',
+          borderColor: 'success',
           color: 'success',
           '&:not(:disabled):hover': {
             borderColor: 'success',
@@ -216,7 +216,7 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps): any => {
         },
         error: {
           border: '2px solid',
-          borderColor: 'accentContext',
+          borderColor: 'error',
           color: 'error',
           '&:not(:disabled):hover': {
             borderColor: 'error',

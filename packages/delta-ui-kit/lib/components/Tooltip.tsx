@@ -81,13 +81,14 @@ export const Tooltip = ({
           sx={{
             padding: 2,
             borderRadius: 3,
-            backgroundColor: 'accentMundane',
+            backgroundColor: 'celestial',
             boxShadow: 1,
+            border: '1px solid',
+            borderColor: 'accentCelestial',
             color: 'accentOnMundane',
             fontSize: 2,
             fontWeight: 300,
             letterSpacing: '0.04em',
-            backdropFilter: 'blur(10px)',
             animation: `${appear} 0.1s cubic-bezier(0.250, 0.460, 0.450, 0.940)`,
           }}
           {...getFloatingProps({
