@@ -9,7 +9,7 @@ import { QuestionFooter } from './QuestionFooter';
 import { QuestionHeader } from './QuestionHeader';
 
 export interface BasicQuestionProps extends Omit<BoxProps, 'children'> {
-  content: ReactNode;
+  content?: ReactNode;
   heading: ReactNode;
   okText?: string;
   cancelText?: string;
@@ -20,12 +20,16 @@ export const BasicQuestion = forwardRef<HTMLDivElement, BasicQuestionProps>(
   ({ heading, content, okText, cancelText, onClose, ...rest }, ref) => {
     const [t] = useTranslation('common');
     return (
-      <Box ref={ref} {...rest}>
+      <Box
+        ref={ref}
+        sx={{ minHeight: '110px', display: 'flex', flexDirection: 'column' }}
+        {...rest}
+      >
         <QuestionHeader>
           <Heading level={4}>{heading}</Heading>
         </QuestionHeader>
-        <QuestionBody>{content}</QuestionBody>
-        <QuestionFooter>
+        {content && <QuestionBody>{content}</QuestionBody>}
+        <QuestionFooter sx={{ mt: 'auto' }}>
           <Button variant="text" onClick={() => onClose?.(false)}>
             {cancelText ?? t('actions.cancel')}
           </Button>
