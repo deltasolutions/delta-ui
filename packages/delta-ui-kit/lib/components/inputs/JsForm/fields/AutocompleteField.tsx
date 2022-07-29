@@ -1,6 +1,7 @@
 import { jsx } from '@theme-ui/core';
 import { FieldProps } from 'delta-jsf';
 import { useMemo } from 'react';
+import { hash } from '../../../../utils';
 import { Autocomplete, AutocompleteProps } from '../../Autocomplete';
 
 export interface AutocompleteFieldSource
@@ -27,7 +28,7 @@ export const AutocompleteField = (props: FieldProps) => {
   const source = useMemo(
     () =>
       getAutocompleteSource?.(target) as AutocompleteFieldSource | undefined,
-    [getAutocompleteSource, target]
+    [getAutocompleteSource, hash(target)]
   );
   const getOptions = useMemo(() => {
     if (Array.isArray(oneOf)) {
