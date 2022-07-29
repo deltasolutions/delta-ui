@@ -1,10 +1,8 @@
 import { jsx } from '@theme-ui/core';
-import { HTMLAttributes, useState } from 'react';
+import { HTMLAttributes, ReactNode, useState } from 'react';
 import {
-  Children,
   createContext,
   forwardRef,
-  ReactElement,
   useCallback,
   useContext,
   useEffect,
@@ -12,40 +10,34 @@ import {
   useRef,
 } from 'react';
 import { IoSearch } from 'react-icons/io5';
-import { useDrop, useImperativePortal, useUpdateEffect } from '../../../hooks';
+import {
+  useDebounce,
+  useDrop,
+  useImperativePortal,
+  useUpdateEffect,
+} from '../../../hooks';
 import { FormWidgetProps } from '../../../types';
-import { getChildrenKey, hash, mergeRefs } from '../../../utils';
+import { hash, mergeRefs } from '../../../utils';
 import { Box, SystemContext } from '../../containers';
 import { TextInput } from '../TextInput';
 import { AutocompleteDrop } from './AutocompleteDrop';
-import { AutocompleteOptionProps } from './AutocompleteOption';
 import { AutocompleteSelection } from './AutocompleteSelection';
-import { getInitialInnerValue, getTitleByValue } from './utils';
-
-export interface AutocompleteSelection {
-  value: unknown;
-  title: string;
-}
 
 export interface AutocompleteContextValue {
-  childrenArray: ReactElement<AutocompleteOptionProps>[];
-  selections: AutocompleteSelection[];
-  handleRemoval: (value: unknown) => void;
-  handleAddition: (value: unknown, title: string) => void;
+  options: unknown[];
+  selections: unknown[];
+  handleRemoval: (v: unknown) => void;
+  handleAddition: (v: unknown) => void;
+  renderOption?: (v: unknown) => ReactNode;
+  renderSelection?: (v: unknown) => ReactNode;
 }
 
 export const AutocompleteContext = createContext<AutocompleteContextValue>({
-  childrenArray: [],
+  options: [],
   selections: [],
   handleRemoval: () => {},
   handleAddition: () => {},
 });
-
-export type AutocompleteChild =
-  | ReactElement<AutocompleteOptionProps>
-  | null
-  | undefined
-  | false;
 
 export interface AutocompleteProps
   extends Omit<
@@ -53,21 +45,23 @@ export interface AutocompleteProps
       'children' | keyof FormWidgetProps
     >,
     FormWidgetProps<unknown> {
-  children: AutocompleteChild[] | ((query: string) => AutocompleteChild[]);
   multiple?: boolean;
   placeholder?: string;
-  query?: string;
-  onQuery?: (query: string) => void;
+  initialQuery?: string;
+  getOptions?: (query: string) => unknown[] | Promise<unknown[]>;
+  renderOption?: (v: unknown) => ReactNode;
+  renderSelection?: (v: unknown) => ReactNode;
 }
 
 export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
   (
     {
-      children,
       multiple,
       placeholder,
-      query,
-      onQuery,
+      initialQuery,
+      getOptions,
+      renderOption,
+      renderSelection,
       value,
       disabled,
       invalid, // TODO
@@ -81,22 +75,10 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
     const inputRef = useRef<HTMLInputElement>(null);
     const { floatingPortal } = useContext(SystemContext);
     const portal = useImperativePortal(floatingPortal);
-    const [innerQuery, setInnerQuery] = useState(query ?? '');
-    const childrenArray = useMemo(
-      () =>
-        (children instanceof Function
-          ? children(innerQuery)
-          : Children.toArray(children).filter(
-              Boolean
-            )) as ReactElement<AutocompleteOptionProps>[],
-      [
-        children instanceof Function
-          ? hash(children) + hash(innerQuery)
-          : getChildrenKey(children, { pivots: ['value'] }),
-      ]
-    );
+    const [query, setQuery] = useState(initialQuery ?? '');
+    const debouncedQuery = useDebounce(query, 300);
     const [backspacePressed, setBackspacePressed] = useState(false);
-    const valueItems = useMemo(
+    const valueArray = useMemo(
       () =>
         multiple
           ? Array.isArray(value)
@@ -107,32 +89,29 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
           : [value],
       [multiple, value]
     );
-    const [selections, setSelections] = useState<AutocompleteSelection[]>(() =>
-      getInitialInnerValue(childrenArray, valueItems)
+    const [options, setOptions] = useState<unknown[]>([]);
+    const [selections, setSelections] = useState<unknown[]>(
+      () => valueArray ?? []
     );
     const handleAddition = useCallback(
-      (value: unknown, title: string) => {
+      (value: unknown) => {
         setBackspacePressed(false);
-        const addition = [{ value, title }];
         const nextSelections = multiple
-          ? selections.filter(v => v.value !== value).concat(addition)
-          : addition;
+          ? selections.filter(v => v !== value).concat([value])
+          : [value];
         setSelections(nextSelections);
-        setInnerQuery('');
-        onChange?.(multiple ? nextSelections.map(v => v.value) : value);
-        onQuery?.('');
+        setQuery('');
+        onChange?.(multiple ? nextSelections : value);
         multiple && inputRef.current?.focus();
       },
-      [selections, onChange, onQuery, multiple]
+      [selections, onChange, multiple]
     );
     const handleRemoval = useCallback(
       (value: unknown) => {
         setBackspacePressed(false);
-        const nextSelections = selections.filter(v => v.value !== value);
+        const nextSelections = selections.filter(v => v !== value);
         setSelections(nextSelections);
-        onChange?.(
-          multiple ? nextSelections.map(v => v.value) : nextSelections[0]?.value
-        );
+        onChange?.(multiple ? nextSelections : nextSelections[0]);
       },
       [selections, onChange]
     );
@@ -162,34 +141,50 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
       query => {
         handleOpen();
         setBackspacePressed(false);
-        setInnerQuery(query);
-        onQuery?.(query);
+        setQuery(query);
       },
-      [onQuery, handleOpen]
+      [handleOpen]
     );
     const contextValue = useMemo<AutocompleteContextValue>(
-      () => ({ childrenArray, selections, handleRemoval, handleAddition }),
-      [childrenArray, selections, handleRemoval, handleAddition]
+      () => ({
+        options,
+        selections,
+        handleRemoval,
+        handleAddition,
+        renderOption,
+        renderSelection,
+      }),
+      [
+        options,
+        selections,
+        handleRemoval,
+        handleAddition,
+        renderOption,
+        renderSelection,
+      ]
     );
+    useEffect(() => {
+      if (!getOptions) {
+        return;
+      }
+      const maybeOptions = getOptions(debouncedQuery);
+      if (Array.isArray(maybeOptions)) {
+        setOptions(maybeOptions);
+      } else {
+        maybeOptions.then(v => Array.isArray(v) && setOptions(v));
+      }
+    }, [debouncedQuery]);
     useUpdateEffect(() => {
       if (
-        valueItems.length !== selections.length ||
-        valueItems.some(item => selections.every(v => v.value !== item))
+        valueArray.length !== selections.length ||
+        valueArray.some(v => !selections.includes(v))
       ) {
-        setSelections(
-          valueItems.map(v => ({
-            value: v,
-            title: getTitleByValue(childrenArray, v),
-          }))
-        );
+        setSelections(valueArray);
       }
-    }, [valueItems]);
+    }, [valueArray]);
     useUpdateEffect(() => {
       !multiple && handleClose();
     }, [selections]);
-    useUpdateEffect(() => {
-      query !== innerQuery && setInnerQuery(query ?? '');
-    }, [query]);
     useEffect(() => {
       const handleNativeBlur = ev => {
         if (
@@ -211,7 +206,7 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
             if (backspacePressed) {
               setBackspacePressed(false);
               if (selections.length > 0) {
-                handleRemoval(selections[selections.length - 1].value);
+                handleRemoval(selections[selections.length - 1]);
               }
             } else {
               setBackspacePressed(true);
@@ -261,7 +256,7 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
               placeholder={placeholder}
               style={{ paddingLeft: selections?.length ? '0.45em' : 0 }}
               sx={{ fontSize: 2 }}
-              value={innerQuery}
+              value={query}
               variant="pure"
               onBlur={onBlur}
               onChange={handleQueryChange}
@@ -272,7 +267,7 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
               }}
             />
           </Box>
-          {selections.map(({ value, title }, index) => {
+          {selections.map((value, index) => {
             const removing =
               backspacePressed && index === selections.length - 1;
             return (
@@ -281,7 +276,7 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
                 style={{ opacity: removing ? 0.5 : 1 }}
                 onClick={() => handleRemoval(value)}
               >
-                {title}
+                {renderSelection?.(value) ?? String(value)}
               </AutocompleteSelection>
             );
           })}

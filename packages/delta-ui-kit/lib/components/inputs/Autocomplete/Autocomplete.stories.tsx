@@ -5,49 +5,29 @@ import { compact } from '../../../../docs/decorators';
 import { Button } from '../../Button';
 import { Box } from '../../containers';
 import { Autocomplete } from './Autocomplete';
-import { AutocompleteOption } from './AutocompleteOption';
 
 export default {
   title: 'Inputs/Autocomplete',
   decorators: [compact('400px')],
 } as Meta;
 
-const options = ['First Option', 'Second Option', 'Third Option'];
+const options = new Array(100).fill(undefined).map((_, i) => `Option #${i}`);
 
 const isAlike = (query: string, option: string) =>
   !query || option.toLocaleLowerCase().includes(query.toLocaleLowerCase());
 
 export const Basics = () => {
   return (
-    <Autocomplete multiple placeholder="Placeholder">
-      <AutocompleteOption value={1}>The Godfather</AutocompleteOption>
-      <AutocompleteOption value={2}>
-        The Shawshank Redemption
-      </AutocompleteOption>
-      <AutocompleteOption value={3}>The Godfather: Part II</AutocompleteOption>
-    </Autocomplete>
-  );
-};
-
-export const FilteringOptions = () => {
-  return (
-    <Autocomplete multiple placeholder="Placeholder">
-      {query =>
-        options
-          .filter(v => isAlike(query, v))
-          .map(v => (
-            <AutocompleteOption key={v} value={v}>
-              {v}
-            </AutocompleteOption>
-          ))
-      }
-    </Autocomplete>
+    <Autocomplete
+      multiple
+      getOptions={v => options.filter(t => isAlike(v, t)).slice(0, 5)}
+      placeholder="Placeholder"
+    />
   );
 };
 
 export const Controlled = () => {
-  const [value, setValue] = useState<any>([]);
-  const [query, setQuery] = useState('');
+  const [value, setValue] = useState<unknown[]>([]);
   return (
     <Box
       sx={{
@@ -60,23 +40,37 @@ export const Controlled = () => {
       <Button variant="contained" onClick={() => setValue([options[0]])}>
         Set Value
       </Button>
-      <Button variant="contained" onClick={() => setQuery('ABC')}>
-        Set Query
-      </Button>
       <Autocomplete
         multiple
+        getOptions={v => options.filter(t => isAlike(v, t)).slice(0, 5)}
         placeholder="Placeholder"
-        query={query}
         value={value}
         onChange={setValue}
-        onQuery={setQuery}
-      >
-        {options.map(v => (
-          <AutocompleteOption key={v} value={v}>
-            {v}
-          </AutocompleteOption>
-        ))}
-      </Autocomplete>
+      />
     </Box>
+  );
+};
+
+export const CustomRenderers = () => {
+  return (
+    <Autocomplete
+      multiple
+      getOptions={v => options.filter(t => isAlike(v, t)).slice(0, 5)}
+      placeholder="Placeholder"
+      renderOption={v => (
+        <Box
+          sx={{
+            px: 2,
+            py: 1,
+            borderRadius: 2,
+            backgroundColor: 'primary',
+            color: 'onPrimary',
+          }}
+        >
+          {String(v)}
+        </Box>
+      )}
+      renderSelection={v => <Box sx={{ color: 'primary' }}>{String(v)}</Box>}
+    />
   );
 };

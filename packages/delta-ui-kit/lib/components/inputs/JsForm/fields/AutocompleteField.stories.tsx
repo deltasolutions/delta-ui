@@ -1,4 +1,6 @@
+import { jsx } from '@theme-ui/core';
 import { createFormStory, formStoryMeta } from '../../../../../docs/utils';
+import { Box } from '../../../containers';
 
 export default {
   ...formStoryMeta,
@@ -74,17 +76,12 @@ export const CustomOptions = createFormStory({
   registry: {
     utils: {
       getAutocompleteSource: () => ({
-        initials: [{ title: `Initial title`, const: 'aaa' }],
-        onQuery: query =>
+        getOptions: query =>
           fetch(`https://jsonplaceholder.typicode.com/users?q=${query}`)
             .then(v => v.json())
-            .then(v =>
-              v.map(t => ({
-                title: t.name,
-                const: t.id,
-              }))
-            )
+            .then(v => v.map(t => t.name))
             .catch(() => []),
+        renderOption: v => <Box sx={{ color: 'primary' }}>{v}</Box>,
       }),
     },
   },

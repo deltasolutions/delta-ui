@@ -1,20 +1,13 @@
 import { jsx } from '@theme-ui/core';
 import { FieldProps } from 'delta-jsf';
-import { ReactNode, useCallback, useMemo, useState } from 'react';
-import { useDebounce, useUpdateEffect } from '../../../../hooks';
-import { Autocomplete, AutocompleteOption } from '../../Autocomplete';
+import { useMemo } from 'react';
+import { Autocomplete, AutocompleteProps } from '../../Autocomplete';
 
-export interface AutocompleteFieldOption {
-  title: string;
-  const: unknown;
-}
-
-export interface AutocompleteFieldSource {
-  initials?: AutocompleteFieldOption[];
-  onQuery: (
-    query: string
-  ) => AutocompleteFieldOption[] | Promise<AutocompleteFieldOption[]>;
-}
+export interface AutocompleteFieldSource
+  extends Pick<
+    AutocompleteProps,
+    'getOptions' | 'renderOption' | 'renderSelection'
+  > {}
 
 export const AutocompleteField = (props: FieldProps) => {
   const {
@@ -28,7 +21,7 @@ export const AutocompleteField = (props: FieldProps) => {
   } = props;
   const { placeholder, target } = schema.layout ?? {};
   const multiple = schema.type === 'array';
-  const optionsFromSchema = multiple
+  const oneOf = multiple
     ? (schema.items as { oneOf: unknown[] })?.oneOf
     : (schema.oneOf as unknown);
   const source = useMemo(
@@ -36,81 +29,57 @@ export const AutocompleteField = (props: FieldProps) => {
       getAutocompleteSource?.(target) as AutocompleteFieldSource | undefined,
     [getAutocompleteSource, target]
   );
-  const sanitizeOptions = (
-    data: unknown
-  ): {
-    title: string;
-    const: unknown;
-    render?: () => ReactNode;
-  }[] => {
-    return Array.isArray(data)
-      ? data.reduce(
-          (p, v) =>
-            typeof v === 'object' && typeof v.title === 'string' && 'const' in v
-              ? [...p, v]
-              : p,
-          []
-        )
-      : [];
-  };
-  const sanitizeValue = value => {
-    const maybeValue = value ?? schema.default;
-    return multiple
-      ? Array.isArray(maybeValue)
-        ? maybeValue
-        : []
-      : maybeValue;
-  };
-  const [options, setOptions] = useState(() =>
-    sanitizeOptions(optionsFromSchema ?? source?.initials ?? [])
-  );
-  const [query, setQuery] = useState('');
-  const debouncedQuery = useDebounce(query, 200);
-  const handleOptions = useCallback(() => {
-    if (optionsFromSchema || !source) {
-      setOptions(sanitizeOptions(optionsFromSchema));
-      return;
+  const getOptions = useMemo(() => {
+    if (Array.isArray(oneOf)) {
+      return (query: string) =>
+        oneOf
+          .map(v => v.const)
+          .filter(
+            v =>
+              isAlike(query, getTitleFromOneOf(oneOf, v)) || isAlike(query, v)
+          );
     }
-    const handle = async () => {
-      try {
-        const options = await source?.onQuery(debouncedQuery);
-        setOptions(sanitizeOptions(options));
-      } catch {
-        setOptions([]);
-      }
-    };
-    handle();
-  }, [debouncedQuery, source, schema]);
-  useUpdateEffect(() => {
-    handleOptions();
-  }, [
-    debouncedQuery,
-    // Ignoring direct dependency here, since we simply
-    // don't want non-user changes to trigger re-render.
-  ]);
+    return source?.getOptions;
+  }, [oneOf, source]);
+  const renderOption = useMemo(() => {
+    return Array.isArray(oneOf)
+      ? (v: unknown) => getTitleFromOneOf(oneOf, v)
+      : source?.renderOption;
+  }, [oneOf, source]);
+  const renderSelection = useMemo(() => {
+    return Array.isArray(oneOf)
+      ? (v: unknown) => getTitleFromOneOf(oneOf, v)
+      : source?.renderSelection;
+  }, [oneOf, source]);
   return (
     <PrimitiveTemplate {...props}>
       <Autocomplete
+        getOptions={getOptions}
         multiple={multiple}
         placeholder={placeholder ? String(placeholder) : undefined}
-        query={query}
-        value={sanitizeValue(value)}
-        onChange={(v: unknown) => {
-          onValue?.(sanitizeValue(v));
-        }}
-        onFocus={handleOptions}
-        onQuery={setQuery}
-      >
-        {options.map((v, i) => (
-          <AutocompleteOption
-            key={i + '-' + v.title}
-            title={v.title}
-            value={v.const}
-          >
-            {v.render?.() ?? v.title}
-          </AutocompleteOption>
-        ))}
-      </Autocomplete>
+        renderOption={renderOption}
+        renderSelection={renderSelection}
+        value={value}
+        onChange={onValue}
+      />
     </PrimitiveTemplate>
   );
 };
+
+const getTitleFromOneOf = (oneOf: unknown, value: unknown) => {
+  if (!Array.isArray(oneOf)) {
+    return '–';
+  }
+  return (
+    oneOf.find(v => v.const === value)?.title ??
+    (isPrimitive(value) ? String(value) : '–')
+  );
+};
+
+const isPrimitive = (v: unknown): v is 'number' | 'string' =>
+  typeof v === 'string' || typeof v === 'number';
+
+const isAlike = (query: string, option: unknown) =>
+  !query ||
+  (isPrimitive(option) &&
+    String(option).toLocaleLowerCase().includes(query.toLocaleLowerCase()));

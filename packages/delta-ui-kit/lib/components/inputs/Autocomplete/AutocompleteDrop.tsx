@@ -1,15 +1,9 @@
 import { jsx } from '@theme-ui/core';
-import {
-  createContext,
-  Dispatch,
-  forwardRef,
-  useContext,
-  useMemo,
-} from 'react';
+import { createContext, Dispatch, forwardRef, useContext } from 'react';
 import { DropRendererProps } from '../../../hooks';
-import { DropMenu } from '../DropMenu';
+import { hash } from '../../../utils';
+import { DropMenu, DropMenuItem } from '../DropMenu';
 import { AutocompleteContext } from './Autocomplete';
-import { getTitleByValue } from './utils';
 
 export interface AutocompleteDropProps extends DropRendererProps {}
 
@@ -24,28 +18,26 @@ export const AutocompleteDrop = forwardRef<
   HTMLDivElement,
   AutocompleteDropProps
 >(({ handleClose, ...rest }, ref) => {
-  const { childrenArray, selections, handleRemoval, handleAddition } =
+  const { options, selections, handleRemoval, handleAddition, renderOption } =
     useContext(AutocompleteContext);
-  const selectedValues = useMemo(
-    () => selections.map(i => i.value),
-    [selections]
-  );
-  if (childrenArray.length === 0) {
+  if (options.length < 1) {
     return null;
   }
   return (
     <DropMenu
       ref={ref}
       handleClose={handleClose}
-      selectedValues={selectedValues}
+      selectedValues={selections}
       onItemClick={v => {
-        selectedValues.includes(v)
-          ? handleRemoval(v)
-          : handleAddition(v, getTitleByValue(childrenArray, v));
+        selections.includes(v) ? handleRemoval(v) : handleAddition(v);
       }}
       {...rest}
     >
-      {childrenArray}
+      {options.map(v => (
+        <DropMenuItem key={hash(v)} value={v}>
+          {renderOption?.(v) ?? String(v)}
+        </DropMenuItem>
+      ))}
     </DropMenu>
   );
 });
