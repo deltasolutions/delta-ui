@@ -70,7 +70,7 @@ const useJsFormManager = <
 ) => {
   const defaults = useJsFormDefaults();
   const mergedOptions = useMemo(
-    () => merge(clone(defaults), clone(options)),
+    () => merge(clone(defaults), options),
     [defaults, options]
   );
   return useBasicJsFormManager(mergedOptions) as O extends {
