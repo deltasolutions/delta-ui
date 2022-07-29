@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { defaults } from '../components';
-import { Registry, ValidateAgainstSchemaFunction, Validity } from '../models';
+import { Registry, Validity } from '../models';
 import { FormManager, FormManagerOptions } from '../models';
 import {
   checkValidity,
@@ -25,7 +25,7 @@ export const useFormManager = <
     return fn(options.schema);
   }, [options.dereference, hash(options.schema)]);
   const registry = useMemo(
-    () => merge({}, defaults.registry, options.registry) as Registry,
+    () => merge(clone(defaults.registry), options.registry) as Registry,
     [options.registry]
   );
   const targetOptions = {
