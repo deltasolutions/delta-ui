@@ -13,7 +13,6 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(
           width: '100%',
           borderCollapse: 'separate',
           borderSpacing: '0px',
-          tableLayout: 'fixed',
         }}
         {...rest}
       />

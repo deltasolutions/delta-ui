@@ -42,7 +42,10 @@ export const Basics = ({ stickyOffset = 0 }) => {
           <TableBodyRow key={index}>
             <TableBodyCell>{crypto.randomUUID()}</TableBodyCell>
             <TableBodyCell>Name {index}</TableBodyCell>
-            <TableBodyCell>Description {index}</TableBodyCell>
+            <TableBodyCell>
+              Description mfjdso f odisjf fodisjgopif jgpoisdjfgoijsdfopi
+              gjsdpfijg {index}
+            </TableBodyCell>
           </TableBodyRow>
         ))}
       </TableBody>

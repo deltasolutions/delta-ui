@@ -21,15 +21,7 @@ export const TableBodyCell = forwardRef<
       }}
       {...rest}
     >
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          fontSize: 2,
-        }}
-      >
-        {children}
-      </Box>
+      {children}
     </td>
   );
 });
