@@ -29,7 +29,6 @@ export const AutocompleteSelection = ({
         alignItems: 'center',
         justifyContent: 'space-between',
       }}
-      tabIndex={-1}
       {...rest}
     >
       <Box sx={{ position: 'relative', zIndex: 1, opacity: 0.9, fontSize: 2 }}>
@@ -46,6 +45,7 @@ export const AutocompleteSelection = ({
             color: 'accentOnContext',
           },
         }}
+        tabIndex={-1}
         onClick={onClick}
       >
         <IoIosClose

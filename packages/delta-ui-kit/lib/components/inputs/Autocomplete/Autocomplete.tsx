@@ -165,15 +165,18 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
     );
     useEffect(() => {
       if (!getOptions) {
+        setOptions([]);
         return;
       }
       const maybeOptions = getOptions(debouncedQuery);
       if (Array.isArray(maybeOptions)) {
         setOptions(maybeOptions);
       } else {
-        maybeOptions.then(v => Array.isArray(v) && setOptions(v));
+        maybeOptions
+          .then(v => Array.isArray(v) && setOptions(v))
+          .catch(() => setOptions([]));
       }
-    }, [debouncedQuery]);
+    }, [debouncedQuery, getOptions]);
     useUpdateEffect(() => {
       if (
         valueArray.length !== selections.length ||
