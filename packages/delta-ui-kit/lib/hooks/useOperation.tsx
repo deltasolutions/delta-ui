@@ -90,7 +90,7 @@ export const useOperation = <OperationInput, OperationOutput>(
         ) as AlertProps;
         const reactElement = (
           <Alert
-            key={crypto.randomUUID()}
+            key={Math.random().toString().slice(-8)}
             onClose={() => {
               setAlerts(prior => prior.filter(v => v !== reactElement));
             }}

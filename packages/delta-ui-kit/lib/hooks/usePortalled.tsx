@@ -22,7 +22,7 @@ export const usePortalled = <T extends HTMLElement, C = never>(
   const Component = useForwardRef(crf, deps);
   const open = useCallback(
     (context?: C) => {
-      const key = crypto.randomUUID();
+      const key = Math.random().toString().slice(-8);
       const handleClose = () => remove(child);
       const child = (
         <Component key={key} context={context} handleClose={handleClose} />

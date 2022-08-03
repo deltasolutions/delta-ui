@@ -40,7 +40,7 @@ export const Basics = ({ stickyOffset = 0 }) => {
       <TableBody>
         {new Array(30).fill(undefined).map((_, index) => (
           <TableBodyRow key={index}>
-            <TableBodyCell>{crypto.randomUUID()}</TableBodyCell>
+            <TableBodyCell>{Math.random().toString().slice(-8)}</TableBodyCell>
             <TableBodyCell>Name {index}</TableBodyCell>
             <TableBodyCell>
               Description mfjdso f odisjf fodisjgopif jgpoisdjfgoijsdfopi
