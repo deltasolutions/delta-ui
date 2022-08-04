@@ -60,11 +60,7 @@ export function ObjectField(props: FieldProps) {
           value: value?.[key],
           validity: validity?.properties?.[key],
           onValue: v => {
-            onValue?.(
-              merge(clone(value), { [key]: v }, (a, b) =>
-                Array.isArray(a) ? b : undefined
-              )
-            );
+            onValue?.({ ...value, [key]: v });
           },
           onValidity: e =>
             onValidity?.(

@@ -6,9 +6,18 @@ export default {
 };
 export const FilePicker = createFormStory({
   schema: {
-    title: 'Pick Files',
-    layout: {
-      field: 'file-picker',
+    type: 'object',
+    properties: {
+      name: {
+        title: 'Name',
+        type: 'string',
+      },
+      file: {
+        title: 'File',
+        layout: {
+          field: 'file-picker',
+        },
+      },
     },
   },
 });
