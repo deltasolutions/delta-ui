@@ -19,20 +19,12 @@ export default {
 export const Basics = () => {
   const [openDrop, anchorRef] = useDrop<HTMLButtonElement>(
     props => {
-      return (
-        <DropMenu handleClose={() => {}}>
-          <DropMenuItem size="large" value={1}>
-            <span>Logout</span>
-          </DropMenuItem>
-          <DropMenuItem size="large" value={2}>
-            <span>Logout</span>
-          </DropMenuItem>
-        </DropMenu>
-      );
+      return <Box sx={{ width: '300px', height: '300px' }}>content</Box>;
     },
     {
       deps: [],
       tailored: false,
+      style: { borderRadius: '200px' },
       blurResistant: false,
       placement: 'bottom-start',
     }

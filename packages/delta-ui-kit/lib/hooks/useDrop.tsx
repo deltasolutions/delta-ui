@@ -45,6 +45,7 @@ export const useDrop = <T extends HTMLElement, C extends unknown = never>(
     portal,
     onClose,
     blurResistant,
+    style,
     ...dropProps
   } = options;
   const { floatingPortal } = useContext(SystemContext);
@@ -112,6 +113,7 @@ export const useDrop = <T extends HTMLElement, C extends unknown = never>(
             left: x ?? '-100vw',
             top: y ?? '-100vh',
             width: tailored ? width : undefined,
+            ...style,
           }}
         >
           <FocusTrap
