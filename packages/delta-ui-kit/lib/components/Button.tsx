@@ -61,7 +61,20 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
               height: '1.65em',
               verticalAlign: 'middle',
               my: '-0.5em',
-              ...(variant === 'icon' ? {} : { ml: '-0.5em', mr: '0.65em' }),
+              ...(variant === 'icon'
+                ? {
+                    ...{
+                      small: {
+                        width: '1.3em',
+                        height: '1.3em',
+                      },
+                      medium: {
+                        width: '1.65em',
+                        height: '1.65em',
+                      },
+                    }[size ?? 'medium'],
+                  }
+                : { ml: '-0.5em', mr: '0.65em' }),
             }}
           />
         )}

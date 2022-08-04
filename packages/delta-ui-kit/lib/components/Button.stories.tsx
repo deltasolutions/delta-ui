@@ -55,7 +55,12 @@ export const Text = () => (
   </Box>
 );
 
-export const Icon = () => <Button icon={IoPlay} variant="icon" />;
+export const Icon = () => (
+  <Box>
+    <Button icon={IoPlay} size="small" variant="icon" />
+    <Button icon={IoPlay} size="medium" variant="icon" />
+  </Box>
+);
 
 export const WithIcon = () => (
   <Button color="primary" icon={IoPlay} variant="contained">
