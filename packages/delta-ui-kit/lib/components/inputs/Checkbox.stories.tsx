@@ -7,13 +7,11 @@ export default {
   title: 'Inputs/Checkbox',
 } as Meta;
 
-export const Contained = () => {
-  return <Checkbox variant="contained" />;
-};
-export const Outlined = () => {
+export const Basics = () => {
   return (
     <Card>
-      <CardBody>
+      <CardBody sx={{ display: 'flex', gap: 3 }}>
+        <Checkbox variant="contained" />
         <Checkbox variant="outlined" />
       </CardBody>
     </Card>

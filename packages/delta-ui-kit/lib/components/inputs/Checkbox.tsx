@@ -44,7 +44,6 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
         sx={{
           display: 'inline-flex',
           alignItems: 'center',
-          minHeight: '22px',
           gap: 2,
           position: 'relative',
           verticalAlign: 'middle',
@@ -122,12 +121,15 @@ const getVariantStyle = ({ variant }) => {
   if (variant === 'outlined') {
     return {
       '.checkmark': {
-        border: '2px solid',
+        border: '1px solid',
         //TODO pick color from defaults/theme.ts
         borderColor: 'rgb(255 255 255 / 25%)',
+        height: '20px',
+        width: '20px',
         '&:hover': {
           borderColor: 'rgb(255 255 255 / 50%)',
         },
+        '&:after': { left: '6px', top: '3px' },
       },
       'input:checked ~ .checkmark': {
         borderColor: 'primary',
