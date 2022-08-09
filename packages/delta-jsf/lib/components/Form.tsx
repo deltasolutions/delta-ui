@@ -22,7 +22,6 @@ export const Form = <T extends unknown>({
     registry: registry as Registry,
     value,
     validity,
-
     onValue: (v: T) => {
       setValue(v);
     },
@@ -31,7 +30,6 @@ export const Form = <T extends unknown>({
     },
   };
   const RootField = getFieldComponent(rootFieldProps);
-
   return (
     <form
       noValidate

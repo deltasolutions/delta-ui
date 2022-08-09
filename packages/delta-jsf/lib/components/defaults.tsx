@@ -2,32 +2,34 @@ import { validateAgainstSchemaViaAjv } from '../utils';
 import {
   ArrayField,
   InputField,
+  DomainField,
   NullField,
   ObjectField,
-  SelectField
+  SelectField,
 } from './fields';
 import { ArrayTemplate, PanicTemplate, createFieldTemplate } from './templates';
 
 export const defaults = {
   registry: {
     fields: {
-      string: InputField,
-      number: InputField,
-      integer: InputField,
-      select: SelectField,
-      object: ObjectField,
       array: ArrayField,
+      domain: DomainField,
+      hidden: NullField,
+      integer: InputField,
       null: NullField,
-      hidden: NullField
+      number: InputField,
+      object: ObjectField,
+      select: SelectField,
+      string: InputField,
     },
     templates: {
       PanicTemplate,
       ArrayTemplate,
       PrimitiveTemplate: createFieldTemplate('djsf-primitive'),
-      ObjectTemplate: createFieldTemplate('djsf-object')
+      ObjectTemplate: createFieldTemplate('djsf-object'),
     },
     utils: {
-      validateAgainstSchema: validateAgainstSchemaViaAjv
-    }
-  }
+      validateAgainstSchema: validateAgainstSchemaViaAjv,
+    },
+  },
 };

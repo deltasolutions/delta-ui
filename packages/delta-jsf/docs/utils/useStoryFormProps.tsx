@@ -11,15 +11,18 @@ export const useStoryFormProps = <T extends unknown>(
 ): FormProps<T | undefined> => {
   const manager = useFormManager<T, FormManagerOptions<T>>({
     ...options,
-    registry: defaults.registry,
+    registry: {
+      ...defaults.registry,
+      ...options.registry,
+    },
   });
   return {
     manager,
     children: (
       <div style={{ marginTop: '1rem' }}>
         <button type="submit">
-          {manager.isSubmitted ? 'Submitted' : 'Submit'}
-          {manager.isValid ? ' (valid)' : ' (invalid)'}
+          {manager.submitted ? 'Submitted' : 'Submit'}
+          {manager.valid ? ' (valid)' : ' (invalid)'}
         </button>
       </div>
     ),
