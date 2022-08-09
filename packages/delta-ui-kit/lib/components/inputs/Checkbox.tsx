@@ -1,4 +1,5 @@
 import { jsx } from '@theme-ui/core';
+import { borderStyle } from 'polished';
 import { forwardRef, InputHTMLAttributes, useState } from 'react';
 import { useUpdateEffect } from '../../hooks';
 import { FormWidgetProps } from '../../types';
@@ -6,7 +7,9 @@ import { Box } from '../containers';
 
 export interface CheckboxProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, keyof FormWidgetProps>,
-    FormWidgetProps<boolean> {}
+    FormWidgetProps<boolean> {
+  variant?: 'contained' | 'outlined';
+}
 
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
   (
@@ -17,6 +20,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       onChange,
       onFocus,
       onBlur,
+      variant = 'contained',
       onKeyDown,
       children,
       ...rest
@@ -45,9 +49,6 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           position: 'relative',
           verticalAlign: 'middle',
           userSelect: 'none',
-          'input:checked ~ .checkmark': {
-            backgroundColor: 'primary',
-          },
           'input:focus-visible + span': {
             outline: '2px solid',
             outlineColor: 'primary',
@@ -56,6 +57,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           'input:checked ~ .checkmark:after': {
             display: 'block',
           },
+          ...getVariantStyle({ variant }),
         }}
       >
         <input
@@ -91,7 +93,6 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             borderRadius: 4,
             height: '22px',
             width: '22px',
-            backgroundColor: 'accentContext',
             '&:after': {
               content: '""',
               position: 'absolute',
@@ -100,7 +101,8 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
               top: '4px',
               width: '5px',
               height: '9px',
-              border: 'solid white', // FIXME
+              borderColor: 'secondary',
+              borderStyle: 'solid',
               borderWidth: '0 3px 3px 0',
               WebkitTransform: 'rotate(45deg)',
               msTransform: 'rotate(45deg)',
@@ -113,3 +115,30 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     );
   }
 );
+const getVariantStyle = ({ variant }) => {
+  if (!variant) {
+    return;
+  }
+  if (variant === 'outlined') {
+    return {
+      '.checkmark': {
+        border: '2px solid',
+        //TODO pick color from defaults/theme.ts
+        borderColor: 'rgb(255 255 255 / 25%)',
+        '&:hover': {
+          borderColor: 'rgb(255 255 255 / 50%)',
+        },
+      },
+      'input:checked ~ .checkmark': {
+        borderColor: 'primary',
+        backgroundColor: 'primary',
+      },
+    };
+  }
+  return {
+    '.checkmark': { backgroundColor: 'accentContext' },
+    'input:checked ~ .checkmark': {
+      backgroundColor: 'primary',
+    },
+  };
+};
