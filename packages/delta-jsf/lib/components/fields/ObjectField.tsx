@@ -1,6 +1,6 @@
 import React, { Key } from 'react';
 import { useDefaults, useIsomorphicLayoutEffect } from '../../hooks';
-import { FieldProps, Schema } from '../../models';
+import { FieldProps, Schema, Validity } from '../../models';
 import { clone, getCompressed, getFieldComponent, merge } from '../../utils';
 
 export function ObjectField(props: FieldProps) {
@@ -62,12 +62,13 @@ export function ObjectField(props: FieldProps) {
           onValue: v => {
             onValue?.({ ...value, [key]: v });
           },
-          onValidity: e =>
+          onValidity: v => {
             onValidity?.(
-              merge(clone(validity), { properties: { [key]: e } }, (a, b, k) =>
-                k === 'errors' ? b : undefined
-              )
-            ),
+              v instanceof Promise
+                ? (async () => ({ properties: { [key]: await v } }))()
+                : { properties: { [key]: v } }
+            );
+          },
         };
         if (typeof sub.schema !== 'object') {
           return (

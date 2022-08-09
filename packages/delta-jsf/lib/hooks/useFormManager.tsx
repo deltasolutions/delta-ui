@@ -47,7 +47,11 @@ export const useFormManager = <
   const [value, setValue] = useState(initialValue);
 
   const [schemaValidity, setSchemaValidity] = useState<Validity>({});
-  const [extensionValidity, extendValidity, wait] = useMergeQueue<Validity>({});
+  const [extensionValidity, extendValidity, wait] = useMergeQueue<Validity>(
+    {},
+    // TODO: Handle items and errors differently.
+    (_, b) => (Array.isArray(b) ? b : undefined)
+  );
   const [validity, setValidity] = useState<Validity>({});
   const flushValidity = useCallback(() => {
     const validity = merge(clone(schemaValidity), clone(extensionValidity));

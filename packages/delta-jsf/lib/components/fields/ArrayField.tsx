@@ -9,12 +9,12 @@ export function ArrayField(props: FieldProps) {
   const {
     schema: { items },
     registry: {
-      templates: { ArrayTemplate, PanicTemplate }
+      templates: { ArrayTemplate, PanicTemplate },
     },
     value: fieldValues,
     validity,
     onValue,
-    onValidity
+    onValidity,
   } = props;
 
   if (Array.isArray(items)) {
@@ -40,17 +40,14 @@ export function ArrayField(props: FieldProps) {
             onValue?.(copy);
           },
           validity: validity?.items?.[index],
-          onValidity: e => {
+          onValidity: v => {
             const items = new Array(values.length).fill(null);
             if (values.length - 1 >= index) {
-              items[index] = e;
+              items[index] = v;
             }
-            onValidity?.(
-              merge(clone(validity), { items }, (a, b, k) =>
-                k === 'errors' ? b : undefined
-              )
-            );
-          }
+            // TODO: Handle promise separately.
+            onValidity?.({ items });
+          },
         };
         if (typeof sub.schema !== 'object') {
           return (

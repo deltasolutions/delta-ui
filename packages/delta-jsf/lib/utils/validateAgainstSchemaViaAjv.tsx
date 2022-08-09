@@ -24,15 +24,17 @@ export const validateAgainstSchemaViaAjv = ({
       [];
     let validity =
       ajvErrors.reduce((prev, curr) => {
-        const path =
-          curr.instancePath === ''
-            ? ['properties', curr.params.missingProperty]
-            : curr.instancePath
-                .replace(/\/(\D)/g, '/properties/$1')
-                .replace(/\/(\d)/g, '/items/$1')
-                .split('/')
-                .map(v => v.replace(/~0/g, '~').replace(/~1/g, '/'))
-                .slice(1);
+        const path = curr.instancePath
+          .replace(/\/(\D)/g, '/properties/$1')
+          .replace(/\/(\d)/g, '/items/$1')
+          .split('/')
+          .map(v => v.replace(/~0/g, '~').replace(/~1/g, '/'))
+          .slice(1)
+          .concat(
+            curr.keyword === 'required' && curr.params?.missingProperty
+              ? ['properties', curr.params.missingProperty]
+              : []
+          );
         path.push('errors');
         const existingValue = get(prev, path) ?? [];
         set(
