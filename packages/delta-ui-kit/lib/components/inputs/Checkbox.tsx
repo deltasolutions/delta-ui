@@ -1,6 +1,7 @@
 import { jsx } from '@theme-ui/core';
 import { borderStyle } from 'polished';
 import { forwardRef, InputHTMLAttributes, useState } from 'react';
+import { FiCheck } from 'react-icons/fi';
 import { useUpdateEffect } from '../../hooks';
 import { FormWidgetProps } from '../../types';
 import { Box } from '../containers';
@@ -45,16 +46,12 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           display: 'inline-flex',
           alignItems: 'center',
           gap: 2,
-          position: 'relative',
           verticalAlign: 'middle',
           userSelect: 'none',
-          'input:focus-visible + span': {
+          'input:focus-visible + div': {
             outline: '2px solid',
             outlineColor: 'primary',
             outlineOffset: 2,
-          },
-          'input:checked ~ .checkmark:after': {
-            display: 'block',
           },
           ...getVariantStyle({ variant }),
         }}
@@ -83,32 +80,26 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           }}
           {...rest}
         />
-        <span
+        <Box
           className="checkmark"
           sx={{
-            position: 'relative',
-            top: '0',
-            left: '0',
-            borderRadius: 4,
-            height: '22px',
             width: '22px',
-            '&:after': {
-              content: '""',
-              position: 'absolute',
-              display: 'none',
-              left: '7px',
-              top: '4px',
-              width: '5px',
-              height: '9px',
-              borderColor: 'secondary',
-              borderStyle: 'solid',
-              borderWidth: '0 3px 3px 0',
-              WebkitTransform: 'rotate(45deg)',
-              msTransform: 'rotate(45deg)',
-              transform: 'rotate(45deg)',
-            },
+            height: '22px',
+            borderRadius: 4,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            '&:hover': {},
           }}
-        />
+        >
+          <FiCheck
+            sx={{
+              width: '1.2em',
+              height: '1.2em',
+              color: innerValue ? 'white' : 'transparent',
+            }}
+          />
+        </Box>
         {children && <Box>{children}</Box>}
       </label>
     );
