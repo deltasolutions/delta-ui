@@ -60,7 +60,7 @@ export function ObjectField(props: FieldProps) {
           value: value?.[key],
           validity: validity?.properties?.[key],
           onValue: v => {
-            onValue?.({ ...value, [key]: v });
+            onValue?.(prior => ({ ...prior, [key]: v }));
           },
           onValidity: v => {
             onValidity?.(

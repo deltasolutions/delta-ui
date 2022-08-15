@@ -11,5 +11,5 @@ export const useDefaults = (props: FieldProps) => {
     if (value === undefined && defaultValue) {
       onValue?.(defaultValue);
     }
-  }, [value]);
+  }, [value, defaultValue]);
 };
