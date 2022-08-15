@@ -3,18 +3,25 @@ import { ValidateAgainstSchemaOptions, Validity } from '../models';
 import { get } from './get';
 import { set } from './set';
 
-const ajv = new Ajv({ strict: 'log', allErrors: true, keywords: ['layout'] });
-
 export interface ValidateAgainstSchemaViaAjvOptions
   extends ValidateAgainstSchemaOptions {
   transformAjvErrors?: (errors: AjvError[]) => AjvError[];
+  ajv?: Ajv;
 }
+const defaultAjv = new Ajv({
+  strict: 'log',
+  allErrors: true,
+  keywords: ['layout'],
+});
 
 export const validateAgainstSchemaViaAjv = ({
   schema,
   value,
   transformAjvErrors,
+  ...rest
 }: ValidateAgainstSchemaViaAjvOptions): Validity => {
+  const { ajv: propsAjv } = rest;
+  const ajv = propsAjv ?? defaultAjv;
   try {
     const validateViaAjv = ajv.compile(schema);
     validateViaAjv(value);

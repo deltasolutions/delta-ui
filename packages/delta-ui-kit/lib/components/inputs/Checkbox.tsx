@@ -58,7 +58,8 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       >
         <input
           ref={ref}
-          checked={innerValue as unknown as boolean}
+          // checked={innerValue as unknown as boolean}
+          checked={innerValue}
           disabled={disabled}
           sx={{
             position: 'absolute',
@@ -96,7 +97,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             sx={{
               width: '1.2em',
               height: '1.2em',
-              color: innerValue ? 'white' : 'transparent',
+              color: innerValue ? 'secondary' : 'transparent',
             }}
           />
         </Box>

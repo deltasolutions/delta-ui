@@ -41,5 +41,8 @@
       "lib/index.css",
       "lib/index.tsx"
     ]
+  },
+  "dependencies": {
+    "ajv-formats": "^2.1.1"
   }
 }

@@ -1,4 +1,4 @@
-import { ErrorObject as AjvError } from 'ajv';
+import Ajv, { ErrorObject as AjvError } from 'ajv';
 import localizeEn from 'ajv-i18n/localize/en';
 import localizeRu from 'ajv-i18n/localize/ru';
 import {
@@ -47,6 +47,7 @@ export const useJsFormDefaults = () => {
       validateAgainstSchemaViaAjv({ ...options, transformAjvErrors }),
     [transformAjvErrors]
   );
+
   return useMemo(
     () => ({
       registry: {

@@ -196,3 +196,21 @@ export const ComplexDeps = props => {
   });
   return <Form {...formProps} />;
 };
+
+export const Validation = props => {
+  const formProps = useStoryFormProps({
+    ...props,
+    schema: {
+      type: 'string',
+      format: 'ipv4',
+      title: 'IPv4',
+    },
+  });
+  return <Form {...formProps} />;
+};
+
+export const External = () => {
+  return null;
+};
+
+const useExternalFormManager = () => {};

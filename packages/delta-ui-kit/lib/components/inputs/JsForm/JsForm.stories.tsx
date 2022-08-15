@@ -1,4 +1,21 @@
+import { jsx } from '@theme-ui/core';
+import Ajv, { ErrorObject as AjvError } from 'ajv';
+import addFormats from 'ajv-formats';
+import localizeEn from 'ajv-i18n/localize/en';
+import localizeRu from 'ajv-i18n/localize/ru';
+import {
+  clone,
+  hash,
+  merge,
+  ValidateAgainstSchemaOptions,
+  validateAgainstSchemaViaAjv,
+} from 'delta-jsf';
+import { useCallback, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { createFormStory, formStoryMeta } from '../../../../docs/utils';
+import { Button } from '../../Button';
+import { Box } from '../../containers';
+import { JsForm, useJsFormManager } from './JsForm';
 
 export default {
   ...formStoryMeta,
@@ -86,3 +103,92 @@ export const LoginForm = createFormStory({
   },
   initialValue: {},
 });
+
+const ajv = new Ajv({
+  strict: 'log',
+  formats: { date: true, time: true },
+  allErrors: true,
+  keywords: ['layout'],
+});
+addFormats(ajv, { mode: 'full' });
+ajv.addFormat('url', {
+  type: 'string',
+  validate: x => /^(ftp|http|https):\/\/[^ "]+$/.test(x),
+});
+
+const useExternalJsFormManagerDefaults = () => {
+  const { i18n } = useTranslation();
+  const transformAjvErrors = useMemo(() => {
+    const localize = ({
+      en: localizeEn,
+      ru: localizeRu,
+    }[i18n.language] ?? (v => v)) as (es: AjvError[]) => AjvError[];
+    return (es: AjvError[]) => {
+      localize(es);
+      es.forEach(e => {
+        e.message = e.message
+          ? e.message.charAt(0).toUpperCase() + e.message.slice(1)
+          : undefined;
+      });
+      return es;
+    };
+  }, [i18n.language]);
+
+  const validateAgainstSchema = useCallback(
+    (options: ValidateAgainstSchemaOptions) =>
+      validateAgainstSchemaViaAjv({
+        ...options,
+        transformAjvErrors,
+        ajv,
+      }),
+    [transformAjvErrors, ajv]
+  );
+  return {
+    registry: {
+      utils: { validateAgainstSchema },
+    },
+  };
+};
+
+const useExternalJsFormManager = options => {
+  const externalDefaults = useExternalJsFormManagerDefaults();
+  const mergedOptions = useMemo(
+    () => merge(clone(externalDefaults), options),
+    [hash(options), externalDefaults]
+  );
+  return useJsFormManager(mergedOptions);
+};
+
+export const External = () => {
+  const manager = useExternalJsFormManager({
+    onSubmit: v => console.warn('aaaa', v),
+    schema: {
+      type: 'object',
+      properties: {
+        username: {
+          type: 'string',
+          title: 'Username',
+        },
+        password: {
+          type: 'string',
+          title: 'Password',
+          minLength: 8,
+        },
+        url: {
+          type: 'string',
+          format: 'url',
+        },
+      },
+      required: ['username', 'password', 'ipv4'],
+    },
+    initialValue: {},
+  });
+  return (
+    <Box>
+      <JsForm manager={manager}>
+        <Button type="submit">Submit</Button>
+      </JsForm>
+    </Box>
+  );
+};
+External.args = {};
