@@ -1,9 +1,9 @@
 import { jsx } from '@theme-ui/core';
-import { FieldProps } from 'delta-jsf';
+import { FieldProps, useDefaults } from 'delta-jsf';
 import { Slider } from '../../Slider';
-import { TextArea } from '../../TextArea';
 
 export const SliderField = (props: FieldProps) => {
+  useDefaults(props);
   const {
     schema: { readOnly, minimum, maximum },
     value,
@@ -17,6 +17,7 @@ export const SliderField = (props: FieldProps) => {
         max={maximum}
         min={minimum}
         value={value}
+        // TODO: Use debounce!
         onChange={v => onValue?.(v)}
       />
     </PrimitiveTemplate>

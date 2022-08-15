@@ -1,5 +1,5 @@
 import { jsx } from '@theme-ui/core';
-import { FieldProps } from 'delta-jsf';
+import { FieldProps, useDefaults } from 'delta-jsf';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useGeoLocDescription, useLeafletDefaults } from '../../../../hooks';
 import { Box } from '../../../containers';
@@ -8,6 +8,7 @@ import { Skeleton } from '../../../displays';
 const height = '300px';
 
 export const GeoLocPickerField = (props: FieldProps) => {
+  useDefaults(props);
   const {
     registry: {
       templates: { PrimitiveTemplate },

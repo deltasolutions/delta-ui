@@ -5,10 +5,10 @@ export const useDefaults = (props: FieldProps) => {
   const {
     value,
     onValue,
-    schema: { default: defaultValue }
+    schema: { default: defaultValue },
   } = props;
   useIsomorphicLayoutEffect(() => {
-    if (!value && defaultValue) {
+    if (value === undefined && defaultValue) {
       onValue?.(defaultValue);
     }
   }, [value]);

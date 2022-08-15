@@ -1,10 +1,10 @@
-import { useEffect, useReducer, DependencyList, EffectCallback } from 'react';
+import { useEffect, DependencyList, EffectCallback, useRef } from 'react';
 
 export const useUpdateEffect = (fn: EffectCallback, deps: DependencyList) => {
-  const [isFirst, check] = useReducer(() => false, true);
+  const first = useRef(true);
   useEffect(() => {
-    if (isFirst) {
-      check();
+    if (first.current) {
+      first.current = false;
       return;
     }
     return fn();

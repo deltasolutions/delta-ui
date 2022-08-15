@@ -31,6 +31,11 @@ export const Basics = createFormStory({
         type: 'string',
         description: 'Description',
       },
+      textWithDefaults: {
+        title: 'Text With Defaults',
+        type: 'string',
+        default: 'ABCD',
+      },
       switch: {
         title: 'Switch',
         type: 'boolean',
@@ -138,10 +143,10 @@ const useExternalJsFormManagerDefaults = () => {
     (options: ValidateAgainstSchemaOptions) =>
       validateAgainstSchemaViaAjv({
         ...options,
-        transformAjvErrors,
         ajv,
+        transformAjvErrors,
       }),
-    [transformAjvErrors, ajv]
+    [ajv, transformAjvErrors]
   );
   return {
     registry: {
@@ -161,7 +166,6 @@ const useExternalJsFormManager = options => {
 
 export const External = () => {
   const manager = useExternalJsFormManager({
-    onSubmit: v => console.warn('aaaa', v),
     schema: {
       type: 'object',
       properties: {
@@ -186,9 +190,10 @@ export const External = () => {
   return (
     <Box>
       <JsForm manager={manager}>
-        <Button type="submit">Submit</Button>
+        <Button sx={{ mt: 3 }} type="submit" variant="contained-dimmed">
+          Submit
+        </Button>
       </JsForm>
     </Box>
   );
 };
-External.args = {};
