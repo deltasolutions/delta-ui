@@ -59,8 +59,11 @@ export function ObjectField(props: FieldProps) {
           required: required.includes(key),
           value: value?.[key],
           validity: validity?.properties?.[key],
-          onValue: v => {
-            onValue?.(prior => ({ ...prior, [key]: v }));
+          onValue: update => {
+            onValue?.(prior => ({
+              ...prior,
+              [key]: update instanceof Function ? update(prior[key]) : update,
+            }));
           },
           onValidity: v => {
             onValidity?.(
