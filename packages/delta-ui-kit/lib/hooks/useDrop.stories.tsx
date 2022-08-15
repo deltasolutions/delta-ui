@@ -1,15 +1,6 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import FocusTrap from 'focus-trap-react';
-import { CgProfile } from 'react-icons/cg';
-import {
-  Box,
-  Button,
-  Drop,
-  DropOption,
-  DropMenu,
-  DropMenuItem,
-} from '../components';
+import { Box, Button } from '../components';
 import { useDrop } from './useDrop';
 
 export default {
@@ -18,8 +9,8 @@ export default {
 
 export const Basics = () => {
   const [openDrop, anchorRef] = useDrop<HTMLButtonElement>(
-    props => {
-      return <Box sx={{ width: '300px', height: '300px' }}>content</Box>;
+    () => {
+      return <Box sx={{ width: '300px', height: '300px' }}>SAMPLE</Box>;
     },
     {
       deps: [],

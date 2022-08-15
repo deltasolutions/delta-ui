@@ -33,7 +33,7 @@ export interface DropOptions extends Omit<DropProps, 'children'> {
   onClose?: () => void;
 }
 
-export const useDrop = <T extends HTMLElement, C extends unknown = never>(
+export const useDrop = <T extends Element, C extends unknown = never>(
   render: DropRenderer<C>,
   options: DropOptions
 ) => {
