@@ -1,11 +1,7 @@
-import React, { Key, useEffect, useState } from 'react';
-import {
-  useDefaults,
-  useIsomorphicLayoutEffect,
-  useUpdateEffect,
-} from '../../hooks';
+import React, { Key } from 'react';
+import { useDefaults, useIsomorphicLayoutEffect } from '../../hooks';
 import { FieldProps, Schema } from '../../models';
-import { getCompressed, getFieldComponent, hash } from '../../utils';
+import { getCompressed, getFieldComponent } from '../../utils';
 
 export function ObjectField(props: FieldProps) {
   useDefaults(props);
@@ -22,11 +18,7 @@ export function ObjectField(props: FieldProps) {
     onValidity,
   } = props;
 
-  const [innerValue, setInnerValue] = useState<{ [key: string]: unknown }>(
-    value
-  );
-
-  const { properties = {}, required = [] } = getCompressed(schema, innerValue);
+  const { properties = {}, required = [] } = getCompressed(schema, value);
   const keys = new Set(Object.keys(properties));
   const sortedKeys = (Array.isArray(order) ? order : [])
     .map(v => v?.toString() ?? '')
@@ -40,30 +32,22 @@ export function ObjectField(props: FieldProps) {
     }, [] as string[])
     .concat(Array.from(keys));
 
-  // Handling the case of changed keys set –
-  // removing unneeded data.
+  // Removing properties which might be
+  // removed in the process of schema changes.
   useIsomorphicLayoutEffect(() => {
-    const filtered = { ...innerValue };
+    const filtered = { ...value };
     const availableKeys = new Set(Object.keys(properties));
     let hasToUpdate = false;
-    Object.keys(innerValue ?? {}).forEach(k => {
+    Object.keys(value ?? {}).forEach(k => {
       if (!availableKeys.has(k)) {
         filtered[k] = undefined;
         hasToUpdate = true;
       }
     });
     if (hasToUpdate) {
-      setInnerValue(filtered);
+      onValue?.(filtered);
     }
   }, [sortedKeys.join()]);
-
-  useUpdateEffect(() => {
-    hash(value) !== hash(innerValue) && setInnerValue(value);
-  }, [value]);
-
-  useEffect(() => {
-    hash(value) !== hash(innerValue) && onValue?.(innerValue);
-  }, [innerValue]);
 
   return (
     <ObjectTemplate {...props}>
@@ -73,10 +57,10 @@ export function ObjectField(props: FieldProps) {
           ...props,
           schema: properties?.[key] as Schema,
           required: required.includes(key),
-          value: innerValue?.[key],
+          value: value?.[key],
           validity: validity?.properties?.[key],
           onValue: v => {
-            setInnerValue(p => ({ ...p, [key]: v }));
+            onValue?.({ ...value, [key]: v });
           },
           onValidity: v => {
             onValidity?.(
