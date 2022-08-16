@@ -5,7 +5,7 @@ import {
   useUpdateEffect,
 } from '../../hooks';
 import { FieldProps, Schema } from '../../models';
-import { getCompressed, getFieldComponent } from '../../utils';
+import { getCompressed, getFieldComponent, hash } from '../../utils';
 
 export function ObjectField(props: FieldProps) {
   useDefaults(props);
@@ -58,11 +58,11 @@ export function ObjectField(props: FieldProps) {
   }, [sortedKeys.join()]);
 
   useUpdateEffect(() => {
-    value !== innerValue && setInnerValue(value);
+    hash(value) !== hash(innerValue) && setInnerValue(value);
   }, [value]);
 
   useEffect(() => {
-    value !== innerValue && onValue?.(innerValue);
+    hash(value) !== hash(innerValue) && onValue?.(innerValue);
   }, [innerValue]);
 
   return (
