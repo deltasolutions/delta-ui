@@ -82,7 +82,7 @@ export const useDialog = <C extends unknown = never>(
               outline: 'none',
             }}
             tabIndex={-1}
-            onClick={e => {
+            onMouseDown={e => {
               if (overlayRef.current === e.target) {
                 handleClose();
               }
