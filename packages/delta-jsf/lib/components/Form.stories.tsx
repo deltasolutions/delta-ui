@@ -93,6 +93,28 @@ export const Collections = props => {
   return <Form {...formProps} />;
 };
 
+export const Defaults = props => {
+  const formProps = useStoryFormProps({
+    ...props,
+    schema: {
+      type: 'object',
+      properties: {
+        name: {
+          title: 'Name',
+          type: 'string',
+          default: 'John',
+        },
+        surname: {
+          title: 'Surname',
+          type: 'string',
+          default: 'Doe',
+        },
+      },
+    },
+  });
+  return <Form {...formProps} />;
+};
+
 export const HiddenField = props => {
   const formProps = useStoryFormProps({
     ...props,
@@ -208,9 +230,3 @@ export const Validation = props => {
   });
   return <Form {...formProps} />;
 };
-
-export const External = () => {
-  return null;
-};
-
-const useExternalFormManager = () => {};

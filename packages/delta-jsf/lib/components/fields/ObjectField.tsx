@@ -1,9 +1,15 @@
-import React, { Key } from 'react';
-import { useDefaults, useIsomorphicLayoutEffect } from '../../hooks';
-import { FieldProps, Schema, Validity } from '../../models';
-import { clone, getCompressed, getFieldComponent, merge } from '../../utils';
+import React, { Key, useEffect, useState } from 'react';
+import {
+  useDefaults,
+  useIsomorphicLayoutEffect,
+  useUpdateEffect,
+} from '../../hooks';
+import { FieldProps, Schema } from '../../models';
+import { getCompressed, getFieldComponent } from '../../utils';
 
 export function ObjectField(props: FieldProps) {
+  useDefaults(props);
+
   const {
     schema,
     schema: { layout: { order } = {} },
@@ -16,10 +22,11 @@ export function ObjectField(props: FieldProps) {
     onValidity,
   } = props;
 
-  useDefaults(props);
+  const [innerValue, setInnerValue] = useState<{ [key: string]: unknown }>(
+    value
+  );
 
-  const { properties = {}, required = [] } = getCompressed(schema, value);
-
+  const { properties = {}, required = [] } = getCompressed(schema, innerValue);
   const keys = new Set(Object.keys(properties));
   const sortedKeys = (Array.isArray(order) ? order : [])
     .map(v => v?.toString() ?? '')
@@ -33,21 +40,30 @@ export function ObjectField(props: FieldProps) {
     }, [] as string[])
     .concat(Array.from(keys));
 
+  // Handling the case of changed keys set –
+  // removing unneeded data.
   useIsomorphicLayoutEffect(() => {
-    // An object without values from removed fields.
-    const filtered = { ...value };
+    const filtered = { ...innerValue };
     const availableKeys = new Set(Object.keys(properties));
     let hasToUpdate = false;
-    Object.keys(value ?? {}).forEach(k => {
+    Object.keys(innerValue ?? {}).forEach(k => {
       if (!availableKeys.has(k)) {
         filtered[k] = undefined;
         hasToUpdate = true;
       }
     });
     if (hasToUpdate) {
-      onValue?.(filtered);
+      setInnerValue(filtered);
     }
   }, [sortedKeys.join()]);
+
+  useUpdateEffect(() => {
+    value !== innerValue && setInnerValue(value);
+  }, [value]);
+
+  useEffect(() => {
+    value !== innerValue && onValue?.(innerValue);
+  }, [innerValue]);
 
   return (
     <ObjectTemplate {...props}>
@@ -57,13 +73,10 @@ export function ObjectField(props: FieldProps) {
           ...props,
           schema: properties?.[key] as Schema,
           required: required.includes(key),
-          value: value?.[key],
+          value: innerValue?.[key],
           validity: validity?.properties?.[key],
-          onValue: update => {
-            onValue?.(prior => ({
-              ...prior,
-              [key]: update instanceof Function ? update(prior[key]) : update,
-            }));
+          onValue: v => {
+            setInnerValue(p => ({ ...p, [key]: v }));
           },
           onValidity: v => {
             onValidity?.(
