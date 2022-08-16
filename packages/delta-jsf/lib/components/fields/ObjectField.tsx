@@ -1,9 +1,11 @@
 import React, { Key } from 'react';
 import { useDefaults, useIsomorphicLayoutEffect } from '../../hooks';
-import { FieldProps, Schema, Validity } from '../../models';
-import { clone, getCompressed, getFieldComponent, merge } from '../../utils';
+import { FieldProps, Schema } from '../../models';
+import { getCompressed, getFieldComponent } from '../../utils';
 
 export function ObjectField(props: FieldProps) {
+  useDefaults(props);
+
   const {
     schema,
     schema: { layout: { order } = {} },
@@ -16,10 +18,7 @@ export function ObjectField(props: FieldProps) {
     onValidity,
   } = props;
 
-  useDefaults(props);
-
   const { properties = {}, required = [] } = getCompressed(schema, value);
-
   const keys = new Set(Object.keys(properties));
   const sortedKeys = (Array.isArray(order) ? order : [])
     .map(v => v?.toString() ?? '')
@@ -33,8 +32,9 @@ export function ObjectField(props: FieldProps) {
     }, [] as string[])
     .concat(Array.from(keys));
 
+  // Removing properties which might be
+  // removed in the process of schema changes.
   useIsomorphicLayoutEffect(() => {
-    // An object without values from removed fields.
     const filtered = { ...value };
     const availableKeys = new Set(Object.keys(properties));
     let hasToUpdate = false;

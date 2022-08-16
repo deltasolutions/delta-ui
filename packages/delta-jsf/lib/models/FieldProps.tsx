@@ -8,6 +8,6 @@ export interface FieldProps<FieldValue = any> {
   required?: boolean;
   value?: FieldValue;
   validity?: Validity;
-  onValue?: (value: FieldValue | Promise<FieldValue>) => void;
+  onValue?: (value: FieldValue) => void;
   onValidity?: (validity: Validity | Promise<Validity>) => void;
 }

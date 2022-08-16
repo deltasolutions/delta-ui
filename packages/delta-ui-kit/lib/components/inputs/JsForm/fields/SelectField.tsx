@@ -1,8 +1,9 @@
 import { jsx } from '@theme-ui/core';
-import { FieldProps } from 'delta-jsf';
+import { FieldProps, useDefaults } from 'delta-jsf';
 import { Select, SelectOption } from '../../Select';
 
 export const SelectField = (props: FieldProps) => {
+  useDefaults(props);
   const {
     schema,
     value,

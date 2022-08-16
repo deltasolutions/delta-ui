@@ -29,20 +29,23 @@ export const Basics = () => {
     },
     registry: {
       utils: {
-        getDomainSchema: () => {
+        getDomainSource: () => {
           return {
-            type: 'object',
-            properties: {
-              b: {
-                title: 'B',
-                type: 'string',
+            schema: {
+              type: 'object',
+              properties: {
+                b: {
+                  title: 'B',
+                  type: 'string',
+                },
+                c: {
+                  title: 'C',
+                  type: 'string',
+                },
               },
-              c: {
-                title: 'C',
-                type: 'string',
-              },
+              required: ['b'],
             },
-            required: ['b'],
+            initialValue: { b: 'ABCD' },
           };
         },
       },

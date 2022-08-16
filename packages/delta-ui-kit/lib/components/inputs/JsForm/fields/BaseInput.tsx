@@ -1,9 +1,10 @@
 import { jsx } from '@theme-ui/core';
 import dayjs from 'dayjs';
-import { FieldProps } from 'delta-jsf';
+import { FieldProps, useDefaults } from 'delta-jsf';
 import { TextInput } from '../../TextInput';
 
 export const BaseInput = (props: FieldProps) => {
+  useDefaults(props);
   const {
     schema: {
       minimum,

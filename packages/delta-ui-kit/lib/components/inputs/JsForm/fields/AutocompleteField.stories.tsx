@@ -53,6 +53,16 @@ export const InitialValue = createFormStory({
   initialValue: 'aaa',
 });
 
+export const DefaultValue = createFormStory({
+  schema: {
+    type: 'string',
+    title: 'With default value',
+    oneOf,
+    default: 'aaa',
+    layout: { field: 'autocomplete' },
+  },
+});
+
 export const InitialValueWithoutOption = createFormStory({
   schema: {
     type: 'string',

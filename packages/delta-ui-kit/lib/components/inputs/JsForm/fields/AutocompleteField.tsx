@@ -1,5 +1,5 @@
 import { jsx } from '@theme-ui/core';
-import { FieldProps } from 'delta-jsf';
+import { FieldProps, useDefaults } from 'delta-jsf';
 import { useMemo } from 'react';
 import { hash } from '../../../../utils';
 import { Autocomplete, AutocompleteProps } from '../../Autocomplete';
@@ -11,6 +11,7 @@ export interface AutocompleteFieldSource
   > {}
 
 export const AutocompleteField = (props: FieldProps) => {
+  useDefaults(props);
   const {
     schema,
     value,
