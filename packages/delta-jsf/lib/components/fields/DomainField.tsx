@@ -8,6 +8,11 @@ import {
 import { FieldProps, Schema } from '../../models';
 import { getFieldComponent, hash } from '../../utils';
 
+const defaultSource = {
+  schema: { type: 'null' as const },
+  initialValue: undefined,
+};
+
 export function DomainField(props: FieldProps) {
   const {
     schema: { layout: { target } = {} },
@@ -34,14 +39,8 @@ export function DomainField(props: FieldProps) {
     maybeSource instanceof Promise ? resolvedSource : maybeSource;
   const { schema, initialValue } = isSource(targetSource)
     ? targetSource
-    : {
-        schema: { type: 'null' as const },
-        initialValue: undefined,
-      };
-  const targetProps = {
-    ...props,
-    schema,
-  };
+    : defaultSource;
+  const targetProps = { ...props, schema };
   const TargetField = getFieldComponent(targetProps);
   const manager = useFormManager({
     schema,

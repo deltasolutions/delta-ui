@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from 'react';
 import { Registry } from './Registry';
 import { Schema } from './Schema';
 import { Validity } from './Validity';
@@ -8,6 +9,6 @@ export interface FieldProps<FieldValue = any> {
   required?: boolean;
   value?: FieldValue;
   validity?: Validity;
-  onValue?: (value: FieldValue | Promise<FieldValue>) => void;
+  onValue?: Dispatch<SetStateAction<FieldValue>>;
   onValidity?: (validity: Validity | Promise<Validity>) => void;
 }
