@@ -14,14 +14,15 @@ export const TableBodyCell = forwardRef<
       ref={ref}
       role="cell"
       sx={{
-        py: '1.05em',
-        px: 2,
+        p: 2,
         '&:first-of-type': { pl: 4 },
         '&:last-of-type': { pr: 4 },
       }}
       {...rest}
     >
-      {children}
+      <Box sx={{ display: 'flex', alignItems: 'center', minHeight: '32px' }}>
+        {children}
+      </Box>
     </td>
   );
 });
