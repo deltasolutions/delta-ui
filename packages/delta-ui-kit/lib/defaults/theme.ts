@@ -10,7 +10,7 @@ const baseColors = {
   error: '#cc3922',
   background: '#0f111a',
   mundane: 'rgba(190, 202, 255, 0.035)',
-  celestial: '#1a1e2c',
+  celestial: 'rgb(21 23 36)',
   contrast: '#fafafa',
   exterior: '#09090e',
 
@@ -20,7 +20,7 @@ const baseColors = {
   accentWarning: '#cb8224',
   accentSuccess: '#159038',
   accentError: '#b5301b',
-  accentBackground: '#1a1e2c',
+  accentBackground: 'rgb(21 23 36)',
   accentMundane: 'rgba(190, 202, 255, 0.05)',
   accentCelestial: '#21273a',
   accentContrast: '#e1e0e0',

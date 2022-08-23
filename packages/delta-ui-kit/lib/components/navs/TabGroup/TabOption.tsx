@@ -40,7 +40,7 @@ export const TabOption = forwardRef<HTMLAnchorElement, TabOptionProps>(
       background:
         `linear-gradient(` +
         `${colors.accentBackground} 0, ` +
-        `${transparentize(0.3, colors.accentBackground)} 40px` +
+        `${colors.accentBackground} 40px` +
         `), ${layoutMainNoise}`,
     };
     return (
@@ -65,7 +65,7 @@ export const TabOption = forwardRef<HTMLAnchorElement, TabOptionProps>(
               ...(active
                 ? bookmarkActiveStyle
                 : {
-                    backgroundColor: rgba(colors.accentContext, 0.5),
+                    backgroundColor: rgba(colors.accentContext, 0.4),
                     color: 'onContext',
                     '&:hover, &:focus-visible': bookmarkActiveStyle,
                   }),
