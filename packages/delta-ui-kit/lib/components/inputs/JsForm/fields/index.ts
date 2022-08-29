@@ -1,4 +1,5 @@
 import { AutocompleteField } from './AutocompleteField';
+import { BadgeField } from './BadgeField';
 import { BaseInput } from './BaseInput';
 import { CheckboxField } from './CheckboxField';
 import { FilePickerField } from './FilePickerField';
@@ -10,26 +11,29 @@ import { TableField } from './TableField';
 import { TextAreaField } from './TextAreaField';
 
 export const jsFormFields = {
+  'file-picker': FilePickerField,
+  'geo-loc-picker': GeoLocPickerField,
+  'text-area': TextAreaField,
   autocomplete: AutocompleteField,
+  badge: BadgeField,
   boolean: SwitchField,
   checkbox: CheckboxField,
-  table: TableField,
   integer: BaseInput,
   number: BaseInput,
   select: SelectField,
+  slider: SliderField,
   string: BaseInput,
   switch: SwitchField,
-  slider: SliderField,
-  'geo-loc-picker': GeoLocPickerField,
-  'text-area': TextAreaField,
-  'file-picker': FilePickerField,
+  table: TableField,
 };
 
 export * from './AutocompleteField';
+export * from './BadgeField';
 export * from './BaseInput';
 export * from './CheckboxField';
+export * from './FilePickerField';
 export * from './GeoLocPickerField';
 export * from './SelectField';
-export * from './SwitchField';
-export * from './FilePickerField';
 export * from './SliderField';
+export * from './SwitchField';
+export * from './TableField';

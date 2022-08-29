@@ -5,16 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { MdAddCircleOutline } from 'react-icons/md';
 import { TbEdit } from 'react-icons/tb';
-import { useModal } from '../../../../hooks';
 import { Button } from '../../../Button';
-import {
-  Box,
-  Heading,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
-  ModalProps,
-} from '../../../containers';
+import { Box } from '../../../containers';
 import {
   Table,
   TableBody,
@@ -25,8 +17,7 @@ import {
   TableHeaderRow,
 } from '../../../displays';
 import { Tooltip } from '../../../Tooltip';
-import { useArrayFieldHandlers } from '../hooks';
-import { JsForm, JsFormManagerOptions, useJsFormManager } from '../JsForm';
+import { useArrayFieldHandlers, useJsFormModal } from '../hooks';
 
 export const TableField = (props: FieldProps) => {
   useDefaults(props);
@@ -39,19 +30,7 @@ export const TableField = (props: FieldProps) => {
   } = props;
   const { handleChange, handleAdd, handleDelete, values } =
     useArrayFieldHandlers(props);
-  const openModal = useModal<Partial<JsModalFormProps>>(
-    ({ handleClose, context }) => {
-      return (
-        <JsModalForm
-          handleClose={handleClose}
-          initialValue={context?.initialValue}
-          schema={items as Schema}
-          onChange={context?.onChange}
-        />
-      );
-    },
-    { deps: [items] }
-  );
+  const openModal = useJsFormModal({ schema: items });
   const columns = useMemo(
     () =>
       Object.entries((items as Schema)?.properties ?? {})
@@ -152,69 +131,5 @@ export const TableField = (props: FieldProps) => {
         </TableBody>
       </Table>
     </PrimitiveTemplate>
-  );
-};
-
-interface JsModalFormProps extends Omit<ModalProps, 'onChange'> {
-  schema: JsFormManagerOptions['schema'];
-  initialValue: JsFormManagerOptions['initialValue'];
-  onChange?: (data: unknown, prevData?: unknown) => void;
-}
-const JsModalForm = ({
-  schema,
-  initialValue,
-  onChange,
-  handleClose,
-  ...rest
-}: JsModalFormProps) => {
-  const [t] = useTranslation('common');
-  const manager = useJsFormManager({
-    schema: schema,
-    initialValue,
-    onSubmit: values => {
-      onChange?.(values);
-      handleClose?.();
-    },
-  });
-  return (
-    <Box
-      {...rest}
-      sx={{
-        overflow: 'auto',
-        maxHeight: '90vh',
-        '@media screen and (max-height: 800px)': {
-          maxHeight: '100vh',
-        },
-        width: '500px',
-        borderRadius: 4,
-      }}
-    >
-      <ModalHeader>
-        <Heading level={3}>
-          {initialValue ? t('actions.update') : t('actions.addition')}
-        </Heading>
-      </ModalHeader>
-      <ModalBody>
-        <JsForm manager={manager} />
-      </ModalBody>
-      <ModalFooter>
-        <Box sx={{ display: 'flex', gap: 3 }}>
-          <Button
-            color="secondary"
-            variant="contained-dimmed"
-            onClick={handleClose}
-          >
-            {t('actions.cancel')}
-          </Button>
-          <Button
-            type="submit"
-            variant="contained"
-            onClick={async () => await manager.submit()}
-          >
-            {t('actions.save')}
-          </Button>
-        </Box>
-      </ModalFooter>
-    </Box>
   );
 };
