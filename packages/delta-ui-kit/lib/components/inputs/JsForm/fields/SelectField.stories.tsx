@@ -20,3 +20,28 @@ export const Basics = createFormStory({
   },
   initialValue: '',
 });
+
+export const Multiple = createFormStory({
+  schema: {
+    type: 'array',
+    title: 'Select (multiple)',
+    items: {
+      oneOf: [
+        {
+          title: 'A',
+          const: 'aaa',
+        },
+        {
+          title: 'B',
+          const: 'bbb',
+        },
+        {
+          title: 'C',
+          const: 'ccc',
+        },
+      ],
+    },
+    layout: { field: 'select' },
+  },
+  initialValue: '',
+});

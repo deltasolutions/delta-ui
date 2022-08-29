@@ -1,9 +1,16 @@
 import { jsx } from '@theme-ui/core';
 import { FieldProps, useDefaults } from 'delta-jsf';
 import { Select, SelectOption } from '../../Select';
+import { AutocompleteField } from './AutocompleteField';
 
 export const SelectField = (props: FieldProps) => {
   useDefaults(props);
+  if (props.schema.type === 'array') {
+    console.warn(
+      'JsForm: SelectField with type === "array" deprecated. Use Autocomplete instead.'
+    );
+    return <AutocompleteField {...props} />;
+  }
   const {
     schema,
     value,
@@ -15,6 +22,7 @@ export const SelectField = (props: FieldProps) => {
   const { placeholder } = schema.layout ?? {};
   const toPickFrom = schema.oneOf ?? [];
   const sanitizeValue = value => value ?? schema.default;
+
   return (
     <PrimitiveTemplate {...props}>
       <Select

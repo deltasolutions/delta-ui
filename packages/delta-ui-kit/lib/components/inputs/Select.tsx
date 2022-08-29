@@ -15,6 +15,7 @@ import { FormWidgetProps } from '../../types';
 import { mergeRefs } from '../../utils';
 import { Box, BoxProps } from '../containers';
 import { DropMenu, DropMenuItem, DropMenuItemProps } from './DropMenu';
+import { EmptyOptions } from './EmptyOptions';
 import { TextInput } from './TextInput';
 
 export interface SelectProps
@@ -63,11 +64,16 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
     const dropRef = useRef<HTMLDivElement>(null);
     const closeDropRef = useRef<undefined | (() => void)>();
     const [openDrop, anchorRef] = useDrop<HTMLDivElement>(
-      props => (
-        <DropMenu ref={dropRef} onItemClick={handleChange} {...props}>
-          {childrenArray}
-        </DropMenu>
-      ),
+      props => {
+        if (childrenArray.length > 0) {
+          return (
+            <DropMenu ref={dropRef} onItemClick={handleChange} {...props}>
+              {childrenArray}
+            </DropMenu>
+          );
+        }
+        return <EmptyOptions />;
+      },
       {
         deps: [childrenArray, handleChange],
         tailored: true,

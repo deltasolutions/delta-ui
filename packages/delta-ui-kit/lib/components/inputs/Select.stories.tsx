@@ -24,6 +24,10 @@ export const Basics = () => {
   return <Select placeholder="Placeholder">{options}</Select>;
 };
 
+export const Empty = () => {
+  return <Select placeholder="Empty">{[]}</Select>;
+};
+
 export const Disabled = () => {
   return (
     <Select disabled placeholder="Disabled">

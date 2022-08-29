@@ -1,6 +1,5 @@
 import { jsx } from '@theme-ui/core';
 import { FieldProps, hash, Schema, useDefaults } from 'delta-jsf';
-import { t } from 'i18next';
 import { HTMLAttributes, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IoIosAddCircleOutline } from 'react-icons/io';
