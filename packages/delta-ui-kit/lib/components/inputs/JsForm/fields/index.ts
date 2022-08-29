@@ -6,20 +6,22 @@ import { GeoLocPickerField } from './GeoLocPickerField';
 import { SelectField } from './SelectField';
 import { SliderField } from './SliderField';
 import { SwitchField } from './SwitchField';
+import { TableField } from './TableField';
 import { TextAreaField } from './TextAreaField';
 
 export const jsFormFields = {
   autocomplete: AutocompleteField,
   boolean: SwitchField,
   checkbox: CheckboxField,
+  table: TableField,
   integer: BaseInput,
   number: BaseInput,
   select: SelectField,
   string: BaseInput,
   switch: SwitchField,
+  slider: SliderField,
   'geo-loc-picker': GeoLocPickerField,
   'text-area': TextAreaField,
-  slider: SliderField,
   'file-picker': FilePickerField,
 };
 

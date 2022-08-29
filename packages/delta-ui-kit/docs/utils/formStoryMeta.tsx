@@ -10,8 +10,7 @@ export const formStoryMeta = {
     Story => (
       <Card
         sx={{
-          width: '100%',
-          maxWidth: '500px',
+          maxWidth: '100%',
         }}
       >
         <CardBody>

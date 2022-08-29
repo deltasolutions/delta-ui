@@ -42,7 +42,6 @@ export const TableHeaderCell = forwardRef<
           display: 'flex',
           alignItems: 'center',
           gap: 1,
-          pr: 1,
           fontSize: 1,
           fontWeight: 300,
           textTransform: 'uppercase',
