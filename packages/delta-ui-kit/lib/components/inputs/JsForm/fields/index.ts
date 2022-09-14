@@ -2,6 +2,7 @@ import { AutocompleteField } from './AutocompleteField';
 import { BadgesField } from './BadgesField';
 import { BaseInput } from './BaseInput';
 import { CheckboxField } from './CheckboxField';
+import { ColorPickerField } from './ColorPickerField';
 import { FilePickerField } from './FilePickerField';
 import { GeoLocPickerField } from './GeoLocPickerField';
 import { SelectField } from './SelectField';
@@ -14,6 +15,7 @@ export const jsFormFields = {
   'file-picker': FilePickerField,
   'geo-loc-picker': GeoLocPickerField,
   'text-area': TextAreaField,
+  'color-picker': ColorPickerField,
   autocomplete: AutocompleteField,
   badges: BadgesField,
   boolean: SwitchField,
@@ -27,6 +29,7 @@ export const jsFormFields = {
   table: TableField,
 };
 
+export * from './ColorPickerField';
 export * from './AutocompleteField';
 export * from './BadgesField';
 export * from './BaseInput';
