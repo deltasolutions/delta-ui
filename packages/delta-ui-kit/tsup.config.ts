@@ -9,6 +9,7 @@ export default defineConfig({
   platform: 'browser',
   format: ['cjs', 'esm'],
   entryPoints: ['lib/index.tsx'],
+  esbuildPlugins: [cjsToEsmPlugin('focus-trap-react')],
 });
 
 function cjsToEsmPlugin(...packages: string[]): Plugin {
