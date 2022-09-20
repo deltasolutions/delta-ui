@@ -19,7 +19,7 @@ export const Basics = () => {
     <Box sx={{ gap: 2, flexDirection: 'column', display: 'flex' }}>
       <TextInput
         endIcon={
-          <Button tabIndex={-1}>
+          <Button sx={{ display: 'flex', alignItems: 'center' }} tabIndex={-1}>
             <MdOutlineMail size={20} />
           </Button>
         }
@@ -30,6 +30,9 @@ export const Basics = () => {
         startIcon={
           <Button
             sx={{
+              aspectRatio: '1 / 1',
+              alignItems: 'center',
+              display: 'flex',
               borderRadius: '100%',
               '&:hover, &:active, &:focus-visible': {
                 color: 'accentOnContext',
@@ -46,6 +49,7 @@ export const Basics = () => {
         }
         type={shown ? 'text' : 'password'}
       />
+      <TextInput placeholder="Password" type="password" />
     </Box>
   );
 };

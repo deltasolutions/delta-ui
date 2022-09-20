@@ -5,6 +5,7 @@ import { CheckboxField } from './CheckboxField';
 import { ColorPickerField } from './ColorPickerField';
 import { FilePickerField } from './FilePickerField';
 import { GeoLocPickerField } from './GeoLocPickerField';
+import { PasswordField } from './PasswordField';
 import { SelectField } from './SelectField';
 import { SliderField } from './SliderField';
 import { SwitchField } from './SwitchField';
@@ -27,8 +28,10 @@ export const jsFormFields = {
   string: BaseInput,
   switch: SwitchField,
   table: TableField,
+  password: PasswordField,
 };
 
+export * from './PasswordField';
 export * from './ColorPickerField';
 export * from './AutocompleteField';
 export * from './BadgesField';

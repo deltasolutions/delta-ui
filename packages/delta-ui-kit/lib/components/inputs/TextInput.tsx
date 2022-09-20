@@ -24,6 +24,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       onBlur,
       startIcon,
       endIcon,
+      type = 'text',
       ...rest
     }: TextInputProps,
     ref
@@ -44,6 +45,8 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             left: '0.3rem',
             top: '50%',
             transform: 'translateY(-50%)',
+            display: 'flex',
+            alignItems: 'center',
           }}
         >
           {startIcon}
@@ -87,7 +90,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
                   },
                 }),
           }}
-          type="text"
+          type={type}
           value={innerValue}
           onBlur={() => onBlur?.()}
           onChange={e => handleChange(e.target.value)}
@@ -100,6 +103,8 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             right: '0.3rem',
             top: '50%',
             transform: 'translateY(-50%)',
+            display: 'flex',
+            alignItems: 'center',
           }}
         >
           {endIcon}
