@@ -47,8 +47,8 @@ export const Basics = () => {
           data={appleStock.slice(0, 8)}
           formatX={v => dayjs(v).format('YYYY-MM-DD')}
           formatY={v => `${v} Celsius`}
-          getX={v => v.date}
-          getY={v => v.close}
+          xAccessor={v => v.date}
+          yAccessor={v => v.close}
         />
       </CardBody>
       <CardFooter>

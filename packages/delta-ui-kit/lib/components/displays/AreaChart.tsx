@@ -1,84 +1,138 @@
 import { jsx } from '@theme-ui/core';
 import { curveCardinal } from '@visx/curve';
 import { LinearGradient } from '@visx/gradient';
-import { AreaSeries, XYChart, Tooltip } from '@visx/xychart';
-import { transparentize } from 'polished';
+import {
+  buildChartTheme,
+  AnimatedAreaSeries,
+  XYChart,
+  AnimatedGrid,
+  AnimatedAxis,
+  Tooltip,
+} from '@visx/xychart';
+import { useMemo } from 'react';
 import { useDeltaTheme } from '../../hooks';
-import { Box } from '../containers';
+import { Box, Heading } from '../containers';
 
 export interface AreaChartProps<T extends object> {
-  height?: number;
-  margin?: { top: number; right: number; bottom: number; left: number };
   data: T[];
   color?: string;
-  getX: (v: T) => number | string | Date;
-  getY: (v: T) => number | string | Date;
+  xTicks?: number;
+  yTicks?: number;
+  yAccessor: any;
+  xAccessor: any;
   formatX?: (v: number | string | Date) => string;
   formatY?: (v: number | string | Date) => string;
 }
+const tickLabelOffset = 10;
 
 export const AreaChart = <T extends object>({
-  height = 300,
-  margin = { left: 0, right: 0, top: 0, bottom: 0 },
   data,
-  color = 'primary',
-  getX,
-  getY,
+  yAccessor,
+  xAccessor,
   formatX,
   formatY,
+  color = 'success',
+  xTicks = 20,
+  yTicks = 10,
 }: AreaChartProps<T>) => {
   const { colors } = useDeltaTheme();
-  const colorString = colors[color] ?? color;
+  const mainColor = colors[color] ?? colors.success;
+  const theme = useMemo(
+    () =>
+      buildChartTheme({
+        backgroundColor: mainColor,
+        colors: [mainColor],
+        gridColor: 'rgba(255,255,255,0.01)',
+        gridStyles: {
+          stroke: 'rgba(255,255,255,0.2)',
+          strokeLinecap: 'round',
+        },
+        gridColorDark: 'rgba(255,255,255,0.01)',
+        tickLength: 8,
+        htmlLabel: {
+          color: 'red',
+        },
+        yAxisLineStyles: {
+          color: 'red',
+        },
+      }),
+    [colors, mainColor]
+  );
+
   return (
-    <Box sx={{ overflow: 'hidden' }}>
+    <Box
+      style={{ height: 400 }}
+      sx={{
+        '.visx-axis-tick': {
+          text: { fontSize: '12px', fontWeight: 400, fill: 'onCelestial' },
+        },
+      }}
+    >
       <XYChart
-        height={height}
-        margin={margin}
-        xScale={{ type: 'point' }}
+        height={400}
+        margin={{ top: 10, left: 50, right: 50, bottom: 40 }}
+        theme={theme}
+        xScale={{ type: 'time' }}
         yScale={{ type: 'linear' }}
       >
         <LinearGradient
-          from={transparentize(0.5, colorString)}
+          from={mainColor}
+          fromOpacity={0.3}
           id="gradient"
-          to="transparent"
+          toOpacity={0.2}
         />
-        <AreaSeries
+        <AnimatedGrid
+          columns={false}
+          numTicks={yTicks}
+          strokeDasharray="0, 4"
+        />
+        <AnimatedAxis
+          hideAxisLine
+          hideTicks
+          left={30}
+          numTicks={xTicks}
+          orientation="bottom"
+          tickLabelProps={() => ({ dy: tickLabelOffset })}
+        />
+        <AnimatedAxis
+          hideAxisLine
+          hideTicks
+          labelClassName="asix-label"
+          numTicks={yTicks}
+          orientation="left"
+        />
+        <AnimatedAreaSeries
           curve={curveCardinal}
           data={data}
-          dataKey="data"
+          dataKey="primary_line"
           fill="url(#gradient)"
-          lineProps={{ stroke: colorString }}
-          xAccessor={getX}
-          yAccessor={getY}
+          xAccessor={xAccessor}
+          yAccessor={yAccessor}
         />
+
         <Tooltip
           showSeriesGlyphs
           showVerticalCrosshair
           snapTooltipToDatumX
           snapTooltipToDatumY
-          glyphStyle={{
-            fill: colorString,
-            stroke: colors.onPrimary,
-            strokeWidth: '3px',
-          }}
-          renderTooltip={({ tooltipData }) => {
-            const nearest = tooltipData?.nearestDatum;
-            if (!nearest) {
-              return null;
-            }
-            const x = getX(nearest.datum as T);
-            const y = getY(nearest.datum as T);
-            return (
-              <Box sx={{ fontFamily: 'Montserrat', fontWeight: 500 }}>
-                {`${formatX?.(x) ?? x}, ${formatY?.(y) ?? y}`}
-              </Box>
-            );
-          }}
-          verticalCrosshairStyle={{
-            stroke: colors.onPrimary,
-            strokeWidth: '2px',
-            strokeDasharray: '3 5',
-          }}
+          renderTooltip={({ tooltipData }) => (
+            <Box
+              sx={{
+                p: 2,
+                textAlign: 'center',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 1,
+              }}
+            >
+              <Heading level={4} sx={{ color: 'exterior' }}>
+                {/* {yAccessor(tooltipData?.nearestDatum?.datum)} */}
+              </Heading>
+              <Heading level={6} sx={{ fontWeight: 300, color: 'exterior' }}>
+                {/* {xAccessor(tooltipData?.nearestDatum?.datum)} */}
+              </Heading>
+            </Box>
+          )}
         />
       </XYChart>
     </Box>
