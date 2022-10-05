@@ -14,7 +14,7 @@ export const Loader = forwardRef<HTMLDivElement, LoaderProps>(
   ({ size: propsSize = 'small', color, ...props }: LoaderProps, ref) => {
     const { colors } = useDeltaTheme();
     const { scale, size } = {
-      small: { scale: 0.3, size: 24 },
+      small: { scale: 0.3, size: 22 },
       medium: { scale: 0.45, size: 36 },
       large: { scale: 0.7, size: 56 },
     }[propsSize];
