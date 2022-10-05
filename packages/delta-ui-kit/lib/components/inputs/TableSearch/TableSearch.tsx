@@ -169,6 +169,9 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
     useEffect(() => {
       setOptions([]);
       const lastId = selections.at(-1) ?? '';
+      if (!lastId.includes('|')) {
+        setLoading(false);
+      }
       const queryableIds = queryables?.map(q => q.id);
       if (queryableIds?.includes(lastId)) {
         const queryableId = selections.at(-1);
@@ -178,6 +181,7 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
         setOptions(filteredOperators.map(operator => `${lastId}|${operator}`));
         return;
       }
+
       if (lastId.includes('|')) {
         const queryKey = lastId.split('|')[0];
         const queryable = queryables?.find(q => q.id === queryKey);
@@ -186,8 +190,13 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
           queryable
             .getItems(debouncedQuery)
             .then(items => {
-              setItems(prev => ({ ...prev, [queryable.id]: items }));
-              setOptions(items.map((i: any) => i['id']));
+              setSelections(prev => {
+                setItems(prev => ({ ...prev, [queryable.id]: items }));
+                if (prev.at(-1) === lastId) {
+                  setOptions(items.map((i: any) => i['id']));
+                }
+                return prev;
+              });
             })
             .finally(() => {
               setLoading(false);
@@ -210,7 +219,6 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
       });
       setOptions(filtered?.map(f => f.id) ?? []);
     }, [selections, queryables, debouncedQuery]);
-
     useEffect(() => {
       const handleNativeBlur = ev => {
         if (
@@ -302,7 +310,7 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
                 key={hash(id)}
                 style={{
                   opacity: removing ? 0.5 : 1,
-                  marginLeft: index == 3 ? 8 : 0,
+                  marginLeft: index % 3 === 0 ? 8 : 0,
                 }}
                 sx={{
                   px: 2,

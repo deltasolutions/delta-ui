@@ -8,25 +8,25 @@ import { TableSearch } from './TableSearch';
 
 export default {
   title: 'Inputs/TableSearch',
-  decorators: [compact('800px')],
+  decorators: [compact('900px')],
 } as Meta;
 
 export const Basics = () => {
   const [value, setValue] = useState<string[]>(defaultValue);
 
   return (
-    <Box>
-      <TableSearch
-        initialItems={{
-          userId: users,
-          url: urls,
-        }}
-        queryables={queryables}
-        value={value}
-        onChange={v => {
-          setValue(v);
-        }}
-      />
+    <Box sx={{ height: '600px' }}>
+      <Box>
+        <TableSearch
+          initialItems={{
+            userId: users,
+            url: urls,
+          }}
+          queryables={queryables}
+          value={value}
+          onChange={setValue}
+        />
+      </Box>
       <Box
         sx={{
           mt: '50px',
@@ -62,6 +62,8 @@ const FiqlLike = ({ value }) => {
     '!=': '!=',
     '>': '=gt=',
     '<': '=lt=',
+    in: '=in=',
+    'not in': '=out=',
   };
   const chunks: string[][] = value.reduce((arr, item, index) => {
     const chunkIndex = Math.floor(index / 3);
@@ -99,7 +101,7 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
 const queryables = [
   {
     getItems: async query => {
-      await delay(100);
+      await delay(2000);
       return users;
     },
     id: 'userId',
@@ -155,11 +157,11 @@ const queryables = [
   {
     id: 'projectId',
     getItems: async query => {
-      await delay(100);
+      await delay(4000);
       return projects;
     },
     operators: ['in', 'not in'],
-    renderSelection: datum => datum.value,
+    renderSelection: datum => <Box>{datum.value}</Box>,
     renderOption: datum => datum.value,
     label: 'Project',
   },
@@ -176,4 +178,4 @@ const urls = [
   { value: 'http://google.com/', id: '3' },
 ];
 
-const projects = [{ value: 'Peepo', id: 12 }];
+const projects = [{ value: 'Peepo', id: '12' }];
