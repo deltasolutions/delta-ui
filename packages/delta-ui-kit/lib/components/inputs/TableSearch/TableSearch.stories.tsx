@@ -1,8 +1,8 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
+import appleStock from '@visx/mock-data/lib/mocks/appleStock';
 import { useState } from 'react';
 import { compact } from '../../../../docs/decorators';
-import { Button } from '../../Button';
 import { Box, Heading } from '../../containers';
 import { TableSearch } from './TableSearch';
 
@@ -12,7 +12,7 @@ export default {
 } as Meta;
 
 export const Basics = () => {
-  const [value, setValue] = useState<string[]>(defaultValue);
+  const [value, setValue] = useState<string[]>([]);
 
   return (
     <Box sx={{ height: '600px' }}>
@@ -101,7 +101,7 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
 const queryables = [
   {
     getItems: async query => {
-      await delay(2000);
+      await delay(200);
       return users;
     },
     id: 'userId',
@@ -143,7 +143,7 @@ const queryables = [
   },
   {
     getItems: async query => {
-      await delay(1500);
+      await delay(100);
       return urls;
     },
     operators: ['=', '!=', '>', '<'],
@@ -157,13 +157,31 @@ const queryables = [
   {
     id: 'projectId',
     getItems: async query => {
-      await delay(4000);
+      await delay(100);
       return projects;
     },
-    operators: ['in', 'not in'],
+    operators: ['in', '!in'],
     renderSelection: datum => <Box>{datum.value}</Box>,
     renderOption: datum => datum.value,
     label: 'Project',
+  },
+  {
+    id: 'date',
+    getItems: async query => {
+      await delay(100);
+      return appleStock
+        .slice(0, 80)
+        .map((i, index) => ({ ...i, id: index.toString() }));
+    },
+    operators: ['>', '<'],
+    renderSelection: datum => <Box>{datum.close}</Box>,
+    renderOption: datum => (
+      <Box>
+        <span>{datum.close}</span>
+        <span>{datum.date}</span>
+      </Box>
+    ),
+    label: 'Date',
   },
 ];
 

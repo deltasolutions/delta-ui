@@ -21,6 +21,9 @@ export const TableSearchDrop = forwardRef<HTMLDivElement, TableSearchDropProps>(
       options,
     } = useContext(TableSearchContext);
     const render = id => {
+      if (id.slice(0, 6) === '_query') {
+        return 'Search for this text';
+      }
       const isItem = (selections.at(-1) as string)?.includes('|') ?? '';
       if (isItem && !loading) {
         const key = (selections.at(-1) as string).split('|')[0];
@@ -57,11 +60,6 @@ export const TableSearchDrop = forwardRef<HTMLDivElement, TableSearchDropProps>(
             );
           })}
         </DropMenu>
-        {loading && (
-          <Box sx={{ py: 2, px: 1 }}>
-            <Loader size="small" />
-          </Box>
-        )}
       </Fragment>
     );
   }

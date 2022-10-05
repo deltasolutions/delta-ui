@@ -1,4 +1,5 @@
 import { jsx } from '@theme-ui/core';
+import { at } from 'lodash-es';
 import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react';
 import { HTMLAttributes, ReactNode, useContext, useRef } from 'react';
 import { IoSearch } from 'react-icons/io5';
@@ -11,6 +12,7 @@ import {
 import { FormWidgetProps } from '../../../types';
 import { hash, mergeRefs } from '../../../utils';
 import { Box, SystemContext } from '../../containers';
+import { Loader } from '../../displays';
 import { TextInput } from '../TextInput';
 import {
   TableSearchContext,
@@ -68,13 +70,13 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
     const [selections, setSelections] = useState<string[]>(propsValue ?? []);
     const handleAddition = useCallback(
       (value: string) => {
+        setQuery('');
         setBackspacePressed(false);
         const nextSelections = selections
           .filter(v => v !== value)
           .concat([value]);
         setOptions([]);
         setSelections(nextSelections);
-        setQuery('');
         propsOnChange?.(nextSelections);
         inputRef.current?.focus();
       },
@@ -99,7 +101,12 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
         deps: [],
         portal,
         tailored: true,
-        style: { width: '220px', marginTop: '12px' },
+        style: {
+          width: '220px',
+          marginTop: '12px',
+          maxHeight: '400px',
+          overflow: 'auto',
+        },
         blurResistant: true,
         placement: 'bottom-start',
       }
@@ -125,6 +132,10 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
     );
 
     const renderSelection = (id, index, arr) => {
+      const maybeInput = id.slice(0, 6) === '_query';
+      if (maybeInput) {
+        return id.split(':').at(-1);
+      }
       if (id.includes('|')) {
         return id.split('|')[1];
       }
@@ -187,16 +198,31 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
         const queryable = queryables?.find(q => q.id === queryKey);
         if (queryable) {
           setLoading(true);
+
+          if (debouncedQuery) {
+            setOptions([`_query:${lastId.split('|')[0]}:${debouncedQuery}`]);
+          }
           queryable
             .getItems(debouncedQuery)
             .then(items => {
               setSelections(prev => {
                 setItems(prev => ({ ...prev, [queryable.id]: items }));
                 if (prev.at(-1) === lastId) {
-                  setOptions(items.map((i: any) => i['id']));
+                  const ids = items.map((i: any) => i.id);
+                  setOptions(
+                    [
+                      ...ids,
+                      debouncedQuery
+                        ? `_query:${lastId.split('|')[0]}:${debouncedQuery}`
+                        : undefined,
+                    ].filter(Boolean)
+                  );
                 }
                 return prev;
               });
+            })
+            .catch(e => {
+              console.error(e);
             })
             .finally(() => {
               setLoading(false);
@@ -204,20 +230,27 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
           return;
         }
       }
-      const filtered = queryables?.filter(q => {
-        if (selections?.includes(q.id)) {
-          return false;
-        }
-        if (
-          q.label
-            ?.toLocaleLowerCase()
-            .includes(debouncedQuery.toLocaleLowerCase())
-        ) {
-          return true;
-        }
-        return false;
-      });
-      setOptions(filtered?.map(f => f.id) ?? []);
+      const filteredIds =
+        queryables
+          ?.filter(q => {
+            if (selections?.includes(q.id)) {
+              return false;
+            }
+            if (
+              q.label
+                ?.toLocaleLowerCase()
+                .includes(debouncedQuery.toLocaleLowerCase())
+            ) {
+              return true;
+            }
+            return false;
+          })
+          .map(i => i.id) ?? [];
+      setOptions(
+        [...filteredIds, debouncedQuery && `_query:${debouncedQuery}`].filter(
+          Boolean
+        ) as string[]
+      );
     }, [selections, queryables, debouncedQuery]);
     useEffect(() => {
       const handleNativeBlur = ev => {
@@ -233,6 +266,11 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
       const handleKeydown = ev => {
         if (ev.key === 'ArrowDown') {
           handleOpen();
+          return;
+        }
+
+        if (ev.metaKey && ev.key === 'Backspace') {
+          setSelections([]);
           return;
         }
         if (ev.key === 'Backspace') {
@@ -251,6 +289,7 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
       };
       inputRef.current?.addEventListener('blur', handleNativeBlur);
       inputRef.current?.addEventListener('keydown', handleKeydown);
+
       return () => {
         inputRef.current?.removeEventListener('blur', handleNativeBlur);
         inputRef.current?.removeEventListener('keydown', handleKeydown);
@@ -305,12 +344,18 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
           {selections.map((id, index, arr) => {
             const removing =
               backspacePressed && index === selections.length - 1;
+
             return (
               <Box
                 key={hash(id)}
                 style={{
                   opacity: removing ? 0.5 : 1,
-                  marginLeft: index % 3 === 0 ? 8 : 0,
+                  marginLeft:
+                    index === 0 ||
+                    arr[index - 1]?.includes('|') ||
+                    id.split('|').length === 2
+                      ? 0
+                      : 8,
                 }}
                 sx={{
                   px: 2,
@@ -322,16 +367,22 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
               </Box>
             );
           })}
-          <IoSearch
+          <Box
             sx={{
               position: 'absolute',
               top: '50%',
-              right: 2,
-              width: '1.25em',
-              height: '1.25em',
+              display: 'flex',
+              alignItems: 'center',
               transform: 'translateY(-50%)',
+              right: 2,
             }}
-          />
+          >
+            {loading ? (
+              <Loader size="small" />
+            ) : (
+              <IoSearch sx={{ width: '1.4em', height: '1.4em' }} />
+            )}
+          </Box>
         </label>
       </TableSearchContext.Provider>
     );
