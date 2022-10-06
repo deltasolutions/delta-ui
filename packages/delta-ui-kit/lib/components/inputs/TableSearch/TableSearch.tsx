@@ -1,5 +1,4 @@
 import { jsx } from '@theme-ui/core';
-import { at } from 'lodash-es';
 import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react';
 import { HTMLAttributes, ReactNode, useContext, useRef } from 'react';
 import { IoSearch } from 'react-icons/io5';
@@ -19,6 +18,7 @@ import {
   TableSearchContextOptions,
 } from './TableSearchContext';
 import { TableSearchDrop } from './TableSearchDrop';
+import { TableSearchSelection } from './TableSearchSelection';
 
 export interface TableSearchProps
   extends Omit<
@@ -75,10 +75,10 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
         const nextSelections = selections
           .filter(v => v !== value)
           .concat([value]);
-        setOptions([]);
         setSelections(nextSelections);
         propsOnChange?.(nextSelections);
-        inputRef.current?.focus();
+        setOptions([]);
+        // inputRef.current?.focus();
       },
       [selections, propsOnChange]
     );
@@ -95,8 +95,11 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
     );
     const dropRef = useRef<HTMLDivElement>(null);
     const closeDropRef = useRef<undefined | (() => void)>();
-    const [openDrop, anchorRef] = useDrop<HTMLLabelElement>(
-      props => <TableSearchDrop ref={dropRef} {...props} />,
+    const [handleOpen, anchorRef] = useDrop<HTMLLabelElement>(
+      props => {
+        closeDropRef.current = props.handleClose;
+        return <TableSearchDrop ref={dropRef} {...props} />;
+      },
       {
         deps: [],
         portal,
@@ -112,13 +115,8 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
       }
     );
     const mergedRef = useMemo(() => {
-      const refs = [ref, anchorRef, inputRef].filter(Boolean) as any;
-      return mergeRefs(refs);
+      return mergeRefs([ref, anchorRef as any, inputRef]);
     }, [ref, anchorRef, inputRef]);
-    const handleOpen = useCallback(() => {
-      closeDropRef.current = openDrop();
-    }, [openDrop]);
-
     const handleClose = useCallback(() => {
       closeDropRef.current?.();
     }, []);
@@ -132,7 +130,7 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
     );
 
     const renderSelection = (id, index, arr) => {
-      const maybeInput = id.slice(0, 6) === '_query';
+      const maybeInput = id?.slice(0, 6) === '_query';
       if (maybeInput) {
         return id.split(':').at(-1);
       }
@@ -342,29 +340,16 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
           </Box>
 
           {selections.map((id, index, arr) => {
-            const removing =
-              backspacePressed && index === selections.length - 1;
-
             return (
-              <Box
+              <TableSearchSelection
                 key={hash(id)}
-                style={{
-                  opacity: removing ? 0.5 : 1,
-                  marginLeft:
-                    index === 0 ||
-                    arr[index - 1]?.includes('|') ||
-                    id.split('|').length === 2
-                      ? 0
-                      : 8,
-                }}
-                sx={{
-                  px: 2,
-                  py: '2px',
-                  backgroundColor: 'rgba(255,255,255,0.04)',
-                }}
+                arr={arr}
+                id={id}
+                index={index}
+                removing={backspacePressed && index === selections.length - 1}
               >
                 {renderSelection(id, index, arr)}
-              </Box>
+              </TableSearchSelection>
             );
           })}
           <Box

@@ -55,8 +55,11 @@ export const DropMenu = forwardRef<HTMLDivElement, DropMenuProps>(
             ev.preventDefault();
             ev.stopPropagation();
             const child = childrenArray[activeIndex];
-            const value = child.props.value;
-            onItemClick?.(value);
+            const value = child?.props?.value;
+            if (value) {
+              onItemClick?.(value);
+            }
+
             // selectedValues.includes(value)
             //   ? handleRemoval(value)
             //   : handleAddition(child.props?.value, getTitleByChild(child));

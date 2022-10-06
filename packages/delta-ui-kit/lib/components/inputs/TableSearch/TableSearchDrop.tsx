@@ -1,9 +1,8 @@
 import { jsx } from '@theme-ui/core';
 import { hash } from 'delta-jsf';
-import { forwardRef, Fragment, useCallback, useContext } from 'react';
+import { forwardRef, Fragment, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DropRendererProps } from '../../../hooks';
-import { Box } from '../../containers';
-import { Loader } from '../../displays';
 import { DropMenu, DropMenuItem } from '../DropMenu';
 import { TableSearchContext } from './TableSearchContext';
 
@@ -11,6 +10,7 @@ export interface TableSearchDropProps extends DropRendererProps {}
 
 export const TableSearchDrop = forwardRef<HTMLDivElement, TableSearchDropProps>(
   ({ handleClose, ...rest }, ref) => {
+    const [t] = useTranslation('common');
     const {
       selections,
       handleAddition,
@@ -22,7 +22,7 @@ export const TableSearchDrop = forwardRef<HTMLDivElement, TableSearchDropProps>(
     } = useContext(TableSearchContext);
     const render = id => {
       if (id.slice(0, 6) === '_query') {
-        return 'Search for this text';
+        return t('actions.searchForThisText');
       }
       const isItem = (selections.at(-1) as string)?.includes('|') ?? '';
       if (isItem && !loading) {

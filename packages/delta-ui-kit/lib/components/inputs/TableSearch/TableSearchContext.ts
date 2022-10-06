@@ -1,4 +1,4 @@
-import { createContext, ReactNode } from 'react';
+import { createContext } from 'react';
 import { QueryableOptions } from './TableSearch';
 
 export const TableSearchContext = createContext<TableSearchContextOptions>(
