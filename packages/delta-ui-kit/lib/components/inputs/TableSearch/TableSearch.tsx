@@ -27,6 +27,8 @@ export interface TableSearchProps
     >,
     FormWidgetProps<unknown> {
   value?: string[];
+  renderSelectialOperator?: (operator: string) => ReactNode;
+  renderOptionOperator?: (operator: string) => ReactNode;
   initialItems?: { [key: string]: unknown[] };
   queryables?: QueryableOptions[];
   onChange?: (v: string[]) => void;
@@ -36,7 +38,7 @@ export interface QueryableOptions {
   id: string;
   label?: string;
   operators: string[];
-  getItems: (query: string) => Promise<unknown[]>;
+  getItems: (query: string) => Promise<unknown[]> | unknown[];
   renderSelection: (datum) => ReactNode;
   renderOption: (datum) => ReactNode;
 }
@@ -49,6 +51,8 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
       queryables,
       initialItems: propsInitialItems,
       disabled,
+      renderSelectialOperator,
+      renderOptionOperator,
       onChange: propsOnChange,
       onFocus,
       onBlur,
@@ -135,7 +139,8 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
         return id.split(':').at(-1);
       }
       if (id.includes('|')) {
-        return id.split('|')[1];
+        const operator = id.split('|').at(-1);
+        return renderOptionOperator?.(operator) ?? operator;
       }
       const queryable = queryables?.find(q => q.id === id);
       if (queryable) {
@@ -157,10 +162,12 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
         queryables,
         handleAddition,
         loading,
+        renderOptionOperator,
         items,
       }),
       [
         options,
+        renderOptionOperator,
         selections,
         handleRemoval,
         handleAddition,
@@ -195,37 +202,36 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
         const queryKey = lastId.split('|')[0];
         const queryable = queryables?.find(q => q.id === queryKey);
         if (queryable) {
-          setLoading(true);
-
-          if (debouncedQuery) {
-            setOptions([`_query:${lastId.split('|')[0]}:${debouncedQuery}`]);
-          }
-          queryable
-            .getItems(debouncedQuery)
-            .then(items => {
-              setSelections(prev => {
-                setItems(prev => ({ ...prev, [queryable.id]: items }));
-                if (prev.at(-1) === lastId) {
-                  const ids = items.map((i: any) => i.id);
-                  setOptions(
-                    [
-                      ...ids,
-                      debouncedQuery
-                        ? `_query:${lastId.split('|')[0]}:${debouncedQuery}`
-                        : undefined,
-                    ].filter(Boolean)
-                  );
-                }
-                return prev;
+          const inputOption =
+            debouncedQuery &&
+            `_query:${lastId.split('|')[0]}:${debouncedQuery}`;
+          const maybeItems = queryable?.getItems(query);
+          if (Array.isArray(maybeItems)) {
+            const ids = maybeItems.map(i => i.id);
+            setOptions([...ids, inputOption].filter(Boolean));
+            setItems(prev => ({ ...prev, [queryable.id]: maybeItems }));
+            return;
+          } else {
+            setLoading(true);
+            (queryable.getItems(debouncedQuery) as Promise<unknown[]>)
+              .then(items => {
+                setSelections(prev => {
+                  setItems(prev => ({ ...prev, [queryable.id]: items }));
+                  if (prev.at(-1) === lastId) {
+                    const ids = items.map((i: any) => i.id);
+                    setOptions([...ids, inputOption].filter(Boolean));
+                  }
+                  return prev;
+                });
+              })
+              .catch(e => {
+                console.error(e);
+              })
+              .finally(() => {
+                setLoading(false);
               });
-            })
-            .catch(e => {
-              console.error(e);
-            })
-            .finally(() => {
-              setLoading(false);
-            });
-          return;
+            return;
+          }
         }
       }
       const filteredIds =

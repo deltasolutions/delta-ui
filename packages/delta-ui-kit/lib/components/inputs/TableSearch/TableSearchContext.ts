@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import { createContext, ReactNode } from 'react';
 import { QueryableOptions } from './TableSearch';
 
 export const TableSearchContext = createContext<TableSearchContextOptions>(
@@ -8,6 +8,7 @@ export const TableSearchContext = createContext<TableSearchContextOptions>(
 export interface TableSearchContextOptions {
   options: string[];
   selections: unknown[];
+  renderOptionOperator?: (operator: string) => ReactNode
   queryables?: QueryableOptions[];
   loading: boolean;
   handleRemoval: (v: unknown) => void;

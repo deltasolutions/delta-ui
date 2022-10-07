@@ -23,6 +23,8 @@ export const Basics = () => {
             url: urls,
           }}
           queryables={queryables}
+          renderOptionOperator={operator => operators[operator]}
+          renderSelectialOperator={operator => operators[operator]}
           value={value}
           onChange={setValue}
         />
@@ -49,63 +51,27 @@ export const Basics = () => {
         </Box>
         <Box>
           <Heading level={5}>Fiql like</Heading>
-          <FiqlLike value={value} />
         </Box>
       </Box>
     </Box>
   );
 };
-
-const FiqlLike = ({ value }) => {
-  const fiqlOps = {
-    '=': '==',
-    '!=': '!=',
-    '>': '=gt=',
-    '<': '=lt=',
-    in: '=in=',
-    'not in': '=out=',
-  };
-  const chunks: string[][] = value.reduce((arr, item, index) => {
-    const chunkIndex = Math.floor(index / 3);
-    if (!arr[chunkIndex]) {
-      arr[chunkIndex] = [];
-    }
-    arr[chunkIndex].push(item);
-    return arr;
-  }, []);
-
-  return (
-    <span>
-      {chunks
-        .map(chunk =>
-          chunk
-            .map((i, index) => {
-              if (index === 0) {
-                return i;
-              }
-              if (index === 1) {
-                return fiqlOps[i.split('|')[1]];
-              }
-              if (index === 2) {
-                return `"${i}"`;
-              }
-            })
-            .join('')
-        )
-        .join(';')}
-    </span>
-  );
+const operators = {
+  '==': '=',
+  '!=': '!=',
+  '=gt=': '>',
+  '=lt=': '<',
+  '=in=': 'in',
+  '=out=': 'not in',
 };
+
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 const queryables = [
   {
-    getItems: async query => {
-      await delay(200);
-      return users;
-    },
+    getItems: () => users,
     id: 'userId',
-    operators: ['=', '!='],
+    operators: ['==', '!='],
     renderSelection: datum => (
       <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
         <Box
@@ -146,24 +112,13 @@ const queryables = [
       await delay(100);
       return urls;
     },
-    operators: ['=', '!=', '>', '<'],
+    operators: ['==', '!=', '=gt=', '=lt='],
     id: 'url',
     renderSelection: datum => <Box>{datum.value}</Box>,
     renderOption: datum => {
       return <Box>{datum.value}</Box>;
     },
     label: 'Url',
-  },
-  {
-    id: 'projectId',
-    getItems: async query => {
-      await delay(100);
-      return projects;
-    },
-    operators: ['in', '!in'],
-    renderSelection: datum => <Box>{datum.value}</Box>,
-    renderOption: datum => datum.value,
-    label: 'Project',
   },
   {
     id: 'date',
@@ -173,7 +128,7 @@ const queryables = [
         .slice(0, 80)
         .map((i, index) => ({ ...i, id: index.toString() }));
     },
-    operators: ['>', '<'],
+    operators: ['=gt=', '=lt='],
     renderSelection: datum => <Box>{datum.close}</Box>,
     renderOption: datum => (
       <Box>
@@ -195,5 +150,3 @@ const urls = [
   { value: 'http://gitlab.ds.local/', id: '2' },
   { value: 'http://google.com/', id: '3' },
 ];
-
-const projects = [{ value: 'Peepo', id: '12' }];

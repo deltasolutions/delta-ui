@@ -1,6 +1,6 @@
 import { jsx } from '@theme-ui/core';
 import { hash } from 'delta-jsf';
-import { forwardRef, Fragment, useContext } from 'react';
+import { forwardRef, Fragment, useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DropRendererProps } from '../../../hooks';
 import { DropMenu, DropMenuItem } from '../DropMenu';
@@ -18,6 +18,7 @@ export const TableSearchDrop = forwardRef<HTMLDivElement, TableSearchDropProps>(
       items,
       loading,
       handleRemoval,
+      renderOptionOperator,
       options,
     } = useContext(TableSearchContext);
     const render = id => {
@@ -28,12 +29,12 @@ export const TableSearchDrop = forwardRef<HTMLDivElement, TableSearchDropProps>(
       if (isItem && !loading) {
         const key = (selections.at(-1) as string).split('|')[0];
         const queryable = queryables?.find(q => q.id === key);
-        return queryable?.renderOption(
-          items[key]?.find((i: any) => i.id === id)
-        );
+        const item = items[key]?.find((i: any) => i.id === id);
+        return queryable?.renderOption(item);
       }
       if (id.includes('|')) {
-        return id.split('|')[1];
+        const operator = id.split('|').at(-1);
+        return renderOptionOperator?.(id.split('|')[1]) ?? operator;
       }
       const queryable = queryables?.find(q => q.id === id);
       if (queryable) {
