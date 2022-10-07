@@ -140,7 +140,7 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
       }
       if (id.includes('|')) {
         const operator = id.split('|').at(-1);
-        return renderOptionOperator?.(operator) ?? operator;
+        return renderSelectialOperator?.(operator) ?? operator;
       }
       const queryable = queryables?.find(q => q.id === id);
       if (queryable) {
