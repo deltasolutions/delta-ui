@@ -97,6 +97,11 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
       },
       [selections, propsOnChange]
     );
+    const handleRemovalAll = useCallback(() => {
+      setBackspacePressed(false);
+      setSelections([]);
+      setOptions([]);
+    }, [propsOnChange]);
     const dropRef = useRef<HTMLDivElement>(null);
     const closeDropRef = useRef<undefined | (() => void)>();
     const [handleOpen, anchorRef] = useDrop<HTMLLabelElement>(
@@ -274,7 +279,7 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
         }
 
         if (ev.metaKey && ev.key === 'Backspace') {
-          setSelections([]);
+          handleRemovalAll();
           return;
         }
         if (ev.key === 'Backspace') {
