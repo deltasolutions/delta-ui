@@ -101,6 +101,7 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
       setBackspacePressed(false);
       setSelections([]);
       setOptions([]);
+      propsOnChange?.([]);
     }, [propsOnChange]);
     const dropRef = useRef<HTMLDivElement>(null);
     const closeDropRef = useRef<undefined | (() => void)>();
