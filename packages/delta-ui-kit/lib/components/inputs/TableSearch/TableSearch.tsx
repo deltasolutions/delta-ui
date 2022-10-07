@@ -207,7 +207,7 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
             `_query:${lastId.split('|')[0]}:${debouncedQuery}`;
           const maybeItems = queryable?.getItems(query);
           if (Array.isArray(maybeItems)) {
-            const ids = maybeItems.map(i => i.id);
+            const ids = maybeItems.map((i: any) => i.id);
             setOptions([...ids, inputOption].filter(Boolean));
             setItems(prev => ({ ...prev, [queryable.id]: maybeItems }));
             return;
