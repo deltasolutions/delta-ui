@@ -1,4 +1,5 @@
 import { jsx } from '@theme-ui/core';
+
 import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react';
 import { HTMLAttributes, ReactNode, useContext, useRef } from 'react';
 import { IoSearch } from 'react-icons/io5';
@@ -6,6 +7,7 @@ import {
   useDebounce,
   useDrop,
   useImperativePortal,
+  useIsomorphicLayoutEffect,
   useUpdateEffect,
 } from '../../../hooks';
 import { FormWidgetProps } from '../../../types';
@@ -84,7 +86,7 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
     );
 
     //TODO FIX
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
       queryables?.forEach(q => {
         const maybeItems = q.getItems(query);
         if (!Array.isArray(maybeItems)) {
