@@ -1,5 +1,4 @@
 import { jsx } from '@theme-ui/core';
-
 import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react';
 import { HTMLAttributes, ReactNode, useContext, useRef } from 'react';
 import { IoSearch } from 'react-icons/io5';
@@ -86,7 +85,7 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
     );
 
     //TODO FIX
-    useIsomorphicLayoutEffect(() => {
+    useEffect(() => {
       queryables?.forEach(q => {
         const maybeItems = q.getItems(query);
         if (!Array.isArray(maybeItems)) {
@@ -97,7 +96,7 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
           setItems(prev => ({ ...prev, [q.id]: maybeItems }));
         }
       });
-    }, []);
+    }, [propsOnChange]);
     const handleRemoval = useCallback(
       (value: unknown) => {
         setBackspacePressed(false);
