@@ -1,4 +1,4 @@
-import { createContext, ReactNode } from 'react';
+import { createContext, Dispatch, ReactNode, SetStateAction } from 'react';
 import { QueryableOptions } from './TableSearch';
 
 export const TableSearchContext = createContext<TableSearchContextOptions>(
@@ -8,7 +8,9 @@ export const TableSearchContext = createContext<TableSearchContextOptions>(
 export interface TableSearchContextOptions {
   options: string[];
   selections: unknown[];
-  renderOptionOperator?: (operator: string) => ReactNode
+  setItems: Dispatch<SetStateAction<{ [key: string]: unknown[] }>>;
+  renderOptionOperator?: (operator: string) => ReactNode;
+  renderSelectialOperator?: (operator: string) => ReactNode;
   queryables?: QueryableOptions[];
   loading: boolean;
   handleRemoval: (v: unknown) => void;

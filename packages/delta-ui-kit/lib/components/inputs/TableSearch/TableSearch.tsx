@@ -136,29 +136,6 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
       [handleOpen]
     );
 
-    const renderSelection = (id, index, arr) => {
-      const maybeInput = id?.slice(0, 6) === '_query';
-      if (maybeInput) {
-        return id.split(':').at(-1);
-      }
-      if (id.includes('|')) {
-        const operator = id.split('|').at(-1);
-        return renderSelectialOperator?.(operator) ?? operator;
-      }
-      const queryable = queryables?.find(q => q.id === id);
-      if (queryable) {
-        return queryable.label;
-      }
-      const itemQueryableId = arr[index - 1].split('|')[0];
-      if (itemQueryableId) {
-        const queryable = queryables?.find(q => q.id === itemQueryableId);
-        const datum = items[itemQueryableId]?.find((i: any) => i.id === id);
-        if (datum) {
-          return queryable?.renderSelection(datum);
-        }
-        return '...';
-      }
-    };
     const contextValue = useMemo<TableSearchContextOptions>(
       () => ({
         options,
@@ -168,16 +145,20 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
         handleAddition,
         loading,
         renderOptionOperator,
+        renderSelectialOperator,
         items,
+        setItems,
       }),
       [
         options,
         renderOptionOperator,
         selections,
+        renderSelectialOperator,
         handleRemoval,
         handleAddition,
         queryables,
         items,
+        setItems,
         loading,
       ]
     );
@@ -358,9 +339,7 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
                 id={id}
                 index={index}
                 removing={backspacePressed && index === selections.length - 1}
-              >
-                {renderSelection(id, index, arr)}
-              </TableSearchSelection>
+              />
             );
           })}
           <Box
