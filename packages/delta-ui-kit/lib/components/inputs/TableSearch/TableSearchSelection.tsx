@@ -28,7 +28,7 @@ export const TableSearchSelection = ({ id, index, arr, removing, ...rest }) => {
       return;
     }
     const itemQueryableId = arr[index - 1].split('|')[0];
-    if (itemQueryableId) {
+    {
       const queryable = queryables?.find(q => q.id === itemQueryableId);
       const datum = items[itemQueryableId]?.find((i: any) => i.id === id);
       if (datum) {
@@ -41,24 +41,24 @@ export const TableSearchSelection = ({ id, index, arr, removing, ...rest }) => {
           setValue(queryable?.renderSelection(datum));
           return;
         } else {
-          if (!loading) {
+          if (loading) {
+            setValue('...');
             setLoading(true);
-            maybeItems
-              ?.then(items => {
-                const datum = items.find((i: any) => i.id === id);
-                if (datum) {
-                  setValue(queryable?.renderSelection(datum));
-                }
-                setItems(prev => ({ ...prev, [queryable!.id]: items }));
-              })
-              .finally(() => {
-                setLoading(false);
-              });
             return;
           }
+          maybeItems
+            ?.then(items => {
+              const datum = items.find((i: any) => i.id === id);
+              if (datum) {
+                setValue(queryable?.renderSelection(datum));
+              }
+              setItems(prev => ({ ...prev, [queryable!.id]: items }));
+            })
+            .finally(() => {
+              setLoading(false);
+            });
+          return;
         }
-        setValue('...');
-        return;
       }
     }
   }, [id]);

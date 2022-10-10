@@ -333,13 +333,14 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
 
           {selections.map((id, index, arr) => {
             return (
-              <TableSearchSelection
-                key={id}
-                arr={arr}
-                id={id}
-                index={index}
-                removing={backspacePressed && index === selections.length - 1}
-              />
+              <Box key={id}>
+                <TableSearchSelection
+                  arr={arr}
+                  id={id}
+                  index={index}
+                  removing={backspacePressed && index === selections.length - 1}
+                />
+              </Box>
             );
           })}
           <Box
