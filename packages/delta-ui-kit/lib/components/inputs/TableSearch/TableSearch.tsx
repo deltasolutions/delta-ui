@@ -353,13 +353,13 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
           {selections.map((id, index, arr) => {
             return (
               <TableSearchSelection
-                key={`${selectialLoading}+${index}`}
+                key={id}
                 arr={arr}
                 id={id}
                 index={index}
                 removing={backspacePressed && index === selections.length - 1}
               >
-                {selectialLoading ? '...' : renderSelection(id, index, arr)}
+                {renderSelection(id, index, arr)}
               </TableSearchSelection>
             );
           })}
