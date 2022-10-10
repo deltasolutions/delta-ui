@@ -60,7 +60,6 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
     ref
   ) => {
     const inputRef = useRef<HTMLInputElement>(null);
-    const [selectialLoading, setSelectialLoading] = useState(true);
     const [loading, setLoading] = useState(false);
     const { floatingPortal } = useContext(SystemContext);
     const [items, setItems] = useState<{ [key: string]: unknown[] }>({});
@@ -85,29 +84,6 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
       [selections, propsOnChange]
     );
 
-    // TODO FIX
-    useEffect(() => {
-      let size = queryables?.length;
-      let index = 0;
-      queryables?.forEach(q => {
-        const maybeItems = q.getItems(query);
-        if (!Array.isArray(maybeItems)) {
-          maybeItems.then(items => {
-            setItems(prev => ({ ...prev, [q.id]: items }));
-            ++index;
-            if (index === size) {
-              setSelectialLoading(false);
-            }
-          });
-        } else {
-          setItems(prev => ({ ...prev, [q.id]: maybeItems }));
-          ++index;
-          if (index === size) {
-            setSelectialLoading(false);
-          }
-        }
-      });
-    }, []);
     const handleRemoval = useCallback(
       (value: unknown) => {
         setBackspacePressed(false);
@@ -177,7 +153,10 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
       if (itemQueryableId) {
         const queryable = queryables?.find(q => q.id === itemQueryableId);
         const datum = items[itemQueryableId]?.find((i: any) => i.id === id);
-        return queryable?.renderSelection(datum);
+        if (datum) {
+          return queryable?.renderSelection(datum);
+        }
+        return '...';
       }
     };
     const contextValue = useMemo<TableSearchContextOptions>(
