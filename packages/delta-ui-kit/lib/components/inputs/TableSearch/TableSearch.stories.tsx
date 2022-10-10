@@ -12,7 +12,7 @@ export default {
 } as Meta;
 
 export const Basics = () => {
-  const [value, setValue] = useState<string[]>([]);
+  const [value, setValue] = useState<string[]>(defaultValue);
 
   return (
     <Box sx={{ height: '600px' }}>
@@ -105,7 +105,7 @@ const queryables = [
   },
   {
     getItems: async query => {
-      await delay(2000);
+      await delay(4000);
       return urls;
     },
     operators: ['==', '!=', '=gt=', '=lt='],
@@ -117,7 +117,97 @@ const queryables = [
     label: 'Url',
   },
   {
-    id: 'date',
+    id: 'dat000e',
+    getItems: async query => {
+      await delay(100);
+      return appleStock
+        .slice(0, 80)
+        .map((i, index) => ({ ...i, id: index.toString() }));
+    },
+    operators: ['=gt=', '=lt='],
+    renderSelection: datum => <Box>{datum.close}</Box>,
+    renderOption: datum => (
+      <Box>
+        <span>{datum.close}</span>
+        <span>{datum.date}</span>
+      </Box>
+    ),
+    label: 'Date',
+  },
+  {
+    id: 'dat444555e',
+    getItems: async query => {
+      await delay(100);
+      return appleStock
+        .slice(0, 80)
+        .map((i, index) => ({ ...i, id: index.toString() }));
+    },
+    operators: ['=gt=', '=lt='],
+    renderSelection: datum => <Box>{datum.close}</Box>,
+    renderOption: datum => (
+      <Box>
+        <span>{datum.close}</span>
+        <span>{datum.date}</span>
+      </Box>
+    ),
+    label: 'Date',
+  },
+  {
+    id: 'dat1111e',
+    getItems: async query => {
+      await delay(100);
+      return appleStock
+        .slice(0, 80)
+        .map((i, index) => ({ ...i, id: index.toString() }));
+    },
+    operators: ['=gt=', '=lt='],
+    renderSelection: datum => <Box>{datum.close}</Box>,
+    renderOption: datum => (
+      <Box>
+        <span>{datum.close}</span>
+        <span>{datum.date}</span>
+      </Box>
+    ),
+    label: 'Date',
+  },
+  {
+    id: 'dat222e',
+    getItems: async query => {
+      await delay(100);
+      return appleStock
+        .slice(0, 80)
+        .map((i, index) => ({ ...i, id: index.toString() }));
+    },
+    operators: ['=gt=', '=lt='],
+    renderSelection: datum => <Box>{datum.close}</Box>,
+    renderOption: datum => (
+      <Box>
+        <span>{datum.close}</span>
+        <span>{datum.date}</span>
+      </Box>
+    ),
+    label: 'Date',
+  },
+  {
+    id: 'dat333e',
+    getItems: async query => {
+      await delay(100);
+      return appleStock
+        .slice(0, 80)
+        .map((i, index) => ({ ...i, id: index.toString() }));
+    },
+    operators: ['=gt=', '=lt='],
+    renderSelection: datum => <Box>{datum.close}</Box>,
+    renderOption: datum => (
+      <Box>
+        <span>{datum.close}</span>
+        <span>{datum.date}</span>
+      </Box>
+    ),
+    label: 'Date',
+  },
+  {
+    id: 'dat444e',
     getItems: async query => {
       await delay(100);
       return appleStock
@@ -136,7 +226,17 @@ const queryables = [
   },
 ];
 
-const defaultValue = ['userId', 'userId|=', '1', 'url', 'url|>', '3'];
+const defaultValue = [
+  'userId',
+  'userId|=',
+  '1',
+  'url',
+  'url|>',
+  '3',
+  'dat333e',
+  'dat333e|>',
+  '0',
+];
 
 const users = [
   { name: 'Alexander', id: '1', username: 'root', surname: 'Emelyanov' },

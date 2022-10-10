@@ -60,6 +60,7 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
     ref
   ) => {
     const inputRef = useRef<HTMLInputElement>(null);
+    const [selectialLoading, setSelectialLoading] = useState(true);
     const [loading, setLoading] = useState(false);
     const { floatingPortal } = useContext(SystemContext);
     const [items, setItems] = useState<{ [key: string]: unknown[] }>({});
@@ -84,19 +85,29 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
       [selections, propsOnChange]
     );
 
-    //TODO FIX
-    useEffect(() => {
-      queryables?.forEach(q => {
-        const maybeItems = q.getItems(query);
-        if (!Array.isArray(maybeItems)) {
-          maybeItems.then(items => {
-            setItems(prev => ({ ...prev, [q.id]: items }));
-          });
-        } else {
-          setItems(prev => ({ ...prev, [q.id]: maybeItems }));
-        }
-      });
-    }, [propsOnChange]);
+    // TODO FIX
+    // useEffect(() => {
+    //   let size = queryables?.length;
+    //   let index = 0;
+    //   queryables?.forEach(q => {
+    //     const maybeItems = q.getItems(query);
+    //     if (!Array.isArray(maybeItems)) {
+    //       maybeItems.then(items => {
+    //         setItems(prev => ({ ...prev, [q.id]: items }));
+    //         ++index;
+    //         if (index === size) {
+    //           setSelectialLoading(false);
+    //         }
+    //       });
+    //     } else {
+    //       setItems(prev => ({ ...prev, [q.id]: maybeItems }));
+    //       ++index;
+    //       if (index === size) {
+    //         setSelectialLoading(false);
+    //       }
+    //     }
+    //   });
+    // }, []);
     const handleRemoval = useCallback(
       (value: unknown) => {
         setBackspacePressed(false);
@@ -165,9 +176,24 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
       const itemQueryableId = arr[index - 1].split('|')[0];
       if (itemQueryableId) {
         const queryable = queryables?.find(q => q.id === itemQueryableId);
+        if (!queryable) {
+          return 'error';
+        }
         const datum = items[itemQueryableId]?.find((i: any) => i.id === id);
-        return datum ? queryable?.renderSelection(datum) : '...';
+        if (!datum) {
+          const maybeItems = queryable?.getItems('');
+          if (!Array.isArray(maybeItems)) {
+            maybeItems?.then(items => {
+              setItems(prev => ({ ...prev, [queryable.id]: items }));
+            });
+            return '...';
+          } else {
+            return queryable.renderSelection(maybeItems.find(i => i.id === id));
+          }
+        }
+        return queryable.renderSelection(datum);
       }
+      return 'error';
     };
     const contextValue = useMemo<TableSearchContextOptions>(
       () => ({
@@ -359,11 +385,10 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
               }}
             />
           </Box>
-
           {selections.map((id, index, arr) => {
             return (
               <TableSearchSelection
-                key={hash(id)}
+                key={id + Object.keys(items).length}
                 arr={arr}
                 id={id}
                 index={index}
