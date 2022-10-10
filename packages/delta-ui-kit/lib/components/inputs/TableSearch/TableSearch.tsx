@@ -188,7 +188,9 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
             });
             return '...';
           } else {
-            return queryable.renderSelection(maybeItems.find(i => i.id === id));
+            return queryable.renderSelection(
+              maybeItems.find((i: any) => i.id === id)
+            );
           }
         }
         return queryable.renderSelection(datum);
