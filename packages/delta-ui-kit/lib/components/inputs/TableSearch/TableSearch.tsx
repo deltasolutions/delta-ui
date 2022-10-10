@@ -29,7 +29,6 @@ export interface TableSearchProps
   value?: string[];
   renderSelectialOperator?: (operator: string) => ReactNode;
   renderOptionOperator?: (operator: string) => ReactNode;
-  initialItems?: { [key: string]: unknown[] };
   queryables?: QueryableOptions[];
   onChange?: (v: string[]) => void;
 }
@@ -49,7 +48,6 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
       placeholder,
       value: propsValue,
       queryables,
-      initialItems: propsInitialItems,
       disabled,
       renderSelectialOperator,
       renderOptionOperator,
@@ -63,9 +61,7 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
     const inputRef = useRef<HTMLInputElement>(null);
     const [loading, setLoading] = useState(false);
     const { floatingPortal } = useContext(SystemContext);
-    const [items, setItems] = useState<{ [key: string]: unknown[] }>(
-      propsInitialItems ?? {}
-    );
+    const [items, setItems] = useState<{ [key: string]: unknown[] }>({});
     const portal = useImperativePortal(floatingPortal);
     const [query, setQuery] = useState('');
     const debouncedQuery = useDebounce(query, 100);
@@ -87,6 +83,19 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
       [selections, propsOnChange]
     );
 
+    //TODO FIX
+    useEffect(() => {
+      queryables?.forEach(q => {
+        const maybeItems = q.getItems(query);
+        if (!Array.isArray(maybeItems)) {
+          maybeItems.then(items => {
+            setItems(prev => ({ ...prev, [q.id]: items }));
+          });
+        } else {
+          setItems(prev => ({ ...prev, [q.id]: maybeItems }));
+        }
+      });
+    }, []);
     const handleRemoval = useCallback(
       (value: unknown) => {
         setBackspacePressed(false);
@@ -155,9 +164,8 @@ export const TableSearch = forwardRef<HTMLInputElement, TableSearchProps>(
       const itemQueryableId = arr[index - 1].split('|')[0];
       if (itemQueryableId) {
         const queryable = queryables?.find(q => q.id === itemQueryableId);
-        return queryable?.renderSelection(
-          items[itemQueryableId].find((i: any) => i.id === id)
-        );
+        const datum = items[itemQueryableId]?.find((i: any) => i.id === id);
+        return datum ? queryable?.renderSelection(datum) : '...';
       }
     };
     const contextValue = useMemo<TableSearchContextOptions>(

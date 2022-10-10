@@ -18,10 +18,6 @@ export const Basics = () => {
     <Box sx={{ height: '600px' }}>
       <Box>
         <TableSearch
-          initialItems={{
-            userId: users,
-            url: urls,
-          }}
           queryables={queryables}
           renderOptionOperator={operator => operators[operator]}
           renderSelectialOperator={operator => operators[operator]}
@@ -82,7 +78,7 @@ const queryables = [
             backgroundColor: 'yellow',
           }}
         />
-        <span>{datum.username}</span>
+        <span>{datum?.username}</span>
       </Box>
     ),
     renderOption: datum => {
@@ -98,7 +94,7 @@ const queryables = [
           />
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <Box sx={{ display: 'flex' }}>
-              <Heading level={6}>{datum.name + ' ' + datum.surname}</Heading>
+              <Heading level={6}>{datum?.name + ' ' + datum.surname}</Heading>
             </Box>
             <span sx={{ fontSize: 1, opacity: 0.7 }}>@{datum.username}</span>
           </Box>
@@ -109,7 +105,7 @@ const queryables = [
   },
   {
     getItems: async query => {
-      await delay(100);
+      await delay(2000);
       return urls;
     },
     operators: ['==', '!=', '=gt=', '=lt='],
