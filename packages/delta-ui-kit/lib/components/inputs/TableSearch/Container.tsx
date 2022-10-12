@@ -6,10 +6,10 @@ import { TableSearchContext } from './contexts';
 export const Container = props => {
   const { disabled } = useContext(TableSearchContext);
   return (
-    <Box sx={{ minWidth: 0, flex: 1, height: '2em' }}>
+    <Box sx={{ minWidth: 0, flex: 1 }}>
       <Box
         sx={{
-          pl: 2,
+          pl: 1,
           whiteSpace: 'nowrap',
           overflowX: 'auto',
           backgroundColor: 'accentContext',
@@ -24,11 +24,13 @@ export const Container = props => {
       >
         <ul
           sx={{
+            minHeight: '1.6em',
             display: 'flex',
+            alignItems: 'center',
             flex: 1,
             width: '1px',
             listStyle: 'none',
-            margin: 2,
+            margin: '6px',
             padding: 0,
           }}
           {...props}

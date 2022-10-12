@@ -31,7 +31,7 @@ export const Basics = () => {
             label: 'Tag',
             renderDrop: renderArrayDrop('tags'),
             renderSelection: datum => (
-              <Box sx={{ color: 'red' }}> {datum.value}</Box>
+              <Box sx={{ color: 'red' }}> {datum.value} </Box>
             ),
           },
           {

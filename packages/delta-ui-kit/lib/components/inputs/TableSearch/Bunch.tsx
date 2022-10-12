@@ -85,11 +85,12 @@ export const Bunch = ({ bunch, index: bunchIndex }: BunchProps) => {
                   autoFocus={true}
                   bunch={bunch}
                   editingItem={item}
+                  sx={{ marginLeft: 1 }}
                   type={propose?.type}
                   value={bunch[item]}
                   onBlur={ev => {
                     if (item === 'value' && ev.target.selectionStart !== 0) {
-                      setCurrentEditingIndex(null);
+                      setCurrentEditingIndex(undefined);
                     }
                   }}
                   onChange={v => {
@@ -105,35 +106,21 @@ export const Bunch = ({ bunch, index: bunchIndex }: BunchProps) => {
               );
             }
             if (item === 'id') {
-              return (
-                <span
-                  key={item}
-                  id={item}
-                  sx={{
-                    backgroundColor: lighten(0.03, colors.accentContext),
-                    px: '6px',
-                    py: '2px',
-                  }}
-                >
-                  {propose?.label}
-                </span>
-              );
+              return <BunchItem key={item}>{propose?.label}</BunchItem>;
             }
             if (item === 'operator') {
               return (
-                <span
-                  key={item}
-                  sx={{
-                    px: '6px',
-                  }}
-                >
+                <BunchItem key={item}>
                   {operators[bunch.operator ?? '']}
-                </span>
+                </BunchItem>
               );
             }
             if (item === 'value') {
               return (
-                <Box key={item} sx={{ display: 'flex', alignItems: 'center' }}>
+                <BunchItem
+                  key={item}
+                  sx={{ display: 'flex', alignItems: 'center' }}
+                >
                   <Box>
                     {propose?.renderSelection({
                       value: bunch.value,
@@ -166,12 +153,29 @@ export const Bunch = ({ bunch, index: bunchIndex }: BunchProps) => {
                       }}
                     />
                   </Box>
-                </Box>
+                </BunchItem>
               );
             }
             return null;
           })}
       </Box>
     </li>
+  );
+};
+
+const BunchItem = props => {
+  const { colors } = useDeltaTheme();
+  return (
+    <Box
+      sx={{
+        borderRadius: 0,
+        px: 1,
+        py: '2px',
+        height: '1.6em',
+        overflow: 'hidden',
+        backgroundColor: lighten(0.03, colors.accentContext),
+      }}
+      {...props}
+    />
   );
 };
