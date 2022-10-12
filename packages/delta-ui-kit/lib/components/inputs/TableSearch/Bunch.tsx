@@ -19,6 +19,7 @@ export const Bunch = ({ bunch, index: bunchIndex }: BunchProps) => {
     currentEditingIndex,
     setCurrentEditingIndex,
     onBunchRemove,
+    operators,
     setValue: setBunches,
   } = useContext(TableSearchContext);
   const { colors } = useDeltaTheme();
@@ -114,7 +115,7 @@ export const Bunch = ({ bunch, index: bunchIndex }: BunchProps) => {
                     py: '2px',
                   }}
                 >
-                  {bunch.id}
+                  {propose?.label}
                 </span>
               );
             }
@@ -126,7 +127,7 @@ export const Bunch = ({ bunch, index: bunchIndex }: BunchProps) => {
                     px: '6px',
                   }}
                 >
-                  {bunch.operator}
+                  {operators[bunch.operator ?? '']}
                 </span>
               );
             }

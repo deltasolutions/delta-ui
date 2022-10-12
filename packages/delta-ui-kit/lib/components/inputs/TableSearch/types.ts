@@ -2,7 +2,6 @@ import { ReactElement, ReactNode, RefObject } from 'react';
 
 export interface Propose {
   id: ProposeKey;
-  operators: ProposeOperator[];
   label: string;
   type?: 'date' | 'time' | 'number' | 'string';
   renderSelection: (options: RenderSelectionOptions) => ReactNode;

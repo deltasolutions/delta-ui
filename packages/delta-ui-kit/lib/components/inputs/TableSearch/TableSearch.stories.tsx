@@ -24,6 +24,7 @@ export const Basics = () => {
   return (
     <Box>
       <TableSearch
+        operators={{ '==': '=', '!=': '!=' }}
         proposes={[
           {
             id: 'tags',
@@ -32,14 +33,12 @@ export const Basics = () => {
             renderSelection: datum => (
               <Box sx={{ color: 'red' }}> {datum.value}</Box>
             ),
-            operators: ['==', '!='],
           },
           {
             id: 'name',
             label: 'Name',
             renderDrop: renderArrayDrop('userId'),
             renderSelection: () => null,
-            operators: ['==', '!='],
           },
         ]}
         value={value}

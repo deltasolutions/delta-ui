@@ -41,7 +41,7 @@ export const SearchInput = forwardRef(
   ) => {
     const { floatingPortal } = useContext(SystemContext);
     const portal = useImperativePortal(floatingPortal);
-    const { disabled, proposes } = useContext(TableSearchContext);
+    const { disabled, proposes, operators } = useContext(TableSearchContext);
     const closeDropRef = useRef<undefined | (() => void)>();
     const inputRef = useRef<HTMLInputElement>(null);
     const requestRef = useRef<any>();
@@ -99,10 +99,11 @@ export const SearchInput = forwardRef(
           return null;
         }
         if (editingItem === 'operator') {
-          const operators = propose.operators.filter(operator =>
-            operator
-              .toLocaleLowerCase()
-              .includes(value?.toLocaleLowerCase() ?? '')
+          const filteredOperators = Object.entries(operators).filter(
+            ([_, shownValue]) =>
+              shownValue
+                .toLocaleLowerCase()
+                .includes(value?.toLocaleLowerCase() ?? '')
           );
 
           return (
@@ -114,9 +115,9 @@ export const SearchInput = forwardRef(
                 onItemClick(v);
               }}
             >
-              {operators.map(operator => (
-                <TableSearchDropMenuItem key={operator} value={operator}>
-                  {operator}
+              {filteredOperators.map(([value, shownValue]) => (
+                <TableSearchDropMenuItem key={value} value={value}>
+                  {shownValue}
                 </TableSearchDropMenuItem>
               ))}
             </TableSearchDropMenu>
@@ -135,7 +136,7 @@ export const SearchInput = forwardRef(
         }
         return null;
       },
-      [proposes, bunch, value, editingItem, dropRef]
+      [proposes, bunch, value, editingItem, dropRef, operators]
     );
 
     //TODO remove raf

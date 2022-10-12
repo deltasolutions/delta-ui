@@ -17,12 +17,14 @@ export interface TableSearchProps
   onChange?: (value: BunchData[]) => void;
   value?: BunchData[];
   proposes: Propose[];
+  operators: { [key: string]: string };
 }
 
 export const TableSearch = ({
   onChange,
   proposes,
   disabled,
+  operators,
   value: propsValue = [],
 }: TableSearchProps) => {
   const [value, setValue] = useState<BunchData[]>(propsValue);
@@ -63,6 +65,7 @@ export const TableSearch = ({
         value,
         currentEditingIndex,
         setCurrentEditingIndex,
+        operators,
         onBunchRemove,
         setValue,
       }}

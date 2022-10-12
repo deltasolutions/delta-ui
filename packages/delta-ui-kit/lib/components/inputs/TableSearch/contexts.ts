@@ -16,6 +16,7 @@ export const TableSearchContext = createContext<TableSearchContextOptions>(
 export interface TableSearchContextOptions {
   proposes: Propose[];
   value: BunchData[];
+  operators: { [key: string]: string };
   disabled?: boolean;
   setValue: Dispatch<SetStateAction<BunchData[] | []>>;
   currentEditingIndex?: number | null;
