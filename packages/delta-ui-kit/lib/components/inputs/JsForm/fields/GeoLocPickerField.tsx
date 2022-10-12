@@ -78,7 +78,7 @@ const Libless = ({
       })
     );
     return null;
-  }, []);
+  }, [onValue]);
   return (
     <Box sx={{ position: 'relative', height }}>
       <MapContainer
