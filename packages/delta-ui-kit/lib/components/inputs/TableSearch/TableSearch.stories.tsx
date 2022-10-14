@@ -38,7 +38,14 @@ export const Basics = () => {
             id: 'name',
             label: 'Name',
             renderDrop: renderArrayDrop('userId'),
-            renderSelection: () => null,
+            renderSelection: () => 'name',
+          },
+          {
+            id: 'date',
+            type: 'date',
+            label: 'Date',
+            renderDrop: renderArrayDrop('date'),
+            renderSelection: () => 'dd',
           },
         ]}
         value={value}
@@ -97,6 +104,6 @@ const items = {
     'a.petuhov': 'Petuhov',
   },
   date: {
-    '2018-07-22': { date: '2018-07-22' },
+    '2018-07-22': '2018-07-22',
   },
 };

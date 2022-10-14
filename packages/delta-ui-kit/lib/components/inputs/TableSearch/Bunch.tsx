@@ -86,7 +86,7 @@ export const Bunch = ({ bunch, index: bunchIndex }: BunchProps) => {
                   bunch={bunch}
                   editingItem={item}
                   sx={{ marginLeft: 1 }}
-                  type={propose?.type}
+                  type={item === 'value' ? propose?.type : 'text'}
                   value={bunch[item]}
                   onBlur={ev => {
                     if (item === 'value' && ev.target.selectionStart !== 0) {

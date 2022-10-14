@@ -1,9 +1,9 @@
 import { jsx } from '@theme-ui/core';
-import { useContext, useState } from 'react';
+import { memo, useContext, useEffect, useMemo, useState } from 'react';
 import { TableSearchContext } from './contexts';
 import { SearchInput } from './SearchInput';
 
-export const StaticSearch = () => {
+export const StaticSearch = memo(() => {
   const [inputValue, setInputValue] = useState('');
   const { setCurrentEditingIndex, currentEditingIndex, setValue, value } =
     useContext(TableSearchContext);
@@ -15,6 +15,7 @@ export const StaticSearch = () => {
         value={inputValue}
         onChange={setInputValue}
         onItemClick={v => {
+          setInputValue('');
           setValue(prev => {
             setCurrentEditingIndex(prev.length);
             return [...prev, { id: v, operator: '' }];
@@ -34,4 +35,4 @@ export const StaticSearch = () => {
       />
     </li>
   );
-};
+});
