@@ -10,7 +10,7 @@ export const StaticSearch = memo(() => {
   return (
     <li sx={{ flex: 1, maxWidth: 'inherit', minWidth: '200px' }}>
       <SearchInput
-        autoFocus={currentEditingIndex === undefined}
+        autoFocus={false}
         editingItem="id"
         value={inputValue}
         onChange={setInputValue}
