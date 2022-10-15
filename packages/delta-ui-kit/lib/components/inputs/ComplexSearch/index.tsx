@@ -1,2 +1,1 @@
-// ComplexSearch - attempt to make TableSearch better
-export default 0;
+export * from './ComplexSearch';

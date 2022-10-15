@@ -21,8 +21,7 @@ export const Basics = () => {
           {
             id: 'userId',
             label: 'Author',
-            operators: ['=', '!='],
-            itemId: 'username',
+            operators: ['==', '!='],
             getItems: () => [
               { id: '43924234-2342342-34234', username: 'emelyanov' },
               { id: '213123-12312-31-333333', username: 'putin' },
@@ -37,10 +36,9 @@ export const Basics = () => {
           {
             id: 'tags.name',
             label: 'Tag',
-            operators: ['=', '!='],
-            itemId: 'name',
+            operators: ['==', '!=', '=gt=', '=lt='],
             getItems: async () =>
-              await new Promise(res => setTimeout(res, 1000)).then(() => [
+              await new Promise(res => setTimeout(res, 2000)).then(() => [
                 { id: '22u8e9213-9213-210', name: 'Bug' },
                 { id: '111-12312-31-333333', name: 'Feature' },
               ]),
@@ -52,6 +50,7 @@ export const Basics = () => {
             },
           },
         ]}
+        renderOperator={operator => operators[operator]}
         value={value}
         onChange={setValue}
       />
@@ -60,7 +59,7 @@ export const Basics = () => {
         <Button
           onClick={() =>
             setValue([
-              { id: 'userId', operator: '=', value: '43924234-2342342-34234' },
+              { id: 'userId', operator: '==', value: '43924234-2342342-34234' },
               { id: 'tags.name', operator: '!=', value: '22u8e9213-9213-210' },
             ])
           }
@@ -71,4 +70,10 @@ export const Basics = () => {
       </Box>
     </Box>
   );
+};
+const operators = {
+  '==': '=',
+  '!=': '!=',
+  '=gt=': '>',
+  '=lt=': '<',
 };

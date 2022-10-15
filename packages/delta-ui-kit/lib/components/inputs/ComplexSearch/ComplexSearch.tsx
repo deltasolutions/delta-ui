@@ -32,7 +32,6 @@ import { TextInput, TextInputProps } from '../TextInput';
 export interface Propose {
   id: string;
   label: string;
-  itemId: string;
   operators: string[];
   getItems: (query) => unknown[] | Promise<unknown[]>;
   renderSelectial: (datum) => ReactNode;
@@ -52,6 +51,7 @@ export interface ComplexSearchProps
     >,
     FormWidgetProps<unknown> {
   value?: ItemType[];
+  renderOperator?: (operator: string) => ReactNode;
   proposes: Propose[];
 }
 
@@ -59,6 +59,7 @@ export const ComplexSearch = ({
   value = [],
   proposes,
   onChange,
+  renderOperator,
 }: ComplexSearchProps) => {
   const [editingIndex, setEditingIndex] = useState<number | undefined>(
     undefined
@@ -135,6 +136,7 @@ export const ComplexSearch = ({
     setEditingIndex,
     itemsValueOptions,
     editingIndex,
+    renderOperator,
   };
   const memoizedContextValue = useMemo(
     () => contextValue,
@@ -180,6 +182,7 @@ interface ComplexSearchContext {
   items;
   removeItem;
   updateItem;
+  renderOperator?;
   addItem;
 }
 const List = props => {
@@ -292,7 +295,11 @@ const AddListItem = forwardRef(() => {
         value={inputValue}
         onChange={setInputValue}
         onKeyDown={(ev: any) => {
-          if (ev.key === 'Backspace' && ev.target.selectionStart === 0) {
+          if (
+            ev.key === 'Backspace' &&
+            ev.target.selectionStart === 0 &&
+            !ev.target.value
+          ) {
             if (items.length > 0) {
               setEditingIndex(items.length - 1);
             }
@@ -313,8 +320,14 @@ interface DropContextOptions {
 }
 
 const ListItem = ({ item, index, ...props }: ListItemProps) => {
-  const { removeItem, updateItem, editingIndex, setEditingIndex, proposes } =
-    useContext(ComplexSearchContext);
+  const {
+    removeItem,
+    updateItem,
+    editingIndex,
+    renderOperator,
+    setEditingIndex,
+    proposes,
+  } = useContext(ComplexSearchContext);
   const { floatingPortal } = useContext(SystemContext);
   const editing = useMemo(() => editingIndex === index, [editingIndex, index]);
   const [inputValue, setInputValue] = useState<string | undefined>(
@@ -324,6 +337,7 @@ const ListItem = ({ item, index, ...props }: ListItemProps) => {
       ? item.operator
       : item.id
   );
+  const propose = proposes.find(pr => pr.id === item?.id);
   const dropRef = useRef<HTMLDivElement>(null);
   const portal = useImperativePortal(floatingPortal);
   const [openDrop, anchorRef] = useDrop<any>(
@@ -394,6 +408,8 @@ const ListItem = ({ item, index, ...props }: ListItemProps) => {
       });
     }
   }, [editingIndex, item]);
+  useEffect(() => {}, []);
+
   const onBlur = ev => {
     if (
       !ev.relatedTarget ||
@@ -401,7 +417,14 @@ const ListItem = ({ item, index, ...props }: ListItemProps) => {
       !dropRef.current.contains(ev.relatedTarget)
     ) {
       handleClose();
-      if (ev.target.value && item.operator) {
+      const key =
+        typeof item.value === 'string'
+          ? 'value'
+          : typeof item.operator === 'string'
+          ? 'operator'
+          : 'id';
+
+      if (ev.target.value && item.operator && key === 'id') {
         setEditingIndex(undefined);
       }
     }
@@ -413,7 +436,11 @@ const ListItem = ({ item, index, ...props }: ListItemProps) => {
     };
 
     const onKeydown = ev => {
-      if (ev.key === 'Backspace' && ev.target.selectionStart === 0) {
+      if (
+        ev.key === 'Backspace' &&
+        ev.target.selectionStart === 0 &&
+        !ev.target.value
+      ) {
         if (typeof item.value === 'string') {
           updateItem(index, 'value', undefined);
           return;
@@ -463,11 +490,21 @@ const ListItem = ({ item, index, ...props }: ListItemProps) => {
                   />
                 );
               }
-              return (
-                <ListItemToken key={key} id={key}>
-                  {keyValue}
-                </ListItemToken>
-              );
+              if (key === 'operator') {
+                return (
+                  <ListItemToken key={key}>
+                    {renderOperator ? renderOperator(keyValue) : keyValue}
+                  </ListItemToken>
+                );
+              }
+              if (key === 'id') {
+                return (
+                  <ListItemToken key={key}>
+                    {propose ? propose?.label : key}
+                  </ListItemToken>
+                );
+              }
+              return null;
             }
           })}
       </Box>
@@ -577,7 +614,17 @@ const Values = ({ propose }) => {
   }, [propose]);
 
   if (!Array.isArray(items)) {
-    return <Loader size="large" />;
+    return (
+      <Box
+        sx={{
+          p: 2,
+          py: 3,
+          pl: 4,
+        }}
+      >
+        <Loader size="small" />
+      </Box>
+    );
   }
   return (
     <DropMenu handleClose={handleClose} onItemClick={onItemClick}>
@@ -590,7 +637,7 @@ const Values = ({ propose }) => {
         .concat(
           query
             ? [
-                <DropMenuItem key={query} value={query ?? ''}>
+                <DropMenuItem key={`query-${query}`} value={query ?? ''}>
                   {t('actions.searchForThisText')}
                 </DropMenuItem>,
               ]
@@ -602,11 +649,12 @@ const Values = ({ propose }) => {
 };
 const Operators = ({ propose }) => {
   const { handleClose, onItemClick } = useContext(DropContentContext);
+  const { renderOperator } = useContext(ComplexSearchContext);
   return (
     <DropMenu handleClose={handleClose} onItemClick={onItemClick}>
       {propose.operators?.map(operator => (
         <DropMenuItem key={operator} value={operator}>
-          {operator}
+          {renderOperator ? renderOperator(operator) : operator}
         </DropMenuItem>
       ))}
     </DropMenu>
