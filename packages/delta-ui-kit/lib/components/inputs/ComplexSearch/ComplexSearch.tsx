@@ -29,7 +29,7 @@ import { Loader, Skeleton } from '../../displays';
 import { DropMenu, DropMenuItem } from '../DropMenu';
 import { TextInput, TextInputProps } from '../TextInput';
 
-export interface Propose {
+export interface ComplexSearchPropose {
   id: string;
   label: string;
   operators: string[];
@@ -52,7 +52,7 @@ export interface ComplexSearchProps
     FormWidgetProps<unknown> {
   value?: ComplexSearchItemType[];
   renderOperator?: (operator: string) => ReactNode;
-  proposes: Propose[];
+  proposes: ComplexSearchPropose[];
 }
 
 export const ComplexSearch = ({
@@ -174,7 +174,7 @@ export const ComplexSearch = ({
 const ComplexSearchContext = createContext({} as ComplexSearchContext);
 
 interface ComplexSearchContext {
-  proposes: Propose[];
+  proposes: ComplexSearchPropose[];
   editingIndex?: number;
   setEditingIndex;
   fetchItemValueOptions;
