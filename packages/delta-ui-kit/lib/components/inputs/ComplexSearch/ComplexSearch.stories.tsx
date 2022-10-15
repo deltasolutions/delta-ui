@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { compact } from '../../../../docs/decorators';
 import { Button } from '../../Button';
 import { Box } from '../../containers';
-import { ComplexSearch, ItemType } from './ComplexSearch';
+import { ComplexSearch, ComplexSearchItemType } from './ComplexSearch';
 
 export default {
   title: 'Inputs/ComplexSearch',
@@ -12,7 +12,7 @@ export default {
 } as Meta;
 
 export const Basics = () => {
-  const [value, setValue] = useState<ItemType[]>([]);
+  const [value, setValue] = useState<ComplexSearchItemType[]>([]);
 
   return (
     <Box>

@@ -38,7 +38,7 @@ export interface Propose {
   renderOption: (datum) => ReactNode;
 }
 
-export interface ItemType {
+export interface ComplexSearchItemType {
   id?: string;
   operator?: string;
   value?: string;
@@ -50,7 +50,7 @@ export interface ComplexSearchProps
       'children' | keyof FormWidgetProps
     >,
     FormWidgetProps<unknown> {
-  value?: ItemType[];
+  value?: ComplexSearchItemType[];
   renderOperator?: (operator: string) => ReactNode;
   proposes: Propose[];
 }
@@ -67,7 +67,7 @@ export const ComplexSearch = ({
   const [itemsValueOptions, setItemsValueOptions] = useState<{
     [key: string]: unknown[] | 'loading';
   }>({});
-  const [items, setItems] = useState<ItemType[]>(value);
+  const [items, setItems] = useState<ComplexSearchItemType[]>(value);
 
   const addItem = useCallback(id => {
     setItems(curr => {
@@ -204,7 +204,7 @@ const List = props => {
 };
 
 interface ListItemProps extends HTMLAttributes<HTMLLIElement> {
-  item: ItemType;
+  item: ComplexSearchItemType;
   index: number;
 }
 
