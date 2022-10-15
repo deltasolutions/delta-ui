@@ -37,11 +37,14 @@ export const Basics = () => {
             id: 'tags.name',
             label: 'Tag',
             operators: ['==', '!=', '=gt=', '=lt='],
-            getItems: async () =>
-              await new Promise(res => setTimeout(res, 2000)).then(() => [
-                { id: '22u8e9213-9213-210', name: 'Bug' },
-                { id: '111-12312-31-333333', name: 'Feature' },
-              ]),
+            getItems: async () => {
+              return await new Promise(res => setTimeout(res, 2000)).then(
+                () => [
+                  { id: '22u8e9213-9213-210', name: 'Bug' },
+                  { id: '111-12312-31-333333', name: 'Feature' },
+                ]
+              );
+            },
             renderOption: datum => {
               return <span>{datum.name}</span>;
             },

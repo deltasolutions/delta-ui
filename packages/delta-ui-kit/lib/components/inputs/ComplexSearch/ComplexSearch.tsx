@@ -123,7 +123,7 @@ export const ComplexSearch = ({
           });
       }
     },
-    [proposes]
+    [proposes, itemsValueOptions]
   );
 
   const contextValue = {
