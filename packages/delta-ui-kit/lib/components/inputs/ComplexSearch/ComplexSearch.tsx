@@ -276,6 +276,7 @@ const AddListItem = forwardRef(() => {
   };
 
   const onFocus = useCallback(() => {
+    setEditingIndex(-1);
     handleOpen();
   }, [handleOpen]);
   useEffect(() => {
@@ -408,7 +409,6 @@ const ListItem = ({ item, index, ...props }: ListItemProps) => {
       });
     }
   }, [editingIndex, item]);
-  useEffect(() => {}, []);
 
   const onBlur = ev => {
     if (
