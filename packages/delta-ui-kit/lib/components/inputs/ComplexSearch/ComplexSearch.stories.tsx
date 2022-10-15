@@ -1,9 +1,10 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { compact } from '../../../../docs/decorators';
+import { Button } from '../../Button';
 import { Box } from '../../containers';
-import { ComplexSearch } from './ComplexSearch';
+import { ComplexSearch, ItemType } from './ComplexSearch';
 
 export default {
   title: 'Inputs/ComplexSearch',
@@ -11,32 +12,63 @@ export default {
 } as Meta;
 
 export const Basics = () => {
-  const [value, setValue] = useState([]);
+  const [value, setValue] = useState<ItemType[]>([]);
+
   return (
     <Box>
       <ComplexSearch
         proposes={[
           {
-            id: 'User',
+            id: 'userId',
+            label: 'Author',
             operators: ['=', '!='],
-            getItems: () => [],
+            itemId: 'username',
+            getItems: () => [
+              { id: '43924234-2342342-34234', username: 'emelyanov' },
+              { id: '213123-12312-31-333333', username: 'putin' },
+            ],
             renderOption: datum => {
-              return 'User-DROP';
+              return <span>@{datum.username}</span>;
             },
             renderSelectial: datum => {
-              return 'User-SELECTIAL';
+              return <span>@{datum.username}</span>;
+            },
+          },
+          {
+            id: 'tags.name',
+            label: 'Tag',
+            operators: ['=', '!='],
+            itemId: 'name',
+            getItems: async () =>
+              await new Promise(res => setTimeout(res, 1000)).then(() => [
+                { id: '22u8e9213-9213-210', name: 'Bug' },
+                { id: '111-12312-31-333333', name: 'Feature' },
+              ]),
+            renderOption: datum => {
+              return <span>{datum.name}</span>;
+            },
+            renderSelectial: datum => {
+              return <span>{datum.name}</span>;
             },
           },
         ]}
-        value={[
-          { id: 'User', value: 'aaroot', operator: '=' },
-          { id: 'User', value: 'root2', operator: '=' },
-          { id: 'User', value: 'root3', operator: '=' },
-          { id: 'User', value: 'root4', operator: '=' },
-        ]}
+        value={value}
+        onChange={setValue}
       />
+
+      <Box sx={{ height: '600px' }}>
+        <Button
+          onClick={() =>
+            setValue([
+              { id: 'userId', operator: '=', value: '43924234-2342342-34234' },
+              { id: 'tags.name', operator: '!=', value: '22u8e9213-9213-210' },
+            ])
+          }
+        >
+          change state
+        </Button>
+        <pre>{JSON.stringify(value, null, 4)}</pre>
+      </Box>
     </Box>
   );
 };
-
-const proposes = [];

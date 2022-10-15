@@ -68,9 +68,11 @@ export const DropMenu = forwardRef<HTMLDivElement, DropMenuProps>(
             handleClose();
             break;
           case 'ArrowUp':
+            ev.preventDefault();
             setActiveIndex(v => (v === 0 ? v : v - 1));
             break;
           case 'ArrowDown':
+            ev.preventDefault();
             setActiveIndex(v => (v === childrenArray.length - 1 ? v : v + 1));
             break;
         }
