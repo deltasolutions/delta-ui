@@ -35,7 +35,7 @@ export const AutocompleteField = (props: FieldProps) => {
     if (Array.isArray(oneOf)) {
       return (query: string) =>
         oneOf
-          .map(v => v.const)
+          .map(v => v.title)
           .filter(
             v =>
               isAlike(query, getTitleFromOneOf(oneOf, v)) || isAlike(query, v)

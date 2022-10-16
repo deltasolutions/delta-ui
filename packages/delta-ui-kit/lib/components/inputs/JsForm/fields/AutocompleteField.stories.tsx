@@ -9,15 +9,15 @@ export default {
 
 const oneOf = [
   {
-    title: 'A',
+    title: 'Value: a',
     const: 'aaa',
   },
   {
-    title: 'B',
+    title: 'Value: b',
     const: 'bbb',
   },
   {
-    title: 'C',
+    title: 'Value: c',
     const: 'ccc',
   },
 ];

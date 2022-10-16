@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import { compact } from '../../../../docs/decorators';
 import { Button } from '../../Button';
 import { Box } from '../../containers';
-import { ComplexSearch, ComplexSearchItemType } from './ComplexSearch';
+import { ComplexSearch } from './ComplexSearch';
+import { ComplexSearchItemType } from './types';
 
 export default {
   title: 'Inputs/ComplexSearch',
