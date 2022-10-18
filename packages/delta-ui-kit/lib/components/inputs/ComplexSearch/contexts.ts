@@ -1,20 +1,20 @@
 import { createContext, Dispatch, ReactNode, SetStateAction } from 'react';
-import { ComplexSearchItemType, ComplexSearchPropose } from './types';
+import { ComplexSearchProps } from '../..';
+import { ComplexSearchSegment } from './types';
 
 export const ComplexSearchContext = createContext(
   {} as ComplexSearchContextOptions
 );
 
 export interface ComplexSearchContextOptions {
-  proposes: ComplexSearchPropose[];
+  proposals: ComplexSearchProps['proposals'];
   editingIndex?: number;
   setEditingIndex: Dispatch<SetStateAction<number | undefined>>;
   fetchItemValueOptions: (key: string, query: string) => void;
   itemsValueOptions: { [key: string]: unknown[] | 'loading' };
-  items: ComplexSearchItemType[];
+  items: ComplexSearchSegment[];
   removeItem: (index: number) => void;
   updateItem: (index: number, key: string, value?: string) => void;
-  renderOperator?: (operator: string) => ReactNode;
   addItem: (id: any) => void;
 }
 

@@ -5,7 +5,7 @@ import { compact } from '../../../../docs/decorators';
 import { Button } from '../../Button';
 import { Box } from '../../containers';
 import { ComplexSearch } from './ComplexSearch';
-import { ComplexSearchItemType } from './types';
+import { ComplexSearchSegment } from './types';
 
 export default {
   title: 'Inputs/ComplexSearch',
@@ -13,32 +13,41 @@ export default {
 } as Meta;
 
 export const Basics = () => {
-  const [value, setValue] = useState<ComplexSearchItemType[]>([]);
+  const [value, setValue] = useState<ComplexSearchSegment[]>([]);
 
   return (
     <Box>
       <ComplexSearch
-        proposes={[
+        proposals={[
           {
-            id: 'userId',
+            key: 'userId',
             label: 'Author',
-            operators: ['==', '!='],
-            getItems: () => [
+            getSelectionQuery: datum => datum['username'],
+            getOptionValue: datum => datum.id,
+            operators: [
+              { key: '=re=', label: '=' },
+              { key: '!=', label: '!=' },
+            ],
+            getOptions: () => [
               { id: '43924234-2342342-34234', username: 'emelyanov' },
               { id: '213123-12312-31-333333', username: 'putin' },
             ],
             renderOption: datum => {
               return <span>@{datum.username}</span>;
             },
-            renderSelectial: datum => {
+            renderSelection: datum => {
               return <span>@{datum.username}</span>;
             },
           },
           {
-            id: 'tags.name',
+            key: 'tags.name',
             label: 'Tag',
-            operators: ['==', '!=', '=gt=', '=lt='],
-            getItems: async () => {
+            getOptionValue: datum => datum.id,
+            operators: [
+              { key: '=re=', label: '=' },
+              { key: '!=', label: '!=' },
+            ],
+            getOptions: async () => {
               return await new Promise(res => setTimeout(res, 2000)).then(
                 () => [
                   { id: '22u8e9213-9213-210', name: 'Bug' },
@@ -46,15 +55,23 @@ export const Basics = () => {
                 ]
               );
             },
+            getSelectionQuery: datum => datum.name,
             renderOption: datum => {
               return <span>{datum.name}</span>;
             },
-            renderSelectial: datum => {
+            renderSelection: datum => {
               return <span>{datum.name}</span>;
             },
           },
+          {
+            key: 'name',
+            label: 'Name',
+            operators: [
+              { key: '=re=', label: '=' },
+              { key: '!=', label: '!=' },
+            ],
+          },
         ]}
-        renderOperator={operator => operators[operator]}
         value={value}
         onChange={setValue}
       />
@@ -63,8 +80,12 @@ export const Basics = () => {
         <Button
           onClick={() =>
             setValue([
-              { id: 'userId', operator: '==', value: '43924234-2342342-34234' },
-              { id: 'tags.name', operator: '!=', value: '22u8e9213-9213-210' },
+              {
+                key: 'userId',
+                operator: '=re=',
+                value: '43924234-2342342-34234',
+              },
+              { key: 'tags.name', operator: '!=', value: '22u8e9213-9213-210' },
             ])
           }
         >

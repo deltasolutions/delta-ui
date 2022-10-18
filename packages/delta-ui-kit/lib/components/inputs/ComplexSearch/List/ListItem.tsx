@@ -15,12 +15,12 @@ import { Box, SystemContext } from '../../../containers';
 import { ComplexSearchContext, DropContext } from '../contexts';
 import { DropContent } from '../Drop';
 import { Input } from '../Input';
-import { ComplexSearchItemType } from '../types';
+import { ComplexSearchSegment } from '../types';
 import { ListItemToken } from './ListItemToken';
 import { ListItemTokenValue } from './ListItemTokenValue';
 
 export interface ListItemProps extends HTMLAttributes<HTMLLIElement> {
-  item: ComplexSearchItemType;
+  item: ComplexSearchSegment;
   index: number;
 }
 
@@ -29,9 +29,8 @@ export const ListItem = ({ item, index, ...props }: ListItemProps) => {
     removeItem,
     updateItem,
     editingIndex,
-    renderOperator,
     setEditingIndex,
-    proposes,
+    proposals: proposes,
   } = useContext(ComplexSearchContext);
   const { floatingPortal } = useContext(SystemContext);
   const editing = useMemo(() => editingIndex === index, [editingIndex, index]);
@@ -40,9 +39,9 @@ export const ListItem = ({ item, index, ...props }: ListItemProps) => {
       ? item.value
       : typeof item.operator === 'string'
       ? item.operator
-      : item.id
+      : item.key
   );
-  const propose = proposes.find(pr => pr.id === item?.id);
+  const propose = proposes.find(pr => pr.key === item?.key);
   const dropRef = useRef<HTMLDivElement>(null);
   const portal = useImperativePortal(floatingPortal);
   const [openDrop, anchorRef] = useDrop<any>(
@@ -86,9 +85,9 @@ export const ListItem = ({ item, index, ...props }: ListItemProps) => {
           ? 'value'
           : typeof item.operator === 'string'
           ? 'operator'
-          : 'id';
+          : 'key';
       updateItem(index, key, value);
-      if (key === 'id') {
+      if (key === 'key') {
         updateItem(index, 'operator', '');
       }
       if (key === 'operator') {
@@ -126,9 +125,9 @@ export const ListItem = ({ item, index, ...props }: ListItemProps) => {
           ? 'value'
           : typeof item.operator === 'string'
           ? 'operator'
-          : 'id';
+          : 'key';
 
-      if (ev.target.value && item.operator && key === 'id') {
+      if (ev.target.value && item.operator && key === 'key') {
         setEditingIndex(undefined);
       }
     }
@@ -180,32 +179,33 @@ export const ListItem = ({ item, index, ...props }: ListItemProps) => {
         onClick={onItemClick}
       >
         {Object.entries(item)
-          .filter(([_, keyValue]) => typeof keyValue === 'string')
-          .map(([key, keyValue], itemIndex, arr) => {
+          .filter(([_, tokenValue]) => typeof tokenValue === 'string')
+          .map(([token, tokenValue], itemIndex, arr) => {
             if (editingIndex === index && itemIndex === arr.length - 1) {
               return null;
             } else {
-              if (key === 'value') {
+              if (token === 'value') {
                 return (
                   <ListItemTokenValue
-                    key={keyValue}
-                    id={item['id']}
-                    value={keyValue}
+                    key={tokenValue}
+                    itemKey={item['key']}
+                    value={tokenValue}
                   />
                 );
               }
-              if (key === 'operator') {
+              if (token === 'operator') {
+                const operator = propose?.operators.find(
+                  opr => opr.key === tokenValue
+                );
                 return (
-                  <ListItemToken key={key}>
-                    {renderOperator ? renderOperator(keyValue) : keyValue}
-                  </ListItemToken>
+                  <ListItemToken key={token}>{operator?.label}</ListItemToken>
                 );
               }
-              if (key === 'id') {
+              console.log('propose', propose);
+
+              if (token === 'key') {
                 return (
-                  <ListItemToken key={key}>
-                    {propose ? propose?.label : key}
-                  </ListItemToken>
+                  <ListItemToken key={token}>{propose?.label}</ListItemToken>
                 );
               }
               return null;

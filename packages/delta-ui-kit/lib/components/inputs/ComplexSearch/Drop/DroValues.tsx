@@ -10,10 +10,10 @@ import {
   DropContentContext,
   DropContext,
 } from '../contexts';
-import { ComplexSearchPropose } from '../types';
+import { ComplexSearchProposal } from '../types';
 
 export interface DropValuesProps extends Partial<DropRendererProps> {
-  propose: ComplexSearchPropose;
+  propose: ComplexSearchProposal;
 }
 
 export const DropValues = ({ propose }: DropValuesProps) => {
@@ -22,10 +22,22 @@ export const DropValues = ({ propose }: DropValuesProps) => {
     useContext(ComplexSearchContext);
   const { handleClose, onItemClick } = useContext(DropContentContext);
   const { query } = useContext(DropContext);
-  const items = itemsValueOptions[propose.id];
+  const items = itemsValueOptions[propose.key];
   useEffect(() => {
-    fetchItemValueOptions(propose.id, '');
+    fetchItemValueOptions(propose.key, '');
   }, [propose]);
+
+  if (!propose.getOptions) {
+    return (
+      <DropMenu handleClose={handleClose} onItemClick={onItemClick}>
+        {[
+          <DropMenuItem key={`query-${query}`} value={query ?? ''}>
+            {t('actions.searchForThisText')}
+          </DropMenuItem>,
+        ]}
+      </DropMenu>
+    );
+  }
 
   if (!Array.isArray(items)) {
     return (
@@ -42,22 +54,11 @@ export const DropValues = ({ propose }: DropValuesProps) => {
   }
   return (
     <DropMenu handleClose={handleClose} onItemClick={onItemClick}>
-      {items
-        ?.map(option => (
-          <DropMenuItem key={option.id} value={option.id}>
-            {propose?.renderOption(option)}
-          </DropMenuItem>
-        ))
-        .concat(
-          query
-            ? [
-                <DropMenuItem key={`query-${query}`} value={query ?? ''}>
-                  {t('actions.searchForThisText')}
-                </DropMenuItem>,
-              ]
-            : []
-        )
-        .filter(Boolean)}
+      {items?.map(option => (
+        <DropMenuItem key={option.id} value={option.id}>
+          {propose?.renderOption?.(option)}
+        </DropMenuItem>
+      ))}
     </DropMenu>
   );
 };

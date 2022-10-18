@@ -1,16 +1,28 @@
 import { ReactNode } from 'react';
 
-export interface ComplexSearchPropose {
-  id: string;
+export interface ComplexSearchProposal {
+  key: string;
   label: string;
-  operators: string[];
-  getItems: (query) => unknown[] | Promise<unknown[]>;
-  renderSelectial: (datum) => ReactNode;
-  renderOption: (datum) => ReactNode;
+  operators: ComplexSearchOperator[];
+  getOptions?: (query) => ComplexSearchDatum[] | Promise<ComplexSearchDatum[]>;
+  getOptionValue?: (option: ComplexSearchDatum) => string;
+  getSelectionQuery?: (datum: ComplexSearchDatum) => string;
+  renderSelection?: (datum: ComplexSearchDatum) => ReactNode;
+  renderOption?: (datum: ComplexSearchDatum) => ReactNode;
 }
 
-export interface ComplexSearchItemType {
-  id?: string;
+export interface ComplexSearchOperator {
+  key: string;
+  label: string;
+}
+
+interface ComplexSearchDatum {
+  //TODO maybe add better types for datum
+  [key: PropertyKey]: any;
+}
+
+export interface ComplexSearchSegment {
+  key?: string;
   operator?: string;
   value?: string;
 }

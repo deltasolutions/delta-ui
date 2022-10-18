@@ -15,7 +15,7 @@ import { AddListItem } from './AddListItem';
 import { ComplexSearchContainer } from './ComplexSearchContainer';
 import { ComplexSearchContext } from './contexts';
 import { List, ListItem } from './List';
-import { ComplexSearchItemType, ComplexSearchPropose } from './types';
+import { ComplexSearchSegment, ComplexSearchProposal } from './types';
 
 export interface ComplexSearchProps
   extends Omit<
@@ -23,16 +23,14 @@ export interface ComplexSearchProps
       'children' | keyof FormWidgetProps
     >,
     FormWidgetProps<unknown> {
-  value?: ComplexSearchItemType[];
-  renderOperator?: (operator: string) => ReactNode;
-  proposes: ComplexSearchPropose[];
+  value?: ComplexSearchSegment[];
+  proposals: ComplexSearchProposal[];
 }
 
 export const ComplexSearch = ({
   value = [],
-  proposes,
+  proposals,
   onChange,
-  renderOperator,
 }: ComplexSearchProps) => {
   const [editingIndex, setEditingIndex] = useState<number | undefined>(
     undefined
@@ -40,11 +38,11 @@ export const ComplexSearch = ({
   const [itemsValueOptions, setItemsValueOptions] = useState<{
     [key: string]: unknown[] | 'loading';
   }>({});
-  const [items, setItems] = useState<ComplexSearchItemType[]>(value);
+  const [items, setItems] = useState<ComplexSearchSegment[]>(value);
 
-  const addItem = useCallback(id => {
+  const addItem = useCallback(key => {
     setItems(curr => {
-      return [...curr, { id, operator: '' }];
+      return [...curr, { key, operator: '' }];
     });
   }, []);
   const removeItem = useCallback((index: number) => {
@@ -76,12 +74,12 @@ export const ComplexSearch = ({
   );
   const fetchItemValueOptions = useCallback(
     (key: string, query: string) => {
-      const propose = proposes.find(i => i.id === key);
+      const propose = proposals.find(i => i['key'] === key);
       const itemsFetched = Array.isArray(itemsValueOptions[key]);
       if (itemsFetched) {
         return;
       }
-      const maybeOptions = propose?.getItems(query);
+      const maybeOptions = propose?.getOptions?.(query);
       if (Array.isArray(maybeOptions)) {
         _accumulateItemsValueOptions(key, maybeOptions);
       } else {
@@ -96,11 +94,11 @@ export const ComplexSearch = ({
           });
       }
     },
-    [proposes, itemsValueOptions]
+    [proposals, itemsValueOptions]
   );
 
   const contextValue = {
-    proposes,
+    proposals,
     addItem,
     removeItem,
     items,
@@ -109,7 +107,6 @@ export const ComplexSearch = ({
     setEditingIndex,
     itemsValueOptions,
     editingIndex,
-    renderOperator,
   };
   const memoizedContextValue = useMemo(
     () => contextValue,

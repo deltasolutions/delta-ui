@@ -7,30 +7,44 @@ import { ListItemToken } from './ListItemToken';
 
 export interface ListItemTokenValueProps extends BoxProps {
   value: string;
+  itemKey?: string;
 }
-export const ListItemTokenValue = ({ id, value }: ListItemTokenValueProps) => {
-  const { proposes, itemsValueOptions, fetchItemValueOptions } =
-    useContext(ComplexSearchContext);
+export const ListItemTokenValue = ({
+  itemKey,
+  value,
+}: ListItemTokenValueProps) => {
+  const {
+    proposals: proposes,
+    itemsValueOptions,
+    fetchItemValueOptions,
+  } = useContext(ComplexSearchContext);
   const propose = useMemo(
-    () => proposes.find(p => p.id === id),
-    [proposes, id]
+    () => proposes.find(p => p.key === itemKey),
+    [proposes, itemKey]
   );
-  if (!propose) {
-    return <span>{value}</span>;
-  }
-  const maybeItems = itemsValueOptions[propose.id];
+  const maybeItems = itemsValueOptions[propose?.key ?? ''];
   const item =
     maybeItems !== 'loading' &&
     maybeItems?.find((i: { id: string }) => i.id === value);
+
   useEffect(() => {
-    if (maybeItems !== 'loading' && !Array.isArray(maybeItems)) {
-      fetchItemValueOptions(propose.id, '');
+    if (
+      maybeItems !== 'loading' &&
+      !Array.isArray(maybeItems) &&
+      propose?.getOptions
+    ) {
+      fetchItemValueOptions(propose.key, '');
     }
   }, [maybeItems]);
 
-  if (item) {
-    return <ListItemToken>{propose?.renderSelectial(item)}</ListItemToken>;
+  if (!propose?.getOptions) {
+    return <ListItemToken>{value}</ListItemToken>;
   }
+
+  if (item) {
+    return <ListItemToken>{propose?.renderSelection?.(item)}</ListItemToken>;
+  }
+
   if (!Array.isArray(maybeItems)) {
     return (
       <ListItemToken sx={{ width: '100px', height: '1.5em' }}>

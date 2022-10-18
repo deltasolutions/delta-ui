@@ -3,7 +3,7 @@ import { forwardRef, useContext } from 'react';
 import { DropRendererProps } from '../../../../hooks';
 import { Box } from '../../../containers';
 import { ComplexSearchContext, DropContentContext } from '../contexts';
-import { DropIds } from './DropIds';
+import { DropKeys } from './DropKeys';
 import { DropOperators } from './DropOperators';
 import { DropValues } from './DroValues';
 
@@ -13,21 +13,25 @@ export interface DropContentProps extends DropRendererProps {
 
 export const DropContent = forwardRef<HTMLDivElement, DropContentProps>(
   ({ handleClose, onItemClick }, ref) => {
-    const { items, editingIndex, proposes } = useContext(ComplexSearchContext);
+    const {
+      items,
+      editingIndex,
+      proposals: proposes,
+    } = useContext(ComplexSearchContext);
     const currentItem =
       (editingIndex as number) >= 0 && (items[editingIndex as number] ?? {});
     const propose = proposes.find(
-      propose => propose.id === currentItem?.['id']
+      propose => propose.key === currentItem?.['key']
     );
     const token =
       typeof currentItem['value'] === 'string'
         ? 'value'
         : typeof currentItem['operator'] === 'string'
         ? 'operator'
-        : 'id';
+        : 'key';
 
     const TokenMenu = {
-      id: DropIds,
+      key: DropKeys,
       value: DropValues,
       operator: DropOperators,
     }[token];
