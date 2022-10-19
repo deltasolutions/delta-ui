@@ -1,6 +1,7 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { useEffect, useState } from 'react';
+import { exoplanets as exp } from '@visx/mock-data';
+import { useState } from 'react';
 import { compact } from '../../../../docs/decorators';
 import { Button } from '../../Button';
 import { Box } from '../../containers';
@@ -12,6 +13,13 @@ export default {
   decorators: [compact('800px')],
 } as Meta;
 
+const users = [
+  { id: '1', username: 'root228' },
+  { id: '3', username: 'root1337' },
+];
+
+const exoplanets = exp.slice(0, 100);
+
 export const Basics = () => {
   const [value, setValue] = useState<ComplexSearchSegment[]>([]);
 
@@ -22,45 +30,56 @@ export const Basics = () => {
           {
             key: 'userId',
             label: 'Author',
-            getSelectionQuery: datum => datum['username'],
-            getOptionValue: datum => datum.id,
+            getSelectionQuery: value =>
+              users.find(u => u.id === value)?.username ?? '',
             operators: [
               { key: '=re=', label: '=' },
               { key: '!=', label: '!=' },
             ],
-            getOptions: () => [
-              { id: '43924234-2342342-34234', username: 'emelyanov' },
-              { id: '213123-12312-31-333333', username: 'putin' },
-            ],
-            renderOption: datum => {
-              return <span>@{datum.username}</span>;
+            getOptions: query =>
+              users
+                .filter(u =>
+                  u.username
+                    .toLocaleLowerCase()
+                    .includes(query?.toLocaleLowerCase() ?? '')
+                )
+                .map(u => u.id),
+            renderOption: option => {
+              return <span>@{users.find(u => u.id === option)?.username}</span>;
             },
-            renderSelection: datum => {
-              return <span>@{datum.username}</span>;
+            renderSelection: value => {
+              return <span>@{users.find(u => u.id === value)?.username}</span>;
             },
           },
           {
-            key: 'tags.name',
-            label: 'Tag',
-            getOptionValue: datum => datum.id,
+            key: 'exoplanet',
+            label: 'Exoplanet',
             operators: [
               { key: '=re=', label: '=' },
               { key: '!=', label: '!=' },
             ],
-            getOptions: async () => {
-              return await new Promise(res => setTimeout(res, 2000)).then(
-                () => [
-                  { id: '22u8e9213-9213-210', name: 'Bug' },
-                  { id: '111-12312-31-333333', name: 'Feature' },
-                ]
+            getOptions: async query => {
+              return await new Promise(res => setTimeout(res, 1000)).then(() =>
+                exoplanets
+                  .filter(i =>
+                    i.name
+                      .toLocaleLowerCase()
+                      .includes(query?.toLocaleLowerCase() ?? '')
+                  )
+                  .map(i => i.name)
               );
             },
-            getSelectionQuery: datum => datum.name,
-            renderOption: datum => {
-              return <span>{datum.name}</span>;
+            getSelectionQuery: value =>
+              exoplanets.find(t => t.name === value)?.name ?? '',
+            renderOption: option => {
+              return (
+                <span>{exoplanets.find(t => t.name === option)?.name}</span>
+              );
             },
-            renderSelection: datum => {
-              return <span>{datum.name}</span>;
+            renderSelection: value => {
+              return (
+                <span>{exoplanets.find(t => t.name === value)?.name}</span>
+              );
             },
           },
           {
@@ -83,22 +102,15 @@ export const Basics = () => {
               {
                 key: 'userId',
                 operator: '=re=',
-                value: '43924234-2342342-34234',
+                value: '1',
               },
-              { key: 'tags.name', operator: '!=', value: '22u8e9213-9213-210' },
             ])
           }
         >
-          change state
+          Change state
         </Button>
         <pre>{JSON.stringify(value, null, 4)}</pre>
       </Box>
     </Box>
   );
-};
-const operators = {
-  '==': '=',
-  '!=': '!=',
-  '=gt=': '>',
-  '=lt=': '<',
 };

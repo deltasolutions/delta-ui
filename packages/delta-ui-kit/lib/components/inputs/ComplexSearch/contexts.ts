@@ -10,12 +10,10 @@ export interface ComplexSearchContextOptions {
   proposals: ComplexSearchProps['proposals'];
   editingIndex?: number;
   setEditingIndex: Dispatch<SetStateAction<number | undefined>>;
-  fetchItemValueOptions: (key: string, query: string) => void;
-  itemsValueOptions: { [key: string]: unknown[] | 'loading' };
-  items: ComplexSearchSegment[];
-  removeItem: (index: number) => void;
-  updateItem: (index: number, key: string, value?: string) => void;
-  addItem: (id: any) => void;
+  segments: ComplexSearchSegment[];
+  removeSegment: (index: number) => void;
+  updateSegment: (index: number, key: string, value?: string) => void;
+  addSegment: (id: any) => void;
 }
 
 export const DropContext = createContext({} as DropContextOptions);

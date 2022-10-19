@@ -1,33 +1,61 @@
 import { jsx } from '@theme-ui/core';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { DropRendererProps } from '../../../../hooks';
+import { FaBoxOpen } from 'react-icons/fa';
+import { DropRendererProps, useLoader, useOperation } from '../../../../hooks';
 import { Box } from '../../../containers';
 import { Loader } from '../../../displays';
 import { DropMenu, DropMenuItem } from '../../DropMenu';
-import {
-  ComplexSearchContext,
-  DropContentContext,
-  DropContext,
-} from '../contexts';
+import { DropContentContext, DropContext } from '../contexts';
 import { ComplexSearchProposal } from '../types';
 
 export interface DropValuesProps extends Partial<DropRendererProps> {
-  propose: ComplexSearchProposal;
+  proposal: ComplexSearchProposal;
 }
 
-export const DropValues = ({ propose }: DropValuesProps) => {
+export const DropValues = ({ proposal }: DropValuesProps) => {
   const [t] = useTranslation('common');
-  const { itemsValueOptions, fetchItemValueOptions } =
-    useContext(ComplexSearchContext);
+  const loaderId = useMemo(() => Symbol(), []);
+  const [loading] = useLoader([loaderId]);
   const { handleClose, onItemClick } = useContext(DropContentContext);
+  const [options, setOptions] = useState<string[] | undefined>(undefined);
   const { query } = useContext(DropContext);
-  const items = itemsValueOptions[propose.key];
-  useEffect(() => {
-    fetchItemValueOptions(propose.key, '');
-  }, [propose]);
+  const [handleFetching] = useOperation<string, void>(
+    async query => {
+      const maybeOptions = proposal.getOptions?.(query);
+      if (Array.isArray(maybeOptions)) {
+        setOptions(maybeOptions);
+      } else {
+        const options = await maybeOptions;
+        setOptions(options ?? []);
+      }
+    },
+    {
+      deps: [],
+      loaderIds: [loaderId],
+    }
+  );
 
-  if (!propose.getOptions) {
+  useEffect(() => {
+    handleFetching(query);
+  }, [query]);
+
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          p: 1,
+          height: '40px',
+        }}
+      >
+        <Loader size="small" />
+      </Box>
+    );
+  }
+  if (!proposal.getOptions) {
     return (
       <DropMenu handleClose={handleClose} onItemClick={onItemClick}>
         {[
@@ -39,24 +67,31 @@ export const DropValues = ({ propose }: DropValuesProps) => {
     );
   }
 
-  if (!Array.isArray(items)) {
+  if (options?.length === 0) {
     return (
       <Box
         sx={{
           p: 2,
-          py: 3,
-          pl: 4,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '40px',
         }}
       >
-        <Loader size="small" />
+        <FaBoxOpen size={18} />
       </Box>
     );
   }
+
+  if (!options) {
+    return null;
+  }
+
   return (
     <DropMenu handleClose={handleClose} onItemClick={onItemClick}>
-      {items?.map(option => (
-        <DropMenuItem key={option.id} value={option.id}>
-          {propose?.renderOption?.(option)}
+      {options?.map(option => (
+        <DropMenuItem key={option} value={option}>
+          {proposal?.renderOption?.(option)}
         </DropMenuItem>
       ))}
     </DropMenu>

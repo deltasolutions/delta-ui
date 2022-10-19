@@ -1,7 +1,7 @@
 import { jsx } from '@theme-ui/core';
 import { HTMLAttributes } from 'react';
 
-export const List = (props: HTMLAttributes<HTMLUListElement>) => {
+export const Segments = (props: HTMLAttributes<HTMLUListElement>) => {
   return (
     <ul
       sx={{

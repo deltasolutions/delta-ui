@@ -4,7 +4,6 @@ import {
   HTMLAttributes,
   useContext,
   useMemo,
-  useState,
   useRef,
   useCallback,
   useEffect,
@@ -12,42 +11,34 @@ import {
 import { useDrop, useImperativePortal } from '../../../../hooks';
 import { mergeRefs } from '../../../../utils';
 import { Box, SystemContext } from '../../../containers';
-import { ComplexSearchContext, DropContext } from '../contexts';
-import { DropContent } from '../Drop';
-import { Input } from '../Input';
+import { ComplexSearchContext } from '../contexts';
+import { Drop } from '../Drop';
 import { ComplexSearchSegment } from '../types';
-import { ListItemToken } from './ListItemToken';
-import { ListItemTokenValue } from './ListItemTokenValue';
+import { SegmentInput } from './SegmentInput';
+import { SegmentToken } from './SegmentToken';
 
-export interface ListItemProps extends HTMLAttributes<HTMLLIElement> {
+export interface SegmentPropos extends HTMLAttributes<HTMLLIElement> {
   item: ComplexSearchSegment;
   index: number;
 }
 
-export const ListItem = ({ item, index, ...props }: ListItemProps) => {
+export const Segment = ({ item, index, ...props }: SegmentPropos) => {
   const {
-    removeItem,
-    updateItem,
+    removeSegment,
+    updateSegment,
     editingIndex,
     setEditingIndex,
     proposals: proposes,
   } = useContext(ComplexSearchContext);
   const { floatingPortal } = useContext(SystemContext);
   const editing = useMemo(() => editingIndex === index, [editingIndex, index]);
-  const [inputValue, setInputValue] = useState<string | undefined>(
-    typeof item.value === 'string'
-      ? item.value
-      : typeof item.operator === 'string'
-      ? item.operator
-      : item.key
-  );
   const propose = proposes.find(pr => pr.key === item?.key);
   const dropRef = useRef<HTMLDivElement>(null);
   const portal = useImperativePortal(floatingPortal);
   const [openDrop, anchorRef] = useDrop<any>(
     ({ handleClose }) => {
       return (
-        <DropContent
+        <Drop
           ref={dropRef}
           handleClose={handleClose}
           onItemClick={onOptionClick}
@@ -86,12 +77,12 @@ export const ListItem = ({ item, index, ...props }: ListItemProps) => {
           : typeof item.operator === 'string'
           ? 'operator'
           : 'key';
-      updateItem(index, key, value);
+      updateSegment(index, key, value);
       if (key === 'key') {
-        updateItem(index, 'operator', '');
+        updateSegment(index, 'operator', '');
       }
       if (key === 'operator') {
-        updateItem(index, 'value', '');
+        updateSegment(index, 'value', '');
       }
       if (key === 'value') {
         setEditingIndex(-1);
@@ -145,15 +136,15 @@ export const ListItem = ({ item, index, ...props }: ListItemProps) => {
         !ev.target.value
       ) {
         if (typeof item.value === 'string') {
-          updateItem(index, 'value', undefined);
+          updateSegment(index, 'value', undefined);
           return;
         }
         if (typeof item.operator === 'string') {
-          updateItem(index, 'operator', undefined);
+          updateSegment(index, 'operator', undefined);
           return;
         }
         setEditingIndex(index - 1);
-        removeItem(index);
+        removeSegment(index);
       }
     };
     if (inputRef.current) {
@@ -186,11 +177,11 @@ export const ListItem = ({ item, index, ...props }: ListItemProps) => {
             } else {
               if (token === 'value') {
                 return (
-                  <ListItemTokenValue
-                    key={tokenValue}
-                    itemKey={item['key']}
-                    value={tokenValue}
-                  />
+                  <SegmentToken key={token}>
+                    {propose?.renderSelection
+                      ? propose?.renderSelection?.(tokenValue)
+                      : tokenValue}
+                  </SegmentToken>
                 );
               }
               if (token === 'operator') {
@@ -198,31 +189,21 @@ export const ListItem = ({ item, index, ...props }: ListItemProps) => {
                   opr => opr.key === tokenValue
                 );
                 return (
-                  <ListItemToken key={token}>{operator?.label}</ListItemToken>
+                  <SegmentToken key={token}>{operator?.label}</SegmentToken>
                 );
               }
-              console.log('propose', propose);
 
-              if (token === 'key') {
-                return (
-                  <ListItemToken key={token}>{propose?.label}</ListItemToken>
-                );
-              }
-              return null;
+              return <SegmentToken key={token}>{propose?.label}</SegmentToken>;
             }
           })}
       </Box>
-      <Input
+      <SegmentInput
         key={hash(item)}
         ref={stableRef}
-        style={{ width: editing ? '200px' : '0px' }}
-        tabIndex={editing ? 0 : -1}
-        value={inputValue}
-        onChange={setInputValue}
+        editing={editing}
+        item={item}
+        portal={portal}
       />
-      <DropContext.Provider value={{ query: inputValue }}>
-        {portal}
-      </DropContext.Provider>
     </li>
   );
 };

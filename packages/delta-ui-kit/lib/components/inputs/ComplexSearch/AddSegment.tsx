@@ -11,12 +11,12 @@ import { useDrop, useImperativePortal } from '../../../hooks';
 import { mergeRefs } from '../../../utils';
 import { Box, SystemContext } from '../../containers';
 import { ComplexSearchContext, DropContext } from './contexts';
-import { DropContent } from './Drop';
+import { Drop } from './Drop';
 import { Input } from './Input';
 
-export const AddListItem = () => {
+export const AddSegment = () => {
   const { floatingPortal } = useContext(SystemContext);
-  const { items, setEditingIndex, editingIndex, addItem } =
+  const { segments, setEditingIndex, editingIndex, addSegment } =
     useContext(ComplexSearchContext);
   const dropRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -26,7 +26,7 @@ export const AddListItem = () => {
   const [openDrop, anchorRef] = useDrop<any>(
     ({ handleClose }) => {
       return (
-        <DropContent
+        <Drop
           ref={dropRef}
           handleClose={handleClose}
           onItemClick={onOptionClick}
@@ -53,15 +53,15 @@ export const AddListItem = () => {
   const handleOpen = useCallback(() => {
     closeDropRef.current = openDrop();
   }, [openDrop]);
-  const itemsLengthRef = useRef(items.length);
+  const itemsLengthRef = useRef(segments.length);
 
   useEffect(() => {
-    itemsLengthRef.current = items.length;
-  }, [items]);
+    itemsLengthRef.current = segments.length;
+  }, [segments]);
 
   const onOptionClick = (value: string) => {
     handleClose();
-    addItem(value);
+    addSegment(value);
     setEditingIndex(itemsLengthRef.current);
   };
   useEffect(() => {
@@ -107,8 +107,8 @@ export const AddListItem = () => {
             ev.target.selectionStart === 0 &&
             !ev.target.value
           ) {
-            if (items.length > 0) {
-              setEditingIndex(items.length - 1);
+            if (segments.length > 0) {
+              setEditingIndex(segments.length - 1);
             }
           }
         }}

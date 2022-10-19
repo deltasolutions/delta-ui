@@ -3,7 +3,7 @@ import { lighten } from 'polished';
 import { useDeltaTheme } from '../../../../hooks';
 import { Box, BoxProps } from '../../../containers';
 
-export const ListItemToken = (props: BoxProps) => {
+export const SegmentToken = (props: BoxProps) => {
   const { colors } = useDeltaTheme();
   return (
     <Box

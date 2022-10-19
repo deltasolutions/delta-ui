@@ -4,21 +4,15 @@ export interface ComplexSearchProposal {
   key: string;
   label: string;
   operators: ComplexSearchOperator[];
-  getOptions?: (query) => ComplexSearchDatum[] | Promise<ComplexSearchDatum[]>;
-  getOptionValue?: (option: ComplexSearchDatum) => string;
-  getSelectionQuery?: (datum: ComplexSearchDatum) => string;
-  renderSelection?: (datum: ComplexSearchDatum) => ReactNode;
-  renderOption?: (datum: ComplexSearchDatum) => ReactNode;
+  getOptions?: (query?: string) => string[] | Promise<string[]>;
+  getSelectionQuery?: (value: string) => string;
+  renderSelection?: (value: string) => ReactNode;
+  renderOption?: (option?: string) => ReactNode;
 }
 
 export interface ComplexSearchOperator {
   key: string;
   label: string;
-}
-
-interface ComplexSearchDatum {
-  //TODO maybe add better types for datum
-  [key: PropertyKey]: any;
 }
 
 export interface ComplexSearchSegment {

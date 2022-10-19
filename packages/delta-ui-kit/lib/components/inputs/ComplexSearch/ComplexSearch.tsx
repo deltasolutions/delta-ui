@@ -11,10 +11,10 @@ import {
 } from 'react';
 import { useUpdateEffect } from '../../../hooks';
 import { FormWidgetProps } from '../../../types';
-import { AddListItem } from './AddListItem';
+import { AddSegment } from './AddSegment';
 import { ComplexSearchContainer } from './ComplexSearchContainer';
 import { ComplexSearchContext } from './contexts';
-import { List, ListItem } from './List';
+import { Segments, Segment } from './Segments';
 import { ComplexSearchSegment, ComplexSearchProposal } from './types';
 
 export interface ComplexSearchProps
@@ -32,29 +32,26 @@ export const ComplexSearch = ({
   proposals,
   onChange,
 }: ComplexSearchProps) => {
+  const [segments, setSegments] = useState<ComplexSearchSegment[]>(value);
   const [editingIndex, setEditingIndex] = useState<number | undefined>(
     undefined
   );
-  const [itemsValueOptions, setItemsValueOptions] = useState<{
-    [key: string]: unknown[] | 'loading';
-  }>({});
-  const [items, setItems] = useState<ComplexSearchSegment[]>(value);
 
-  const addItem = useCallback(key => {
-    setItems(curr => {
+  const addSegment = useCallback(key => {
+    setSegments(curr => {
       return [...curr, { key, operator: '' }];
     });
   }, []);
-  const removeItem = useCallback((index: number) => {
-    setItems(curr => {
+  const removeSegment = useCallback((index: number) => {
+    setSegments(curr => {
       const next = [...curr];
       next.splice(index, 1);
       return next;
     });
   }, []);
-  const updateItem = useCallback(
+  const updateSegment = useCallback(
     (index: number, key: string, value?: string) => {
-      setItems(curr => {
+      setSegments(curr => {
         const next = [...curr];
         next[index][key] = value;
         return next;
@@ -62,50 +59,14 @@ export const ComplexSearch = ({
     },
     []
   );
-  const _accumulateItemsValueOptions = useCallback(
-    (key: string, options: unknown[] | 'loading') => {
-      setItemsValueOptions(curr => {
-        const prev = { ...curr };
-        prev[key] = options;
-        return prev;
-      });
-    },
-    []
-  );
-  const fetchItemValueOptions = useCallback(
-    (key: string, query: string) => {
-      const propose = proposals.find(i => i['key'] === key);
-      const itemsFetched = Array.isArray(itemsValueOptions[key]);
-      if (itemsFetched) {
-        return;
-      }
-      const maybeOptions = propose?.getOptions?.(query);
-      if (Array.isArray(maybeOptions)) {
-        _accumulateItemsValueOptions(key, maybeOptions);
-      } else {
-        _accumulateItemsValueOptions(key, 'loading');
-        maybeOptions
-          ?.then(options => {
-            _accumulateItemsValueOptions(key, options);
-          })
-          .catch(e => {
-            console.warn(e);
-            _accumulateItemsValueOptions(key, []);
-          });
-      }
-    },
-    [proposals, itemsValueOptions]
-  );
 
   const contextValue = {
     proposals,
-    addItem,
-    removeItem,
-    items,
-    updateItem,
-    fetchItemValueOptions,
+    addSegment,
+    removeSegment,
+    segments,
+    updateSegment,
     setEditingIndex,
-    itemsValueOptions,
     editingIndex,
   };
   const memoizedContextValue = useMemo(
@@ -113,29 +74,25 @@ export const ComplexSearch = ({
     Object.values(contextValue)
   );
   useUpdateEffect(() => {
-    onChange?.(items);
-  }, [items]);
+    onChange?.(segments);
+  }, [segments]);
 
   useEffect(() => {
-    if (!isEqual(value, items)) {
+    if (!isEqual(value, segments)) {
       setEditingIndex(undefined);
-      setItems(value);
+      setSegments(value);
     }
   }, [value]);
 
   return (
     <ComplexSearchContext.Provider value={memoizedContextValue}>
       <ComplexSearchContainer>
-        <List>
-          {items.map((item, index) => (
-            <ListItem
-              key={`${hash(item)}-${index}`}
-              index={index}
-              item={item}
-            />
+        <Segments>
+          {segments.map((item, index) => (
+            <Segment key={`${hash(item)}-${index}`} index={index} item={item} />
           ))}
-          <AddListItem key={items.length} />
-        </List>
+          <AddSegment key={segments.length} />
+        </Segments>
       </ComplexSearchContainer>
     </ComplexSearchContext.Provider>
   );

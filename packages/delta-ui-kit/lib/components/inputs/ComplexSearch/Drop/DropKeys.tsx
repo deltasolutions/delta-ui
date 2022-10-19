@@ -1,23 +1,34 @@
 import { jsx } from '@theme-ui/core';
 import { useContext } from 'react';
 import { DropMenu, DropMenuItem, DropMenuProps } from '../../DropMenu';
-import { DropContentContext, ComplexSearchContext } from '../contexts';
+import {
+  DropContentContext,
+  ComplexSearchContext,
+  DropContext,
+} from '../contexts';
 import { ComplexSearchProposal } from '../types';
 
 export interface DropKeysProps extends Partial<DropMenuProps> {
-  propose?: ComplexSearchProposal;
+  proposal?: ComplexSearchProposal;
 }
 
-export const DropKeys = ({ propose, ...rest }: DropKeysProps) => {
+export const DropKeys = (props: DropKeysProps) => {
   const { handleClose, onItemClick } = useContext(DropContentContext);
-  const { proposals: proposes } = useContext(ComplexSearchContext);
+  const { query } = useContext(DropContext);
+  const { proposals } = useContext(ComplexSearchContext);
   return (
-    <DropMenu handleClose={handleClose} onItemClick={onItemClick} {...rest}>
-      {proposes.map(({ label, key }) => (
-        <DropMenuItem key={key} value={key}>
-          {label}
-        </DropMenuItem>
-      ))}
+    <DropMenu handleClose={handleClose} onItemClick={onItemClick} {...props}>
+      {proposals
+        .filter(proposal =>
+          proposal.label
+            .toLocaleLowerCase()
+            .includes(query?.toLocaleLowerCase() ?? '')
+        )
+        .map(({ label, key }) => (
+          <DropMenuItem key={key} value={key}>
+            {label}
+          </DropMenuItem>
+        ))}
     </DropMenu>
   );
 };
