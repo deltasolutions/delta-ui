@@ -24,27 +24,27 @@ export const decorators = [
               @font-face {
                 font-family: Stolzl;
                 font-weight: 200;
-                src: url('/fonts/stolzl_thin.otf') format('opentype');
+                src: url('./fonts/stolzl_thin.otf') format('opentype');
               }
               @font-face {
                 font-family: Stolzl;
                 font-weight: 300;
-                src: url('/fonts/stolzl_light.otf') format('opentype');
+                src: url('./fonts/stolzl_light.otf') format('opentype');
               }
               @font-face {
                 font-family: Stolzl;
                 font-weight: 400;
-                src: url('/fonts/stolzl_book.otf') format('opentype');
+                src: url('./fonts/stolzl_book.otf') format('opentype');
               }
               @font-face {
                 font-family: Stolzl;
                 font-weight: 500;
-                src: url('/fonts/stolzl_medium.otf') format('opentype');
+                src: url('./fonts/stolzl_medium.otf') format('opentype');
               }
               @font-face {
                 font-family: Stolzl;
                 font-weight: 600;
-                src: url('/fonts/stolzl_medium.otf') format('opentype');
+                src: url('./fonts/stolzl_medium.otf') format('opentype');
               }
             }
             * {

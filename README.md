@@ -9,10 +9,6 @@ call package script via `nx run <package>:<script>`.
 
 [delta-chest](https://deltasolutions.github.io/delta-ui/delta-chest)
 
-[delta-data-chest (deprecated)](https://deltasolutions.github.io/delta-ui/delta-data-chest)
-
-[delta-data-table (deprecated)](https://deltasolutions.github.io/delta-ui/delta-data-table)
-
 [delta-jsf](https://deltasolutions.github.io/delta-ui/delta-jsf)
 
 [delta-layout (deprecated)](https://deltasolutions.github.io/delta-ui/delta-layout)

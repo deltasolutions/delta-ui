@@ -5,7 +5,14 @@
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "test", "lint", "package", "prepare"]
+        "cacheableOperations": [
+          "build",
+          "doc",
+          "test",
+          "lint",
+          "package",
+          "prepare"
+        ]
       }
     }
   },
@@ -17,6 +24,12 @@
       }
     ],
     "dev": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ],
+    "doc": [
       {
         "target": "build",
         "projects": "dependencies"

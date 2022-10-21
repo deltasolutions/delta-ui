@@ -7,7 +7,7 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
-  ModalRendererProps
+  ModalRendererProps,
 } from 'restyler';
 
 export interface LocaleModalProps extends ModalRendererProps {
@@ -27,19 +27,19 @@ export const LocaleModal = ({ locales, handleClose }: LocaleModalProps) => {
       <ModalBody sx={{ display: 'flex', flexDirection: 'column' }}>
         {locales.map(v => (
           <Button
+            key={v.title}
             sx={{
               cursor: 'pointer',
               '&:hover': {
-                color: 'primary'
+                color: 'primary',
               },
               '& + &': {
                 mt: 2,
                 pt: 2,
                 borderTop: '1px solid',
-                borderTopColor: 'border'
-              }
+                borderTopColor: 'border',
+              },
             }}
-            key={v.title}
             onClick={() => {
               v.onClick?.();
               handleClose();
