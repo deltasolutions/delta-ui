@@ -1,8 +1,0 @@
-{
-  "compilerOptions": {
-    "jsx": "react",
-    "jsxFactory": "React.createElement",
-    "types": ["node", "react"]
-  },
-  "extends": "../../tsconfig"
-}

@@ -7,6 +7,7 @@ import fse from 'fs-extra';
 const exec = util.promisify(childProcess.exec);
 const outputDir = path.resolve(__dirname, 'dist');
 const packagesDir = path.resolve(__dirname, '..');
+const rootDir = path.resolve(__dirname, '../..');
 
 async function main() {
   console.log('Cleaning output directory');
@@ -31,9 +32,9 @@ async function main() {
       continue;
     }
     console.log('Building', packageName, counter);
-    await exec('npm run doc', {
-      cwd: packageDir,
-    });
+    await exec(`nx run ${packageName}:build`, { cwd: rootDir });
+    console.log('Documenting', packageName);
+    await exec(`nx run ${packageName}:doc`, { cwd: rootDir });
     const sourceDir = path.resolve(packageDir, 'dist/docs');
     const targetDir = path.resolve(outputDir, packageName);
     console.log('Copying output');
