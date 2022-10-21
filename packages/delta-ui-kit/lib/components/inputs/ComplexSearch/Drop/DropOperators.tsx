@@ -16,7 +16,11 @@ export const DropOperators = ({ proposal: propose }: DropOperatorsProps) => {
   const { handleClose, onItemClick } = useContext(DropContentContext);
   const { query } = useContext(DropContext);
   return (
-    <DropMenu handleClose={handleClose} onItemClick={onItemClick}>
+    <DropMenu
+      closeOnEscape={false}
+      handleClose={handleClose}
+      onItemClick={onItemClick}
+    >
       {propose?.operators
         ?.filter(operator =>
           operator.label

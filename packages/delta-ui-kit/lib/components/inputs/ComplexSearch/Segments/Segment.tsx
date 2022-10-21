@@ -27,12 +27,13 @@ export const Segment = ({ item, index, ...props }: SegmentPropos) => {
     removeSegment,
     updateSegment,
     editingIndex,
+
     setEditingIndex,
-    proposals: proposes,
+    proposals,
   } = useContext(ComplexSearchContext);
   const { floatingPortal } = useContext(SystemContext);
   const editing = useMemo(() => editingIndex === index, [editingIndex, index]);
-  const propose = proposes.find(pr => pr.key === item?.key);
+  const propose = proposals.find(pr => pr.key === item?.key);
   const dropRef = useRef<HTMLDivElement>(null);
   const portal = useImperativePortal(floatingPortal);
   const [openDrop, anchorRef] = useDrop<any>(
@@ -145,6 +146,17 @@ export const Segment = ({ item, index, ...props }: SegmentPropos) => {
         }
         setEditingIndex(index - 1);
         removeSegment(index);
+        return;
+      }
+      if (
+        ev.key === 'Backspace' &&
+        ev.target.selectionStart === 1 &&
+        editingIndex === 0 &&
+        !item.value &&
+        !item.operator
+      ) {
+        setEditingIndex(-1);
+        removeSegment(index);
       }
     };
     if (inputRef.current) {
@@ -157,7 +169,7 @@ export const Segment = ({ item, index, ...props }: SegmentPropos) => {
       inputRef.current?.removeEventListener('keydown', onKeydown);
       inputRef.current?.removeEventListener('blur', onBlur);
     };
-  }, [inputRef.current]);
+  }, [inputRef.current, editingIndex]);
   return (
     <li {...props} sx={{ display: 'flex', mr: 1 }}>
       <Box

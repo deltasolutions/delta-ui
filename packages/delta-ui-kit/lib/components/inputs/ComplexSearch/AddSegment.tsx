@@ -10,11 +10,12 @@ import {
 import { useDrop, useImperativePortal } from '../../../hooks';
 import { mergeRefs } from '../../../utils';
 import { Box, SystemContext } from '../../containers';
+import { TextInputProps } from '../TextInput';
 import { ComplexSearchContext, DropContext } from './contexts';
 import { Drop } from './Drop';
 import { Input } from './Input';
 
-export const AddSegment = () => {
+export const AddSegment = ({ placeholder, ...rest }: TextInputProps) => {
   const { floatingPortal } = useContext(SystemContext);
   const { segments, setEditingIndex, editingIndex, addSegment } =
     useContext(ComplexSearchContext);
@@ -99,6 +100,7 @@ export const AddSegment = () => {
     <Box sx={{ flex: 1 }}>
       <Input
         ref={stableRef}
+        placeholder={segments.length > 0 ? '' : placeholder}
         value={inputValue}
         onChange={setInputValue}
         onKeyDown={(ev: any) => {
@@ -112,6 +114,7 @@ export const AddSegment = () => {
             }
           }
         }}
+        {...rest}
       />
       <DropContext.Provider value={{ query: inputValue }}>
         {portal}

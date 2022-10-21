@@ -35,6 +35,7 @@ export const SegmentInput = forwardRef<HTMLInputElement, SegmentInputProps>(
             output = maybeOperator.label;
           }
         }
+
         if (tokenKey === 'value') {
           if (maybePropose.getOptions) {
             output = maybePropose.getSelectionQuery?.(tokenValue) ?? '';

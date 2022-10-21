@@ -17,7 +17,12 @@ export const DropKeys = (props: DropKeysProps) => {
   const { query } = useContext(DropContext);
   const { proposals } = useContext(ComplexSearchContext);
   return (
-    <DropMenu handleClose={handleClose} onItemClick={onItemClick} {...props}>
+    <DropMenu
+      closeOnEscape={false}
+      handleClose={handleClose}
+      onItemClick={onItemClick}
+      {...props}
+    >
       {proposals
         .filter(proposal =>
           proposal.label

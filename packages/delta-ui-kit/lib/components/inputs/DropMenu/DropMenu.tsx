@@ -25,6 +25,7 @@ export interface DropMenuProps extends DropRendererProps, BoxProps {
   children: ReactElement<DropMenuItemProps>[];
   selectedValues?: unknown[];
   onItemClick?: (value: unknown) => void;
+  closeOnEscape?: boolean;
 }
 
 export const DropMenu = forwardRef<HTMLDivElement, DropMenuProps>(
@@ -32,6 +33,7 @@ export const DropMenu = forwardRef<HTMLDivElement, DropMenuProps>(
     {
       children,
       selectedValues = [],
+      closeOnEscape = true,
       onItemClick,
       handleClose,
       context: _context,
@@ -65,7 +67,7 @@ export const DropMenu = forwardRef<HTMLDivElement, DropMenuProps>(
             //   : handleAddition(child.props?.value, getTitleByChild(child));
             break;
           case 'Escape':
-            handleClose();
+            closeOnEscape && handleClose();
             break;
           case 'ArrowUp':
             ev.preventDefault();

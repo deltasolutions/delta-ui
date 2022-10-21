@@ -26,6 +26,7 @@ export const Basics = () => {
   return (
     <Box>
       <ComplexSearch
+        placeholder="Search something"
         proposals={[
           {
             key: 'userId',

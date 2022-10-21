@@ -8,6 +8,7 @@ import {
   useState,
   useEffect,
   useMemo,
+  InputHTMLAttributes,
 } from 'react';
 import { useUpdateEffect } from '../../../hooks';
 import { FormWidgetProps } from '../../../types';
@@ -19,7 +20,7 @@ import { ComplexSearchSegment, ComplexSearchProposal } from './types';
 
 export interface ComplexSearchProps
   extends Omit<
-      HTMLAttributes<HTMLLabelElement>,
+      InputHTMLAttributes<HTMLInputElement>,
       'children' | keyof FormWidgetProps
     >,
     FormWidgetProps<unknown> {
@@ -31,6 +32,7 @@ export const ComplexSearch = ({
   value = [],
   proposals,
   onChange,
+  ...inputPropos
 }: ComplexSearchProps) => {
   const [segments, setSegments] = useState<ComplexSearchSegment[]>(value);
   const [editingIndex, setEditingIndex] = useState<number | undefined>(
@@ -91,7 +93,7 @@ export const ComplexSearch = ({
           {segments.map((item, index) => (
             <Segment key={`${hash(item)}-${index}`} index={index} item={item} />
           ))}
-          <AddSegment key={segments.length} />
+          <AddSegment key={segments.length} {...inputPropos} />
         </Segments>
       </ComplexSearchContainer>
     </ComplexSearchContext.Provider>

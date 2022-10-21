@@ -56,8 +56,15 @@ export const DropValues = ({ proposal }: DropValuesProps) => {
     );
   }
   if (!proposal.getOptions) {
+    if (!query) {
+      return null;
+    }
     return (
-      <DropMenu handleClose={handleClose} onItemClick={onItemClick}>
+      <DropMenu
+        closeOnEscape={false}
+        handleClose={handleClose}
+        onItemClick={onItemClick}
+      >
         {[
           <DropMenuItem key={`query-${query}`} value={query ?? ''}>
             {t('actions.searchForThisText')}
@@ -88,7 +95,11 @@ export const DropValues = ({ proposal }: DropValuesProps) => {
   }
 
   return (
-    <DropMenu handleClose={handleClose} onItemClick={onItemClick}>
+    <DropMenu
+      closeOnEscape={false}
+      handleClose={handleClose}
+      onItemClick={onItemClick}
+    >
       {options?.map(option => (
         <DropMenuItem key={option} value={option}>
           {proposal?.renderOption?.(option)}
