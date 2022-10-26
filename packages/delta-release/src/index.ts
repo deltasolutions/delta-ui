@@ -34,7 +34,7 @@ export const main = async (args: string[]) => {
   }
 
   const branchOutput = await exec('git', ['branch', '--show-current'], {
-    stdio: 'pipe'
+    stdio: 'pipe',
   });
   const { stdout: branch = '' } = branchOutput ?? {};
   log('info', `current branch is ${branch}`);
@@ -45,14 +45,14 @@ export const main = async (args: string[]) => {
 
   const execSafe = createExecutor({
     cwd: packageDir,
-    preview: config.preview
+    preview: config.preview,
   });
 
   const version = inc(packageJson.version, config.increment);
   log('info', `new version is ${version}`);
   const message = mustache.render(config.message, { ...packageJson, version });
   log('info', `generated commit message is "${message}"`);
-  await execSafe('npm', ['--no-git-tag-version', 'version', version]);
+  await execSafe('npm', ['--no-git-tag-version', 'version', String(version)]);
   await execSafe('git', ['commit', '-am', message]);
   await execSafe('git', ['push', 'origin', branch]);
 
