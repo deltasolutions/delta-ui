@@ -61,7 +61,6 @@ export const DropMenu = forwardRef<HTMLDivElement, DropMenuProps>(
             if (value) {
               onItemClick?.(value);
             }
-
             // selectedValues.includes(value)
             //   ? handleRemoval(value)
             //   : handleAddition(child.props?.value, getTitleByChild(child));
