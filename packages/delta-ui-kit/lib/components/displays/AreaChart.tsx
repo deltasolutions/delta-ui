@@ -44,7 +44,7 @@ export const AreaChart = <T extends object>({
         colors: [mainColor],
         gridColor: 'rgba(255,255,255,0.01)',
         gridStyles: {
-          stroke: 'rgba(255,255,255,0.2)',
+          stroke: colors.onCelestial,
           strokeLinecap: 'round',
         },
         gridColorDark: 'rgba(255,255,255,0.01)',

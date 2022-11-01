@@ -37,7 +37,7 @@ export const DropMenuItem = forwardRef<HTMLButtonElement, DropMenuItemProps>(
       [ref, buttonRef]
     );
     const {
-      colors: { accentContext, accentOnContext },
+      colors: { accentContext, accentOnContext, onContext },
     } = useDeltaTheme();
     const { setActiveIndex } = useContext(DropMenuContext);
     return (
@@ -46,7 +46,7 @@ export const DropMenuItem = forwardRef<HTMLButtonElement, DropMenuItemProps>(
         style={{
           ...(active && {
             backgroundColor: accentContext,
-            color: accentOnContext,
+            color: onContext,
           }),
         }}
         sx={{

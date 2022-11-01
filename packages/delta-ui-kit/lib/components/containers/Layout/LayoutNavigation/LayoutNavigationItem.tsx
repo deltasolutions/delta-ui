@@ -6,6 +6,7 @@ import {
   useContext,
   useMemo,
 } from 'react';
+import { useDeltaTheme } from '../../../../hooks';
 import { Anchor, AnchorProps } from '../../../Anchor';
 import { Box } from '../../Box';
 import { NavigationContext } from './LayoutNavigation';
@@ -23,6 +24,7 @@ export const LayoutNavigationItem = forwardRef<
 >(({ children, icon: Icon, id, ...rest }, ref) => {
   const { activeId } = useContext(NavigationContext);
   const active = useMemo(() => id === activeId, [id, activeId]);
+  const { colorScheme } = useDeltaTheme();
   return (
     <Anchor
       ref={ref}
@@ -39,8 +41,16 @@ export const LayoutNavigationItem = forwardRef<
           color: 'accentOnContext',
         },
         ...(active
-          ? { '&:before': getAccentBlockStyle(1.0) }
-          : { '&:hover::before': getAccentBlockStyle(0.75) }),
+          ? {
+              '&:before': getAccentBlockStyle(
+                colorScheme === 'dark' ? 1.0 : 0.3
+              ),
+            }
+          : {
+              '&:hover::before': getAccentBlockStyle(
+                colorScheme === 'dark' ? 0.75 : 0.2
+              ),
+            }),
       }}
       variant="pure"
       {...rest}

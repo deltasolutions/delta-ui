@@ -123,7 +123,7 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(
               width: '1rem',
               borderRadius: '100%',
               height: '1rem',
-              backgroundColor: 'onPrimary',
+              backgroundColor: 'accentSecondary',
               cursor: disabled ? 'auto' : 'pointer',
             },
             '&::-moz-range-thumb': {

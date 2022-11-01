@@ -5,7 +5,12 @@ import { TextInput, TextInputProps } from '../TextInput';
 export const Input = forwardRef<HTMLInputElement, TextInputProps>(
   (props, ref) => {
     return (
-      <TextInput ref={ref} sx={{ height: '32px' }} variant="pure" {...props} />
+      <TextInput
+        ref={ref}
+        sx={{ height: '32px', color: 'inherit' }}
+        variant="pure"
+        {...props}
+      />
     );
   }
 );

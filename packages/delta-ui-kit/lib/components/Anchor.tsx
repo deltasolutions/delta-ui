@@ -23,16 +23,18 @@ export const Anchor = forwardRef<HTMLAnchorElement, AnchorProps>(
           textDecoration: 'none',
           '&:focus-visible': {
             outlineColor: 'primary',
+            outline: '1px solid',
+            color: 'accentOnBackground',
           },
           '&:active, &:focus-visible, &:hover': {
             color: 'accentOnBackground',
           },
-          ...(variant === 'pure'
-            ? {}
-            : {
-                textDecoration: 'underline',
-                textUnderlineOffset: '1px',
-              }),
+          // ...(variant === 'pure'
+          //   ? {}
+          //   : {
+          //       textDecoration: 'underline',
+          //       textUnderlineOffset: '1px',
+          //     }),
         }}
         {...rest}
       >

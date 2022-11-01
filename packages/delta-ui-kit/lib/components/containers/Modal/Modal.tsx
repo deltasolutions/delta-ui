@@ -49,9 +49,11 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
             >
               <Button
                 sx={{
+                  display: 'flex',
                   borderRadius: '100px',
                   color: 'onContext',
                   p: '3px',
+                  minWidth: 'fit-content',
                   backgroundColor: 'accentContext',
                   '&:hover': {
                     color: 'accentOnContext',
