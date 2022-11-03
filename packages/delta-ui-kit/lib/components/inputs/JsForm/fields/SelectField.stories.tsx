@@ -10,12 +10,14 @@ export const Basics = createFormStory({
     type: 'string',
     title: 'Select Field',
     oneOf: [
-      { const: 'a', title: 'A' },
-      { const: 'b', title: 'B' },
-      { const: 'c', title: 'C' },
+      { title: 'A', const: 'a' },
+      { title: 'B', const: 'b' },
+      { title: 'C', const: 'c' },
+      { title: 'Empty', const: undefined },
     ],
     layout: {
       field: 'select',
+      placeholder: 'Empty',
     },
   },
   initialValue: '',
@@ -41,7 +43,9 @@ export const Multiple = createFormStory({
         },
       ],
     },
-    layout: { field: 'select' },
+    layout: {
+      field: 'select',
+    },
   },
   initialValue: '',
 });

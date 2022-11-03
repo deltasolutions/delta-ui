@@ -13,6 +13,7 @@ export * from './useIsomorphicLayoutEffect';
 export * from './useLeafletDefaults';
 export * from './useLoader';
 export * from './useModal';
+export * from './useNotification';
 export * from './useOperation';
 export * from './usePortalled';
 export * from './usePortalledTransition';
