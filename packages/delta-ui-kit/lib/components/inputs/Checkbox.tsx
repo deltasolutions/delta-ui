@@ -115,11 +115,11 @@ const getVariantStyle = ({ variant }) => {
       '.checkmark': {
         border: '1px solid',
         //TODO pick color from defaults/theme.ts
-        borderColor: 'accentCelestial',
+        borderColor: 'border',
         height: '20px',
         width: '20px',
         '&:hover': {
-          borderColor: 'accentCelestial',
+          borderColor: 'accentBorder',
         },
         '&:after': { left: '6px', top: '3px' },
       },

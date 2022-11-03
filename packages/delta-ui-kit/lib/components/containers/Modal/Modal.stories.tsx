@@ -2,6 +2,7 @@ import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { Button } from '../../Button';
 import { Select, SelectOption, TextInput } from '../../inputs';
+import { Heading } from '../Heading';
 import { Modal } from './Modal';
 import { ModalBody } from './ModalBody';
 import { ModalFooter } from './ModalFooter';
@@ -14,7 +15,9 @@ export default {
 export const Basics = props => {
   return (
     <Modal sx={{ minWidth: '450px' }} {...props}>
-      <ModalHeader>Header</ModalHeader>
+      <ModalHeader>
+        <Heading level={4}>Modal Heading</Heading>
+      </ModalHeader>
       <ModalBody sx={{ gap: 3, flexDirection: 'column', display: 'flex' }}>
         <TextInput placeholder="Placeholder" />
         <Select>

@@ -13,6 +13,7 @@ const baseColors = {
   celestial: 'rgb(21 23 36)',
   contrast: '#fafafa',
   exterior: '#09090e',
+  border: 'rgb(255 255 255 / 25%)',
 
   accentPrimary: '#1e70c1',
   accentSecondary: '#e5e5e5',
@@ -25,6 +26,7 @@ const baseColors = {
   accentCelestial: '#21273a',
   accentContrast: '#e1e0e0',
   accentExterior: '#171724',
+  accentBorder: 'rgb(255 255 255 / 50%)',
 
   onPrimary: '#ffffff',
   onSecondary: '#2c2c2c',
@@ -85,10 +87,11 @@ const baseLightColors = {
   success: '#18a33f',
   error: '#cc3922',
   background: '#f8f5f5',
-  mundane: 'rgba(65,53,0, 0.35)',
+  mundane: '#ccc9be59',
   celestial: '#dae4dc',
   contrast: '#e8f0eb',
   exterior: '#ffffff',
+  border: 'rgb(0 0 0 / 25%)',
 
   accentPrimary: '#8667c8',
   accentSecondary: 'black',
@@ -97,10 +100,11 @@ const baseLightColors = {
   accentSuccess: '#159038',
   accentError: '#b5301b',
   accentBackground: 'rgb(234 232 219)',
-  accentMundane: 'rgba(65,53,0, 0.5)',
+  accentMundane: 'rgba(65,53,0, 0.09)',
   accentCelestial: '#bad2bd',
   accentContrast: '#e1e0e0',
   accentExterior: '#171724',
+  accentBorder: 'rgb(0 0 0 / 50%)',
 
   onPrimary: 'rgba(0, 0, 0, 0.9)',
   onSecondary: 'rgba(255,255,255, 0.95)',
@@ -122,7 +126,7 @@ const baseLightColors = {
   accentOnError: '#ffffff',
   accentOnBackground: 'rgba(0, 0, 0, 0.9)',
   accentOnMundane: 'rgba(0, 0, 0, 0.9)',
-  accentOnCelestial: 'rgba(255, 255, 255, 0.9)',
+  accentOnCelestial: 'rgba(0, 0, 0, 0.9)',
   accentOnContrast: '#282828',
   accentOnExterior: 'black',
 };

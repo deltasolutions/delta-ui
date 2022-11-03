@@ -108,6 +108,7 @@ const ControlItem = ({ ...rest }) => (
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
+      color: 'onContext',
       borderRadius: 4,
       '&:hover, &:focus-visible': {
         backgroundColor: 'accentContext',

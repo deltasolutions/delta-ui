@@ -43,12 +43,12 @@ export const LayoutNavigationItem = forwardRef<
         ...(active
           ? {
               '&:before': getAccentBlockStyle(
-                colorScheme === 'dark' ? 1.0 : 0.3
+                colorScheme === 'dark' ? 1.0 : 0.1
               ),
             }
           : {
               '&:hover::before': getAccentBlockStyle(
-                colorScheme === 'dark' ? 0.75 : 0.2
+                colorScheme === 'dark' ? 0.75 : 0.05
               ),
             }),
       }}
