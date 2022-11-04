@@ -23,46 +23,43 @@ export const BadgesField = (props: FieldProps) => {
   const openModal = useJsFormModal({
     schema: itemsSchema as Schema,
   });
-
   return (
-    <Box sx={{ ...(props.schema.title && { mt: '16px' }) }}>
-      <PrimitiveTemplate {...props}>
-        <Box
-          sx={{
-            marginBottom: 3,
-            gap: 2,
-            display: 'flex',
-            flexWrap: 'wrap',
-            alignItems: 'center',
-          }}
-        >
-          {values?.map(datum => (
-            <BadgeItem
-              key={hash(datum)}
-              colorMap={(itemsSchema as any)?.layout?.colorMap ?? []}
-              value={datum}
-              onClick={() =>
-                openModal({
-                  initialValue: datum,
-                  onChange: v => handleChange(v, datum),
-                })
-              }
-              onDelete={handleDelete}
+    <PrimitiveTemplate {...props}>
+      <Box
+        sx={{
+          marginBottom: 3,
+          gap: 2,
+          display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+        }}
+      >
+        {values?.map(datum => (
+          <BadgeItem
+            key={hash(datum)}
+            colorMap={(itemsSchema as any)?.layout?.colorMap ?? []}
+            value={datum}
+            onClick={() =>
+              openModal({
+                initialValue: datum,
+                onChange: v => handleChange(v, datum),
+              })
+            }
+            onDelete={handleDelete}
+          />
+        ))}
+        {handleAdd && (
+          <Tooltip content={t('actions.add')}>
+            <Button
+              icon={IoIosAddCircleOutline}
+              size="small"
+              variant="icon"
+              onClick={() => openModal({ onChange: handleAdd })}
             />
-          ))}
-          {handleAdd && (
-            <Tooltip content={t('actions.add')}>
-              <Button
-                icon={IoIosAddCircleOutline}
-                size="small"
-                variant="icon"
-                onClick={() => openModal({ onChange: handleAdd })}
-              />
-            </Tooltip>
-          )}
-        </Box>
-      </PrimitiveTemplate>
-    </Box>
+          </Tooltip>
+        )}
+      </Box>
+    </PrimitiveTemplate>
   );
 };
 

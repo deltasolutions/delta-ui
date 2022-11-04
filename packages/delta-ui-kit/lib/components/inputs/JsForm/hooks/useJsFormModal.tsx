@@ -50,7 +50,7 @@ const JsFormModal = ({
     >
       <ModalHeader>
         <Heading level={3}>
-          {initialValue ? t('actions.update') : t('actions.addition')}
+          {initialValue ? t('actions.edit') : t('actions.create')}
         </Heading>
       </ModalHeader>
       <ModalBody>

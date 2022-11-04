@@ -1,5 +1,6 @@
 import { jsx } from '@theme-ui/core';
 import { TemplateProps, useArrayHandlers } from 'delta-jsf';
+import { Children } from 'react';
 import { CgPlayListAdd, CgPlayListRemove } from 'react-icons/cg';
 import { Button } from '../../../Button';
 import { Box } from '../../../containers';
@@ -35,6 +36,7 @@ export const ArrayTemplate = (props: TemplateProps) => {
           {required && <span sx={{ ml: 1, color: 'error' }}>*</span>}
         </Box>
         <Button
+          disabled={!handleDelete}
           icon={CgPlayListRemove}
           sx={{ ml: 'auto' }}
           variant="icon"
@@ -45,13 +47,14 @@ export const ArrayTemplate = (props: TemplateProps) => {
           }
         />
         <Button
+          disabled={!handleAdd}
           icon={CgPlayListAdd}
           variant="icon"
           onClick={() => handleAdd?.()}
         />
       </Box>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-        {children}
+        {Children.count(children) > 0 ? children : null}
       </Box>
       <ErrorList validity={validity} />
     </Box>
