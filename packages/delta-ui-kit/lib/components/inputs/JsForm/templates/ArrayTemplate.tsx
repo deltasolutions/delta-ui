@@ -4,6 +4,7 @@ import { Children } from 'react';
 import { CgPlayListAdd, CgPlayListRemove } from 'react-icons/cg';
 import { Button } from '../../../Button';
 import { Box } from '../../../containers';
+import { EmptyOptions } from '../../EmptyOptions';
 import { ErrorList } from './ErrorList';
 
 export const ArrayTemplate = (props: TemplateProps) => {
@@ -53,9 +54,20 @@ export const ArrayTemplate = (props: TemplateProps) => {
           onClick={() => handleAdd?.()}
         />
       </Box>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-        {Children.count(children) > 0 ? children : null}
-      </Box>
+      {Children.count(children) > 0 ? (
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+          {children}
+        </Box>
+      ) : (
+        <EmptyOptions
+          sx={{
+            fontSize: '18px',
+            border: '3px dashed',
+            borderColor: 'accentContext',
+            borderRadius: 4,
+          }}
+        />
+      )}
       <ErrorList validity={validity} />
     </Box>
   );
