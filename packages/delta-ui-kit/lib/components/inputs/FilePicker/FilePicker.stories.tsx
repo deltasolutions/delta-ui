@@ -18,3 +18,15 @@ export const Basics = () => {
     />
   );
 };
+
+export const MimeFilter = () => {
+  return (
+    <FilePicker
+      accept="image/jpeg"
+      multiple={true}
+      onChange={fileList => {
+        console.log('fileList', fileList);
+      }}
+    />
+  );
+};

@@ -21,6 +21,7 @@ import { FilePickerPreview } from './FilePickerPreview';
 export interface FilePickerProps
   extends Omit<BoxProps, keyof FormWidgetProps>,
     FormWidgetProps<FileList | undefined> {
+  accept?: string;
   multiple?: boolean;
   children?: ReactNode;
   buttonProps?: Omit<ButtonProps, 'children'>;
@@ -29,6 +30,7 @@ export interface FilePickerProps
 export const FilePicker = forwardRef<HTMLDivElement, FilePickerProps>(
   (
     {
+      accept,
       multiple,
       children,
       buttonProps,
@@ -96,12 +98,12 @@ export const FilePicker = forwardRef<HTMLDivElement, FilePickerProps>(
       <Box ref={ref} {...rest}>
         <input
           ref={inputRef}
+          accept={accept}
           disabled={disabled}
           multiple={multiple}
           sx={{ display: 'none' }}
           type="file"
           onChange={handleInputChange}
-          {...rest}
         />
         <Box
           ref={drop}
