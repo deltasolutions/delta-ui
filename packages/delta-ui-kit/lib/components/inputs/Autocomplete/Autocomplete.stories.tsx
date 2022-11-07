@@ -20,7 +20,7 @@ export const Basics = () => {
   return (
     <Autocomplete
       multiple
-      getOptions={v => options.filter(t => isAlike(v, t)).slice(0, 5)}
+      getOptions={v => options.filter(t => isAlike(v, t))}
       placeholder="Placeholder"
     />
   );

@@ -32,11 +32,9 @@ export const Drop = forwardRef<HTMLDivElement, DropPropos>(
     }[token];
 
     return (
-      <Box ref={ref} sx={{ maxHeight: '500px', overflowY: 'auto' }}>
-        <DropContentContext.Provider value={{ handleClose, onItemClick }}>
-          <DropContent proposal={proposal!} />
-        </DropContentContext.Provider>
-      </Box>
+      <DropContentContext.Provider value={{ handleClose, onItemClick }}>
+        <DropContent ref={ref} proposal={proposal!} />
+      </DropContentContext.Provider>
     );
   }
 );
