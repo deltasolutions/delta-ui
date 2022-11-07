@@ -34,7 +34,6 @@ export const Basics = createFormStory({
       textWithDefaults: {
         title: 'Text With Defaults',
         type: 'string',
-        default: 'ABCD',
       },
       switch: {
         title: 'Switch',
@@ -106,7 +105,7 @@ export const LoginForm = createFormStory({
     },
     required: ['username', 'password'],
   },
-  initialValue: {},
+  initialValue: { username: 'root', password: '' },
 });
 
 const ajv = new Ajv({

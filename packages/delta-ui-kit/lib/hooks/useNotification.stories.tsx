@@ -14,7 +14,7 @@ export const Basics = () => {
       variant="contained"
       onClick={() =>
         openNotification({
-          placement: NotificationPlacement.TopRight,
+          placement: NotificationPlacement.BottomRight,
           color: 'success',
           duration: 1000 * 6,
           render: () =>
