@@ -7,10 +7,13 @@ import { Anchor } from '../Anchor';
 import { Card, CardBody, CardFooter, CardHeader, Heading } from '../containers';
 import { DropMenu, DropMenuItem } from '../inputs';
 import { AreaChart } from './AreaChart';
+const relativeTime = require('dayjs/plugin/relativeTime');
+dayjs.extend(relativeTime);
 
 export default {
   title: 'Displays/AreaChart',
 } as Meta;
+console.log(appleStock.slice(0, 50));
 
 const RangePicker = () => {
   const [openDrop, anhorRef] = useDrop(
@@ -42,13 +45,50 @@ export const Basics = () => {
       <CardHeader>
         <Heading level={3}>CPU Temperature</Heading>
       </CardHeader>
-      <CardBody sx={{ width: '600px' }} variant="wide">
+      <CardBody sx={{ width: '1000px', height: '500px' }} variant="wide">
         <AreaChart
-          data={appleStock.slice(0, 8)}
+          data={appleStock.slice(0, 50)}
           formatX={v => dayjs(v).format('YYYY-MM-DD')}
+          formatXTick={v => dayjs(v).format('YYYY-MM-DD')}
           formatY={v => `${v} Celsius`}
           xAccessor={v => v.date}
+          xScale={{ type: 'band' }}
           yAccessor={v => v.close}
+          yScale={{ type: 'linear' }}
+        />
+      </CardBody>
+      <CardFooter>
+        <RangePicker />
+      </CardFooter>
+    </Card>
+  );
+};
+
+export const Today = () => {
+  const data = new Array(11)
+    .fill(undefined)
+    .map((_, index) => ({
+      close: Math.random() * 80,
+      date: new Date().getTime() - 1000 * 60 * 60 * index,
+    }))
+    .reverse();
+
+  return (
+    <Card>
+      <CardHeader>
+        <Heading level={3}>CPU Temperature</Heading>
+      </CardHeader>
+      <CardBody sx={{ width: '1000px', height: '400px' }} variant="wide">
+        <AreaChart
+          data={data}
+          formatX={v => dayjs(v).format('YYYY-MM-DD')}
+          //@ts-ignore
+          formatXTick={v => dayjs().to(v)}
+          formatY={v => `${v} Celsius`}
+          xAccessor={v => v.date}
+          xScale={{ type: 'band' }}
+          yAccessor={v => v.close}
+          yScale={{ type: 'linear' }}
         />
       </CardBody>
       <CardFooter>

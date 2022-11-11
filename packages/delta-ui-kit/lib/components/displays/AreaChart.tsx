@@ -1,28 +1,33 @@
 import { jsx } from '@theme-ui/core';
-import { curveCardinal } from '@visx/curve';
 import { LinearGradient } from '@visx/gradient';
 import {
   buildChartTheme,
-  AnimatedAreaSeries,
+  AreaSeries,
   XYChart,
-  AnimatedGrid,
-  AnimatedAxis,
+  Grid,
+  Axis,
   Tooltip,
 } from '@visx/xychart';
-import { useMemo } from 'react';
+import { transparentize } from 'polished';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { useDeltaTheme } from '../../hooks';
-import { Box, Heading } from '../containers';
+import { BoxProps, Box, Heading } from '../containers';
 
-export interface AreaChartProps<T extends object> {
+export interface AreaChartProps<T extends object> extends BoxProps {
   data: T[];
   color?: string;
   xTicks?: number;
   yTicks?: number;
   yAccessor: any;
   xAccessor: any;
-  formatX?: (v: number | string | Date) => string;
-  formatY?: (v: number | string | Date) => string;
+  formatX: (v: number | string | Date) => string;
+  formatY: (v: number | string | Date) => string;
+  formatYTick?: (v) => string;
+  formatXTick?: (v) => string;
+  xScale;
+  yScale;
 }
+
 const tickLabelOffset = 10;
 
 export const AreaChart = <T extends object>({
@@ -31,85 +36,103 @@ export const AreaChart = <T extends object>({
   xAccessor,
   formatX,
   formatY,
-  color = 'success',
-  xTicks = 20,
-  yTicks = 10,
+  xScale,
+  yScale,
+  formatXTick,
+  formatYTick,
+  color = 'primary',
+  xTicks = 3,
+  yTicks = 8,
+  ...rest
 }: AreaChartProps<T>) => {
+  const [container, setContainer] = useState<HTMLDivElement | null>(null);
+  const [width, setWidth] = useState<number | undefined>(undefined);
+  const [height, setHeight] = useState<number | undefined>(undefined);
   const { colors } = useDeltaTheme();
-  const mainColor = colors[color] ?? colors.success;
+  const mainColor = colors[color] ?? color;
   const theme = useMemo(
     () =>
+      // TODO: Remove hardcoded values.
       buildChartTheme({
-        backgroundColor: mainColor,
+        backgroundColor: colors.secondary,
         colors: [mainColor],
-        gridColor: 'rgba(255,255,255,0.01)',
+        gridColor: 'rgba(255, 255, 255, 0.01)',
         gridStyles: {
-          stroke: 'rgba(255,255,255,0.2)',
+          stroke: 'rgba(255, 255, 255, 0.2)',
           strokeLinecap: 'round',
         },
         gridColorDark: 'rgba(255,255,255,0.01)',
         tickLength: 8,
-        htmlLabel: {
-          color: 'red',
-        },
-        yAxisLineStyles: {
-          color: 'red',
-        },
       }),
     [colors, mainColor]
   );
-
+  useEffect(() => {
+    if (!container) {
+      setWidth(undefined);
+      setHeight(undefined);
+      return;
+    }
+    const handleSizes = () => {
+      setWidth(container.clientWidth);
+      setHeight(container.clientHeight);
+    };
+    handleSizes();
+    const observer = new ResizeObserver(handleSizes);
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, [container]);
   return (
     <Box
-      style={{ height: 400 }}
       sx={{
+        width: '100%',
+        height: '100%',
         '.visx-axis-tick': {
-          text: { fontSize: '12px', fontWeight: 400, fill: 'onCelestial' },
+          text: {
+            fontSize: '12px',
+            fontWeight: 400,
+            fill: 'onCelestial',
+          },
         },
       }}
+      {...rest}
     >
       <XYChart
-        height={400}
-        margin={{ top: 10, left: 50, right: 50, bottom: 40 }}
+        height={height}
+        margin={{ left: 50, right: 35, top: 15, bottom: 35 }}
         theme={theme}
-        xScale={{ type: 'time' }}
-        yScale={{ type: 'linear' }}
+        width={width}
+        xScale={xScale}
+        yScale={yScale}
       >
         <LinearGradient
-          from={mainColor}
-          fromOpacity={0.3}
+          from={transparentize(0.4, mainColor)}
           id="gradient"
-          toOpacity={0.2}
+          to="transparent"
         />
-        <AnimatedGrid
-          columns={false}
-          numTicks={yTicks}
-          strokeDasharray="0, 4"
-        />
-        <AnimatedAxis
+        <Axis
           hideAxisLine
           hideTicks
-          left={30}
           numTicks={xTicks}
           orientation="bottom"
+          tickFormat={formatXTick}
           tickLabelProps={() => ({ dy: tickLabelOffset })}
         />
-        <AnimatedAxis
+        <Grid columns={false} numTicks={xTicks} strokeDasharray="0,4" />
+        <Axis
           hideAxisLine
           hideTicks
           labelClassName="asix-label"
           numTicks={yTicks}
           orientation="left"
+          tickFormat={formatYTick}
         />
-        <AnimatedAreaSeries
-          curve={curveCardinal}
+        <AreaSeries
           data={data}
           dataKey="primary_line"
           fill="url(#gradient)"
           xAccessor={xAccessor}
           yAccessor={yAccessor}
         />
-
         <Tooltip
           showSeriesGlyphs
           showVerticalCrosshair
@@ -126,10 +149,10 @@ export const AreaChart = <T extends object>({
               }}
             >
               <Heading level={4} sx={{ color: 'exterior' }}>
-                {/* {yAccessor(tooltipData?.nearestDatum?.datum)} */}
+                {formatY(yAccessor(tooltipData?.nearestDatum?.datum))}
               </Heading>
               <Heading level={6} sx={{ fontWeight: 300, color: 'exterior' }}>
-                {/* {xAccessor(tooltipData?.nearestDatum?.datum)} */}
+                {formatX(xAccessor(tooltipData?.nearestDatum?.datum))}
               </Heading>
             </Box>
           )}
