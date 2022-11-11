@@ -13,6 +13,7 @@ export const main = async (args: string[]) => {
   const {
     project,
     config: configFileName,
+    force,
     ...overrides
   } = await parseOpts(args);
   const projectPath = project ?? process.cwd();
@@ -39,8 +40,12 @@ export const main = async (args: string[]) => {
   const { stdout: branch = '' } = branchOutput ?? {};
   log('info', `current branch is ${branch}`);
   if (!['master', 'main'].includes(branch)) {
-    log('error', 'wrong branch to make release at, exiting');
-    return;
+    if (force) {
+      log('info', 'unsafely making release on unknown branch');
+    } else {
+      log('error', 'wrong branch to make release at, exiting');
+      return;
+    }
   }
 
   const execSafe = createExecutor({
