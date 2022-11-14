@@ -43,7 +43,7 @@ export const DropMenu = forwardRef<HTMLDivElement, DropMenuProps>(
     ref
   ) => {
     const childrenArray = Array.from(children);
-    const [activeIndex, setActiveIndex] = useState(0);
+    const [activeIndex, setActiveIndex] = useState<number | null>(0);
     const listItemRef = useRef<HTMLDivElement>(null);
     const stableRef = useMemo(
       () => mergeRefs([listItemRef, ref]),
@@ -62,7 +62,7 @@ export const DropMenu = forwardRef<HTMLDivElement, DropMenuProps>(
           case 'Enter':
             ev.preventDefault();
             ev.stopPropagation();
-            const child = childrenArray[activeIndex];
+            const child = childrenArray[activeIndex!];
             const value = child?.props?.value;
             if (value) {
               onItemClick?.(value);
@@ -76,11 +76,11 @@ export const DropMenu = forwardRef<HTMLDivElement, DropMenuProps>(
             break;
           case 'ArrowUp':
             ev.preventDefault();
-            setActiveIndex(v => (v === 0 ? v : v - 1));
+            setActiveIndex(v => (v === 0 ? v : v! - 1));
             break;
           case 'ArrowDown':
             ev.preventDefault();
-            setActiveIndex(v => (v === childrenArray.length - 1 ? v : v + 1));
+            setActiveIndex(v => (v === childrenArray.length - 1 ? v : v! + 1));
             break;
         }
       };
@@ -110,6 +110,9 @@ export const DropMenu = forwardRef<HTMLDivElement, DropMenuProps>(
             display: 'flex',
             flexDirection: 'column',
             borderRadius: 4,
+          }}
+          onMouseLeave={() => {
+            setActiveIndex(null);
           }}
           {...rest}
         >

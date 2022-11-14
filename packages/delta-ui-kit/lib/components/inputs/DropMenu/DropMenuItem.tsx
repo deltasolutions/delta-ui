@@ -74,8 +74,7 @@ export const DropMenuItem = forwardRef<HTMLButtonElement, DropMenuItemProps>(
         }}
         tabIndex={-1}
         onClick={onClick}
-        onMouseEnter={() => setActiveIndex(index as number)}
-        onMouseLeave={() => setActiveIndex(null)}
+        onMouseMove={() => setActiveIndex(index as number)}
         {...rest}
       >
         {children}
