@@ -1,4 +1,11 @@
-import { autoUpdate, Placement, useFloating } from '@floating-ui/react-dom';
+import {
+  autoUpdate,
+  flip,
+  offset,
+  Placement,
+  size,
+  useFloating,
+} from '@floating-ui/react-dom';
 import { jsx } from '@theme-ui/core';
 import FocusTrap from 'focus-trap-react';
 import {
@@ -58,6 +65,18 @@ export const useDrop = <T extends Element, C extends unknown = never>(
         useFloating<T>({
           placement,
           whileElementsMounted: autoUpdate,
+          middleware: [
+            offset(2),
+            flip({ padding: 8 }),
+            size({
+              apply({ rects, availableHeight, elements }) {
+                Object.assign(elements.floating.style, {
+                  maxHeight: `${availableHeight}px`,
+                });
+              },
+              padding: 8,
+            }),
+          ],
         });
       const clickOusideRef = useClickOutside<HTMLDivElement>(
         () => !blurResistant && handleClose()
