@@ -37,7 +37,7 @@ export const SelectField = (props: FieldProps) => {
             (typeof v.const === 'string' || typeof v.const === 'undefined')
           ) {
             p.push(
-              <SelectOption key={i} value={v.const}>
+              <SelectOption key={i} value={v.const!}>
                 {v.title || String(v.const)}
               </SelectOption>
             );
