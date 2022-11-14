@@ -106,7 +106,6 @@ export const DropMenu = forwardRef<HTMLDivElement, DropMenuProps>(
           ref={stableRef}
           sx={{
             p: 1,
-            maxHeight: '140px',
             overflowY: 'auto',
             display: 'flex',
             flexDirection: 'column',
