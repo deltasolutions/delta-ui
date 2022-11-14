@@ -122,7 +122,6 @@ export const DropMenu = forwardRef<HTMLDivElement, DropMenuProps>(
             return cloneElement(v, {
               index: i,
               selected,
-              id: `list-item-${i}`,
               active: i === activeIndex,
               onClick: () => onItemClick?.(v.props.value),
             });
