@@ -1,6 +1,6 @@
 {
   "name": "delta-ui-kit",
-  "version": "0.6.76",
+  "version": "0.6.77",
   "license": "MIT",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
