@@ -9,24 +9,9 @@ export default {
 } as Meta;
 
 export const Basics = () => {
-  return (
-    <FilePicker
-      multiple={true}
-      onChange={fileList => {
-        console.log('fileList', fileList);
-      }}
-    />
-  );
+  return <FilePicker multiple={true} />;
 };
 
 export const MimeFilter = () => {
-  return (
-    <FilePicker
-      accept="image/jpeg"
-      multiple={true}
-      onChange={fileList => {
-        console.log('fileList', fileList);
-      }}
-    />
-  );
+  return <FilePicker accept="image/jpeg" multiple={true} />;
 };

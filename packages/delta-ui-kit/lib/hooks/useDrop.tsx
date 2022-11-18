@@ -166,5 +166,12 @@ export const useDrop = <T extends Element, C extends unknown = never>(
     };
     return (closeDropInstance.current = fnWrap);
   }, [openDropInstance]);
-  return [openDrop, setAnchor] as const;
+
+  const anchorRef = useCallback((v: T | null) => {
+    setAnchor(v);
+    if (!v) {
+      closeDropInstance.current?.();
+    }
+  }, []);
+  return [openDrop, anchorRef] as const;
 };
