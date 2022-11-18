@@ -13,7 +13,6 @@ dayjs.extend(relativeTime);
 export default {
   title: 'Displays/AreaChart',
 } as Meta;
-console.log(appleStock.slice(0, 50));
 
 const RangePicker = () => {
   const [openDrop, anhorRef] = useDrop(
