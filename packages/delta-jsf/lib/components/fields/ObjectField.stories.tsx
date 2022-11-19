@@ -201,3 +201,54 @@ export const MultipleIfs = props => {
     />
   );
 };
+
+export const NestedAllOf = props => {
+  const fieldProps = useStoryFieldProps(props);
+  return (
+    <ObjectField
+      schema={{
+        type: 'object',
+        allOf: [
+          {
+            type: 'object',
+            properties: {
+              a: { title: 'AAA', type: 'string' },
+            },
+          },
+          {
+            if: {
+              type: 'object',
+              properties: { a: { const: 'x' } },
+              required: ['a'],
+            },
+            then: {
+              type: 'object',
+              allOf: [
+                {
+                  type: 'object',
+                  properties: {
+                    b: { title: 'BBB', type: 'string' },
+                  },
+                },
+                {
+                  if: {
+                    type: 'object',
+                    properties: { b: { const: 'x' } },
+                    required: ['b'],
+                  },
+                  then: {
+                    type: 'object',
+                    properties: {
+                      c: { title: 'CCC', type: 'string' },
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      }}
+      {...fieldProps}
+    />
+  );
+};
