@@ -212,7 +212,12 @@ export const NestedAllOf = props => {
           {
             type: 'object',
             properties: {
-              a: { title: 'AAA', type: 'string' },
+              a: {
+                title: 'AAA',
+                type: 'string',
+                oneOf: [{ const: 'x' }, { const: 'y' }],
+                layout: { field: 'select' },
+              },
             },
           },
           {
@@ -227,7 +232,12 @@ export const NestedAllOf = props => {
                 {
                   type: 'object',
                   properties: {
-                    b: { title: 'BBB', type: 'string' },
+                    b: {
+                      title: 'BBB',
+                      type: 'string',
+                      oneOf: [{ const: 'x' }, { const: 'y' }],
+                      layout: { field: 'select' },
+                    },
                   },
                 },
                 {

@@ -34,7 +34,8 @@ export function getCompressed(schema: Schema, value: unknown): Schema {
     compressedIf,
     ...compressedAllOf,
   ].reduce(
-    (p: { [key: string]: unknown }, v) => (isWalkable(v) ? merge(p, v) : p),
+    (p: { [key: string]: unknown }, v) =>
+      isWalkable(v) ? merge(p, clone(v)) : p,
     {}
   ) as { [key: string]: unknown };
   if (isWalkable(compressedSchema.properties)) {
