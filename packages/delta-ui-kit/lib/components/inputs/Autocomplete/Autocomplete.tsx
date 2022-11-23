@@ -244,7 +244,7 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
             display: 'flex',
             alignItems: 'center',
             flexWrap: 'wrap',
-            cursor: disabled ? 'not-allowed' : 'text',
+            cursor: 'default',
             '&:focus-within': {
               outline: '2px solid',
               outlineColor: 'primary',
@@ -256,6 +256,7 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
             <TextInput
               ref={inputRef}
               autoComplete="off"
+              disabled={disabled}
               placeholder={placeholder}
               style={{ paddingLeft: selections?.length ? '0.45em' : 0 }}
               sx={{ fontSize: 2 }}

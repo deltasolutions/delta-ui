@@ -30,6 +30,10 @@ export const Empty = () => {
   return <Autocomplete multiple placeholder="Placeholder" />;
 };
 
+export const Disabled = () => {
+  return <Autocomplete disabled multiple placeholder="Placeholder" />;
+};
+
 export const Controlled = () => {
   const [value, setValue] = useState<unknown[]>([]);
   return (
