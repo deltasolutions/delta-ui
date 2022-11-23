@@ -12,6 +12,10 @@ export const Basics = () => {
   return <FilePicker multiple={true} />;
 };
 
+export const Disabled = () => {
+  return <FilePicker disabled multiple={true} />;
+};
+
 export const MimeFilter = () => {
   return <FilePicker accept="image/jpeg" multiple={true} />;
 };

@@ -48,6 +48,9 @@ export const FilePicker = forwardRef<HTMLDivElement, FilePickerProps>(
     const inputRef = useRef<HTMLInputElement>(null);
     const handleChange = useCallback(
       (nextValue: FileList | undefined) => {
+        if (disabled) {
+          return;
+        }
         setInnerValue(nextValue);
         onChange?.(nextValue);
       },
@@ -55,6 +58,9 @@ export const FilePicker = forwardRef<HTMLDivElement, FilePickerProps>(
     );
     const handleInputChange = useCallback(
       (event: ChangeEvent<HTMLInputElement>) => {
+        if (disabled) {
+          return;
+        }
         const files = event?.target?.files;
         if (!event) {
           handleChange(undefined);
@@ -64,10 +70,12 @@ export const FilePicker = forwardRef<HTMLDivElement, FilePickerProps>(
           handleChange(files);
         }
       },
-      [handleChange, multiple]
+      [handleChange, multiple, disabled]
     );
     const onBrowseFiles = useCallback(() => {
-      inputRef.current?.click();
+      if (!disabled) {
+        inputRef.current?.click();
+      }
     }, [disabled]);
     const [{ canDrop, isOver }, drop] = useDrop(
       () => ({
@@ -95,7 +103,7 @@ export const FilePicker = forwardRef<HTMLDivElement, FilePickerProps>(
       innerValue !== value && setInnerValue(value);
     }, [value]);
     return (
-      <Box ref={ref} {...rest}>
+      <Box ref={ref} sx={{ opacity: disabled ? 0.5 : 1 }} {...rest}>
         <input
           ref={inputRef}
           accept={accept}
@@ -124,24 +132,26 @@ export const FilePicker = forwardRef<HTMLDivElement, FilePickerProps>(
             outlineStyle: 'solid',
             outlineColor: 'primary',
             outlineWidth: 0,
-            ...(active && {
-              opacity: 0.5,
-              outlineWidth: 2,
-            }),
+            ...(!disabled &&
+              active && {
+                opacity: 0.5,
+                outlineWidth: 2,
+              }),
           }}
           {...rest}
         >
           {innerValue ? (
             <FilePickerFiles
+              disabled={disabled}
               files={innerValue}
               handleInputChange={handleInputChange}
               isMultiple={multiple}
               onBrowseFiles={onBrowseFiles}
             />
-          ) : active ? (
+          ) : active && !disabled ? (
             <RiUploadCloudLine size={26} />
           ) : (
-            <FilePickerPreview isMultiple={multiple} />
+            <FilePickerPreview disabled={disabled} isMultiple={multiple} />
           )}
         </Box>
       </Box>

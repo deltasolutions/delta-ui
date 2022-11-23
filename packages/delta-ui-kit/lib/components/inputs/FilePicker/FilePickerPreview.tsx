@@ -7,9 +7,13 @@ import { Box, BoxProps } from '../../containers';
 
 export interface FilePickerPreviewProps extends BoxProps {
   isMultiple?: boolean;
+  disabled?: boolean;
 }
 
-export const FilePickerPreview = ({ isMultiple }: FilePickerPreviewProps) => {
+export const FilePickerPreview = ({
+  disabled,
+  isMultiple,
+}: FilePickerPreviewProps) => {
   const [t] = useTranslation('common');
   return (
     <Fragment>
@@ -26,6 +30,7 @@ export const FilePickerPreview = ({ isMultiple }: FilePickerPreviewProps) => {
         </Box>
       </Box>
       <Button
+        disabled={disabled}
         sx={{
           color: 'accentOnContext',
           width: 'fit-content',

@@ -249,6 +249,7 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
               outline: '2px solid',
               outlineColor: 'primary',
             },
+            opacity: disabled ? 0.5 : 1,
           }}
           {...rest}
         >

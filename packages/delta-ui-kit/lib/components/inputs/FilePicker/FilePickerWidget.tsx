@@ -6,12 +6,13 @@ import { Anchor, AnchorProps } from '../../Anchor';
 export interface FilePickerWidgetProps extends AnchorProps {
   file: File;
   isEven: boolean;
+  disabled?: boolean;
 }
 
 export const FilePickerWidget = forwardRef<
   HTMLAnchorElement,
   FilePickerWidgetProps
->(({ file, isEven, ...rest }, ref) => {
+>(({ file, isEven, disabled, ...rest }, ref) => {
   const [link, setLink] = useState('#');
   useEffect(() => {
     if (!file || typeof window === 'undefined') {
