@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { compact } from '../../../../docs/decorators';
 import { Button } from '../../Button';
 import { Box } from '../../containers';
-import { ComplexSearch } from './ComplexSearch';
+import { ComplexSearch, ComplexSearchProps } from './ComplexSearch';
 import { ComplexSearchSegment } from './types';
 
 export default {
@@ -20,7 +20,9 @@ const users = [
 
 const exoplanets = exp.slice(0, 100);
 
-export const Basics = () => {
+export const Disabled = () => <Basics disabled />;
+
+export const Basics = (props: Partial<ComplexSearchProps>) => {
   const [value, setValue] = useState<ComplexSearchSegment[]>([]);
 
   return (
@@ -94,6 +96,7 @@ export const Basics = () => {
         ]}
         value={value}
         onChange={setValue}
+        {...props}
       />
 
       <Box sx={{ height: '600px' }}>

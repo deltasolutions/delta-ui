@@ -9,6 +9,7 @@ export const ComplexSearchContext = createContext(
 export interface ComplexSearchContextOptions {
   proposals: ComplexSearchProps['proposals'];
   editingIndex?: number;
+  disabled?: boolean;
   setEditingIndex: Dispatch<SetStateAction<number | undefined>>;
   segments: ComplexSearchSegment[];
   removeSegment: (index: number) => void;
