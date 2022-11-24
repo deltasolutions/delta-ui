@@ -51,9 +51,9 @@ export const Basics = () => {
           formatXTick={v => dayjs(v).format('YYYY-MM-DD')}
           formatY={v => `${v} Celsius`}
           xAccessor={v => v.date}
-          xAngleTicks={-25}
           xScale={{ type: 'band' }}
-          xWidthTicks={50}
+          xTickAngle={-25}
+          xTickWidth={50}
           yAccessor={v => v.close}
           yScale={{ type: 'linear' }}
         />
@@ -83,6 +83,7 @@ export const Today = () => {
         <AreaChart
           data={data}
           formatX={v => dayjs(v).format('YYYY-MM-DD')}
+          // FIXME
           // @ts-ignore
           formatXTick={v => dayjs().to(v)}
           formatY={v => `${v} Celsius`}
