@@ -24,8 +24,8 @@ export interface AreaChartProps<T extends object> extends BoxProps {
   formatY: (v: number | string | Date) => string;
   formatYTick?: (v) => string;
   formatXTick?: (v) => string;
-  xScale;
-  yScale;
+  xScale: any;
+  yScale: any;
   xAngleTicks?: number;
   yAngleTicks?: number;
   xWidthTicks?: number;
@@ -49,8 +49,8 @@ export const AreaChart = <T extends object>({
   yTicks = 8,
   xAngleTicks = 0,
   yAngleTicks = 0,
-  xWidthTicks = 35, 
-  yWidthTicks = 15, 
+  xWidthTicks = 35,
+  yWidthTicks = 15,
   ...rest
 }: AreaChartProps<T>) => {
   const [container, setContainer] = useState<HTMLDivElement | null>(null);
@@ -91,6 +91,7 @@ export const AreaChart = <T extends object>({
   }, [container]);
   return (
     <Box
+      ref={setContainer}
       sx={{
         width: '100%',
         height: '100%',

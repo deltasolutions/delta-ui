@@ -83,7 +83,7 @@ export const Today = () => {
         <AreaChart
           data={data}
           formatX={v => dayjs(v).format('YYYY-MM-DD')}
-          //@ts-ignore
+          // @ts-ignore
           formatXTick={v => dayjs().to(v)}
           formatY={v => `${v} Celsius`}
           xAccessor={v => v.date}
