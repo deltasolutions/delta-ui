@@ -26,6 +26,10 @@ export interface AreaChartProps<T extends object> extends BoxProps {
   formatXTick?: (v) => string;
   xScale;
   yScale;
+  xAngleTicks?: number;
+  yAngleTicks?: number;
+  xWidthTicks?: number;
+  yWidthTicks?: number;
 }
 
 const tickLabelOffset = 10;
@@ -43,6 +47,10 @@ export const AreaChart = <T extends object>({
   color = 'primary',
   xTicks = 3,
   yTicks = 8,
+  xAngleTicks = 0,
+  yAngleTicks = 0,
+  xWidthTicks = 35, 
+  yWidthTicks = 15, 
   ...rest
 }: AreaChartProps<T>) => {
   const [container, setContainer] = useState<HTMLDivElement | null>(null);
@@ -98,7 +106,7 @@ export const AreaChart = <T extends object>({
     >
       <XYChart
         height={height}
-        margin={{ left: 50, right: 35, top: 15, bottom: 35 }}
+        margin={{ left: 50, right: 35, top: yWidthTicks, bottom: xWidthTicks }}
         theme={theme}
         width={width}
         xScale={xScale}
@@ -115,7 +123,7 @@ export const AreaChart = <T extends object>({
           numTicks={xTicks}
           orientation="bottom"
           tickFormat={formatXTick}
-          tickLabelProps={() => ({ dy: tickLabelOffset })}
+          tickLabelProps={() => ({ dy: tickLabelOffset, angle: xAngleTicks })}
         />
         <Grid columns={false} numTicks={xTicks} strokeDasharray="0,4" />
         <Axis
@@ -125,6 +133,7 @@ export const AreaChart = <T extends object>({
           numTicks={yTicks}
           orientation="left"
           tickFormat={formatYTick}
+          tickLabelProps={() => ({ angle: yAngleTicks })}
         />
         <AreaSeries
           data={data}
