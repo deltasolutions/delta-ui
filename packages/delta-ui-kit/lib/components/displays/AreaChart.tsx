@@ -50,7 +50,7 @@ export const AreaChart = <T extends object>({
   xTickAngle = 0,
   xTickWidth = 35,
   yTickAngle = 0,
-  yTickWidth = 15,
+  yTickWidth = 50,
   ...rest
 }: AreaChartProps<T>) => {
   const [container, setContainer] = useState<HTMLDivElement | null>(null);
@@ -107,7 +107,7 @@ export const AreaChart = <T extends object>({
     >
       <XYChart
         height={height}
-        margin={{ left: 50, right: 35, top: yTickWidth, bottom: xTickWidth }}
+        margin={{ left: yTickWidth, right: 35, top: 15, bottom: xTickWidth }}
         theme={theme}
         width={width}
         xScale={xScale}
