@@ -14,7 +14,7 @@ import { TabContext } from './TabContext';
 
 export interface TabOptionProps extends Omit<AnchorProps, 'variant'> {
   id: string;
-  variant?: 'chip' | 'bookmark';
+  variant?: 'bookmark' | 'chip' | 'underline';
   icon?: ComponentType<HTMLAttributes<Element>>;
 }
 
@@ -89,6 +89,41 @@ export const TabOption = forwardRef<HTMLAnchorElement, TabOptionProps>(
                       color: 'accentOnContext',
                     },
                   }),
+            },
+            underline: {
+              borderRadius: 0,
+              px: 3,
+              pb: 2,
+              position: 'relative',
+              '&:first-of-type': {
+                ml: -2,
+              },
+              '&:not(:last-of-type)::after': {
+                content: "''",
+                width: 0,
+                height: '60%',
+                position: 'absolute',
+                right: '-5px',
+                top: '10%',
+                borderRight: '1px solid',
+                borderRightColor: transparentize(0.5, colors.onContext),
+              },
+              ...(active && {
+                color: 'accentOnContext',
+                '&::before': {
+                  content: "''",
+                  width: '65%',
+                  height: '3px',
+                  position: 'absolute',
+                  left: '50%',
+                  bottom: 0,
+                  transform: 'translateX(-50%)',
+                  borderRadius: 4,
+                  borderBottomRightRadius: 0,
+                  borderBottomLeftRadius: 0,
+                  background: 'primary',
+                },
+              }),
             },
           }[variant ?? '']
         }

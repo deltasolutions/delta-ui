@@ -5,6 +5,7 @@ export * from './useDebounce';
 export * from './useDeltaTheme';
 export * from './useDialog';
 export * from './useDrop';
+export * from './useEChartDefalults';
 export * from './useForwardRef';
 export * from './useGeoLocDescription';
 export * from './useGrid';
