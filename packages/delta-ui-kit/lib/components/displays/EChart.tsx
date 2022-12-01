@@ -63,7 +63,6 @@ export class EChart extends PureComponent<EChartsReactProps> {
       !isEqual(prevProps.onEvents, this.props.onEvents)
     ) {
       this.dispose();
-
       this.renderNewEcharts();
       return;
     }
@@ -129,7 +128,9 @@ export class EChart extends PureComponent<EChartsReactProps> {
     await this.initEchartsInstance();
     const echartsInstance = this.updateEChartsOption();
     this.bindEvents(echartsInstance, onEvents || {});
-    if (isFunction(onChartReady)) onChartReady?.(echartsInstance);
+    if (isFunction(onChartReady)) {
+      onChartReady?.(echartsInstance);
+    }
     if (this.element && autoResize) {
       bind(this.element, () => {
         this.resize();
@@ -172,6 +173,7 @@ export class EChart extends PureComponent<EChartsReactProps> {
     const echartsInstance = this.getEchartsInstance();
     if (!this.isInitialResize) {
       try {
+        console.log('!', this.element);
         echartsInstance.resize({
           width: 'auto',
           height: 'auto',
@@ -185,15 +187,16 @@ export class EChart extends PureComponent<EChartsReactProps> {
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   render(): JSX.Element {
-    const { style, className = '' } = this.props;
-    const newStyle = { height: 300, ...style };
     return (
       <div
         ref={e => {
           this.element = e;
         }}
-        className={`echarts-for-react ${className}`}
-        style={newStyle}
+        style={{
+          width: '100%',
+          height: '100%',
+          ...this.props.style,
+        }}
       />
     );
   }

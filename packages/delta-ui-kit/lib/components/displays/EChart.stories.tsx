@@ -47,7 +47,7 @@ export const AreaChart = () => {
           </TabOption>
         </TabGroup>
       </CardBody>
-      <CardBody sx={{ width: '1000px' }} variant="wide">
+      <CardBody sx={{ width: '1000px', height: '300px' }} variant="wide">
         <EChart
           option={{
             tooltip: {
@@ -98,7 +98,7 @@ export const PieChart = () => {
       <CardHeader>
         <Heading level={3}>Temperature</Heading>
       </CardHeader>
-      <CardBody sx={{ width: '400px' }} variant="wide">
+      <CardBody sx={{ width: '400px', height: '300px' }} variant="wide">
         <EChart
           option={{
             tooltip: defaults.pie.tooltip(),
