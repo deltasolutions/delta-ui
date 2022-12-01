@@ -1,4 +1,4 @@
-import { DefaultLabelFormatterCallbackParams, graphic } from 'echarts';
+import { graphic } from 'echarts';
 import { transparentize } from 'polished';
 import { useMemo } from 'react';
 import { useDeltaTheme } from './useDeltaTheme';
@@ -42,7 +42,7 @@ export const useEChartDefalults = () => {
             offset: 1,
             color: 'transparent',
           },
-        ]),
+        ]) as any,
       }),
     }),
     [colors]
@@ -70,8 +70,7 @@ export const useEChartDefalults = () => {
         position: 'inner' as const,
         fontSize: 14,
         color: colors.accentOnContext,
-        formatter: ({ data }: DefaultLabelFormatterCallbackParams) =>
-          data['value'],
+        formatter: ({ data }) => data['value'],
       }),
     }),
     [colors]
