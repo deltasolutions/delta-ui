@@ -7,7 +7,7 @@ export const useEChartDefalults = () => {
   const { colors } = useDeltaTheme();
   const line = useMemo(
     () => ({
-      grid: () => ({ left: 50, right: 50, top: 10, bottom: 30 }),
+      grid: () => ({ left: 50, right: 35, top: 10, bottom: 30 }),
       xAxis: () => ({
         type: 'time' as const,
         axisTick: {
