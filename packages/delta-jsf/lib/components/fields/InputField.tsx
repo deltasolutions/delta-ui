@@ -4,7 +4,7 @@ import { FieldProps } from '../../models';
 
 export function InputField(props: FieldProps) {
   const {
-    schema: { type, multipleOf, minimum, maximum },
+    schema: { type, multipleOf, minimum, maximum, readOnly },
     value,
     onValue,
     onValidity,
@@ -36,6 +36,7 @@ export function InputField(props: FieldProps) {
   return (
     <PrimitiveTemplate {...props}>
       <input
+        disabled={readOnly ?? false}
         max={maximum}
         min={minimum}
         step={step}
