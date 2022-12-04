@@ -173,7 +173,6 @@ export class EChart extends PureComponent<EChartsReactProps> {
     const echartsInstance = this.getEchartsInstance();
     if (!this.isInitialResize) {
       try {
-        console.log('!', this.element);
         echartsInstance.resize({
           width: 'auto',
           height: 'auto',
