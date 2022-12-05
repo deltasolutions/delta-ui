@@ -65,12 +65,12 @@ export const ItemsLimits = props => {
   );
 };
 
-export const ReadOnlyValue = props => {
+export const ReadOnlyField = props => {
   const fieldProps = useStoryFieldProps(props, ['12345', '56789']);
   return (
     <ArrayField
       schema={{
-        title: 'Array with initial value',
+        title: 'Array with initial field',
         type: 'array',
         items: {
           type: 'string',

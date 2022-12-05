@@ -36,7 +36,7 @@ export function InputField(props: FieldProps) {
   return (
     <PrimitiveTemplate {...props}>
       <input
-        disabled={readOnly ?? false}
+        disabled={readOnly}
         max={maximum}
         min={minimum}
         step={step}

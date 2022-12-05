@@ -10,7 +10,7 @@ export function ArrayTemplate(props: TemplateProps) {
     <div className="djsf-array">
       {schema.title && <div className="title">{schema.title}</div>}
       {handleAdd && (
-        <button disabled={schema.readOnly ?? false} onClick={handleAdd}>
+        <button disabled={schema.readOnly} onClick={handleAdd}>
           Add
         </button>
       )}
@@ -21,7 +21,7 @@ export function ArrayTemplate(props: TemplateProps) {
                 {child}
                 {handleDelete && (
                   <button
-                    disabled={schema.readOnly ?? false}
+                    disabled={schema.readOnly}
                     onClick={() => handleDelete(index)}
                   >
                     Delete

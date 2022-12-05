@@ -84,9 +84,34 @@ export const Array = createFormStory({
           type: 'string',
         },
       },
+      disabledField: {
+        title: 'Disabled Fields',
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {
+            name: {
+              title: 'Name',
+              type: 'string',
+            },
+            age: {
+              title: 'age',
+              type: 'string',
+            },
+          },
+        },
+        readOnly: true,
+      },
     },
   },
-  initialValue: {},
+  initialValue: {
+    disabledField: [
+      {
+        name: 'Oleg',
+        age: '32',
+      },
+    ],
+  },
 });
 
 export const LoginForm = createFormStory({

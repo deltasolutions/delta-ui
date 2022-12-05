@@ -11,10 +11,11 @@ export const ArrayTemplate = (props: TemplateProps) => {
   const {
     children,
     value,
-    schema: { title },
+    schema: { title, readOnly },
     validity,
     required,
   } = props;
+  console.log('children', props)
   const { handleDelete, handleAdd } = useArrayHandlers(props);
   return (
     <Box
@@ -37,7 +38,7 @@ export const ArrayTemplate = (props: TemplateProps) => {
           {required && <span sx={{ ml: 1, color: 'error' }}>*</span>}
         </Box>
         <Button
-          disabled={!handleDelete}
+          disabled={!handleDelete || readOnly}
           icon={CgPlayListRemove}
           sx={{ ml: 'auto' }}
           variant="icon"
@@ -48,7 +49,7 @@ export const ArrayTemplate = (props: TemplateProps) => {
           }
         />
         <Button
-          disabled={!handleAdd}
+          disabled={!handleAdd || readOnly}
           icon={CgPlayListAdd}
           variant="icon"
           onClick={() => handleAdd?.()}
