@@ -31,10 +31,7 @@ export function ArrayField(props: FieldProps) {
       {values?.map((value, index) => {
         const sub: FieldProps<any> = {
           ...props,
-          schema: {
-            ...((items ?? {}) as Schema),
-            readOnly,
-          },
+          schema: { readOnly, ...((items ?? {}) as Schema) },
           value,
           onValue: v => {
             const copy = [...values];

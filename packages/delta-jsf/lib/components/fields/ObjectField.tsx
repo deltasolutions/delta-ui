@@ -1,4 +1,5 @@
-import React, { Key } from 'react';
+import required from 'ajv/dist/vocabularies/validation/required';
+import React, { Component, Key } from 'react';
 import { useDefaults, useIsomorphicLayoutEffect } from '../../hooks';
 import { FieldProps, Schema } from '../../models';
 import { getCompressed, getFieldComponent } from '../../utils';
@@ -8,7 +9,7 @@ export function ObjectField(props: FieldProps) {
 
   const {
     schema,
-    schema: { layout: { order } = {} },
+    schema: { layout: { order } = {}, readOnly },
     registry: {
       templates: { ObjectTemplate, PanicTemplate },
     },
@@ -55,7 +56,7 @@ export function ObjectField(props: FieldProps) {
         const sub: FieldProps & { key: Key } = {
           key,
           ...props,
-          schema: properties?.[key] as Schema,
+          schema: { readOnly, ...(properties?.[key] as Schema) },
           required: required.includes(key),
           value: value?.[key],
           validity: validity?.properties?.[key],

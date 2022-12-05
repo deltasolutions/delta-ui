@@ -65,7 +65,7 @@ export const ItemsLimits = props => {
   );
 };
 
-export const ReadOnlyField = props => {
+export const DisabledFields = props => {
   const fieldProps = useStoryFieldProps(props, ['12345', '56789']);
   return (
     <ArrayField
