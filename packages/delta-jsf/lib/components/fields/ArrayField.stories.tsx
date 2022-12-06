@@ -64,3 +64,22 @@ export const ItemsLimits = props => {
     />
   );
 };
+
+export const DisabledFields = props => {
+  const fieldProps = useStoryFieldProps(props, ['12345', '56789']);
+  return (
+    <ArrayField
+      schema={{
+        title: 'Array with initial field',
+        type: 'array',
+        items: {
+          type: 'string',
+          minLength: 5
+        },
+        readOnly: true,
+        additionalItems: true
+      }}
+      {...fieldProps}
+    />
+  );
+};
