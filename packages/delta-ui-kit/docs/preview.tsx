@@ -16,9 +16,9 @@ export const parameters = {
 
 export const decorators = [
   Story => {
-    const [theme, setTheme] = useState('light');
+    const [mode, setMode] = useState('light');
     return (
-      <SystemContainer theme={theme === 'dark' ? deltaTheme : deltaLightTheme}>
+      <SystemContainer theme={mode === 'dark' ? deltaTheme : deltaLightTheme}>
         <Global
           styles={css`
             html,
@@ -27,7 +27,7 @@ export const decorators = [
               padding: 0;
               width: 100%;
               min-height: 100vh;
-              color-scheme: ${deltaTheme.colorScheme};
+              color-scheme: ${deltaTheme.mode};
               @font-face {
                 font-family: Stolzl;
                 font-weight: 200;
@@ -59,13 +59,11 @@ export const decorators = [
             }
           `}
         />
-        <Box>
-          <span>Light Theme</span>
+        <Box sx={{ p: 2 }}>
+          <span>Light theme</span>{' '}
           <Switch
-            value={theme === 'light'}
-            onChange={() => {
-              setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
-            }}
+            value={mode === 'light'}
+            onChange={() => setMode(v => (v === 'dark' ? 'light' : 'dark'))}
           />
         </Box>
         <Box

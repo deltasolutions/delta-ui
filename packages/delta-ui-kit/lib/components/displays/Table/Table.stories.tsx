@@ -21,42 +21,38 @@ export default {
 
 export const Basics = ({ stickyOffset = 0 }) => {
   return (
-    <Card>
-      <CardBody>
-        <Table>
-          <TableHeader stickyOffset={stickyOffset}>
-            <TableHeaderRow>
-              <TableHeaderCell sx={{ width: '300px' }}>
-                <span>Id</span>
-              </TableHeaderCell>
-              <TableHeaderCell>
-                <span>Name</span>
-                <Button sx={{ borderRadius: '100%' }}>
-                  <FiChevronDown />
-                </Button>
-              </TableHeaderCell>
-              <TableHeaderCell>
-                <span>Description</span>
-              </TableHeaderCell>
-            </TableHeaderRow>
-          </TableHeader>
-          <TableBody>
-            {new Array(30).fill(undefined).map((_, index) => (
-              <TableBodyRow key={index}>
-                <TableBodyCell>
-                  <Checkbox variant="outlined" />
-                </TableBodyCell>
-                <TableBodyCell>Name {index}</TableBodyCell>
-                <TableBodyCell>
-                  Description mfjdso f odisjf fodisjgopif jgpoisdjfgoijsdfopi
-                  gjsdpfijg {index}
-                </TableBodyCell>
-              </TableBodyRow>
-            ))}
-          </TableBody>
-        </Table>
-      </CardBody>
-    </Card>
+    <Table>
+      <TableHeader stickyOffset={stickyOffset}>
+        <TableHeaderRow>
+          <TableHeaderCell sx={{ width: '300px' }}>
+            <span>Id</span>
+          </TableHeaderCell>
+          <TableHeaderCell>
+            <span>Name</span>
+            <Button sx={{ borderRadius: '100%' }}>
+              <FiChevronDown />
+            </Button>
+          </TableHeaderCell>
+          <TableHeaderCell>
+            <span>Description</span>
+          </TableHeaderCell>
+        </TableHeaderRow>
+      </TableHeader>
+      <TableBody>
+        {new Array(30).fill(undefined).map((_, index) => (
+          <TableBodyRow key={index}>
+            <TableBodyCell>
+              <Checkbox variant="outlined" />
+            </TableBodyCell>
+            <TableBodyCell>Name {index}</TableBodyCell>
+            <TableBodyCell>
+              Description mfjdso f odisjf fodisjgopif jgpoisdjfgoijsdfopi
+              gjsdpfijg {index}
+            </TableBodyCell>
+          </TableBodyRow>
+        ))}
+      </TableBody>
+    </Table>
   );
 };
 

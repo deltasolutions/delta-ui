@@ -24,7 +24,7 @@ export const LayoutNavigationItem = forwardRef<
 >(({ children, icon: Icon, id, ...rest }, ref) => {
   const { activeId } = useContext(NavigationContext);
   const active = useMemo(() => id === activeId, [id, activeId]);
-  const { colorScheme } = useDeltaTheme();
+  const { mode } = useDeltaTheme();
   return (
     <Anchor
       ref={ref}
@@ -33,7 +33,7 @@ export const LayoutNavigationItem = forwardRef<
         px: '1.35rem',
         position: 'relative',
         fontSize: 2,
-        fontWeight: 300,
+        fontWeight: mode === 'light' ? 400 : 300,
         letterSpacing: '0.04em',
         cursor: 'pointer',
         userSelect: 'none',
@@ -41,16 +41,8 @@ export const LayoutNavigationItem = forwardRef<
           color: 'accentOnContext',
         },
         ...(active
-          ? {
-              '&:before': getAccentBlockStyle(
-                colorScheme === 'dark' ? 1.0 : 0.1
-              ),
-            }
-          : {
-              '&:hover::before': getAccentBlockStyle(
-                colorScheme === 'dark' ? 0.75 : 0.05
-              ),
-            }),
+          ? { '&:before': getAccentBlockStyle(1) }
+          : { '&:hover::before': getAccentBlockStyle(0.75) }),
       }}
       variant="pure"
       {...rest}

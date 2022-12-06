@@ -20,7 +20,7 @@ export interface TabOptionProps extends Omit<AnchorProps, 'variant'> {
 
 export const TabOption = forwardRef<HTMLAnchorElement, TabOptionProps>(
   ({ id, variant, icon: Icon, children, onClick, href, ...rest }, ref) => {
-    const { colors } = useDeltaTheme();
+    const { mode, colors } = useDeltaTheme();
     const { activeId } = useContext(TabContext);
     const active = id === activeId;
     const handleClick = useCallback(
@@ -54,7 +54,7 @@ export const TabOption = forwardRef<HTMLAnchorElement, TabOptionProps>(
               height: '35px',
               lineHeight: '35px',
               fontSize: 2,
-              fontWeight: 300,
+              fontWeight: mode === 'light' ? 400 : 300,
               letterSpacing: '0.04em',
               borderTopRightRadius: 3,
               borderTopLeftRadius: 3,
