@@ -4,14 +4,15 @@ import { formStoryParameters, useStoryFormProps } from '../../../docs/utils';
 import { Form } from '../Form';
 
 const meta: Meta = {
-  title: 'fields/NestedField',
+  title: 'fields/DomainField',
   ...formStoryParameters,
 };
 
 export default meta;
 
-export const Basics = () => {
+export const Basics = props => {
   const formProps = useStoryFormProps({
+    ...props,
     schema: {
       type: 'object',
       properties: {

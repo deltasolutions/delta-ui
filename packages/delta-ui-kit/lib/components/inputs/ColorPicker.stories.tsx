@@ -16,3 +16,11 @@ export const Basics = () => {
     </Box>
   );
 };
+
+export const Disabled = () => {
+  return (
+    <Box sx={{ gap: 2, flexDirection: 'column', display: 'flex' }}>
+      <ColorPicker disabled />
+    </Box>
+  );
+};

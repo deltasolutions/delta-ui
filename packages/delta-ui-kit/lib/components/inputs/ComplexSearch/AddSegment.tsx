@@ -17,7 +17,7 @@ import { Input } from './Input';
 
 export const AddSegment = ({ placeholder, ...rest }: TextInputProps) => {
   const { floatingPortal } = useContext(SystemContext);
-  const { segments, setEditingIndex, editingIndex, addSegment } =
+  const { segments, setEditingIndex, disabled, editingIndex, addSegment } =
     useContext(ComplexSearchContext);
   const dropRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -100,6 +100,7 @@ export const AddSegment = ({ placeholder, ...rest }: TextInputProps) => {
     <Box sx={{ flex: 1 }}>
       <Input
         ref={stableRef}
+        disabled={disabled}
         placeholder={segments.length > 0 ? '' : placeholder}
         value={inputValue}
         onChange={setInputValue}

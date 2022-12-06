@@ -20,7 +20,7 @@ export const Basics = () => {
   return (
     <Autocomplete
       multiple
-      getOptions={v => options.filter(t => isAlike(v, t)).slice(0, 5)}
+      getOptions={v => options.filter(t => isAlike(v, t))}
       placeholder="Placeholder"
     />
   );
@@ -28,6 +28,10 @@ export const Basics = () => {
 
 export const Empty = () => {
   return <Autocomplete multiple placeholder="Placeholder" />;
+};
+
+export const Disabled = () => {
+  return <Autocomplete disabled multiple placeholder="Placeholder" />;
 };
 
 export const Controlled = () => {

@@ -32,6 +32,7 @@ export const ComplexSearch = ({
   value = [],
   proposals,
   onChange,
+  disabled,
   ...inputPropos
 }: ComplexSearchProps) => {
   const [segments, setSegments] = useState<ComplexSearchSegment[]>(value);
@@ -70,6 +71,7 @@ export const ComplexSearch = ({
     updateSegment,
     setEditingIndex,
     editingIndex,
+    disabled,
   };
   const memoizedContextValue = useMemo(
     () => contextValue,

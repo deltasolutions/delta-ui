@@ -17,7 +17,7 @@ export const parseOpts = async (args: string[]) => {
         'preminor',
         'patch',
         'prepatch',
-        'prerelease'
+        'prerelease',
       ])
     )
     .option(
@@ -30,6 +30,7 @@ export const parseOpts = async (args: string[]) => {
       'create tag using given template or previously generated commit message'
     )
     .option('-p, --publish', 'publish module to npm')
+    .option('-f, --force', 'ignore branch restrictions')
     .option('-P, --preview', 'do not commit any changes to git or npm registry')
     .option('-c, --config [config]', 'config to use', '.releaserc')
     .argument(

@@ -6,7 +6,7 @@ export const FilePickerField = (props: FieldProps) => {
   const {
     value,
     onValue,
-    schema: { readOnly },
+    schema: { readOnly, layout: { accept } = {} },
     registry: {
       templates: { PrimitiveTemplate },
     },
@@ -14,6 +14,7 @@ export const FilePickerField = (props: FieldProps) => {
   return (
     <PrimitiveTemplate {...props}>
       <FilePicker
+        accept={accept ? String(accept) : undefined}
         disabled={readOnly}
         value={value}
         onChange={v => onValue?.(v)}

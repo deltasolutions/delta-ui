@@ -1,6 +1,6 @@
 {
   "name": "delta-release",
-  "version": "0.2.6",
+  "version": "0.2.8",
   "license": "MIT",
   "main": "dist/index.js",
   "module": "dist/index.mjs",

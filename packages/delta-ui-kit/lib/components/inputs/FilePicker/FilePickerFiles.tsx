@@ -12,10 +12,12 @@ export interface FilePickerFilesProps extends BoxProps {
   onBrowseFiles: () => void;
   handleInputChange;
   isMultiple?: boolean;
+  disabled?: boolean;
 }
 
 export const FilePickerFiles = ({
   files,
+  disabled,
   handleInputChange,
   onBrowseFiles,
 }: FilePickerFilesProps) => {
@@ -31,38 +33,42 @@ export const FilePickerFiles = ({
           ml: 'auto',
         }}
       >
-        <Button
-          sx={{
-            display: 'flex',
-            gap: 1,
-            alignItems: 'flex-start',
-            borderRadius: 2,
-            fontSize: '0.7rem',
-            textDecoration: 'underline',
-            '&:hover, &:active, &:focus-visible': {
-              color: 'accentOnContext',
-            },
-          }}
-          onClick={onBrowseFiles}
-        >
-          <RiUpload2Fill size={16} />
-        </Button>
-        <Button
-          sx={{
-            display: 'flex',
-            gap: 1,
-            alignItems: 'flex-start',
-            borderRadius: 2,
-            fontSize: '0.7rem',
-            textDecoration: 'underline',
-            '&:hover, &:active, &:focus-visible': {
-              color: 'accentOnContext',
-            },
-          }}
-          onClick={() => handleInputChange(undefined)}
-        >
-          <RiDeleteBin5Fill size={16} />
-        </Button>
+        {!disabled && (
+          <Fragment>
+            <Button
+              sx={{
+                display: 'flex',
+                gap: 1,
+                alignItems: 'flex-start',
+                borderRadius: 2,
+                fontSize: '0.7rem',
+                textDecoration: 'underline',
+                '&:hover, &:active, &:focus-visible': {
+                  color: 'accentOnContext',
+                },
+              }}
+              onClick={onBrowseFiles}
+            >
+              <RiUpload2Fill size={16} />
+            </Button>
+            <Button
+              sx={{
+                display: 'flex',
+                gap: 1,
+                alignItems: 'flex-start',
+                borderRadius: 2,
+                fontSize: '0.7rem',
+                textDecoration: 'underline',
+                '&:hover, &:active, &:focus-visible': {
+                  color: 'accentOnContext',
+                },
+              }}
+              onClick={() => handleInputChange(undefined)}
+            >
+              <RiDeleteBin5Fill size={16} />
+            </Button>
+          </Fragment>
+        )}
       </Box>
       <Box
         sx={{
@@ -82,7 +88,12 @@ export const FilePickerFiles = ({
               return null;
             }
             return (
-              <FilePickerWidget key={i} file={file} isEven={i % 2 === 0} />
+              <FilePickerWidget
+                key={i}
+                disabled={disabled}
+                file={file}
+                isEven={i % 2 === 0}
+              />
             );
           })}
       </Box>

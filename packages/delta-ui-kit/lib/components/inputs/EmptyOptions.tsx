@@ -1,20 +1,19 @@
 import { jsx } from '@theme-ui/core';
-import { useTranslation } from 'react-i18next';
 import { AiOutlineInbox } from 'react-icons/ai';
-import { Box } from '../containers';
+import { Box, BoxProps } from '../containers';
 
-export const EmptyOptions = () => {
-  const [t] = useTranslation('common');
+export const EmptyOptions = (props: BoxProps) => {
   return (
     <Box
       sx={{
+        p: 2,
         display: 'flex',
-        flexWrap: 'wrap',
         alignItems: 'center',
         justifyContent: 'center',
+        flexWrap: 'wrap',
         gap: 1,
-        p: 2,
       }}
+      {...props}
     >
       <AiOutlineInbox sx={{ width: '1.3em', height: '1.3em' }} />
     </Box>

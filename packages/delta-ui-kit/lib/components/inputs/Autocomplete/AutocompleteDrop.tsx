@@ -24,6 +24,7 @@ export const AutocompleteDrop = forwardRef<
   if (options.length < 1) {
     return <EmptyOptions />;
   }
+
   return (
     <DropMenu
       ref={ref}

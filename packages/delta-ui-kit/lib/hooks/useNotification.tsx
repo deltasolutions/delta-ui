@@ -47,7 +47,7 @@ export const useNotification = () => {
     (
       {
         context: {
-          placement = 'topRight',
+          placement = NotificationPlacement.BottomRight,
           duration,
           render,
           onClose,

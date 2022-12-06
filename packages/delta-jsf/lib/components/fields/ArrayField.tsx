@@ -7,7 +7,7 @@ export function ArrayField(props: FieldProps) {
   useDefaults(props);
 
   const {
-    schema: { items },
+    schema: { items, readOnly },
     registry: {
       templates: { ArrayTemplate, PanicTemplate },
     },
@@ -26,13 +26,12 @@ export function ArrayField(props: FieldProps) {
   }
 
   const values = Array.isArray(fieldValues) ? fieldValues : [];
-
   return (
     <ArrayTemplate {...props}>
       {values?.map((value, index) => {
         const sub: FieldProps<any> = {
           ...props,
-          schema: (items ?? {}) as Schema,
+          schema: { readOnly, ...((items ?? {}) as Schema) },
           value,
           onValue: v => {
             const copy = [...values];

@@ -22,7 +22,6 @@ export const SelectField = (props: FieldProps) => {
   const { placeholder } = schema.layout ?? {};
   const toPickFrom = schema.oneOf ?? [];
   const sanitizeValue = value => value ?? schema.default;
-
   return (
     <PrimitiveTemplate {...props}>
       <Select
@@ -32,15 +31,18 @@ export const SelectField = (props: FieldProps) => {
           onValue?.(sanitizeValue(v));
         }}
       >
-        {toPickFrom.reduce((res, curr, index) => {
-          if (typeof curr === 'object' && typeof curr.const === 'string') {
-            res.push(
-              <SelectOption key={index} value={curr.const}>
-                {curr.title || curr.const}
+        {toPickFrom.reduce((p, v, i) => {
+          if (
+            typeof v === 'object' &&
+            (typeof v.const === 'string' || typeof v.const === 'undefined')
+          ) {
+            p.push(
+              <SelectOption key={i} value={v.const!}>
+                {v.title || String(v.const)}
               </SelectOption>
             );
           }
-          return res;
+          return p;
         }, [] as JSX.Element[])}
       </Select>
     </PrimitiveTemplate>

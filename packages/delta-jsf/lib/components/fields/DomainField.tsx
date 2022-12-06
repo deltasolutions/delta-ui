@@ -5,13 +5,8 @@ import {
   useIsomorphicLayoutEffect,
   useUpdateEffect,
 } from '../../hooks';
-import { FieldProps, Schema } from '../../models';
+import { FieldProps, Registry, Schema, Validity } from '../../models';
 import { getFieldComponent, hash } from '../../utils';
-
-const defaultSource = {
-  schema: { type: 'null' as const },
-  initialValue: undefined,
-};
 
 export function DomainField(props: FieldProps) {
   const {
@@ -37,13 +32,40 @@ export function DomainField(props: FieldProps) {
   }, [maybeSource]);
   const targetSource =
     maybeSource instanceof Promise ? resolvedSource : maybeSource;
-  const { schema, initialValue } = isSource(targetSource)
-    ? targetSource
-    : defaultSource;
-  const targetProps = { ...props, schema };
+  const source = isSource(targetSource) ? targetSource : undefined;
+  if (!source) {
+    return null;
+  }
+  return (
+    <Domain
+      initialValue={source.initialValue}
+      registry={registry}
+      targetProps={{ ...props, schema: source.schema }}
+      value={value}
+      onValidity={onValidity}
+      onValue={onValue}
+    />
+  );
+}
+
+function Domain({
+  targetProps,
+  registry,
+  initialValue,
+  value,
+  onValue,
+  onValidity,
+}: {
+  targetProps: FieldProps<any>;
+  registry: Registry;
+  initialValue: any;
+  value: any;
+  onValue?: (value: any) => void;
+  onValidity?: (validity: Validity | Promise<Validity>) => void;
+}) {
   const TargetField = getFieldComponent(targetProps);
   const manager = useFormManager({
-    schema,
+    schema: targetProps.schema,
     initialValue: value,
     onValue,
     onValidity,
@@ -52,7 +74,7 @@ export function DomainField(props: FieldProps) {
   });
   useIsomorphicLayoutEffect(() => {
     manager.setValue(initialValue);
-  }, [hash(schema)]);
+  }, [hash(targetProps.schema)]);
   useUpdateEffect(() => {
     manager.setValue(value);
   }, [value]);

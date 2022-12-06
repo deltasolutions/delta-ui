@@ -9,14 +9,23 @@ export function ArrayTemplate(props: TemplateProps) {
   return (
     <div className="djsf-array">
       {schema.title && <div className="title">{schema.title}</div>}
-      {handleAdd && <button onClick={handleAdd}>Add</button>}
+      {handleAdd && (
+        <button disabled={schema.readOnly} onClick={handleAdd}>
+          Add
+        </button>
+      )}
       <div className="content">
         {Array.isArray(children)
           ? [...children]?.map((child, index) => (
               <div key={`array-item-${index}`} className="item">
                 {child}
                 {handleDelete && (
-                  <button onClick={() => handleDelete(index)}>Delete</button>
+                  <button
+                    disabled={schema.readOnly}
+                    onClick={() => handleDelete(index)}
+                  >
+                    Delete
+                  </button>
                 )}
               </div>
             ))

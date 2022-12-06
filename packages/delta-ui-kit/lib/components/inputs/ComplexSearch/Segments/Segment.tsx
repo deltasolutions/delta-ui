@@ -27,7 +27,7 @@ export const Segment = ({ item, index, ...props }: SegmentPropos) => {
     removeSegment,
     updateSegment,
     editingIndex,
-
+    disabled,
     setEditingIndex,
     proposals,
   } = useContext(ComplexSearchContext);
@@ -179,7 +179,7 @@ export const Segment = ({ item, index, ...props }: SegmentPropos) => {
           mr: 1,
           alignItems: 'center',
         }}
-        onClick={onItemClick}
+        {...(!disabled && { onClick: onItemClick })}
       >
         {Object.entries(item)
           .filter(([_, tokenValue]) => typeof tokenValue === 'string')

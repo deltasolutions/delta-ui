@@ -11,5 +11,5 @@ export const GenericFormStory = props => {
     },
     ...rest,
   });
-  return <JsForm {...formProps} />;
+  return <JsForm sx={{ minWidth: '300px' }} {...formProps} />;
 };

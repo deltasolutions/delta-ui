@@ -1,4 +1,5 @@
 import { jsx } from '@theme-ui/core';
+import { isEqual } from 'lodash-es';
 import { useReducer } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -15,6 +16,7 @@ export const useStoryFormProps = <T extends unknown>(
   const [t] = useTranslation('common');
   const [submitsCount, increaseSubmitsCount] = useReducer(v => v + 1, 0);
   const manager = useJsFormManager<T, JsFormManagerOptions<T>>(options);
+
   return {
     manager,
     children: (
@@ -27,6 +29,7 @@ export const useStoryFormProps = <T extends unknown>(
       >
         <Button
           color="primary"
+          disabled={isEqual(manager['initialValue'], manager.value)}
           type="submit"
           variant="outlined"
           onClick={increaseSubmitsCount}

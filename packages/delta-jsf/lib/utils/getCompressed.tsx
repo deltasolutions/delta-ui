@@ -1,40 +1,58 @@
 import Ajv from 'ajv';
 import { Schema } from '../models';
 import { clone } from './clone';
-import { isObject } from './guards';
+import { get } from './get';
 import { merge } from './merge';
 
 const ajv = new Ajv();
 
-export const getCompressed = (
-  schema: Schema,
-  value: any
-): Pick<Schema, 'properties' | 'required'> => {
-  const additionals = (schema.allOf ?? []).reduce((prev, curr) => {
-    return typeof curr === 'object' ? [...prev, curr] : prev;
-  }, [] as Pick<Schema, 'properties' | 'required'>[]);
-  const conditionals = value
-    ? [schema, ...(schema.allOf ?? [])].reduce((prev, curr) => {
-        if (typeof curr !== 'object' || typeof curr.if !== 'object') {
-          return prev;
-        }
-        const validate = ajv.compile(curr.if);
-        const target = validate(value) ? curr.then : curr.else;
-        return isObject(target) ? [...prev, target] : prev;
-      }, [] as Pick<Schema, 'properties' | 'required'>[])
+export function getCompressed(schema: Schema, value: unknown): Schema {
+  if (!isWalkable(schema)) {
+    return schema;
+  }
+  schema;
+  const {
+    allOf: schemaAllOf,
+    if: schemaIf,
+    then: schemaThen,
+    else: schemaElse,
+    ...schemaRest
+  } = schema;
+  const compressedIf = (() => {
+    if (!schemaIf && (!schemaThen || !schemaElse)) {
+      return {};
+    }
+    const validate = ajv.compile(schemaIf as any); // FIXME
+    const validated = validate(value) ? schemaThen : schemaElse;
+    return getCompressed(validated as Schema, value);
+  })();
+  const compressedAllOf = Array.isArray(schemaAllOf)
+    ? schemaAllOf.map(v => getCompressed(v, value))
     : [];
-  return [schema, ...additionals, ...conditionals].reduce(
-    (prev, curr) => {
-      return {
-        properties: merge(prev.properties, clone(curr.properties)),
-        required: Array.from(
-          new Set([...(prev.required ?? []), ...(curr.required ?? [])])
-        ),
-      } as Pick<Schema, 'properties' | 'required'>;
-    },
-    {
-      properties: {},
-      required: [],
-    } as Pick<Schema, 'properties' | 'required'>
-  );
-};
+  const compressedSchema = [
+    schemaRest,
+    compressedIf,
+    ...compressedAllOf,
+  ].reduce(
+    (p: { [key: string]: unknown }, v) =>
+      isWalkable(v) ? merge(p, clone(v)) : p,
+    {}
+  ) as { [key: string]: unknown };
+  if (isWalkable(compressedSchema.properties)) {
+    for (const [schemaKey, schemaValue] of Object.entries(
+      compressedSchema.properties
+    )) {
+      compressedSchema.properties[schemaKey] = getCompressed(
+        schemaValue as Schema,
+        get(value as any, schemaKey)
+      );
+    }
+  }
+  // TODO: Handle item schema via validating EVERY datum against it.
+  // if (isWalkable(compressedSchema.items)) {}
+  return compressedSchema;
+}
+
+function isWalkable(data: unknown): data is { [key: string]: unknown } {
+  return Boolean(data && typeof data === 'object');
+}

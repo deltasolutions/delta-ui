@@ -56,6 +56,7 @@
     "dayjs": "^1.11.6",
     "delta-jsf": ">=0.8.18",
     "delta-release": "file:packages/delta-release",
+    "echarts": "^5.4.0",
     "eslint": "^8.25.0",
     "eslint-import-resolver-typescript": "^3.5.2",
     "eslint-plugin-import": "^2.26.0",
@@ -84,9 +85,10 @@
     "react-spring": "^9.5.5",
     "react-window": "^1.8.7",
     "restyler": "^0.37.8",
+    "size-sensor": "^1.0.1",
     "ts-node": "^10.9.1",
-    "tsup": "^6.3.0",
+    "tsup": "^6.5.0",
     "type-fest": "^3.1.0",
-    "typescript": "4.8.4"
+    "typescript": "^4.9.3"
   }
 }

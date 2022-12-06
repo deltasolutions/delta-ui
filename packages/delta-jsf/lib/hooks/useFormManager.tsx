@@ -105,6 +105,8 @@ export const useFormManager = <
   return {
     options: targetOptions,
 
+    initialValue,
+
     value,
     setValue,
 

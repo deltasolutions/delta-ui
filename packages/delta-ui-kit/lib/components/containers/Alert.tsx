@@ -74,24 +74,26 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
           >
             {children}
           </span>
-          <Button
-            sx={{
-              mt: '7px',
-              ml: 'auto',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              minHeight: 1,
-              minWidth: 1,
-              borderRadius: '100%',
-              '&:hover, &:focus-visible': {
-                backgroundColor: 'accentContext',
-              },
-            }}
-            onClick={onClose}
-          >
-            <IoClose size={18} />
-          </Button>
+          {onClose && (
+            <Button
+              sx={{
+                mt: '7px',
+                ml: 'auto',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minHeight: 1,
+                minWidth: 1,
+                borderRadius: '100%',
+                '&:hover, &:focus-visible': {
+                  backgroundColor: 'accentContext',
+                },
+              }}
+              onClick={onClose}
+            >
+              <IoClose size={18} />
+            </Button>
+          )}
         </Box>
       </ThemeProvider>
     );
