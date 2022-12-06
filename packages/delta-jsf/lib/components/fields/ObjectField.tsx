@@ -1,5 +1,4 @@
-import required from 'ajv/dist/vocabularies/validation/required';
-import React, { Component, Key } from 'react';
+import React, { Key } from 'react';
 import { useDefaults, useIsomorphicLayoutEffect } from '../../hooks';
 import { FieldProps, Schema } from '../../models';
 import { getCompressed, getFieldComponent } from '../../utils';
