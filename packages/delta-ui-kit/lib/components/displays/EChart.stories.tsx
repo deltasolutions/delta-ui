@@ -111,8 +111,8 @@ export const PieChart = () => {
                         OK: colors.accentSuccess,
                         WARNING: colors.accentWarning,
                         CRITICAL: colors.accentError,
-                        UNKNOWN: colors.accentOnContext,
-                      }[key] ?? colors.accentOnContext)
+                        UNKNOWN: colors.accentInfo,
+                      }[key] ?? colors.accentInfo)
                   ) ?? [],
                 type: 'pie',
                 radius: defaults.pie.radius(),

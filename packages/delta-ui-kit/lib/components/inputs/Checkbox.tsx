@@ -36,7 +36,6 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     useUpdateEffect(() => {
       innerValue !== value && setInnerValue(value ?? false);
     }, [value]);
-
     return (
       <label
         style={{
@@ -58,7 +57,6 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       >
         <input
           ref={ref}
-          // checked={innerValue as unknown as boolean}
           checked={innerValue}
           disabled={disabled}
           sx={{
@@ -90,14 +88,13 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            '&:hover': {},
           }}
         >
           <FiCheck
             sx={{
               width: '1.2em',
               height: '1.2em',
-              color: innerValue ? 'secondary' : 'transparent',
+              color: innerValue ? 'onPrimary' : 'transparent',
             }}
           />
         </Box>
@@ -114,7 +111,6 @@ const getVariantStyle = ({ variant }) => {
     return {
       '.checkmark': {
         border: '1px solid',
-        //TODO pick color from defaults/theme.ts
         borderColor: 'border',
         height: '20px',
         width: '20px',

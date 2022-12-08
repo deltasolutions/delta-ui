@@ -9,7 +9,7 @@ import {
   MdOutlineSpaceDashboard,
 } from 'react-icons/md';
 import { RiEditFill } from 'react-icons/ri';
-import { useModal } from '../../../hooks';
+import { useDeltaTheme, useModal } from '../../../hooks';
 import { Account } from '../../Account';
 import { Anchor } from '../../Anchor';
 import { Button } from '../../Button';
@@ -61,7 +61,8 @@ const sidebar = (
       }}
     >
       <DeltaLogo
-        bottomColor="brandBeta"
+        // bottomColor="brandBeta"
+        bottomColor="accentPrimary"
         sx={{ maxWidth: '3rem', my: 2 }}
         topColor="brandAlpha"
       />
@@ -126,6 +127,7 @@ const footer = (
 );
 
 export const Resource = () => {
+  const { colors } = useDeltaTheme();
   return (
     <Layout>
       {sidebar}
@@ -151,7 +153,7 @@ export const Resource = () => {
           </Box>
         </LayoutMainHeader>
         <LayoutMainBody variant="wide">
-          <TabGroup activeId="3">
+          <TabGroup activeId="3" sx={{ position: 'relative', zIndex: 1 }}>
             <TabOption icon={IoMapOutline} id="1" variant="bookmark">
               Overview
             </TabOption>
@@ -209,7 +211,10 @@ export const Collection = () => {
         </LayoutMainHeader>
         <LayoutMainBody
           size="medium"
-          sx={{ display: 'flex', justifyContent: 'center' }}
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+          }}
         >
           <TableStory
             heading={

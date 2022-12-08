@@ -37,7 +37,7 @@ export const DropMenuItem = forwardRef<HTMLButtonElement, DropMenuItemProps>(
       [ref, buttonRef]
     );
     const {
-      colors: { accentContext, accentOnContext, onContext },
+      colors: { accentContext, onContext },
     } = useDeltaTheme();
     const { setActiveIndex } = useContext(DropMenuContext);
     return (
@@ -69,7 +69,7 @@ export const DropMenuItem = forwardRef<HTMLButtonElement, DropMenuItemProps>(
           fontFamily: 'inherit',
           '&:focus, &:active, &:focus-visible': {
             backgroundColor: 'accentContext',
-            color: 'onPrimary',
+            color: 'accentOnContext',
           },
         }}
         tabIndex={-1}

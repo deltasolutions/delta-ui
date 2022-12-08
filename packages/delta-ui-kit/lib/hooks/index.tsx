@@ -23,4 +23,3 @@ export * from './useSticked';
 export * from './useThrottledCallback';
 export * from './useTransition';
 export * from './useUpdateEffect';
-export * from './useAccentColor';

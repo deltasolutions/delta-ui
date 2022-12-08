@@ -173,7 +173,7 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps): any => {
           backgroundColor: 'accentContext',
           color: 'accentOnContext',
           '&:not(:disabled):hover': {
-            backgroundColor: 'accentPrimary',
+            backgroundColor: 'primary',
             color: 'onPrimary',
           },
         },
@@ -181,7 +181,7 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps): any => {
           backgroundColor: 'accentContext',
           color: 'accentOnContext',
           '&:not(:disabled):hover': {
-            backgroundColor: 'accentSecondary',
+            backgroundColor: 'secondary',
             color: 'onSecondary',
           },
         },
@@ -189,7 +189,7 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps): any => {
           backgroundColor: 'accentContext',
           color: 'accentOnContext',
           '&:not(:disabled):hover': {
-            backgroundColor: 'accentSuccess',
+            backgroundColor: 'success',
             color: 'onSuccess',
           },
         },
@@ -197,7 +197,7 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps): any => {
           backgroundColor: 'accentContext',
           color: 'accentOnContext',
           '&:not(:disabled):hover': {
-            backgroundColor: 'accentError',
+            backgroundColor: 'error',
             color: 'onError',
           },
         },

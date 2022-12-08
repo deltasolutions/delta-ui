@@ -24,7 +24,7 @@ export const FilePickerPreview = ({
           gap: 1,
         }}
       >
-        <RiUploadCloudLine size={18} />
+        <RiUploadCloudLine size={20} />
         <Box>
           {isMultiple ? t('descriptions.dndFiles') : t('descriptions.dndFile')}
         </Box>

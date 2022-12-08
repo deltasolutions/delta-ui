@@ -49,7 +49,7 @@ export const FilePickerFiles = ({
               }}
               onClick={onBrowseFiles}
             >
-              <RiUpload2Fill size={16} />
+              <RiUpload2Fill size={18} />
             </Button>
             <Button
               sx={{
@@ -65,7 +65,7 @@ export const FilePickerFiles = ({
               }}
               onClick={() => handleInputChange(undefined)}
             >
-              <RiDeleteBin5Fill size={16} />
+              <RiDeleteBin5Fill size={18} />
             </Button>
           </Fragment>
         )}
@@ -74,7 +74,7 @@ export const FilePickerFiles = ({
         sx={{
           display: 'flex',
           width: '100%',
-          mt: '-8px',
+          mt: '-5px',
           flexDirection: 'column',
           'a:not(a:last-child)': {
             borderBottom: '1px solid',

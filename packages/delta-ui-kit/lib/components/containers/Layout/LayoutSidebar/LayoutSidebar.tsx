@@ -37,6 +37,7 @@ export const LayoutSidebar = forwardRef<HTMLDivElement, LayoutSidebarProps>(
             height: '100vh',
             backgroundColor: 'context',
             color: 'onContext',
+            boxShadow: 'soft',
           }}
           {...rest}
         >

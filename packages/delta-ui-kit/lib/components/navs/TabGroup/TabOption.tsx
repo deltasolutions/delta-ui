@@ -1,5 +1,5 @@
 import { jsx } from '@theme-ui/core';
-import { invert, lighten, rgba, transparentize } from 'polished';
+import { darken, invert, lighten, rgba, transparentize } from 'polished';
 import {
   ComponentType,
   forwardRef,
@@ -21,6 +21,7 @@ export interface TabOptionProps extends Omit<AnchorProps, 'variant'> {
 export const TabOption = forwardRef<HTMLAnchorElement, TabOptionProps>(
   ({ id, variant, icon: Icon, children, onClick, href, ...rest }, ref) => {
     const { mode, colors } = useDeltaTheme();
+    const accentInverted = mode === 'light' ? lighten : darken;
     const { activeId } = useContext(TabContext);
     const active = id === activeId;
     const handleClick = useCallback(
@@ -34,15 +35,17 @@ export const TabOption = forwardRef<HTMLAnchorElement, TabOptionProps>(
       },
       [href]
     );
-    const bookmarkActiveStyle = {
+    const bookmarkStyle = (top: number, bottom: number) => ({
       backgroundColor: 'accentContext',
       color: 'accentOnContext',
       background:
         `linear-gradient(` +
-        `${transparentize(0.3, colors.accentBackground)} 0, ` +
-        `transparent 270px` +
+        `${transparentize(top, colors.accentBackground)} 0,` +
+        `${transparentize(bottom, colors.accentBackground)} 100%` +
+        // `${transparentize(0.1, colors.accentBackground)} 0,` +
+        // `${transparentize(0.5, colors.accentBackground)} 100%` +
         `), ${layoutMainNoise}`,
-    };
+    });
     return (
       <Anchor
         ref={ref}
@@ -63,11 +66,11 @@ export const TabOption = forwardRef<HTMLAnchorElement, TabOptionProps>(
               px: '1em',
               pt: '2px',
               ...(active
-                ? bookmarkActiveStyle
+                ? bookmarkStyle(0.1, 0.4)
                 : {
-                    backgroundColor: rgba(colors.accentContext, 0.3),
+                    ...bookmarkStyle(0.3, 0.9),
                     color: 'onContext',
-                    '&:hover, &:focus-visible': bookmarkActiveStyle,
+                    '&:hover, &:focus-visible': bookmarkStyle(0.1, 0.4),
                   }),
             },
             chip: {
@@ -79,7 +82,10 @@ export const TabOption = forwardRef<HTMLAnchorElement, TabOptionProps>(
                 ? {
                     backgroundColor: 'accentOnContext',
                     '&, &:hover, &:active, &:focus-visible': {
-                      color: invert(colors.accentOnContext),
+                      color: accentInverted(
+                        0.5,
+                        invert(colors.accentOnContext)
+                      ),
                     },
                   }
                 : {
