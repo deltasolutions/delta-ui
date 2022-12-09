@@ -81,9 +81,9 @@ export const Tooltip = ({
           sx={{
             padding: 2,
             borderRadius: 3,
-            backgroundColor: 'exterior',
-            boxShadow: 1,
-            color: 'accentOnExterior',
+            backgroundColor: 'rgba(0, 0, 0, 0.6)',
+            backdropFilter: 'blur(5px)',
+            color: 'white',
             fontSize: 2,
             fontWeight: 300,
             letterSpacing: '0.04em',

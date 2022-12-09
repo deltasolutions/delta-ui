@@ -1,5 +1,5 @@
 import { jsx } from '@theme-ui/core';
-import { lighten } from 'polished';
+import { darken, lighten } from 'polished';
 import { IoIosClose } from 'react-icons/io';
 import { useDeltaTheme } from '../../../hooks';
 import { Button } from '../../Button';
@@ -14,7 +14,8 @@ export const AutocompleteSelection = ({
   onClick,
   ...rest
 }: AutocompleteSelectionProps) => {
-  const { colors } = useDeltaTheme();
+  const { mode, colors } = useDeltaTheme();
+  const accent = mode === 'light' ? darken : lighten;
   return (
     <Box
       sx={{
@@ -23,7 +24,7 @@ export const AutocompleteSelection = ({
         pr: 1,
         py: 1,
         gap: '2px',
-        backgroundColor: lighten(0.065, colors.accentContext),
+        backgroundColor: accent(0.07, colors.accentContext),
         borderRadius: 3,
         display: 'flex',
         alignItems: 'center',

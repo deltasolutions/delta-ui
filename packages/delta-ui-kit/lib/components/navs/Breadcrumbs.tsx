@@ -1,11 +1,8 @@
 import { jsx } from '@theme-ui/core';
 import { Children, forwardRef, ReactElement, ReactNode } from 'react';
-import { ImHome } from 'react-icons/im';
-import { IoHome, IoHomeOutline } from 'react-icons/io5';
-import { RiHomeFill } from 'react-icons/ri';
-import { SiHomebridge } from 'react-icons/si';
+import { IoHome } from 'react-icons/io5';
 import { TbChevronRight } from 'react-icons/tb';
-import { VscChevronRight } from 'react-icons/vsc';
+import { useDeltaTheme } from '../../hooks';
 import { Anchor, AnchorProps } from '../Anchor';
 import { Box, BoxProps } from '../containers';
 
@@ -52,10 +49,15 @@ export const BreadcrumbsItem = forwardRef<
   HTMLAnchorElement,
   BreadcrumbsItemProps
 >((props: BreadcrumbsItemProps, ref) => {
+  const { mode } = useDeltaTheme();
   return (
     <Anchor
       ref={ref}
-      sx={{ fontWeight: 300, verticalAlign: 'middle', letterSpacing: '0.04em' }}
+      sx={{
+        fontWeight: mode === 'light' ? 400 : 300,
+        verticalAlign: 'middle',
+        letterSpacing: '0.04em',
+      }}
       variant="pure"
       {...props}
     />

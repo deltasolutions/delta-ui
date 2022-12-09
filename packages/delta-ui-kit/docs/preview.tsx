@@ -1,7 +1,13 @@
 import { Global, css } from '@emotion/react';
 import { jsx } from '@theme-ui/core';
-import { Box, deltaTheme, SystemContainer } from '../lib';
-
+import { useState } from 'react';
+import {
+  Box,
+  deltaLightTheme,
+  deltaTheme,
+  Switch,
+  SystemContainer,
+} from '../lib';
 import 'leaflet/dist/leaflet.css';
 
 export const parameters = {
@@ -10,8 +16,9 @@ export const parameters = {
 
 export const decorators = [
   Story => {
+    const [mode, setMode] = useState('light');
     return (
-      <SystemContainer>
+      <SystemContainer theme={mode === 'dark' ? deltaTheme : deltaLightTheme}>
         <Global
           styles={css`
             html,
@@ -20,7 +27,7 @@ export const decorators = [
               padding: 0;
               width: 100%;
               min-height: 100vh;
-              color-scheme: ${deltaTheme.colorScheme};
+              color-scheme: ${deltaTheme.mode};
               @font-face {
                 font-family: Stolzl;
                 font-weight: 200;
@@ -52,6 +59,13 @@ export const decorators = [
             }
           `}
         />
+        <Box sx={{ p: 2 }}>
+          <span>Light theme</span>{' '}
+          <Switch
+            value={mode === 'light'}
+            onChange={() => setMode(v => (v === 'dark' ? 'light' : 'dark'))}
+          />
+        </Box>
         <Box
           sx={{
             width: '100%',

@@ -39,15 +39,7 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(
     }: SliderProps,
     propsRef
   ) => {
-    const {
-      colors: { accentPrimary, accentContext },
-    } = useDeltaTheme();
-    // const [openDrop, anchorRef] = useDrop(
-    //   () => {
-    //     return <Box sx={{ mt: 3 }}>32</Box>;
-    //   },
-    //   { deps: [] }
-    // );
+    const { colors } = useDeltaTheme();
     const ref = useRef<HTMLInputElement>(null);
     const [innerValue, setInnerValue] = useState<number>(
       value ?? (max - min) / 2
@@ -62,6 +54,7 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(
       () => mergeRefs([ref, propsRef]),
       [ref, propsRef]
     );
+    // TODO: Fix types.
     const setBackground = useCallback(
       (ref, value) => {
         const raw = (value - min) * (100 / (max - min));
@@ -70,15 +63,16 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(
           ref.current.style.background =
             `linear-gradient(` +
             `to right,` +
-            `${accentPrimary} 0%,` +
-            `${accentPrimary} ${percent}%,` +
-            `${accentContext} ${percent}%,` +
-            `${accentContext} 100%` +
+            `${colors.primary} 0%,` +
+            `${colors.primary} ${percent}%,` +
+            `${colors.accentContext} ${percent}%,` +
+            `${colors.accentContext} 100%` +
             `)`;
         }
       },
-      [accentPrimary, accentContext, min, max]
+      [colors, min, max]
     );
+    // TODO: Fix types.
     const onInputHandler = useCallback(
       ev => {
         setBackground(ref, ev.target.value);
@@ -101,15 +95,13 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(
           {...{
             ...(onChange && { onChange: ev => onChange(+ev.target.value) }),
           }}
-          style={{ cursor: disabled ? 'auto' : 'pointer' }}
           sx={{
-            accentColor: 'red',
             appearance: 'none',
             width: '100%',
             minWidth: '100px',
             height: '6px',
             borderRadius: 5,
-            backgroundColor: 'accentPrimary',
+            backgroundColor: 'accentContext',
             outline: 'none',
             opacity: disabled ? 0.5 : 1,
             transition: 'opacity 0.2s',
@@ -123,15 +115,15 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(
               width: '1rem',
               borderRadius: '100%',
               height: '1rem',
-              backgroundColor: 'onPrimary',
-              cursor: disabled ? 'auto' : 'pointer',
+              backgroundColor: 'accentOnContext',
+              cursor: disabled ? 'auto' : 'ew-resize',
             },
             '&::-moz-range-thumb': {
               width: '1rem',
               borderRadius: '100%',
               height: '1rem',
               backgroundColor: 'primary',
-              cursor: 'pointer',
+              cursor: 'default',
             },
           }}
           onBlur={() => onBlur?.()}

@@ -36,6 +36,7 @@ export const SystemContainer = forwardRef<HTMLDivElement, ContainerProps>(
                 backgroundColor: 'background',
                 color: 'onBackground',
                 fontSize: 2,
+                colorScheme: theme.mode === 'light' ? 'light' : 'dark',
               }}
             >
               {children}

@@ -68,6 +68,9 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             outline: 'none',
             backgroundColor: 'transparent',
             fontFamily: 'inherit',
+            '&::-webkit-calendar-picker-indicator': {
+              color: 'red',
+            },
             ...(variant === 'pure'
               ? {}
               : {

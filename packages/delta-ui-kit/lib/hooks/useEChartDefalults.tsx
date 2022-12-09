@@ -40,7 +40,7 @@ export const useEChartDefalults = () => {
           },
           {
             offset: 1,
-            color: 'transparent',
+            color: transparentize(1, color),
           },
         ]) as any,
       }),
@@ -69,7 +69,7 @@ export const useEChartDefalults = () => {
       label: () => ({
         position: 'inner' as const,
         fontSize: 14,
-        color: colors.accentOnContext,
+        color: colors.accentOnPrimary,
         formatter: ({ data }) => data['value'],
       }),
     }),

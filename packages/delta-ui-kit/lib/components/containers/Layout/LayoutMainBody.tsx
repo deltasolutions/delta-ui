@@ -28,11 +28,9 @@ export const LayoutMainBody = ({
               justifyContent: 'center',
               background:
                 `linear-gradient(` +
-                `${transparentize(0.3, colors.accentBackground)} 0, ` +
+                `${transparentize(0.4, colors.accentBackground)} 0, ` +
                 `transparent 270px` +
                 `), ${layoutMainNoise}`,
-              // borderTop: '1px solid',
-              // borderTopColor: lighten(0.07, colors.accentContext),
             }),
       }}
       {...rest}

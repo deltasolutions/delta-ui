@@ -6,4 +6,6 @@ export default {
   title: 'Displays/Skeleton',
 } as Meta;
 
-export const Basics = () => <Skeleton />;
+export const Basics = () => (
+  <Skeleton sx={{ width: '100px', height: '20px' }} />
+);

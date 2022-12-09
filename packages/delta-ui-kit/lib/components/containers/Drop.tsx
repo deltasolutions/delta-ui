@@ -1,5 +1,5 @@
 import { jsx, ThemeProvider } from '@theme-ui/core';
-import { lighten, transparentize } from 'polished';
+import { darken, lighten, transparentize } from 'polished';
 import { forwardRef, useMemo } from 'react';
 import { PortalledProps, useDeltaTheme } from '../../hooks';
 import { Button, ButtonProps } from '../Button';
@@ -9,15 +9,18 @@ export interface DropProps extends BoxProps, Partial<PortalledProps> {}
 
 export const Drop = forwardRef<HTMLDivElement, DropProps>(
   ({ context, handleClose, ...rest }, ref) => {
-    const { colors } = useDeltaTheme();
+    const { mode, colors } = useDeltaTheme();
     const overrides = useMemo(() => {
       const value = 0.065;
+      const accent = mode === 'light' ? darken : lighten;
+      const context = lighten(value, colors.celestial);
+      const accentContext = accent(0.07, context);
       return {
         colors: {
-          context: lighten(value, colors.celestial),
-          accentContext: lighten(value * 1.5, colors.accentCelestial),
-          onContext: lighten(value, colors.onCelestial),
-          accentOnContext: lighten(value, colors.accentOnCelestial),
+          context,
+          accentContext,
+          onContext: colors.onCelestial,
+          accentOnContext: colors.accentOnCelestial,
         },
       };
     }, [colors]);
@@ -32,7 +35,7 @@ export const Drop = forwardRef<HTMLDivElement, DropProps>(
             backgroundColor: 'context',
             display: 'flex',
             flexDirection: 'column',
-            boxShadow: 1,
+            boxShadow: 'hard',
             borderRadius: 4,
           }}
           {...rest}

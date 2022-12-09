@@ -22,6 +22,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>((props, ref) => {
           borderRadius: 4,
           backgroundColor: 'context',
           color: 'onContext',
+          boxShadow: 'soft',
         }}
         {...props}
       />

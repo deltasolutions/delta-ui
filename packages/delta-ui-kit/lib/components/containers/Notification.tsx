@@ -49,6 +49,7 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
           opacity: isVisible ? 1 : 0,
           backgroundColor: 'contrast',
           color: 'onContrast',
+          boxShadow: 'soft',
           fontSize: 2,
           fontWeight: 600,
           letterSpacing: '0.04em',

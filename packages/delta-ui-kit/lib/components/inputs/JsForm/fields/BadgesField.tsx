@@ -52,7 +52,6 @@ export const BadgesField = (props: FieldProps) => {
           <Tooltip content={t('actions.add')}>
             <Button
               icon={IoIosAddCircleOutline}
-              size="small"
               variant="icon"
               onClick={() => openModal({ onChange: handleAdd })}
             />
@@ -73,7 +72,6 @@ export interface BadgeItemProps extends HTMLAttributes<HTMLDivElement> {
 export const BadgeItem = (props: BadgeItemProps) => {
   const [t] = useTranslation('common');
   const { onDelete, value, maxLength = 15, colorMap, ...rest } = props;
-
   const transformedValue = useMemo(() => {
     if (Array.isArray(value)) {
       return value.join('|');
@@ -84,7 +82,6 @@ export const BadgeItem = (props: BadgeItemProps) => {
     }
     return `${value}`;
   }, [value, maxLength]);
-
   const borderColor = useMemo(
     () =>
       colorMap?.find(({ pattern }) =>
@@ -92,7 +89,6 @@ export const BadgeItem = (props: BadgeItemProps) => {
       )?.color,
     [transformedValue, colorMap]
   );
-
   return (
     <Box
       {...rest}
@@ -103,12 +99,20 @@ export const BadgeItem = (props: BadgeItemProps) => {
         padding: 2,
         gap: 2,
         radius: 'medium',
-        backgroundColor: 'mundane',
-        cursor: 'pointer',
-        borderRadius: 2,
+        backgroundColor: 'accentContext',
+        borderRadius: 3,
+        cursor: 'default',
       }}
     >
-      <Box>{transformedValue.slice(0, maxLength)}</Box>
+      <Box
+        sx={{
+          '&:hover': {
+            textDecoration: 'underline',
+          },
+        }}
+      >
+        {transformedValue.slice(0, maxLength)}
+      </Box>
       {onDelete && (
         <Tooltip content={t('actions.delete')}>
           <Button

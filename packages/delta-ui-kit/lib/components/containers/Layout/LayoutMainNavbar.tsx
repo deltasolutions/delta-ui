@@ -47,6 +47,18 @@ export const LayoutMainNavbar = forwardRef<
           backgroundColor: sticked ? 'exterior' : 'transparent',
           color: 'onContext',
           transition: 'background-color 0.15s linear',
+          '&::before': {
+            opacity: sticked ? 1 : 0,
+            content: '""',
+            display: 'block',
+            position: 'absolute',
+            left: 0,
+            top: '100%',
+            width: '100%',
+            height: '20px',
+            boxShadow: `0px 5px 15px -5px ${theme.colors.shadow} inset`,
+            transform: 'opacity 0.15s linear',
+          },
         }}
         {...rest}
       >

@@ -30,37 +30,30 @@ const useVariantStyle = (variant: ChipProps['variant']) => {
     return {};
   }
   const boxStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    borderRadius: 5,
     px: 2,
     py: 2,
+    display: 'flex',
+    alignItems: 'center',
     gap: 2,
+    borderRadius: 5,
   };
   const contentStyle = {
-    textOverflow: 'ellipsis',
     overflow: 'hidden',
+    textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
   };
   const buttonStyle = {
     display: 'flex',
-    borderRadius: 5,
     alignItems: 'center',
+    borderRadius: 5,
   };
   return {
     contained: {
       ...boxStyle,
-      backgroundColor: 'onContrast',
-      '& > div[role=contentinfo]': {
-        ...contentStyle,
-        color: 'onContext',
-      },
-      '& > button[role=button]': {
-        ...buttonStyle,
-        '&:hover, &:active, &:focus-visible': {
-          color: 'accentOnContext',
-        },
-      },
+      backgroundColor: 'secondary',
+      color: 'onSecondary',
+      '& > div[role=contentinfo]': contentStyle,
+      '& > button[role=button]': buttonStyle,
     },
     outlined: {
       ...boxStyle,
