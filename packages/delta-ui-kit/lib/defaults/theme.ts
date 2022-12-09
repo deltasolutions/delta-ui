@@ -13,7 +13,6 @@ const baseColors = {
   celestial: 'rgb(21, 23, 36)',
   contrast: '#fafafa',
   exterior: '#09090e',
-  shadow: '#00000000',
   border: 'rgb(255 255 255 / 25%)',
 
   accentPrimary: '#1a6dbf',
@@ -75,7 +74,10 @@ export const deltaTheme = {
     bold: 600,
   },
   radii: [0, 1, 2, 4, 5, 8],
-  shadows: {},
+  shadows: {
+    soft: '0px 5px 15px 0px #060f172f',
+    hard: '0px 2px 7px 0px #03070b6e',
+  },
 };
 
 const baseLightColors = {
@@ -93,7 +95,6 @@ const baseLightColors = {
   celestial: '#ffffff',
   contrast: '#ffffff',
   exterior: '#ffffff',
-  shadow: '#52759521',
   border: '#273f555b',
 
   accentPrimary: '#2673c1',
@@ -158,6 +159,7 @@ export const deltaLightTheme = {
   shadows: {
     soft: '0px 5px 15px 0px #52759517',
     hard: '0px 2px 7px 0px #162a3c2f',
+    drop: '0px 5px 15px -5px #52759517 inset',
   },
 };
 

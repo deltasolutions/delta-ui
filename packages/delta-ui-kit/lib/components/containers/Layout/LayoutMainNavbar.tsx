@@ -56,7 +56,7 @@ export const LayoutMainNavbar = forwardRef<
             top: '100%',
             width: '100%',
             height: '20px',
-            boxShadow: `0px 5px 15px -5px ${theme.colors.shadow} inset`,
+            boxShadow: 'drop',
             transform: 'opacity 0.15s linear',
           },
         }}
