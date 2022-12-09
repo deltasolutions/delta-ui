@@ -17,10 +17,10 @@ export const Skeleton = (props: SkeletonProps) => {
         maskImage:
           `linear-gradient(90deg, ` +
           `rgba(0, 0, 0, 1), ` +
-          `rgba(0, 0, 0, 0.5), ` +
+          `rgba(0, 0, 0, 0.25), ` +
           `rgba(0, 0, 0, 1))`,
         maskSize: '300% 100%',
-        animation: `${animation} 1s infinite alternate`,
+        animation: `${animation} 0.5s ease-in-out infinite alternate`,
       }}
       {...props}
     />

@@ -7,5 +7,5 @@ export default {
 } as Meta;
 
 export const Basics = () => (
-  <Skeleton sx={{ width: '300px', height: '100px' }} />
+  <Skeleton sx={{ width: '100px', height: '20px' }} />
 );
