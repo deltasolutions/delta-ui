@@ -67,7 +67,6 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
               overflow: 'hidden',
               wordBreak: 'break-word',
               paddingY: 2,
-              fontWeight: 0,
               display: 'flex',
               alignItems: 'center',
             }}

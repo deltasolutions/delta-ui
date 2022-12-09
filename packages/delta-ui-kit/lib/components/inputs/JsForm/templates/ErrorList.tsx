@@ -19,7 +19,7 @@ export const ErrorList = ({
         flexDirection: 'column',
         gap: 2,
         color: 'error',
-        fontWeight: 600,
+        fontWeight: 'bold',
       }}
     >
       {errors.map(e => (

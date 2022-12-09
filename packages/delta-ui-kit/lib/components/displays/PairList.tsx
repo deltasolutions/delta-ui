@@ -36,7 +36,7 @@ export const PairList = forwardRef<HTMLDivElement, PairListProps>(
                 sx={{
                   color: 'accentOnContext',
                   textAlign: 'right',
-                  fontWeight: 600,
+                  fontWeight: 'bold',
                 }}
               >
                 {key}
@@ -74,7 +74,7 @@ export const PairList = forwardRef<HTMLDivElement, PairListProps>(
             >
               <Box
                 aria-label="key"
-                sx={{ color: 'accentOnContext', fontWeight: 600 }}
+                sx={{ color: 'accentOnContext', fontWeight: 'bold' }}
               >
                 {key}
               </Box>
@@ -99,7 +99,7 @@ export const PairList = forwardRef<HTMLDivElement, PairListProps>(
               <tr key={['string', 'number'].includes(typeof key) ? key : index}>
                 <td
                   aria-label="key"
-                  sx={{ color: 'accentOnContext', fontWeight: 600 }}
+                  sx={{ color: 'accentOnContext', fontWeight: 'bold' }}
                 >
                   {key}
                 </td>

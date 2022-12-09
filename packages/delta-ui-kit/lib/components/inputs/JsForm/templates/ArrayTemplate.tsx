@@ -15,7 +15,7 @@ export const ArrayTemplate = (props: TemplateProps) => {
     validity,
     required,
   } = props;
-  console.log('children', props)
+  console.log('children', props);
   const { handleDelete, handleAdd } = useArrayHandlers(props);
   return (
     <Box
@@ -28,7 +28,7 @@ export const ArrayTemplate = (props: TemplateProps) => {
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
         <Box
           sx={{
-            fontWeight: 600,
+            fontWeight: 'bold',
             letterSpacing: '0.04em',
             color: 'accentOnContext',
             fontSize: 4,

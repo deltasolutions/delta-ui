@@ -30,8 +30,8 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
         {...rest}
       >
         {label && (
-          <Box sx={{ fontWeight: 600, letterSpacing: '0.04em' }}>
-            {label} {required && <span>*</span>}
+          <Box sx={{ fontWeight: 'bold', letterSpacing: '0.04em' }}>
+            {label} {required && <span sx={{ color: 'error' }}>*</span>}
           </Box>
         )}
         <Controller

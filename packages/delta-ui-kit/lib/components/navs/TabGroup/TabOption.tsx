@@ -1,5 +1,5 @@
 import { jsx } from '@theme-ui/core';
-import { darken, invert, lighten, rgba, transparentize } from 'polished';
+import { darken, invert, lighten, transparentize } from 'polished';
 import {
   ComponentType,
   forwardRef,
@@ -57,7 +57,7 @@ export const TabOption = forwardRef<HTMLAnchorElement, TabOptionProps>(
               height: '35px',
               lineHeight: '35px',
               fontSize: 2,
-              fontWeight: mode === 'light' ? 400 : 300,
+              fontWeight: 'light',
               letterSpacing: '0.04em',
               borderTopRightRadius: 3,
               borderTopLeftRadius: 3,

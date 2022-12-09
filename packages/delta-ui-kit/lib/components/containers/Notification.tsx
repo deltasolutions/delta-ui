@@ -51,7 +51,7 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
           color: 'onContrast',
           boxShadow: 'soft',
           fontSize: 2,
-          fontWeight: 600,
+          fontWeight: 'bold',
           letterSpacing: '0.04em',
           transform: `translateX(${
             isVisible ? '0, 0' : isEntering ? '3rem' : '3rem'

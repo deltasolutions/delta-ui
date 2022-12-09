@@ -2,6 +2,7 @@ import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import {
   Button,
+  Heading,
   Question,
   QuestionBody,
   QuestionFooter,
@@ -15,7 +16,9 @@ export default {
 export const Basics = () => {
   return (
     <Question>
-      <QuestionHeader>Header</QuestionHeader>
+      <QuestionHeader>
+        <Heading level={3}>Header</Heading>
+      </QuestionHeader>
       <QuestionBody>Body</QuestionBody>
       <QuestionFooter>
         <Button variant="text">Cancel</Button>

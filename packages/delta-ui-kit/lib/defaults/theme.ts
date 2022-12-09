@@ -69,6 +69,11 @@ export const deltaTheme = {
   ticks: [0, 100, 200, 300, 500, 1000, 1200, 1800],
   space: [0, 4, 8, 16, 24, 32, 42, 64, 128, 256, 512],
   fontSizes: [10, 12, 14, 16, 20, 24, 36, 48, 56],
+  fontWeights: {
+    light: 300,
+    normal: 400,
+    bold: 600,
+  },
   radii: [0, 1, 2, 4, 5, 8],
   shadows: {},
 };
@@ -144,6 +149,11 @@ export const deltaLightTheme = {
   ticks: [0, 100, 200, 300, 500, 1000, 1200, 1800],
   space: [0, 4, 8, 16, 24, 32, 42, 64, 128, 256, 512],
   fontSizes: [10, 12, 14, 16, 20, 24, 36, 48, 56],
+  fontWeights: {
+    light: 400,
+    normal: 400,
+    bold: 600,
+  },
   radii: [0, 1, 2, 4, 5, 8],
   shadows: {
     soft: '0px 5px 15px 0px #52759517',

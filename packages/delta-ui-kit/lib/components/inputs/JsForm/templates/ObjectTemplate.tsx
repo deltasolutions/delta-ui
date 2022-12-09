@@ -20,7 +20,7 @@ export const ObjectTemplate = ({
       {title && (
         <Box
           sx={{
-            fontWeight: 600,
+            fontWeight: 'bold',
             letterSpacing: '0.04em',
             color: 'accentOnContext',
             fontSize: 4,

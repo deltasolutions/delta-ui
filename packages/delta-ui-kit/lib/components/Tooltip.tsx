@@ -85,6 +85,8 @@ export const Tooltip = ({
             backdropFilter: 'blur(5px)',
             color: 'white',
             fontSize: 2,
+            // Ignoring theme-based value, since
+            // the background is also hard-coded.
             fontWeight: 300,
             letterSpacing: '0.04em',
             animation: `${appear} 0.1s cubic-bezier(0.250, 0.460, 0.450, 0.940)`,

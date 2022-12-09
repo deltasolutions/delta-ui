@@ -6,7 +6,6 @@ import {
   useContext,
   useMemo,
 } from 'react';
-import { useDeltaTheme } from '../../../../hooks';
 import { Anchor, AnchorProps } from '../../../Anchor';
 import { Box } from '../../Box';
 import { NavigationContext } from './LayoutNavigation';
@@ -24,7 +23,6 @@ export const LayoutNavigationItem = forwardRef<
 >(({ children, icon: Icon, id, ...rest }, ref) => {
   const { activeId } = useContext(NavigationContext);
   const active = useMemo(() => id === activeId, [id, activeId]);
-  const { mode } = useDeltaTheme();
   return (
     <Anchor
       ref={ref}
@@ -33,7 +31,7 @@ export const LayoutNavigationItem = forwardRef<
         px: '1.35rem',
         position: 'relative',
         fontSize: 2,
-        fontWeight: mode === 'light' ? 400 : 300,
+        fontWeight: 'light',
         letterSpacing: '0.04em',
         cursor: 'pointer',
         userSelect: 'none',

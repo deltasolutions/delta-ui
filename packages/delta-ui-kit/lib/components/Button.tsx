@@ -144,7 +144,7 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps): any => {
     textOverflow: 'ellipsis',
     textTransform: 'uppercase',
     letterSpacing: '0.15em',
-    fontWeight: 600,
+    fontWeight: 'bold',
     ...{
       contained: {
         primary: {

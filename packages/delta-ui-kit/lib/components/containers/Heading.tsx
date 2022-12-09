@@ -16,7 +16,7 @@ export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(
           padding: 0,
           color: 'accentOnContext',
           fontSize: 7 - level,
-          fontWeight: 600,
+          fontWeight: 'bold',
           letterSpacing: '0.02em',
         }}
         {...rest}

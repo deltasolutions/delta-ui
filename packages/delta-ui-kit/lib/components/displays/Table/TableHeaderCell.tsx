@@ -14,7 +14,7 @@ export const TableHeaderCell = forwardRef<
   HTMLTableCellElement,
   TableHeaderCellProps
 >(({ children, ...rest }, ref) => {
-  const { mode, colors } = useDeltaTheme();
+  const { colors } = useDeltaTheme();
   const { sticked } = useContext(TableHeaderContext);
   return (
     <th
@@ -40,7 +40,7 @@ export const TableHeaderCell = forwardRef<
           alignItems: 'center',
           gap: 1,
           fontSize: 1,
-          fontWeight: mode === 'light' ? 400 : 300,
+          fontWeight: 'light',
           letterSpacing: '0.06em',
           textTransform: 'uppercase',
         }}

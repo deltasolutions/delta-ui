@@ -1,6 +1,5 @@
 import { jsx } from '@theme-ui/core';
 import { forwardRef, ReactNode } from 'react';
-import { useDeltaTheme } from '../../../../hooks';
 import { Box, BoxProps } from '../../Box';
 
 export interface LayoutNavigationGroupProps extends Omit<BoxProps, 'title'> {
@@ -11,7 +10,6 @@ export const LayoutNavigationGroup = forwardRef<
   HTMLDivElement,
   LayoutNavigationGroupProps
 >(({ children, title, ...rest }, ref) => {
-  const { mode } = useDeltaTheme();
   return (
     <Box ref={ref} {...rest}>
       <Box
@@ -20,7 +18,7 @@ export const LayoutNavigationGroup = forwardRef<
           display: 'flex',
           alignItems: 'center',
           fontSize: 2,
-          fontWeight: mode === 'light' ? 400 : 300,
+          fontWeight: 'light',
           textTransform: 'uppercase',
           letterSpacing: '0.04em',
           overflow: 'hidden',

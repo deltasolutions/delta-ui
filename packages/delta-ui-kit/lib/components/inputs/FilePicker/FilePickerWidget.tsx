@@ -30,7 +30,7 @@ export const FilePickerWidget = forwardRef<
         p: 2,
         w: '100%',
         fontSize: 1,
-        fontWeight: 400,
+        fontWeight: 'normal',
         justifyContent: 'space-between',
         color: 'accentOnContext',
         '&:hover, &:active, &:focus-visible': {

@@ -2,7 +2,6 @@ import { jsx } from '@theme-ui/core';
 import { Children, forwardRef, ReactElement, ReactNode } from 'react';
 import { IoHome } from 'react-icons/io5';
 import { TbChevronRight } from 'react-icons/tb';
-import { useDeltaTheme } from '../../hooks';
 import { Anchor, AnchorProps } from '../Anchor';
 import { Box, BoxProps } from '../containers';
 
@@ -49,12 +48,11 @@ export const BreadcrumbsItem = forwardRef<
   HTMLAnchorElement,
   BreadcrumbsItemProps
 >((props: BreadcrumbsItemProps, ref) => {
-  const { mode } = useDeltaTheme();
   return (
     <Anchor
       ref={ref}
       sx={{
-        fontWeight: mode === 'light' ? 400 : 300,
+        fontWeight: 'light',
         verticalAlign: 'middle',
         letterSpacing: '0.04em',
       }}
