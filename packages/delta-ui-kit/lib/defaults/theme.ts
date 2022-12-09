@@ -146,7 +146,6 @@ export const deltaLightTheme = {
   fontSizes: [10, 12, 14, 16, 20, 24, 36, 48, 56],
   radii: [0, 1, 2, 4, 5, 8],
   shadows: {
-    // soft: '0px 5px 10px 0px #52759521',
     soft: '0px 5px 15px 0px #52759517',
     hard: '0px 2px 7px 0px #162a3c2f',
   },
