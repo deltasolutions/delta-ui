@@ -105,7 +105,7 @@ const baseLightColors = {
   accentBorder: '#09131e7c',
 
   onPrimary: '#ffffff',
-  onSecondary: 'rgba(255, 255, 255, 0.95)',
+  onSecondary: '#ffffff',
   onInfo: '#ffffff',
   onSuccess: '#ffffff',
   onWarning: '#ffffff',
@@ -117,7 +117,7 @@ const baseLightColors = {
   onExterior: '#354651d4',
 
   accentOnPrimary: '#ffffff',
-  accentOnSecondary: '#131e24',
+  accentOnSecondary: '#ffffff',
   accentOnInfo: '#ffffff',
   accentOnSuccess: '#ffffff',
   accentOnWarning: '#ffffff',

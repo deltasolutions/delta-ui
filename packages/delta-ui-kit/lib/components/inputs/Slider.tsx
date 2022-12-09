@@ -95,7 +95,6 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(
           {...{
             ...(onChange && { onChange: ev => onChange(+ev.target.value) }),
           }}
-          style={{ cursor: disabled ? 'auto' : 'pointer' }}
           sx={{
             appearance: 'none',
             width: '100%',
@@ -124,7 +123,7 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(
               borderRadius: '100%',
               height: '1rem',
               backgroundColor: 'primary',
-              cursor: 'pointer',
+              cursor: 'default',
             },
           }}
           onBlur={() => onBlur?.()}
