@@ -8,7 +8,7 @@ import {
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'contained' | 'contained-dimmed' | 'outlined' | 'text' | 'icon';
-  color?: 'primary' | 'secondary' | 'success' | 'error';
+  color?: 'primary' | 'secondary' | 'info' | 'success' | 'error';
   size?: 'small' | 'medium' | 'large';
   icon?: ComponentType<HTMLAttributes<Element>>;
 }
@@ -157,6 +157,11 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps): any => {
           color: 'onSecondary',
           '&:not(:disabled):hover': { backgroundColor: 'accentSecondary' },
         },
+        info: {
+          backgroundColor: 'info',
+          color: 'onInfo',
+          '&:not(:disabled):hover': { backgroundColor: 'accentInfo' },
+        },
         success: {
           backgroundColor: 'success',
           color: 'onSuccess',
@@ -183,6 +188,14 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps): any => {
           '&:not(:disabled):hover': {
             backgroundColor: 'secondary',
             color: 'onSecondary',
+          },
+        },
+        info: {
+          backgroundColor: 'accentContext',
+          color: 'accentOnContext',
+          '&:not(:disabled):hover': {
+            backgroundColor: 'info',
+            color: 'onInfo',
           },
         },
         success: {
@@ -219,6 +232,14 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps): any => {
             borderColor: 'secondary',
           },
         },
+        info: {
+          border: '2px solid',
+          borderColor: 'info',
+          color: 'info',
+          '&:not(:disabled):hover': {
+            borderColor: 'info',
+          },
+        },
         success: {
           border: '2px solid',
           borderColor: 'success',
@@ -248,6 +269,12 @@ const getVariantStyle = ({ variant, color = 'primary' }: ButtonProps): any => {
           borderRadius: 2,
           color: 'secondary',
           '&:not(:disabled):hover': { color: 'accentSecondary' },
+        },
+        info: {
+          paddingX: 1,
+          borderRadius: 2,
+          color: 'info',
+          '&:not(:disabled):hover': { color: 'accentInfo' },
         },
         success: {
           paddingX: 1,

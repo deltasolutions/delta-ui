@@ -9,7 +9,7 @@ export default {
   component: Button,
 } as Meta;
 
-const colors = ['primary', 'secondary', 'success', 'error'] as const;
+const colors = ['primary', 'secondary', 'info', 'success', 'error'] as const;
 
 export const Default = () => (
   <Button sx={{ width: '300px', height: '300px', background: 'grey' }} />
