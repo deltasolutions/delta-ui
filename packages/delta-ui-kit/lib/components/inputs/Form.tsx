@@ -15,54 +15,52 @@ import { TextInput } from './TextInput';
 
 export interface FormFieldProps extends Omit<BoxProps, 'children'> {
   name: string;
-  label?: string;
+  label?: string; // TODO: Rename to `title`.
+  description?: string;
   required?: boolean;
   children?: ReactElement<FormWidgetProps>;
 }
 
 export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
-  ({ name, label, children, required, ...rest }, ref) => {
+  ({ name, label, description, children, required, ...rest }, ref) => {
     const { control } = useFormContext();
     return (
-      <Box
-        ref={ref}
-        sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
-        {...rest}
-      >
-        {label && (
-          <Box sx={{ fontWeight: 'bold', letterSpacing: '0.04em' }}>
-            {label} {required && <span sx={{ color: 'error' }}>*</span>}
+      <Controller
+        control={control}
+        name={name}
+        render={({
+          field: { onChange, onBlur, value },
+          fieldState: { error },
+        }) => (
+          <Box
+            ref={ref}
+            sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
+            {...rest}
+          >
+            {label && (
+              <Box sx={{ fontWeight: 'bold', letterSpacing: '0.04em' }}>
+                {label} {required && <span sx={{ color: 'error' }}>*</span>}
+              </Box>
+            )}
+            {children ? (
+              cloneElement(children, {
+                value,
+                invalid: Boolean(error),
+                onChange,
+                onBlur,
+              })
+            ) : (
+              <TextInput value={value} onBlur={onBlur} onChange={onChange} />
+            )}
+            {description && <Box sx={{ opacity: 0.5 }}>{description}</Box>}
+            {error?.message && (
+              <Box sx={{ color: 'error', fontWeight: 'bold' }}>
+                {error?.message}
+              </Box>
+            )}
           </Box>
         )}
-        <Controller
-          control={control}
-          name={name}
-          render={({
-            field: { onChange, onBlur, value },
-            fieldState: { error },
-          }) => (
-            <Box>
-              {children ? (
-                cloneElement(children, {
-                  value,
-                  invalid: Boolean(error),
-                  onChange,
-                  onBlur,
-                })
-              ) : (
-                <TextInput value={value} onBlur={onBlur} onChange={onChange} />
-              )}
-              {error?.message && (
-                <Box sx={{ mt: 1 }}>
-                  <span sx={{ color: 'error', fontSize: 1 }}>
-                    {error?.message}
-                  </span>
-                </Box>
-              )}
-            </Box>
-          )}
-        />
-      </Box>
+      />
     );
   }
 );

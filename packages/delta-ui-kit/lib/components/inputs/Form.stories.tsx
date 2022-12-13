@@ -39,7 +39,12 @@ export const Basics = ({
   return (
     <Form onSubmit={v => openModal(v)}>
       <FormGrid>
-        <FormField label="Default Widget" name="defaultWidget" />
+        <FormField
+          required
+          description="Sample description"
+          label="Default Widget"
+          name="defaultWidget"
+        />
         <FormField name="switch">
           <Switch>Switch</Switch>
         </FormField>

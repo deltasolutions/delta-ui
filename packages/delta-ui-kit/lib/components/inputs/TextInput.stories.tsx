@@ -50,6 +50,7 @@ export const Basics = () => {
         type={shown ? 'text' : 'password'}
       />
       <TextInput placeholder="Password" type="password" />
+      <TextInput disabled placeholder="Disabled" type="password" />
     </Box>
   );
 };

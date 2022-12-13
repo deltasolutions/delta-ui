@@ -16,7 +16,7 @@ export const parameters = {
 
 export const decorators = [
   Story => {
-    const [mode, setMode] = useState('light');
+    const [mode, setMode] = useState('dark');
     return (
       <SystemContainer theme={mode === 'dark' ? deltaTheme : deltaLightTheme}>
         <Global
