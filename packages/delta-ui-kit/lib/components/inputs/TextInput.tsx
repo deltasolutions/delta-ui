@@ -33,7 +33,9 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     const handleChange = (nextValue: string) => {
       nextValue !== innerValue && setInnerValue(nextValue);
       nextValue !== value &&
-        onChange?.(type === 'number' ? +nextValue : nextValue);
+        onChange?.(
+          type === 'number' && nextValue !== '' ? +nextValue : nextValue
+        );
     };
     useUpdateEffect(() => {
       innerValue !== value && setInnerValue(value ?? '');
