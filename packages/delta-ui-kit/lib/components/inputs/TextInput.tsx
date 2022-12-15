@@ -30,7 +30,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     ref
   ) => {
     const [innerValue, setInnerValue] = useState<string | number | undefined>(
-      value ?? ''
+      value
     );
     const handleChange = (nextValue: string) => {
       nextValue !== innerValue && setInnerValue(nextValue);
@@ -45,7 +45,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       }
     };
     useUpdateEffect(() => {
-      innerValue !== value && setInnerValue(value ?? '');
+      innerValue !== value && setInnerValue(value);
     }, [value]);
     return (
       <Box sx={{ position: 'relative' }}>
@@ -104,7 +104,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
                 }),
           }}
           type={type}
-          value={innerValue}
+          value={innerValue ?? ''}
           onBlur={() => onBlur?.()}
           onChange={e => handleChange(e.target.value)}
           onFocus={() => onFocus?.()}
