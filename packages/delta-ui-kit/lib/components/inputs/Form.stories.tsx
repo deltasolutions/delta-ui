@@ -13,6 +13,7 @@ import { Select, SelectOption } from './Select';
 import { Slider } from './Slider';
 import { Switch } from './Switch';
 import { TextArea } from './TextArea';
+import { TextInput } from './TextInput';
 
 export default {
   title: 'Inputs/Form',
@@ -45,6 +46,9 @@ export const Basics = ({
           label="Default Widget"
           name="defaultWidget"
         />
+        <FormField required label="Number" name="number">
+          <TextInput type="number" />
+        </FormField>
         <FormField name="switch">
           <Switch>Switch</Switch>
         </FormField>

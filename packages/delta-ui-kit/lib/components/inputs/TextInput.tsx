@@ -6,7 +6,7 @@ import { Box } from '../containers';
 
 export interface TextInputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, keyof FormWidgetProps>,
-    FormWidgetProps<string | number> {
+    FormWidgetProps<string | number | undefined> {
   variant?: 'pure';
   startIcon?: ReactNode;
   endIcon?: ReactNode;
@@ -29,13 +29,20 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     }: TextInputProps,
     ref
   ) => {
-    const [innerValue, setInnerValue] = useState<string | number>(value ?? '');
+    const [innerValue, setInnerValue] = useState<string | number | undefined>(
+      value ?? ''
+    );
     const handleChange = (nextValue: string) => {
       nextValue !== innerValue && setInnerValue(nextValue);
-      nextValue !== value &&
+      if (nextValue !== value) {
         onChange?.(
-          type === 'number' && nextValue !== '' ? +nextValue : nextValue
+          type === 'number'
+            ? nextValue && !isNaN(+nextValue)
+              ? +nextValue
+              : undefined
+            : nextValue
         );
+      }
     };
     useUpdateEffect(() => {
       innerValue !== value && setInnerValue(value ?? '');
