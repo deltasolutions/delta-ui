@@ -3,6 +3,7 @@ import { cloneElement, forwardRef, ReactElement } from 'react';
 import {
   Controller,
   FormProvider,
+  SubmitHandler,
   useForm,
   useFormContext,
   UseFormProps,
@@ -68,7 +69,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
 export interface ControlledFormProps
   extends Omit<HTMLFormElement, 'onSubmit' | 'onChange'> {
   form: UseFormReturn;
-  onSubmit?: (value: { [key: string]: unknown }) => void;
+  onSubmit?: SubmitHandler<any>;
 }
 
 export const ControlledForm = forwardRef<HTMLFormElement, ControlledFormProps>(
