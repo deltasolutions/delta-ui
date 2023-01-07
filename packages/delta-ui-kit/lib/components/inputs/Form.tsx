@@ -1,5 +1,5 @@
 import { jsx } from '@theme-ui/core';
-import { cloneElement, forwardRef, ReactElement } from 'react';
+import { cloneElement, forwardRef, HTMLAttributes, ReactElement } from 'react';
 import {
   Controller,
   FormProvider,
@@ -67,7 +67,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
 );
 
 export interface ControlledFormProps
-  extends Omit<HTMLFormElement, 'onSubmit' | 'onChange'> {
+  extends Omit<HTMLAttributes<HTMLFormElement>, 'onSubmit' | 'onChange'> {
   form: UseFormReturn;
   onSubmit?: SubmitHandler<any>;
 }
