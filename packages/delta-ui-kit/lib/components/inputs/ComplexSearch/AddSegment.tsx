@@ -62,8 +62,8 @@ export const AddSegment = ({ placeholder, ...rest }: TextInputProps) => {
 
   const onOptionClick = (value: string) => {
     handleClose();
-    addSegment(value);
     setEditingIndex(itemsLengthRef.current);
+    addSegment(value);
   };
   useEffect(() => {
     if (editingIndex === -1) {
