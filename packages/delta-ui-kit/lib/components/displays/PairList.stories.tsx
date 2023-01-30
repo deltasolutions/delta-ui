@@ -1,7 +1,7 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
+import { useEffect, useState } from 'react';
 import { compact } from '../../../docs/decorators';
-import { Switch } from '../inputs';
 import { PairList } from './PairList';
 
 export default {
@@ -12,15 +12,24 @@ export default {
 const pairs = [
   ['Name', 'Delta BMC Scan'],
   ['Cron', '*/5 * * * *'],
-  [
-    'Running',
-    'ddsadk jfsodijapso jfpasj fpdjsap ifjsadpoij fpoadsijfp ijadspfij paosijdfp japdsfijapsij fpoijapfi jpasijdf pijapojif d',
-  ],
+  ['Running', 'ddsadk '],
   ['Next Execution', '15.04.2022'],
-  ['Last Status', <Switch />],
 ];
 
 export const Basics = () => <PairList pairs={pairs} />;
+
+export const Async = () => {
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setLoading(prev => !prev);
+    }, 1000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+  return <PairList loading={loading} pairs={pairs} />;
+};
 
 export const Column = () => <PairList pairs={pairs} variant="column" />;
 
