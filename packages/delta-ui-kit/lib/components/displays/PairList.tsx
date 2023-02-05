@@ -1,14 +1,16 @@
 import { jsx } from '@theme-ui/core';
-import { forwardRef } from 'react';
+import { forwardRef, ReactNode } from 'react';
 import { Box, BoxProps } from '../containers';
+import { Skeleton } from './Skeleton';
 
 export interface PairListProps extends BoxProps {
   pairs: any[][];
   variant?: 'column' | 'row' | 'row-space';
+  loading?: boolean;
 }
 
 export const PairList = forwardRef<HTMLDivElement, PairListProps>(
-  ({ pairs, variant = 'row', ...rest }, ref) => {
+  ({ pairs, variant = 'row', loading, ...rest }, ref) => {
     return variant === 'row-space' ? (
       <Box
         ref={ref}
@@ -48,7 +50,7 @@ export const PairList = forwardRef<HTMLDivElement, PairListProps>(
                   ml: 4,
                 }}
               >
-                {value}
+                <PairListValue loading={loading} value={value} />
               </Box>
             </Box>
           );
@@ -78,7 +80,9 @@ export const PairList = forwardRef<HTMLDivElement, PairListProps>(
               >
                 {key}
               </Box>
-              <Box aria-label="value">{value}</Box>
+              <Box aria-label="value">
+                <PairListValue loading={loading} value={value} />
+              </Box>
             </Box>
           );
         })}
@@ -104,7 +108,9 @@ export const PairList = forwardRef<HTMLDivElement, PairListProps>(
                   {key}
                 </td>
                 <td aria-label="space" sx={{ width: '2rem' }}></td>
-                <td aria-label="value">{value}</td>
+                <td aria-label="value">
+                  <PairListValue loading={loading} value={value} />
+                </td>
               </tr>
             ))}
           </tbody>
@@ -113,3 +119,17 @@ export const PairList = forwardRef<HTMLDivElement, PairListProps>(
     );
   }
 );
+
+const PairListValue = ({
+  value,
+  loading,
+}: {
+  value: ReactNode;
+  loading?: boolean;
+}) => {
+  return loading ? (
+    <Skeleton sx={{ height: '1em', width: '100px' }} />
+  ) : (
+    <Box>{value}</Box>
+  );
+};
