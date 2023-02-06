@@ -1,19 +1,23 @@
 import { jsx } from '@theme-ui/core';
 import {
   Children,
+  createContext,
   forwardRef,
   ReactElement,
+  ReactNode,
+  RefObject,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from 'react';
 import { IoChevronDown } from 'react-icons/io5';
-import { useDrop, useUpdateEffect } from '../../hooks';
+import { useDrop, useImperativePortal, useUpdateEffect } from '../../hooks';
 import { FormWidgetProps } from '../../types';
 import { mergeRefs } from '../../utils';
-import { Box, BoxProps } from '../containers';
+import { Box, BoxProps, SystemContext } from '../containers';
 import { DropMenu, DropMenuItem, DropMenuItemProps } from './DropMenu';
 import { EmptyOptions } from './EmptyOptions';
 import { TextInput } from './TextInput';
@@ -41,14 +45,22 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
     ref
   ) => {
     const inputRef = useRef<HTMLInputElement>(null);
+    const { floatingPortal } = useContext(SystemContext);
+    const portal = useImperativePortal(floatingPortal);
     const [innerValue, setInnerValue] = useState<unknown>(value);
     const childrenArray = useMemo(
       () =>
         Children.toArray(children).filter(
           Boolean
         ) as ReactElement<SelectOptionProps>[],
-      [Children.map(children, v => v && String(v.props.value))?.join()]
+      [
+        Children.map(
+          children,
+          v => v && String(v.props.value) + ' ' + String(v.props.children)
+        )?.join(),
+      ]
     );
+
     const title = useMemo(() => {
       return childrenArray.find(v => v.props.value === innerValue)?.props
         .children;
@@ -64,19 +76,11 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
     const dropRef = useRef<HTMLDivElement>(null);
     const closeDropRef = useRef<undefined | (() => void)>();
     const [openDrop, anchorRef] = useDrop<HTMLDivElement>(
-      props => {
-        if (childrenArray.length > 0) {
-          return (
-            <DropMenu ref={dropRef} onItemClick={handleChange} {...props}>
-              {childrenArray}
-            </DropMenu>
-          );
-        }
-        return <EmptyOptions />;
-      },
+      props => <SelectDrop {...props} />,
       {
-        deps: [childrenArray, handleChange],
+        deps: [],
         tailored: true,
+        portal,
         blurResistant: true,
         placement: 'bottom-start',
       }
@@ -114,41 +118,49 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       () => mergeRefs([ref, anchorRef]),
       [ref, anchorRef]
     );
+    const selectContext = {
+      handleChange,
+      childrenArray,
+      dropRef,
+    };
     return (
-      <Box
-        ref={mergedRef}
-        sx={{
-          position: 'relative',
-          width: '100%',
-          minWidth: '100px',
-        }}
-        {...rest}
-      >
-        <TextInput
-          ref={inputRef}
-          readOnly
-          disabled={disabled}
-          placeholder={placeholder}
+      <SelectContext.Provider value={selectContext}>
+        <Box
+          ref={mergedRef}
           sx={{
-            cursor: disabled ? 'not-allowed' : 'default',
-            paddingRight: '2em',
+            position: 'relative',
+            width: '100%',
+            minWidth: '100px',
           }}
-          value={title ?? ''}
-          onBlur={onBlur}
-          onClick={handleOpen}
-          onFocus={onFocus}
-        />
-        <IoChevronDown
-          sx={{
-            position: 'absolute',
-            top: '50%',
-            right: 2,
-            width: '1.25em',
-            height: '1.25em',
-            transform: 'translateY(-50%)',
-          }}
-        />
-      </Box>
+          {...rest}
+        >
+          <TextInput
+            ref={inputRef}
+            readOnly
+            disabled={disabled}
+            placeholder={placeholder}
+            sx={{
+              cursor: disabled ? 'not-allowed' : 'default',
+              paddingRight: '2em',
+            }}
+            value={title ?? ''}
+            onBlur={onBlur}
+            onClick={handleOpen}
+            onFocus={onFocus}
+          />
+          <IoChevronDown
+            sx={{
+              position: 'absolute',
+              top: '50%',
+              right: 2,
+              width: '1.25em',
+              height: '1.25em',
+              transform: 'translateY(-50%)',
+            }}
+          />
+        </Box>
+        {portal}
+      </SelectContext.Provider>
     );
   }
 );
@@ -159,4 +171,25 @@ export interface SelectOptionProps extends Omit<DropMenuItemProps, 'children'> {
 
 export const SelectOption = (props: SelectOptionProps) => (
   <DropMenuItem {...props} />
+);
+
+const SelectDrop = forwardRef<HTMLDivElement, any>((props, ref) => {
+  const { childrenArray, handleChange, dropRef } = useContext(SelectContext);
+  if (childrenArray.length > 0) {
+    return (
+      <DropMenu ref={dropRef} onItemClick={handleChange} {...props}>
+        {childrenArray}
+      </DropMenu>
+    );
+  }
+  return <EmptyOptions ref={dropRef} />;
+});
+
+interface SelectContextOptions {
+  childrenArray: unknown[];
+  handleChange: (v: unknown) => void;
+  dropRef: RefObject<HTMLDivElement>;
+}
+const SelectContext = createContext<SelectContextOptions>(
+  {} as SelectContextOptions
 );
