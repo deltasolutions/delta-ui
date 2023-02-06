@@ -1,7 +1,8 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
+import { Fragment, ReactElement, useEffect, useState } from 'react';
 import { compact } from '../../../docs/decorators';
-import { Select, SelectOption } from './Select';
+import { Select, SelectOption, SelectOptionProps } from './Select';
 
 export default {
   title: 'Inputs/Select',
@@ -32,6 +33,32 @@ export const Disabled = () => {
   return (
     <Select disabled placeholder="Disabled">
       {options}
+    </Select>
+  );
+};
+
+export const Async = () => {
+  const [items, setItems] = useState<{ id: string; title: string }[]>([
+    { id: '1', title: 'Text1' },
+    { id: '2', title: 'Text2' },
+    { id: '3', title: 'Text3' },
+  ]);
+  useEffect(() => {
+    setTimeout(() => {
+      setItems([
+        { id: '1', title: 'UpdatedText1' },
+        { id: '2', title: 'UpdatedText2' },
+        { id: '3', title: 'UpdatedText3' },
+      ]);
+    }, 1000);
+  }, []);
+  return (
+    <Select placeholder="Disabled">
+      {items.map(i => (
+        <SelectOption key={i.id + i.title} value={i.id}>
+          {i.title}
+        </SelectOption>
+      ))}
     </Select>
   );
 };
