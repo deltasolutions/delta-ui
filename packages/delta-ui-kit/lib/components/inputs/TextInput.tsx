@@ -104,7 +104,10 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
           type={type}
           value={innerValue}
           onBlur={() => onBlur?.()}
-          onChange={e => handleChange(e.target.value)}
+          onChange={e => {
+            const v = e.target.value;
+            handleChange(v ? v : undefined);
+          }}
           onFocus={() => onFocus?.()}
           {...rest}
         />

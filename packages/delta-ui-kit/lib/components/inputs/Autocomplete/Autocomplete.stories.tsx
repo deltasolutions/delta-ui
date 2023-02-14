@@ -13,8 +13,8 @@ export default {
 
 const options = new Array(100).fill(undefined).map((_, i) => `Option #${i}`);
 
-const isAlike = (query: string, option: string) =>
-  !query || option.toLocaleLowerCase().includes(query.toLocaleLowerCase());
+const isAlike = (query?: string, option?: string) =>
+  !query || option?.toLocaleLowerCase().includes(query.toLocaleLowerCase());
 
 export const Basics = () => {
   return (
@@ -49,8 +49,8 @@ export const Controlled = () => {
         Set Value
       </Button>
       <Autocomplete
-        multiple
         getOptions={v => options.filter(t => isAlike(v, t)).slice(0, 5)}
+        multiple={false}
         placeholder="Placeholder"
         value={value}
         onChange={setValue}

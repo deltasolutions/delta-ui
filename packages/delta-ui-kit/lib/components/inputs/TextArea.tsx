@@ -8,7 +8,7 @@ export interface TextAreaProps
       TextareaHTMLAttributes<HTMLTextAreaElement>,
       keyof FormWidgetProps
     >,
-    FormWidgetProps<string> {}
+    FormWidgetProps<string | undefined> {}
 
 export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
   (
@@ -24,7 +24,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
     ref
   ) => {
     const [innerValue, setInnerValue] = useState<string | undefined>(value);
-    const handleChange = (nextValue: string) => {
+    const handleChange = (nextValue?: string) => {
       nextValue !== innerValue && setInnerValue(nextValue);
       nextValue !== value && onChange?.(nextValue);
     };
@@ -61,7 +61,10 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
         }}
         value={innerValue}
         onBlur={() => onBlur?.()}
-        onChange={e => handleChange(e.target.value)}
+        onChange={e => {
+          const v = e.target.value;
+          handleChange(v ? v : undefined);
+        }}
         onFocus={() => onFocus?.()}
         {...rest}
       />
