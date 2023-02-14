@@ -32,17 +32,15 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     const [innerValue, setInnerValue] = useState<string | number | undefined>(
       value
     );
-    const handleChange = (nextValue: string) => {
+    const handleChange = (nextValue?: string) => {
       nextValue !== innerValue && setInnerValue(nextValue);
-      if (nextValue !== value) {
-        onChange?.(
-          type === 'number'
-            ? nextValue && !isNaN(+nextValue)
-              ? +nextValue
-              : undefined
-            : nextValue
-        );
-      }
+      onChange?.(
+        type === 'number'
+          ? nextValue && !isNaN(+nextValue)
+            ? +nextValue
+            : undefined
+          : nextValue
+      );
     };
     useUpdateEffect(() => {
       innerValue !== value && setInnerValue(value);
@@ -104,7 +102,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
                 }),
           }}
           type={type}
-          value={innerValue ?? ''}
+          value={innerValue}
           onBlur={() => onBlur?.()}
           onChange={e => handleChange(e.target.value)}
           onFocus={() => onFocus?.()}

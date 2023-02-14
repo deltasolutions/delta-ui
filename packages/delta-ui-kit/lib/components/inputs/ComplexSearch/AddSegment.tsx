@@ -22,7 +22,7 @@ export const AddSegment = ({ placeholder, ...rest }: TextInputProps) => {
   const dropRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const closeDropRef = useRef<() => void | void>();
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState<string | number | undefined>('');
   const portal = useImperativePortal(floatingPortal);
   const [openDrop, anchorRef] = useDrop<any>(
     ({ handleClose }) => {

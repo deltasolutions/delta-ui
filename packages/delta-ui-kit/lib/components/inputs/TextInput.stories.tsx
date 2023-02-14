@@ -49,7 +49,13 @@ export const Basics = () => {
         }
         type={shown ? 'text' : 'password'}
       />
-      <TextInput placeholder="Password" type="password" />
+      <TextInput
+        placeholder="Password"
+        type="password"
+        onChange={v => {
+          console.log('v', v);
+        }}
+      />
       <TextInput disabled placeholder="Disabled" type="password" />
     </Box>
   );

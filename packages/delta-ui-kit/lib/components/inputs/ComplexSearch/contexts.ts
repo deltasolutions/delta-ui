@@ -20,7 +20,7 @@ export interface ComplexSearchContextOptions {
 export const DropContext = createContext({} as DropContextOptions);
 
 export interface DropContextOptions {
-  query?: string;
+  query?: string | number;
 }
 export const DropContentContext = createContext(
   {} as DropContentContextOptions

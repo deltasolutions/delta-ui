@@ -23,13 +23,13 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
     },
     ref
   ) => {
-    const [innerValue, setInnerValue] = useState<string>(value ?? '');
+    const [innerValue, setInnerValue] = useState<string | undefined>(value);
     const handleChange = (nextValue: string) => {
       nextValue !== innerValue && setInnerValue(nextValue);
       nextValue !== value && onChange?.(nextValue);
     };
     useUpdateEffect(() => {
-      innerValue !== value && setInnerValue(value ?? '');
+      innerValue !== value && setInnerValue(value);
     }, [value]);
     return (
       <textarea
