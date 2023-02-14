@@ -48,7 +48,7 @@ export interface AutocompleteProps
   multiple?: boolean;
   placeholder?: string;
   initialQuery?: string;
-  getOptions?: (query: string) => unknown[] | Promise<unknown[]>;
+  getOptions?: (query?: string) => unknown[] | Promise<unknown[]>;
   renderOption?: (v: unknown) => ReactNode;
   renderSelection?: (v: unknown) => ReactNode;
 }
@@ -75,7 +75,7 @@ export const Autocomplete = forwardRef<HTMLLabelElement, AutocompleteProps>(
     const inputRef = useRef<HTMLInputElement>(null);
     const { floatingPortal } = useContext(SystemContext);
     const portal = useImperativePortal(floatingPortal);
-    const [query, setQuery] = useState(initialQuery ?? '');
+    const [query, setQuery] = useState(initialQuery);
     const debouncedQuery = useDebounce(query, 300);
     const [backspacePressed, setBackspacePressed] = useState(false);
     const valueArray = useMemo(
