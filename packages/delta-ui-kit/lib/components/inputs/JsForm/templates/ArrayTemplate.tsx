@@ -15,7 +15,6 @@ export const ArrayTemplate = (props: TemplateProps) => {
     validity,
     required,
   } = props;
-  console.log('children', props);
   const { handleDelete, handleAdd } = useArrayHandlers(props);
   return (
     <Box

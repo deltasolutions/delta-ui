@@ -26,7 +26,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
     const [innerValue, setInnerValue] = useState<string | undefined>(value);
     const handleChange = (nextValue?: string) => {
       nextValue !== innerValue && setInnerValue(nextValue);
-      nextValue !== value && onChange?.(nextValue);
+      onChange?.(nextValue);
     };
     useUpdateEffect(() => {
       innerValue !== value && setInnerValue(value);
