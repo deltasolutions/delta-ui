@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { compact } from '../../../../docs/decorators';
 import { Button } from '../../Button';
 import { Box } from '../../containers';
@@ -24,6 +24,30 @@ export const Basics = () => {
       placeholder="Placeholder"
     />
   );
+};
+
+export const Async = () => {
+  const [value, setValue] = useState({ id: 2, name: 'Alexander' });
+  return (
+    <Autocomplete
+      getOptions={async () => {
+        return [{ id: 0, name: 'Second' }];
+      }}
+      renderOption={v => v?.name}
+      renderSelection={v => <Value />}
+      value={value}
+    />
+  );
+};
+
+const Value = () => {
+  const [v, setV] = useState();
+  useEffect(() => {
+    setTimeout(() => {
+      setV({ id: 3, name: 'Ni' });
+    }, 1_000);
+  }, []);
+  return <span>{v?.name}</span>;
 };
 
 export const Empty = () => {

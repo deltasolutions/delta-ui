@@ -6,7 +6,7 @@ import { Box } from '../containers';
 
 export interface TextInputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, keyof FormWidgetProps>,
-    FormWidgetProps<string | number | undefined> {
+    FormWidgetProps<string | number> {
   variant?: 'pure';
   startIcon?: ReactNode;
   endIcon?: ReactNode;
@@ -16,7 +16,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
   (
     {
       variant,
-      value,
+      value = '',
       disabled,
       invalid, // TODO
       onChange,
@@ -29,16 +29,14 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     }: TextInputProps,
     ref
   ) => {
-    const [innerValue, setInnerValue] = useState<string | number | undefined>(
-      value
-    );
-    const handleChange = (nextValue?: string) => {
+    const [innerValue, setInnerValue] = useState<string | number>(value);
+    const handleChange = (nextValue: string | number) => {
       nextValue !== innerValue && setInnerValue(nextValue);
       onChange?.(
         type === 'number'
           ? nextValue && !isNaN(+nextValue)
             ? +nextValue
-            : undefined
+            : ''
           : nextValue
       );
     };
@@ -106,7 +104,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
           onBlur={() => onBlur?.()}
           onChange={e => {
             const v = e.target.value;
-            handleChange(v ? v : undefined);
+            handleChange(v);
           }}
           onFocus={() => onFocus?.()}
           {...rest}
