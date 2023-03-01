@@ -8,7 +8,6 @@ import {
   Switch,
   SystemContainer,
 } from '../lib';
-import 'leaflet/dist/leaflet.css';
 
 export const parameters = {
   layout: 'fullscreen',

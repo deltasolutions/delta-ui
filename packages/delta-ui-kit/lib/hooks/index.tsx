@@ -11,7 +11,6 @@ export * from './useGeoLocDescription';
 export * from './useGrid';
 export * from './useImperativePortal';
 export * from './useIsomorphicLayoutEffect';
-export * from './useLeafletDefaults';
 export * from './useLoader';
 export * from './useModal';
 export * from './useNotification';
