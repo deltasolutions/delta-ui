@@ -4,7 +4,6 @@ export * from './ColorPicker';
 export * from './DropMenu';
 export * from './FilePicker';
 export * from './Form';
-export * from './JsForm';
 export * from './PasswordInput';
 export * from './Radio';
 export * from './Select';

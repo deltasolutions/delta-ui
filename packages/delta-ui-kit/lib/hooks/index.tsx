@@ -7,7 +7,6 @@ export * from './useDialog';
 export * from './useDrop';
 export * from './useEChartDefalults';
 export * from './useForwardRef';
-export * from './useGeoLocDescription';
 export * from './useGrid';
 export * from './useImperativePortal';
 export * from './useIsomorphicLayoutEffect';
