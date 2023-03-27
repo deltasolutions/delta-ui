@@ -1,7 +1,7 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { ReactNode } from 'react';
-import { useForm } from 'react-hook-form';
+import { FieldValues, useForm } from 'react-hook-form';
 import { compact } from '../../../docs/decorators';
 import { useModal } from '../../hooks';
 import { Button } from '../Button';
@@ -82,7 +82,7 @@ export const Basics = ({
 };
 
 export const Controlled = () => {
-  const form = useForm({
+  const form = useForm<FieldValues>({
     defaultValues: {
       showInput: true,
       textInput: '',

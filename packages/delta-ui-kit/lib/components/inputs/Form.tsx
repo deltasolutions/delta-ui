@@ -5,6 +5,7 @@ import {
   FormProvider,
   SubmitHandler,
   useForm,
+  get,
   useFormContext,
   UseFormProps,
   UseFormReturn,
@@ -25,14 +26,13 @@ export interface FormFieldProps extends Omit<BoxProps, 'children'> {
 export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
   ({ name, label, description, children, required, ...rest }, ref) => {
     const { control } = useFormContext();
+    const { getValues } = useForm();
+    const value = get(getValues(), name);
     return (
       <Controller
         control={control}
         name={name}
-        render={({
-          field: { onChange, onBlur, value },
-          fieldState: { error },
-        }) => (
+        render={({ field: { onChange, onBlur }, fieldState: { error } }) => (
           <Box
             ref={ref}
             sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
@@ -61,6 +61,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
             )}
           </Box>
         )}
+        shouldUnregister={true}
       />
     );
   }
